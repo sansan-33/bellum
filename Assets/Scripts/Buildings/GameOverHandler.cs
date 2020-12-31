@@ -20,7 +20,7 @@ public class GameOverHandler : NetworkBehaviour
         ClientHandlePlayerUpdated();
 
     }
-    public void unit()
+    /*public void unit()
     {
         foreach (UnitBase bases in bases)
         { 
@@ -30,7 +30,7 @@ public class GameOverHandler : NetworkBehaviour
                 
             }
         }
-    }
+    }*/
         
    
 
@@ -39,10 +39,10 @@ public class GameOverHandler : NetworkBehaviour
     {
 
 
-       
 
 
-      
+
+        int Totalplayers = bases.Count;
         int Totalenemies = enemies.Count;
         NumberOfKnight.text = $"{Totalenemies} VS {Totalplayers}";
         

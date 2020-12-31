@@ -90,12 +90,13 @@ public class RTSNetworkManager : NetworkManager
 
                 NetworkServer.Spawn(baseInstance, player.connectionToClient);
 
-
+                /*
                 GameObject mainCharInstance = Instantiate(
                 mainPrefab.gameObject,
                 pos,
                 Quaternion.identity);
                 NetworkServer.Spawn(mainCharInstance, player.connectionToClient);
+                */
        
             }
         }

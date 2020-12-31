@@ -8,7 +8,7 @@ public class SpawnEnemies : NetworkBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject projectilePrefab = null;
-    [SerializeField] private float fireRange = 20;
+    [SerializeField] private float fireRange = 30;
 
     private NavMeshAgent agent = null;
     private Camera mainCamera;
@@ -77,8 +77,8 @@ public class SpawnEnemies : NetworkBehaviour
 
             agent.SetDestination(spawnPosition + spawnOffset);
 
-            //InvokeRepeating("TryMove", 0.1f, 30f);
-            //InvokeRepeating("TryShoot", 1f, 2f);
+            InvokeRepeating("TryMove", 0.1f, 30f);
+            InvokeRepeating("TryShoot", 1f, 1f);
     }
 
     private void  TryMove()
