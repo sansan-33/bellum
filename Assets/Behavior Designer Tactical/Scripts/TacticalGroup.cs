@@ -125,12 +125,15 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         protected virtual void StartGroup()
         {
             started = true;
-
             // Clear the old group.
             targets.Clear();
             targetTransforms.Clear();
             if (leader.Value == null) {
+                Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup} ");
+
                 if (targetGroup.Value.Count > 0) {
+                    Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup} {targetGroup.Value} {targetGroup.Value[0]}");
+
                     for (int i = 0; i < targetGroup.Value.Count; ++i) {
                         var damageable = (targetGroup.Value[i].GetComponentInParent(typeof(IDamageable)) as IDamageable);
                         if (damageable != null) {
@@ -139,6 +142,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     }
                 } else {
                     var foundAttackGroup = GameObject.FindGameObjectsWithTag(targetTag.Value);
+                    Debug.Log($"TaticalGroup ---- What is target tag ? {targetTag.Value } {foundAttackGroup}  ");
+
                     for (int i = 0; i < foundAttackGroup.Length; ++i) {
                         var damageable = (foundAttackGroup[i].GetComponentInParent(typeof(IDamageable)) as IDamageable);
                         if (damageable != null) {

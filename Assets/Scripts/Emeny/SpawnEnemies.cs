@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class SpawnEnemies : NetworkBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject unitBasePrefab;
     [SerializeField] private GameObject projectilePrefab = null;
     [SerializeField] private float fireRange = 30;
 
@@ -28,8 +29,11 @@ public class SpawnEnemies : NetworkBehaviour
         mainCamera = Camera.main;
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
 
-        if (FindObjectOfType<NetworkManager>().numPlayers == 1){ 
-             while (spawncount > 0)
+        if (FindObjectOfType<NetworkManager>().numPlayers == 1){
+
+            SpawnEnemyBase();
+
+            while (spawncount > 0)
             {
                 InvokeRepeating("SpawnEnemy", 0.1f, this.spawnInterval);
                 spawncount--;
@@ -50,21 +54,22 @@ public class SpawnEnemies : NetworkBehaviour
                 enemy.transform.rotation, targetRotation, 800 * Time.deltaTime);
                 }
         }
+    private void SpawnEnemyBase()
+    {
 
+        Vector3 pos = GameObject.FindGameObjectsWithTag("SpawnPoint")[2].transform.position;
+        GameObject baseInstance = Instantiate( unitBasePrefab,pos, Quaternion.identity);
+        baseInstance.tag = "EnemyBase";
+        NetworkServer.Spawn(baseInstance, player.connectionToClient);
+    }
     private void SpawnEnemy()
     {
 
             int i = 0;
             int spawnMoveRange = 1;
             GameObject[] points = GameObject.FindGameObjectsWithTag("SpawnPoint");
-            /*
-            foreach (GameObject point in points)
-            {
-                Debug.Log($"12345 SpawnEnemy spawnPosition {i++} {point.transform.position}");
-            }
-            */
+            
             Vector3 spawnPosition = points[2].transform.position ;
-            //Debug.Log($"7777777 SpawnEnemy spawnPosition {spawnPosition}");
             Vector3 spawnOffset = Random.insideUnitSphere * spawnMoveRange;
             spawnOffset.y = spawnPosition.y;
 
