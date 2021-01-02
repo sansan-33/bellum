@@ -44,6 +44,7 @@ public class Health : NetworkBehaviour, IDamageable
         if (currentHealth == 0) { return; }
         
         damageAmount -= defense;
+        if (damageAmount <= 0) { return; }
        
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
 
