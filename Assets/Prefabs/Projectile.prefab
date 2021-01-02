@@ -130,7 +130,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   rb: {fileID: 2181674515776115725}
-  damageToDeal: 1
+  damageToDeals: 40
   destroyAfterSeconds: 5
   launchForce: 10
   textPrefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}

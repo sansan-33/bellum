@@ -8,7 +8,7 @@ using UnityEngine;
 public class Health : NetworkBehaviour, IDamageable
 {
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private int defend = 0;
+    [SerializeField] private int defense = 0;
     [SyncVar(hook = nameof(HandleHealthUpdated))]
     private int currentHealth;
     
@@ -43,7 +43,7 @@ public class Health : NetworkBehaviour, IDamageable
     {
         if (currentHealth == 0) { return; }
         
-        damageAmount -= defend;
+        damageAmount -= defense;
        
         currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
 

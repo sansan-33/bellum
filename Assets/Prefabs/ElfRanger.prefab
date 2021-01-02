@@ -251,8 +251,16 @@ PrefabInstance:
       value: 3.73
       objectReference: {fileID: 0}
     - target: {fileID: 7619321989462222259, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: defend
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7619321989462222259, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: defense
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7619321989462222259, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: maxHealth
-      value: 1000
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 8342599607336344685, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: unitNetworkAnimator
