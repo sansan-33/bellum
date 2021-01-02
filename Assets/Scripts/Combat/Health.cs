@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tactical;
 using Mirror;
 using UnityEngine;
 
-public class Health : NetworkBehaviour
+public class Health : NetworkBehaviour, IDamageable
 {
     [SerializeField] private int maxHealth = 100;
 
@@ -60,6 +61,16 @@ public class Health : NetworkBehaviour
     public int getCurrentHealth()
     {
         return currentHealth;
+    }
+
+    public void Damage(float amount)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsAlive()
+    {
+        return true;
     }
     #endregion
 }

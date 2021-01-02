@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tactical;
 using Mirror;
 using UnityEngine;
 
-public class UnitProjectile : NetworkBehaviour
+public class UnitProjectile : NetworkBehaviour, IAttackAgent
 {
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] private int damageToDeal = 20;
@@ -76,5 +77,25 @@ public class UnitProjectile : NetworkBehaviour
     private void DestroySelf()
     {
         NetworkServer.Destroy(gameObject);
+    }
+
+    public float AttackDistance()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool CanAttack()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public float AttackAngle()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Attack(Vector3 targetPosition)
+    {
+        throw new System.NotImplementedException();
     }
 }

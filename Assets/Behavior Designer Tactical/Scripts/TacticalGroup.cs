@@ -129,9 +129,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             targets.Clear();
             targetTransforms.Clear();
             if (leader.Value == null) {
-                Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup} ");
-
-                if (targetGroup.Value.Count > 0) {
+                Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup}");
+                if (targetGroup.Value != null && targetGroup.Value.Count > 0) {
                     Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup} {targetGroup.Value} {targetGroup.Value[0]}");
 
                     for (int i = 0; i < targetGroup.Value.Count; ++i) {
@@ -141,9 +140,10 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                         }
                     }
                 } else {
+                    Debug.Log($"TaticalGroup ---- What is target tag : {targetTag.Value} ? ");
+                    if (targetTag.Value == null || targetTag.Value.Length == 0) targetTag.Value = "Enemy";
                     var foundAttackGroup = GameObject.FindGameObjectsWithTag(targetTag.Value);
-                    Debug.Log($"TaticalGroup ---- What is target tag ? {targetTag.Value } {foundAttackGroup}  ");
-
+                
                     for (int i = 0; i < foundAttackGroup.Length; ++i) {
                         var damageable = (foundAttackGroup[i].GetComponentInParent(typeof(IDamageable)) as IDamageable);
                         if (damageable != null) {
@@ -402,6 +402,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         /// </summary>
         protected void FindAttackTarget()
         {
+            //Debug.Log("FindAttackTarget ");
             if (tacticalAgent.TargetTransform == null || !tacticalAgent.TargetDamagable.IsAlive()) {
                 Transform target = null;
                 IDamageable damageable = null;
@@ -417,6 +418,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 }
                 tacticalAgent.TargetTransform = target;
                 tacticalAgent.TargetDamagable = damageable;
+                //Debug.Log($" tacticalAgent.TargetTransform { tacticalAgent.TargetTransform} ,  tacticalAgent.TargetDamagable {tacticalAgent.TargetDamagable}");
             }
         }
 

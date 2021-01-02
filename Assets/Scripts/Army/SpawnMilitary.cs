@@ -18,9 +18,9 @@ public class SpawnMilitary : NetworkBehaviour
     private int spawnMoveRange = 1;
 
     private float chaseRange = 1;
-    private int spawnArcherCount=1;
+    private int spawnArcherCount=0;
     private int spawnFootmanCount = 1;
-    private int spawnKnightCount = 2;
+    private int spawnKnightCount = 5;
     private float lastFireTime;
     [SerializeField] private float fireRate = 6000f;
     private RTSPlayer player;
@@ -39,8 +39,8 @@ public class SpawnMilitary : NetworkBehaviour
                 InvokeRepeating("loadKnight", 0.1f, 60000f);
                 spawnKnightCount--;
             }
-            InvokeRepeating("TrySlash", 5f, 2f);
-            InvokeRepeating("TryShoot", 5f, 3f);
+            //InvokeRepeating("TrySlash", 5f, 2f);
+            //InvokeRepeating("TryShoot", 5f, 3f);
         }
 
     }

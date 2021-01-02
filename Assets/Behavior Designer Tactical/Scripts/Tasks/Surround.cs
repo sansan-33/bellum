@@ -19,6 +19,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
         public override void OnStart()
         {
+            //Debug.Log($"Task Surround OnStart {inPosition}");
             base.OnStart();
 
             inPosition = false;
@@ -26,6 +27,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
         protected override void AddAgentToGroup(Behavior agent, int index)
         {
+            //Debug.Log($"Task Surround AddAgentToGroup {agent} {index}");
             base.AddAgentToGroup(agent, index);
 
             // 2 * PI = 360 degrees
@@ -34,6 +36,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
         protected override int RemoveAgentFromGroup(Behavior agent)
         {
+            Debug.Log($"Task Surround RemoveAgentFromGroup {agent}");
+
             var index = base.RemoveAgentFromGroup(agent);
 
             // 2 * PI = 360 degrees
@@ -44,7 +48,10 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
         public override TaskStatus OnUpdate()
         {
+            //Debug.Log($"123 Task Surround OnUpdate");
+
             var baseStatus = base.OnUpdate();
+            //Debug.Log($"Task Surround baseStatus ? {baseStatus}  / started?  {started} ");
             if (baseStatus != TaskStatus.Running || !started) {
                 return baseStatus;
             }
@@ -52,6 +59,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             var attackCenter = CenterAttackPosition();
             var attackRotation = CenterAttackRotation(attackCenter);
             var offset = Vector3.zero;
+            //Debug.Log($"attackCenter {attackCenter}, attackRotation {attackRotation}   ");
             // Wait until all agents are in position before starting to attack.
             if (canAttack) {
                 if (MoveToAttackPosition()) {

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tactical;
 using Mirror;
 using TMPro;
 using UnityEngine;
 
-public class UnitWeapon : NetworkBehaviour
+public class UnitWeapon : NetworkBehaviour, IAttackAgent
 {
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private int damageToDeal = 1;
@@ -109,6 +110,25 @@ public class UnitWeapon : NetworkBehaviour
         Destroy(gameObject);
         //NetworkServer.Destroy(gameObject);
     }
-    
-    
+
+    public float AttackDistance()
+    {
+        return attackRange;
+    }
+
+    public bool CanAttack()
+    {
+        return true;
+    }
+
+    public float AttackAngle()
+    {
+        return 45f;
+    }
+
+    public void Attack(Vector3 targetPosition)
+    {
+        Debug.Log("unit weapon attacking now ");
+        Attack();
+    }
 }

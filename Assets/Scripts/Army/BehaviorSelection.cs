@@ -30,9 +30,13 @@ public class BehaviorSelection : MonoBehaviour
             GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject child in armies)
             {
-                agentGroup.transform.SetParent(child.transform);
-                //for (int i = 0; i < agentGroup.transform.childCount; ++i) {
-                //     var child = agentGroup.transform.GetChild(i);
+                child.transform.parent = agentGroup.transform;
+            }
+        
+            for (int i = 0; i < agentGroup.transform.childCount; ++i)
+            {
+                var child = agentGroup.transform.GetChild(i);
+                //Debug.Log($" {i} {child} ");
                 var agentTrees = child.GetComponents<BehaviorTree>();
                 for (int j = 0; j < agentTrees.Length; ++j)
                 {
@@ -44,21 +48,19 @@ public class BehaviorSelection : MonoBehaviour
                         agentBehaviorTreeGroup.Add(group, groupBehaviorTrees);
                     }
                     groupBehaviorTrees.Add(agentTrees[j]);
-                    //Debug.Log($" {j} {agentTrees[j]} ");                 
                 }
             }
             //enemyHealth = enemyGroup.GetComponentsInChildren<Health>();
-            //var behaviorTrees = enemyGroup.GetComponentsInChildren<BehaviorTree>();
+
 
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject child in enemies)
             {
-                enemyGroup.transform.SetParent(child.transform);
+                child.transform.parent =  enemyGroup.transform;
             }
-            var behaviorTrees = enemies[0].GetComponentsInChildren<BehaviorTree>();
+            var behaviorTrees = enemyGroup.GetComponentsInChildren<BehaviorTree>();
             for (int i = 0; i < behaviorTrees.Length; ++i)
             {
-                //for (int i = 0; i < behaviorTrees.Length; ++i) {
                 List<BehaviorTree> list;
                 //Debug.Log($" {i} {behaviorTrees[i]} ");
                 if (enemyBehaviorTreeGroup.TryGetValue(behaviorTrees[i].Group, out list))
@@ -72,8 +74,8 @@ public class BehaviorSelection : MonoBehaviour
                     enemyBehaviorTreeGroup[behaviorTrees[i].Group] = list;
                 }
             }
-
-            SelectionChanged();
+        
+        
         }
 
         private string Description()
@@ -135,6 +137,13 @@ public class BehaviorSelection : MonoBehaviour
             SelectionChanged();
 
         }
+        public void TryFlank()
+        {
+            prevSelectionType = selectionType;
+            selectionType = BehaviorSelectionType.Flank;
+            SelectionChanged();
+
+        }
         public void TrySurround()
         {
             prevSelectionType = selectionType;
@@ -149,14 +158,14 @@ public class BehaviorSelection : MonoBehaviour
             for (int i = 0; i < agentBehaviorTreeGroup[(int)prevSelectionType].Count; ++i) {
                 agentBehaviorTreeGroup[(int)prevSelectionType][i].DisableBehavior();
             }
-
+            /*
             if (enemyBehaviorTreeGroup.ContainsKey((int)prevSelectionType)) {
                 var trees = enemyBehaviorTreeGroup[(int)prevSelectionType];
                 for (int i = 0; i < trees.Count; ++i) {
                     trees[i].DisableBehavior();
                 }
             }
-
+            */
             StartCoroutine("EnableBehavior");
         }
 
@@ -170,6 +179,7 @@ public class BehaviorSelection : MonoBehaviour
         private IEnumerator EnableBehavior()
         {
             defendObject.SetActive(false);
+        /*
             switch (selectionType) {
                 case BehaviorSelectionType.Attack:
                 case BehaviorSelectionType.Charge:
@@ -233,28 +243,30 @@ public class BehaviorSelection : MonoBehaviour
                                    new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, 0, 0) });
                     break;
             }
-
+        */
             yield return new WaitForSeconds(0.1f);
         /*
             for (int i = 0; i < enemyHealth.Length; ++i) {
                 enemyHealth[i].ResetHealth();
             }
-        */
+        
             if (enemyBehaviorTreeGroup.ContainsKey((int)selectionType)) {
                 var trees = enemyBehaviorTreeGroup[(int)selectionType];
                 for (int i = 0; i < trees.Count; ++i) {
-                    Debug.Log($"trees {i} {trees[i]}");
+                    //Debug.Log($"trees {i} {trees[i]}");
                     trees[i].EnableBehavior();
                 }
             }
-            Debug.Log($"(int)selectionType {(int)selectionType} agentBehaviorTreeGroup count {agentBehaviorTreeGroup.Count} ");
-            for (int i = 0; i < agentBehaviorTreeGroup[(int)selectionType].Count; ++i) {
+        */
+        //Debug.Log($"(int)selectionType {(int)selectionType} agentBehaviorTreeGroup count {agentBehaviorTreeGroup.Count} ");
+        for (int i = 0; i < agentBehaviorTreeGroup[(int)selectionType].Count; ++i) {
                 agentBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
             }
         }
 
         private void SetPosRot(Vector3 agentGroupPosition, Vector3 agentGroupRotation, Vector3 enemyGroupPosition, Vector3 enemyGroupRotation, Vector3 cameraPosition)
         {
+            //Debug.Log($"SetPosRot : {agentGroupPosition} ");
             agentGroup.transform.position = agentGroupPosition;
             agentGroup.transform.eulerAngles = agentGroupRotation;
             enemyGroup.transform.position = enemyGroupPosition;
@@ -264,10 +276,20 @@ public class BehaviorSelection : MonoBehaviour
 
         private void SetChildPosRot(Vector3[] agentPositions, Vector3[] agentRotations, Vector3[] enemyPositions, Vector3[] enemyRotations)
         {
+            /*
             for (int i = 0; i < agentGroup.transform.childCount; ++i) {
                 var child = agentGroup.transform.Find("Agent " + (i + 1));
                 child.localPosition = agentPositions[i];
                 child.localEulerAngles = agentRotations[i];
+            }
+            */
+            int j = 0;
+            foreach (Transform child in agentGroup.transform)
+            {
+                //var child = agentGroup.transform.Find("Agent " + (i + 1));
+                child.localPosition = agentPositions[j];
+                child.localEulerAngles = agentRotations[j];
+                j++;
             }
             for (int i = 0; i < enemyGroup.transform.childCount; ++i) {
                 var child = enemyGroup.transform.Find("Enemy " + (i + 1));

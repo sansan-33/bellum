@@ -20,7 +20,7 @@ public class SpawnEnemies : NetworkBehaviour
     private GameObject enemy;
     private float stoppingDistance = 1;
     private float chaseRange = 1;
-    private int spawncount=3;
+    private int spawncount=1;
     private float lastFireTime;
     [SerializeField] private float fireRate = 6000f;
     private RTSPlayer player;
@@ -82,8 +82,8 @@ public class SpawnEnemies : NetworkBehaviour
 
             agent.SetDestination(spawnPosition + spawnOffset);
 
-            InvokeRepeating("TryMove", 0.1f, 30f);
-            InvokeRepeating("TryShoot", 1f, 1f);
+            //InvokeRepeating("TryMove", 0.1f, 30f);
+            //InvokeRepeating("TryShoot", 1f, 1f);
     }
 
     private void  TryMove()

@@ -6,3 +6,5 @@
 **/*.csproj
 **/.vs/
 *.sln
+**/ios/
+**/mac/
