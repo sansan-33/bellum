@@ -21,6 +21,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
     [SerializeField] private float attackRange=5f;
     [SerializeField] private LayerMask layerMask = new LayerMask();
     private int id;
+    private int damageToDealOriginal ;
+    
     bool m_Started;
     // The amount of time it takes for the agent to be able to attack again
     public float repeatAttackDelay;
@@ -33,6 +35,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
 
     void Start()
     {
+        damageToDealOriginal += damageToDeal;
         lastAttackTime = -repeatAttackDelay;
         strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
 
@@ -47,13 +50,12 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
     private void Update()
     {
         
-       
     }
 
     [Command]
     public void Attack()
     {
-     
+        damageToDeal = damageToDealOriginal;
         //Use the OverlapBox to detect if there are any other colliders within this box area.
         //Use the GameObject's centre, half the size (as a radius) and rotation. This creates an invisible box around your GameObject.
         Collider[] hitColliders = Physics.OverlapBox(attackPoint.transform.position, transform.localScale * attackRange, Quaternion.identity, layerMask);

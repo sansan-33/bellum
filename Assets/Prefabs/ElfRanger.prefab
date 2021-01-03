@@ -146,6 +146,14 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 860998361504519890, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 860998361504519890, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1000167795489747542, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: m_Name
       value: ElfRanger
@@ -198,6 +206,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1304276066960552448, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304276066960552448, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1815917902274366314, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: m_SizeDelta.x
       value: 2
@@ -230,6 +246,22 @@ PrefabInstance:
       propertyPath: unitMovement
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3327887773513080568, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3327887773513080568, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427476968638101544, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427476968638101544, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4215659329351313236, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: fireRange
       value: 50
@@ -238,6 +270,26 @@ PrefabInstance:
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 3714870687590703606, guid: 73a810fcf32d37b42962d05a9a0d9c95, type: 3}
+    - target: {fileID: 4768947040284657953, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: m_Speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825536637451376186, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825536637451376186, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865378303358282810, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865378303358282810, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5374857783182888671, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.54
@@ -250,22 +302,70 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 3.73
       objectReference: {fileID: 0}
+    - target: {fileID: 5595844572603776156, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595844572603776156, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404895635558941701, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404895635558941701, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7462611656482090199, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7462611656482090199, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7619321989462222259, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: defend
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7619321989462222259, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: defense
-      value: 18
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7619321989462222259, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: maxHealth
-      value: 85
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211548769209933275, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211548769209933275, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305036782183797915, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305036782183797915, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8342599607336344685, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: unitNetworkAnimator
       value: 
       objectReference: {fileID: 352562546541346360}
+    - target: {fileID: 8836078968252556911, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836078968252556911, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3940881559573521736, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
     - {fileID: 0}

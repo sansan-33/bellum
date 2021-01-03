@@ -16,12 +16,10 @@ public class TotalHealthDisplay : NetworkBehaviour
 
     private void Update()
     {
-        //UnitTimer();
-        //if (unitTimer < 6 && unitTimer > 4 && a < 2)
-        //{
+        
         TotalPlayerHealthdisplay();
         totalEnermyhealth();
-        //}
+     
     }
     private void UnitTimer()
     {
@@ -30,6 +28,7 @@ public class TotalHealthDisplay : NetworkBehaviour
     }
     private void TotalPlayerHealthdisplay()
     {
+        
         militarySize = 0;
         GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
         a++;
@@ -37,11 +36,10 @@ public class TotalHealthDisplay : NetworkBehaviour
         
         foreach (GameObject army in armies)
         {
-            //if (unitTimer < 6 && unitTimer > 4)
-            //{
+            
             militarySize += army.GetComponent<Health>().getCurrentHealth();
             TotalPlayerhealth.text = militarySize.ToString();
-            //}
+          
            
 
         }
@@ -50,10 +48,12 @@ public class TotalHealthDisplay : NetworkBehaviour
     }
     private void totalEnermyhealth()
     {
+        
         EnermymilitarySize = 0;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject EnermyArmy in enemies)
         {
+            
             EnermymilitarySize += EnermyArmy.GetComponent<Health>().getCurrentHealth();
             TotalEnermyhealth.text = EnermymilitarySize.ToString();
         }

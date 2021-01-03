@@ -16,11 +16,13 @@ public class UnitProjectile : NetworkBehaviour, IAttackAgent
     [SerializeField] private GameObject textPrefab = null;
     [SerializeField] private GameObject camPrefab = null;
     [SerializeField] private string unitType;
-
+    private int damageToDealOriginal;
+    private StrengthWeakness strengthWeakness;
     void Start()
     {
-       
+        damageToDealOriginal += damageToDeals;
         rb.velocity = transform.forward * launchForce;
+        strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
     }
 
     public override void OnStartServer()
@@ -32,7 +34,7 @@ public class UnitProjectile : NetworkBehaviour, IAttackAgent
     private void OnTriggerEnter(Collider other) //sphere collider is used to differentiate between the unit itself, and the attack range (fireRange)
     {
 
-      
+        damageToDeals = damageToDealOriginal;
         // Not attack same connection client object except AI Enemy
         if (FindObjectOfType<NetworkManager>().numPlayers == 1) {
             //Debug.Log($"other.tag  {other.tag} ,unitType {unitType} ");
@@ -54,9 +56,8 @@ public class UnitProjectile : NetworkBehaviour, IAttackAgent
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {other}");
             cmdDamageText(other.transform.position);
             cmdCMVirtual();
-            health.isArchers(isFootman, damageToDeals, isKnight);
-            health.isFootmans(isKnight, damageToDeals, isArcher);
-            health.isKnights(isArcher, damageToDeals, isFootman);
+            damageToDeals = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeals);
+            health.DealDamage(damageToDeals);
         }
 
         DestroySelf();
