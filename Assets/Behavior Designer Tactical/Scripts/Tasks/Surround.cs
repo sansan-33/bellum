@@ -21,7 +21,6 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         {
             //Debug.Log($"Task Surround OnStart {inPosition}");
             base.OnStart();
-
             inPosition = false;
         }
 

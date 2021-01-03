@@ -331,7 +331,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         /// The formation has changed. Update the formation index.
         /// </summary>
         /// <param name="index">The new formation index.</param>
-        protected virtual void LeaderUpdated(GameObject newLeader)
+        protected void LeaderUpdated(GameObject newLeader)
         {
             Debug.Log($"LeaderUpdated old leader {leader} , new leader {leader} ");
             leader.Value = newLeader;

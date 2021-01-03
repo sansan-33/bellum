@@ -24,10 +24,19 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         private Vector3 destinationOffset;
         private bool inPosition;
 
+        private SharedGameObject objectToUse;
+
+        public override void OnAwake()
+        {
+            objectToUse = (SharedGameObject)Owner.GetVariable("newLeader");
+            //if(objectToUse !=null)
+            //    base.leader = objectToUse;
+            Debug.Log($"objectToUse {objectToUse}");
+        }
+
         protected override void FormationUpdated(int index)
         {
             base.FormationUpdated(index);
-
             // Determine the initial move to offset. This allows the agents to sneak up on the target without crossing directly in front of the target's field of view.
             var groupCount = dualFlank.Value ? 3 : 2;
             var groupIndex = formationIndex % groupCount;

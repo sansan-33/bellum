@@ -9,6 +9,7 @@ public class SpawnMilitary : NetworkBehaviour
     [SerializeField] private GameObject archerPrefab;
     [SerializeField] private GameObject footmanPrefab;
     [SerializeField] private GameObject knightPrefab;
+    [SerializeField] private GameObject heroPrefab;
     [SerializeField] private GameObject projectilePrefab = null;
     [SerializeField] private float fireRange = 5;
     
@@ -18,9 +19,9 @@ public class SpawnMilitary : NetworkBehaviour
     private int spawnMoveRange = 1;
 
     private float chaseRange = 1;
-    private int spawnArcherCount=1;
+    private int spawnArcherCount=0;
     private int spawnFootmanCount = 0;
-    private int spawnKnightCount = 2;
+    private int spawnKnightCount = 4;
     private float lastFireTime;
     [SerializeField] private float fireRate = 6000f;
     private RTSPlayer player;
@@ -34,10 +35,11 @@ public class SpawnMilitary : NetworkBehaviour
                 InvokeRepeating("loadArcher", 0.1f, 60000f);
                 spawnArcherCount--;
             }
+            StartCoroutine(loadHero(2f));
             StartCoroutine(loadKnight(2f));
             StartCoroutine(loadFootman(2f));
-            InvokeRepeating("TrySlash", 10f, 2f);
-            InvokeRepeating("TryShoot", 3f, 10f);
+            //InvokeRepeating("TrySlash", 10f, 2f);
+            //InvokeRepeating("TryShoot", 3f, 10f);
         }
 
     }
@@ -114,6 +116,29 @@ public class SpawnMilitary : NetworkBehaviour
             spawnKnightCount--;
         }
 
+    }
+    private IEnumerator loadHero(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        //while (spawnKnightCount > 0)
+        //{
+            GameObject unit;
+            NavMeshAgent agent = null;
+
+            GameObject[] points = GameObject.FindGameObjectsWithTag("SpawnPoint");
+            Vector3 spawnPosition = points[0].transform.position;
+            Vector3 spawnOffset = Random.insideUnitSphere * spawnMoveRange;
+            spawnOffset.y = spawnPosition.y;
+            unit = Instantiate(heroPrefab, spawnPosition + spawnOffset, Quaternion.identity) as GameObject;
+            unit.name = "Hero";
+            NetworkServer.Spawn(unit, player.connectionToClient);
+            unit.GetComponent<Targeter>().CmdSetAttackType(Targeter.AttackType.Slash);
+
+            unit.GetComponent<Unit>().unitType = Unit.UnitType.HERO;
+            //unit.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("wait");
+            agent = unit.GetComponent<NavMeshAgent>();
+            agent.SetDestination(spawnPosition + spawnOffset);
+        //}
     }
     private void  TrySlash()
     {

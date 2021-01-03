@@ -65,10 +65,12 @@ public class BehaviorSelection : MonoBehaviour
         {
 
 
+            GameObject hero=null;
             defendObject = GameObject.FindGameObjectWithTag("EnemyBase");
-            GameObject[] armies = GameObject.FindGameObjectsWithTag("AgentTB");
+            GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject child in armies)
             {
+                if (child.gameObject.name.Contains("Hero")) { hero = child; }
                 child.transform.parent = agentGroup.transform;
             }
         
@@ -83,13 +85,27 @@ public class BehaviorSelection : MonoBehaviour
 
                 //Debug.Log($" Behavior Tree {j}: {agentTrees[j]} / Group: {group} Leader {agentTrees[j].GetVariable("Leader")} , Index {agentTrees[j].GetVariable("LeaderGroupIndex")} ");
 
-                if (i>0) { 
-                    var myIntVariable = (SharedGameObject)agentTrees[j].GetVariable("Leader");
-                    agentTrees[j].SendEvent<object>("LeaderUpdated", armies[1]);
-                    //myIntVariable.Value = armies[1];
+                if (j==3 && !child.gameObject.name.Contains("Hero"))
+                {
+                    Debug.Log($" Behavior Tree {j}: {agentTrees[j]} / Group: {group} Leader {agentTrees[j].GetVariable("Leader")} , Index {agentTrees[j].GetVariable("LeaderGroupIndex")} / child: {child}");
+                    //var myIntVariable = (SharedGameObject)agentTrees[j].GetVariable("newLeader");
+                    //myIntVariable.Value = hero;
+                    agentTrees[j].SetVariableValue("newLeader", hero);
+                    agentTrees[j].SetVariableValue("newTarget", "Enemy");
+                    agentTrees[j].SetVariableValue("newLeaderGroupIndex",j);
+
+               
+                //agentTrees[j].SendEvent<object>("LeaderUpdated", armies[1]);
+                List<SharedVariable> tmpList = agentTrees[j].GetAllVariables();
+                Debug.Log($"agentTrees {agentTrees[j]} GetAllVariables size:  {tmpList.Count} ");
+                foreach (SharedVariable tmp in tmpList)
+                {
+                    Debug.Log($"agentTrees[j].GetAllVariables()  {tmp} ");
+                }
+                //myIntVariable.Value = armies[1];
                 }
 
-                    List<BehaviorTree> groupBehaviorTrees;
+                List<BehaviorTree> groupBehaviorTrees;
                     if (!agentBehaviorTreeGroup.TryGetValue(group, out groupBehaviorTrees))
                     {
                         groupBehaviorTrees = new List<BehaviorTree>();
