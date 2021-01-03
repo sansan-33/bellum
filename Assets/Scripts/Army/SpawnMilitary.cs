@@ -20,7 +20,7 @@ public class SpawnMilitary : NetworkBehaviour
     private float chaseRange = 1;
     private int spawnArcherCount=0;
     private int spawnFootmanCount = 0;
-    private int spawnKnightCount = 5;
+    private int spawnKnightCount = 0;
     private float lastFireTime;
     [SerializeField] private float fireRate = 6000f;
     private RTSPlayer player;
@@ -36,7 +36,7 @@ public class SpawnMilitary : NetworkBehaviour
             }
             StartCoroutine(loadKnight(2f));
             StartCoroutine(loadFootman(2f));
-            InvokeRepeating("TrySlash", 10f, 2f);
+            //InvokeRepeating("TrySlash", 10f, 2f);
             //InvokeRepeating("TryShoot", 3f, 10f);
         }
 

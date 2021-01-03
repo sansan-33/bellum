@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using BehaviorDesigner.Runtime;
+using BehaviorDesigner.Runtime.Tasks;
 
 public class BehaviorSelection : MonoBehaviour
     {
@@ -76,10 +77,18 @@ public class BehaviorSelection : MonoBehaviour
                 var child = agentGroup.transform.GetChild(i);
                 //Debug.Log($" {i} {child} ");
                 var agentTrees = child.GetComponents<BehaviorTree>();
-                for (int j = 0; j < agentTrees.Length; ++j)
-                {
-                    var group = agentTrees[j].Group;
-                    //Debug.Log($" Behavior Tree {j}: {agentTrees[j]} / Group: {group} ");
+            for (int j = 0; j < agentTrees.Length; ++j)
+            {
+                var group = agentTrees[j].Group;
+
+                //Debug.Log($" Behavior Tree {j}: {agentTrees[j]} / Group: {group} Leader {agentTrees[j].GetVariable("Leader")} , Index {agentTrees[j].GetVariable("LeaderGroupIndex")} ");
+
+                if (i>0) { 
+                    var myIntVariable = (SharedGameObject)agentTrees[j].GetVariable("Leader");
+                    agentTrees[j].SendEvent<object>("LeaderUpdated", armies[1]);
+                    //myIntVariable.Value = armies[1];
+                }
+
                     List<BehaviorTree> groupBehaviorTrees;
                     if (!agentBehaviorTreeGroup.TryGetValue(group, out groupBehaviorTrees))
                     {

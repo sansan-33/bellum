@@ -55,6 +55,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             Owner.RegisterEvent<Behavior>("StartListeningForOrders", StartListeningForOrders);
             Owner.RegisterEvent<Behavior>("StopListeningToOrders", StopListeningToOrders);
             Owner.RegisterEvent<int>("FormationUpdated", FormationUpdated);
+            Owner.RegisterEvent<GameObject>("LeaderUpdated", LeaderUpdated);
             Owner.RegisterEvent<Behavior, int>("AddAgentToGroup", AddAgentToGroup);
             Owner.RegisterEvent<int, bool>("UpdateInPosition", UpdateInPosition);
             Owner.RegisterEvent<Transform, IDamageable>("AddTarget", AddTarget);
@@ -130,8 +131,9 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             // Clear the old group.
             targets.Clear();
             targetTransforms.Clear();
+            Debug.Log($"StartGroup ---- Leader Value {leader} ");
             if (leader.Value == null) {
-                Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup}");
+                Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup} ");
                 if (targetGroup.Value != null && targetGroup.Value.Count > 0) {
                     Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup} {targetGroup.Value} {targetGroup.Value[0]}");
 
@@ -323,6 +325,16 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             }
 
             return TaskStatus.Running;
+        }
+
+        /// <summary>
+        /// The formation has changed. Update the formation index.
+        /// </summary>
+        /// <param name="index">The new formation index.</param>
+        protected virtual void LeaderUpdated(GameObject newLeader)
+        {
+            Debug.Log($"LeaderUpdated old leader {leader} , new leader {leader} ");
+            leader.Value = newLeader;
         }
 
         /// <summary>
