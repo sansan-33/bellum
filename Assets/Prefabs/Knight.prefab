@@ -70,7 +70,7 @@ MonoBehaviour:
   isKnight: 0
   units: {fileID: 0}
   targeter: {fileID: 7533793514368480727}
-  damageToDeal: 1
+  damageToDeal: 4
   destroyAfterSeconds: 1
   textPrefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}
   camPrefab: {fileID: 1434666941670536975, guid: d482d6539d9c6472e83a38c9c0fa768e, type: 3}
@@ -138,6 +138,14 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 860998361504519890, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 860998361504519890, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1000167795489747542, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: m_Name
       value: Knight
@@ -190,6 +198,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1304276066960552448, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304276066960552448, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1815917902274366314, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.06
@@ -206,26 +222,106 @@ PrefabInstance:
       propertyPath: unitType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3327887773513080568, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3327887773513080568, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427476968638101544, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427476968638101544, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3940881559573521736, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: colorRenderers.Array.data[0]
       value: 
       objectReference: {fileID: 6535697132223707556}
     - target: {fileID: 4768947040284657953, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: m_Speed
-      value: 10
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825536637451376186, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825536637451376186, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865378303358282810, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865378303358282810, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595844572603776156, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595844572603776156, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404895635558941701, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404895635558941701, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7462611656482090199, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7462611656482090199, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7619321989462222259, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: defense
-      value: 16
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7619321989462222259, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: maxHealth
-      value: 95
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211548769209933275, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211548769209933275, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305036782183797915, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305036782183797915, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8342599607336344685, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: unitNetworkAnimator
       value: 
       objectReference: {fileID: 184328914081143669}
+    - target: {fileID: 8836078968252556911, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836078968252556911, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
 --- !u!1 &509055680174625323 stripped
