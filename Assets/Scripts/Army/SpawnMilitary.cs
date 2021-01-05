@@ -21,7 +21,7 @@ public class SpawnMilitary : NetworkBehaviour
     private float chaseRange = 1;
     private int spawnArcherCount=0;
     private int spawnFootmanCount = 0;
-    private int spawnKnightCount = 4;
+    private int spawnKnightCount = 5;
     private float lastFireTime;
     [SerializeField] private float fireRate = 6000f;
     private RTSPlayer player;
@@ -38,8 +38,8 @@ public class SpawnMilitary : NetworkBehaviour
             StartCoroutine(loadHero(2f));
             StartCoroutine(loadKnight(2f));
             StartCoroutine(loadFootman(2f));
-            //InvokeRepeating("TrySlash", 10f, 2f);
-            //InvokeRepeating("TryShoot", 3f, 10f);
+            InvokeRepeating("TrySlash", 10f, 2f);
+            InvokeRepeating("TryShoot", 3f, 10f);
         }
 
     }
@@ -73,7 +73,7 @@ public class SpawnMilitary : NetworkBehaviour
         while (spawnFootmanCount > 0)
         {
             GameObject unit;
-            NavMeshAgent agent = null;
+            //NavMeshAgent agent = null;
 
             GameObject[] points = GameObject.FindGameObjectsWithTag("SpawnPoint");
             Vector3 spawnPosition = points[0].transform.position;
@@ -82,13 +82,13 @@ public class SpawnMilitary : NetworkBehaviour
             unit = Instantiate(footmanPrefab, spawnPosition + spawnOffset, Quaternion.identity) as GameObject;
             unit.name = "Footman" + spawnFootmanCount;
             //Debug.Log($"spawnEnemy connectionToClient {player.connectionToClient}");
-            NetworkServer.Spawn(unit, player.connectionToClient);
+            //NetworkServer.Spawn(unit, player.connectionToClient);
             //unit.GetComponent<Targeter>().CmdSetAttackType(Targeter.AttackType.Slash);
 
             //unit.GetComponent<Unit>().unitType = Unit.UnitType.SPEARMAN;
             //unit.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("wait");
             //agent = unit.GetComponent<NavMeshAgent>();
-            //agent.SetDestination(spawnPosition + spawnOffset);
+            //agent.SetDestination(points[2].transform.position + spawnOffset);
             spawnFootmanCount--;
         }
     }

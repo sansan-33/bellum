@@ -49,6 +49,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  isArcher: 0
+  isFootman: 0
+  isKnight: 0
+  units: {fileID: 0}
   targeter: {fileID: 6675452333157594796}
   damageToDeal: 21
   destroyAfterSeconds: 1
@@ -60,6 +64,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
+  repeatAttackDelay: 0
+  attackAngle: 0
 --- !u!114 &6150131529720643114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1000167795489747542, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1000167795489747543, guid: 765608929db10fc4ea6e373ba1c987a5, type: 3}
       propertyPath: m_RootOrder

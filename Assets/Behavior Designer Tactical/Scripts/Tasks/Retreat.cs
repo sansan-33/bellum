@@ -37,8 +37,6 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
         public override TaskStatus OnUpdate()
         {
-            //Debug.Log($"Task Retreat OnUpdate ");
-
             var baseStatus = base.OnUpdate();
             if (baseStatus != TaskStatus.Running || !started) {
                 return baseStatus;

@@ -51,11 +51,9 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         /// </summary>
         public override void OnAwake()
         {
-            Debug.Log($"Who is Owner {Owner.GetOwnerName()}");
             Owner.RegisterEvent<Behavior>("StartListeningForOrders", StartListeningForOrders);
             Owner.RegisterEvent<Behavior>("StopListeningToOrders", StopListeningToOrders);
             Owner.RegisterEvent<int>("FormationUpdated", FormationUpdated);
-            Owner.RegisterEvent<GameObject>("LeaderUpdated", LeaderUpdated);
             Owner.RegisterEvent<Behavior, int>("AddAgentToGroup", AddAgentToGroup);
             Owner.RegisterEvent<int, bool>("UpdateInPosition", UpdateInPosition);
             Owner.RegisterEvent<Transform, IDamageable>("AddTarget", AddTarget);
@@ -82,7 +80,6 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         {
             if (leader.Value == null) {
                 formationIndex = 0;
-                Debug.Log("Update Leader to index 0");
                 AddAgentToGroup(Owner, 0);
                 FormationUpdated(0);
             } else {
@@ -128,15 +125,13 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         protected virtual void StartGroup()
         {
             started = true;
+
             // Clear the old group.
             targets.Clear();
             targetTransforms.Clear();
-            Debug.Log($"StartGroup ---- Leader Value {leader} ");
+            //Debug.Log($"Agent {Owner} checking target group value {targetGroup}");    
             if (leader.Value == null) {
-                Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup} ");
                 if (targetGroup.Value != null && targetGroup.Value.Count > 0) {
-                    Debug.Log($"TaticalGroup ---- What is target group ? {targetGroup} {targetGroup.Value} {targetGroup.Value[0]}");
-
                     for (int i = 0; i < targetGroup.Value.Count; ++i) {
                         var damageable = (targetGroup.Value[i].GetComponentInParent(typeof(IDamageable)) as IDamageable);
                         if (damageable != null) {
@@ -144,10 +139,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                         }
                     }
                 } else {
-                    Debug.Log($"TaticalGroup ---- What is target tag : {targetTag.Value} ? ");
-                    if (targetTag.Value == null || targetTag.Value.Length == 0) targetTag.Value = "Enemy";
                     var foundAttackGroup = GameObject.FindGameObjectsWithTag(targetTag.Value);
-                
                     for (int i = 0; i < foundAttackGroup.Length; ++i) {
                         var damageable = (foundAttackGroup[i].GetComponentInParent(typeof(IDamageable)) as IDamageable);
                         if (damageable != null) {
@@ -200,18 +192,14 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         /// <param name="index">The index of the agent within the group.</param>
         protected virtual void AddAgentToGroup(Behavior agent, int index)
         {
-            Debug.Log($"AddAgentToGroup leader.Value {leader.Value}");
             if (leader.Value == null) {
                 if (formationTrees == null) {
-                    Debug.Log($"AddAgentToGroup formationTrees is null");
                     formationTrees = new List<Behavior>();
                     agentsReady = new List<bool>();
                 }
 
                 // Notify the current agent of the existing agents.
-                Debug.Log($"formationTrees.Count {formationTrees.Count}");
                 for (int i = 0; i < formationTrees.Count; ++i) {
-                    Debug.Log($"Notify the current agent of the existing agents.");
                     agent.SendEvent("AddAgentToGroup", formationTrees[i], i);
                 }
                 // Notify the current agent of the targets.
@@ -223,12 +211,9 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
                 formationTrees.Insert(index, agent);
                 agentsReady.Insert(index, false);
-                Debug.Log($"AddAgentToGroup formationTrees-{index} count {formationTrees.Count} / agentsReady-{index} count {agentsReady.Count}");
 
                 // Notify other agents that the current agent has joined the formation.
                 for (int i = 1; i < formationTrees.Count; ++i) {
-                    Debug.Log($"Notify other agents that the current agent has joined the formation {formationTrees[i]}");
-
                     formationTrees[i].SendEvent("AddAgentToGroup", formationTrees[index], index);
                     formationTrees[i].SendEvent("FormationUpdated", i);
                 }
@@ -254,7 +239,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             if (runStatus != TaskStatus.Running) {
                 return;
             }
-            Debug.Log($"UpdateInPosition Total: {agentsReady.Count} / Index: {index}");
+
             agentsReady[index] = inPosition;
             var allReady = inPosition;
             for (int i = 0; i < agentsReady.Count; ++i) {
@@ -325,16 +310,6 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             }
 
             return TaskStatus.Running;
-        }
-
-        /// <summary>
-        /// The formation has changed. Update the formation index.
-        /// </summary>
-        /// <param name="index">The new formation index.</param>
-        protected void LeaderUpdated(GameObject newLeader)
-        {
-            Debug.Log($"LeaderUpdated old leader {leader} , new leader {leader} ");
-            leader.Value = newLeader;
         }
 
         /// <summary>
@@ -423,7 +398,6 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         /// </summary>
         protected void FindAttackTarget()
         {
-            //Debug.Log("FindAttackTarget ");
             if (tacticalAgent.TargetTransform == null || !tacticalAgent.TargetDamagable.IsAlive()) {
                 Transform target = null;
                 IDamageable damageable = null;
@@ -439,7 +413,6 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 }
                 tacticalAgent.TargetTransform = target;
                 tacticalAgent.TargetDamagable = damageable;
-                //Debug.Log($" tacticalAgent.TargetTransform { tacticalAgent.TargetTransform} ,  tacticalAgent.TargetDamagable {tacticalAgent.TargetDamagable}");
             }
         }
 
