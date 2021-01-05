@@ -85,24 +85,32 @@ public class BehaviorSelection : MonoBehaviour
 
                 //Debug.Log($" Behavior Tree {j}: {agentTrees[j]} / Group: {group} Leader {agentTrees[j].GetVariable("Leader")} , Index {agentTrees[j].GetVariable("LeaderGroupIndex")} ");
 
-                if (j==3 && !child.gameObject.name.Contains("Hero"))
+                if (j == 3)
                 {
-                    Debug.Log($" Behavior Tree {j}: {agentTrees[j]} / Group: {group} Leader {agentTrees[j].GetVariable("Leader")} , Index {agentTrees[j].GetVariable("LeaderGroupIndex")} / child: {child}");
-                    //var myIntVariable = (SharedGameObject)agentTrees[j].GetVariable("newLeader");
-                    //myIntVariable.Value = hero;
-                    agentTrees[j].SetVariableValue("newLeader", hero);
-                    agentTrees[j].SetVariableValue("newTarget", "Enemy");
-                    agentTrees[j].SetVariableValue("newLeaderGroupIndex",j);
+                    if (child.gameObject.name.Contains("Hero") || child.gameObject.name.Contains("Agent1")) {
+                        agentTrees[j].SetVariableValue("HeroTargetGroup", new List<GameObject>()); ;
+                    }
+                    else
+                    {
+                    //else if (child.gameObject.name.Contains("Knight")) { 
+                        //var myIntVariable = (SharedGameObject)agentTrees[j].GetVariable("newLeader");
+                        //myIntVariable.Value = hero;
+                        agentTrees[j].SetVariableValue("newLeader", hero);
+                        //agentTrees[j].SetVariableValue("newLeaderGroupIndex", j);
+                        //agentTrees[j].SetVariableValue("newTagName", "Enemy");
+                        //Debug.Log($" Behavior Tree {j}: {agentTrees[j]} / Group: {group} Leader {agentTrees[j].GetVariable("newLeader")} , Index {agentTrees[j].GetVariable("newLeaderGroupIndex")} / child: {child}");
 
-               
-                //agentTrees[j].SendEvent<object>("LeaderUpdated", armies[1]);
-                List<SharedVariable> tmpList = agentTrees[j].GetAllVariables();
-                Debug.Log($"agentTrees {agentTrees[j]} GetAllVariables size:  {tmpList.Count} ");
-                foreach (SharedVariable tmp in tmpList)
-                {
-                    Debug.Log($"agentTrees[j].GetAllVariables()  {tmp} ");
-                }
-                //myIntVariable.Value = armies[1];
+
+
+                        //agentTrees[j].SendEvent<object>("LeaderUpdated", armies[1]);
+                        List<SharedVariable> tmpList = agentTrees[j].GetAllVariables();
+                        //Debug.Log($"agentTrees {agentTrees[j]} GetAllVariables size:  {tmpList.Count} ");
+                        //foreach (SharedVariable tmp in tmpList)
+                        //{
+                        //    Debug.Log($"agentTrees[j].GetAllVariables()  {tmp} ");
+                        //}
+                        //myIntVariable.Value = armies[1];
+                    }
                 }
 
                 List<BehaviorTree> groupBehaviorTrees;
@@ -362,7 +370,7 @@ public class BehaviorSelection : MonoBehaviour
             //Debug.Log($"(int)selectionType {(int)selectionType} agentBehaviorTreeGroup count {agentBehaviorTreeGroup.Count} ");
             for (int i = 0; i < agentBehaviorTreeGroup[(int)selectionType].Count; ++i) {
                 agentBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
-                Debug.Log($"(int)selectionType {(int)selectionType} / {i} ==== {agentBehaviorTreeGroup[(int)selectionType][i]}");
+                //Debug.Log($"(int)selectionType {(int)selectionType} / {i} ==== {agentBehaviorTreeGroup[(int)selectionType][i]}");
             }
         }
 

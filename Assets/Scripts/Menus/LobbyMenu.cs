@@ -60,6 +60,8 @@ public class LobbyMenu : MonoBehaviour
 
     public void LeaveLobby()
     {
+
+        Debug.Log("LeaveLobby");
         if (NetworkServer.active && NetworkClient.isConnected)
         {
             NetworkManager.singleton.StopHost();
@@ -68,7 +70,8 @@ public class LobbyMenu : MonoBehaviour
         {
             NetworkManager.singleton.StopClient();
 
-            SceneManager.LoadScene(0);
+            Debug.Log("LeaveLobby Scene_Main_Menu");
+            SceneManager.LoadScene("Scene_Main_Menu");
         }
     }
 }

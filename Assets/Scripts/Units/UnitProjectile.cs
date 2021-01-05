@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class UnitProjectile : NetworkBehaviour, IAttackAgent
 {
-    [SerializeField] private bool isArcher = false;
-    [SerializeField] private bool isFootman = false;
-    [SerializeField] private bool isKnight = false;
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] private int damageToDeals = 0;
     [SerializeField] private float destroyAfterSeconds = 5f;
@@ -37,10 +34,8 @@ public class UnitProjectile : NetworkBehaviour, IAttackAgent
         damageToDeals = damageToDealOriginal;
         // Not attack same connection client object except AI Enemy
         if (FindObjectOfType<NetworkManager>().numPlayers == 1) {
-            //Debug.Log($"other.tag  {other.tag} ,unitType {unitType} ");
             if (other.tag == "Enemy" && unitType == "Enemy" ) { return; }  //check to see if it belongs to the player, if it does, do nothing
             if (other.tag == "Player" && unitType == "Player") { return; }  //check to see if it belongs to the player, if it does, do nothing
-
         }
         else // Multi player seneriao
         {
@@ -50,13 +45,13 @@ public class UnitProjectile : NetworkBehaviour, IAttackAgent
             }
 
         }
-
+        Debug.Log($"Health {other} / {other.GetComponent<Health>()} ");
         if (other.TryGetComponent<Health>(out Health health))
         {
-            //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {other}");
+            Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals}");
             cmdDamageText(other.transform.position);
             cmdCMVirtual();
-            damageToDeals = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeals);
+            damageToDeals = strengthWeakness.calculateDamage(Unit.UnitType.ARCHER, other.GetComponent<Unit>().unitType, damageToDeals);
             health.DealDamage(damageToDeals);
         }
 

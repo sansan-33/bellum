@@ -53,7 +53,7 @@ namespace BehaviorDesigner.Runtime.Tactical
 
         public void OnGUI()
         {
-            GUILayout.BeginVertical(GUILayout.Width(600));
+            GUILayout.BeginVertical(GUILayout.Width(300));
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("<-")) {
                 prevSelectionType = selectionType;
@@ -223,8 +223,6 @@ namespace BehaviorDesigner.Runtime.Tactical
 
             for (int i = 0; i < agentBehaviorTreeGroup[(int)selectionType].Count; ++i) {
                 agentBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
-                Debug.Log($"(int)selectionType {(int)selectionType} / {i} ==== {agentBehaviorTreeGroup[(int)selectionType][i]}");
-
             }
         }
 
