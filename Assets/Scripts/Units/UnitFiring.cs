@@ -4,6 +4,7 @@ using Mirror;
 using TMPro;
 using UnityEngine;
 using BehaviorDesigner.Runtime.Tactical;
+using System;
 
 public class UnitFiring : NetworkBehaviour, IAttackAgent
 {
@@ -27,38 +28,43 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent
     [ServerCallback]
     private void Update()
     {
+
         Targetable target = targeter.GetTarget();
 
         if (target == null) { return; }
-        //Debug.Log($"targeter targeterAttackType {targeter.targeterAttackType}");
-        if (targeter.targeterAttackType != Targeter.AttackType.Shoot) {return; }
+        Debug.Log($"targeter targeterAttackType {targeter.targeterAttackType}");
+        if (targeter.targeterAttackType != Targeter.AttackType.Shoot) { return; }
         if (!CanFireAtTarget()) { return; }
 
+        //if (Time.time > (1 / fireRate) + lastFireTime)
+        //{
+        //    Attack(target.transform.position);
+        //    lastFireTime = Time.time;
+        //}
+    }
+
+    private void FireProjectile(Vector3 targetPosition)
+    {
+        
         Quaternion targetRotation =
-            Quaternion.LookRotation(target.transform.position - transform.position);
+            Quaternion.LookRotation(targetPosition - transform.position);
 
         transform.rotation = Quaternion.RotateTowards(
             transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        if (Time.time > (1 / fireRate) + lastFireTime)
-        {
+        
             Quaternion projectileRotation = Quaternion.LookRotation(
-                target.GetAimAtPoint().position - projectileSpawnPoint.position);
+                targetPosition - projectileSpawnPoint.position);
 
-
-            GameObject projectileInstance = Instantiate(
+        GameObject projectileInstance = Instantiate(
                 projectilePrefab, projectileSpawnPoint.position, projectileRotation);
+        
+        NetworkServer.Spawn(projectileInstance, connectionToClient);
 
-            //Debug.Log($"Unit Firing projectilePrefab {projectilePrefab} projectileInstance {projectileInstance}");
-            //Physics.IgnoreCollision(projectilePrefab.GetComponent<Collider>(), GetComponent<Collider>());
 
-
-            NetworkServer.Spawn(projectileInstance, connectionToClient);
-
-           
-            lastFireTime = Time.time;
-        }
+            
     }
+
     [Server]
     private bool CanFireAtTarget()
     {
@@ -83,8 +89,8 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent
 
     public void Attack(Vector3 targetPosition)
     {
-        Debug.Log("unit firing now ");
-        //Attack();
+        //Debug.Log("unit firing now ");
+        FireProjectile(targetPosition);
         lastAttackTime = Time.time;
     }
 }
