@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class MainMenuStory : MonoBehaviour, IPointerClickHandler
-{
+public class MainMenuStory : MonoBehaviour
+{ 
    
-    public void OnPointerClick(PointerEventData eventData)
-    {
-
-        SceneManager.LoadScene("Scene_Story");
+    public void OnPointerClick()
+    { 
+        SceneManager.LoadScene("Scene_Main_Menu" );
     }
-
+   
 }
