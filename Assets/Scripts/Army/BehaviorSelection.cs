@@ -224,10 +224,10 @@ public class BehaviorSelection : MonoBehaviour
                 }
             }
         
-            Debug.Log($"(int)selectionType {(int)selectionType} agentBehaviorTreeGroup count {agentBehaviorTreeGroup.Count} ");
+            //Debug.Log($"(int)selectionType {(int)selectionType} agentBehaviorTreeGroup count {agentBehaviorTreeGroup.Count} ");
             for (int i = 0; i < agentBehaviorTreeGroup[(int)selectionType].Count; ++i) {
                 agentBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
-                Debug.Log($"(int)selectionType {(int)selectionType} / {i} ==== {agentBehaviorTreeGroup[(int)selectionType][i]}");
+                //Debug.Log($"(int)selectionType {(int)selectionType} / {i} ==== {agentBehaviorTreeGroup[(int)selectionType][i]}");
             }
         }
 

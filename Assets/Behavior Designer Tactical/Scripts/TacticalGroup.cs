@@ -398,7 +398,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         /// </summary>
         protected void FindAttackTarget()
         {
-            Debug.Log($"FindAttackTarget --> | {tacticalAgent} | ? ");
+            // IF this error means Agent Group Index is ZERO
+            //Debug.Log($"FindAttackTarget --> | {tacticalAgent} | ? ");
             if (tacticalAgent.TargetTransform == null || !tacticalAgent.TargetDamagable.IsAlive()) {
                 Transform target = null;
                 IDamageable damageable = null;
