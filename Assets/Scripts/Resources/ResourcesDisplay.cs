@@ -14,20 +14,23 @@ public class ResourcesDisplay : MonoBehaviour
 
     private void Start()
     {
+        /*
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
 
         ClientHandleResourcesUpdated(player.GetResources());
 
         player.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
+        */
     }
 
     private void OnDestroy()
     {
-        player.ClientOnResourcesUpdated -= ClientHandleResourcesUpdated;
+        //player.ClientOnResourcesUpdated -= ClientHandleResourcesUpdated;
     }
 
     private void ClientHandleResourcesUpdated(int resources)
     {
+        /*
         int currentresources;
         
         currentresources = resources;
@@ -37,6 +40,7 @@ public class ResourcesDisplay : MonoBehaviour
             maxresources = currentresources;
         }
         healthBarImage.fillAmount = (float)currentresources / (float) maxresources;
+        */
 
     }
 }

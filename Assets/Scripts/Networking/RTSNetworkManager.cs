@@ -27,7 +27,7 @@ public class RTSNetworkManager : NetworkManager
 
     private Dictionary<Unit.UnitType, int> militaryList = new Dictionary<Unit.UnitType, int>();
     private Dictionary<Unit.UnitType, GameObject> unitDict = new Dictionary<Unit.UnitType, GameObject>();
-
+    private int playerID = 0;
     #region Server
 
     public override void OnServerConnect(NetworkConnection conn)
@@ -59,6 +59,12 @@ public class RTSNetworkManager : NetworkManager
 
         isGameInProgress = true;
 
+        unitDict.Clear();
+        unitDict.Add(Unit.UnitType.ARCHER, archerPrefab);
+        unitDict.Add(Unit.UnitType.HERO, heroPrefab);
+        unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
+        unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
+
         ServerChangeScene("Scene_Map_01");
     }
 
@@ -77,7 +83,7 @@ public class RTSNetworkManager : NetworkManager
             UnityEngine.Random.Range(0f, 1f),
             UnityEngine.Random.Range(0f, 1f)
         ));
-
+        player.SetPlayerID(Players.Count);
         player.SetPartyOwner(Players.Count == 1);
     }
 
@@ -88,24 +94,21 @@ public class RTSNetworkManager : NetworkManager
             GameOverHandler gameOverHandlerInstance = Instantiate(gameOverHandlerPrefab);
 
             NetworkServer.Spawn(gameOverHandlerInstance.gameObject);
-
+            
             foreach(RTSPlayer player in Players)
             {
                 Vector3 pos = GetStartPosition().position;
-                /*
+
                 GameObject baseInstance = Instantiate(
                     unitBasePrefab,
                     pos,
                     Quaternion.identity);
-                baseInstance.tag = "PlayerBase";
+                baseInstance.tag = "PlayerBase" + player.GetPlayerID() ;
+                baseInstance.SetActive(true);
                 NetworkServer.Spawn(baseInstance, player.connectionToClient);
 
-                */
-                unitDict.Add(Unit.UnitType.ARCHER, archerPrefab);
-                unitDict.Add(Unit.UnitType.HERO, heroPrefab);
-                unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
-                unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
-
+                Debug.Log($"What is unitbase tag | {baseInstance.tag} | playerID |{player.GetPlayerID()}|  ? ");               
+                militaryList.Clear();
                 militaryList.Add(Unit.UnitType.ARCHER,  4 );
                 militaryList.Add(Unit.UnitType.SPEARMAN, 0 );
                 militaryList.Add(Unit.UnitType.KNIGHT,  0 );
@@ -114,7 +117,6 @@ public class RTSNetworkManager : NetworkManager
                 foreach(Unit.UnitType unitType in militaryList.Keys ) {
                     StartCoroutine(loadMilitary(2f, player, pos, unitDict[unitType], unitType.ToString() , militaryList[unitType]));
                 }
-
             }
         }
     }
@@ -128,6 +130,7 @@ public class RTSNetworkManager : NetworkManager
             spawnOffset.y = spawnPosition.y;
             GameObject unit = Instantiate(unitPrefab, spawnPosition + spawnOffset, Quaternion.identity) as GameObject;
             unit.name = unitName;
+            unit.tag = "Player" + player.GetPlayerID();
             NetworkServer.Spawn(unit, player.connectionToClient);
             unit.GetComponent<Unit>().unitType = Unit.UnitType.HERO;
             unit.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("wait");

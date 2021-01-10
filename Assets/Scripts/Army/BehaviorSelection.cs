@@ -4,51 +4,73 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using Mirror;
 
-public class BehaviorSelection : MonoBehaviour
-    {
+public class BehaviorSelection :  NetworkBehaviour
+{
         public GameObject agentGroup;
-        public GameObject defendObject;
+        private GameObject defendObject;
        
         private Dictionary<int, List<BehaviorTree>> agentBehaviorTreeGroup = new Dictionary<int, List<BehaviorTree>>();
       
         private enum BehaviorSelectionType { Attack, Charge, MarchingFire, Flank, Ambush, ShootAndScoot, Leapfrog, Surround, Defend, Hold, Retreat, Reinforcements, Last }
         private BehaviorSelectionType selectionType = BehaviorSelectionType.Attack;
         private BehaviorSelectionType prevSelectionType = BehaviorSelectionType.Attack;
+        private RTSPlayer player;
 
-
-        public void Start ()
+        void Start()
         {
-            InvokeRepeating("addBehaviourToMilitary", 5f, 6000000f);
+            player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+            Debug.Log($" BehaviorSelection --> player id {player.GetPlayerID()} {player.GetDisplayName()} ");
+        }
+        public override void OnStartServer()
+        {
+            player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+            Debug.Log($"1 BehaviorSelection -->   startMilitaryTB / player id {player.GetPlayerID() } ");
+            //startMilitaryTB();
+            InvokeRepeating("startMilitaryTB", 5f, 6000000f);
             //InvokeRepeating("StartAgent", 5f, 6000000f);
         }
-        private void addBehaviourToMilitary()
+        private void startMilitaryTB()
         {
 
             GameObject hero=null;
-            //defendObject = GameObject.FindGameObjectWithTag("PlayerBase");
-            GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
+            int playerid = player.GetPlayerID();
+            string enemyTag = "Player" + (playerid  == 0 ? "1" : "0") ;
+
+            defendObject = GameObject.FindGameObjectWithTag("PlayerBase" + playerid);
+            Debug.Log($"1.1 Defend Object {defendObject} ");
+
+
+            GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + playerid);
+            Debug.Log($"2 Object with Player tag   {armies.Length} ");
+
             foreach (GameObject child in armies)
             {
-                if (child.gameObject.name.Contains("Hero")) { hero = child; }
-                child.transform.parent = agentGroup.transform;
+                if (child.GetComponent<Unit>().hasAuthority)
+                {
+                    if (child.gameObject.name.ToUpper().Contains("HERO")) { hero = child; }
+                    child.transform.parent = agentGroup.transform;
+                }
             }
-        
+
+            Debug.Log($"agentGroup. .childCount  {agentGroup.transform.childCount} ");
+            
             for (int i = 0; i < agentGroup.transform.childCount; ++i)
             {
                 var child = agentGroup.transform.GetChild(i);
-                //Debug.Log($" {i} {child} ");
+                Debug.Log($" {i} {child} ");
                 var agentTrees = child.GetComponents<BehaviorTree>();
                 for (int j = 0; j < agentTrees.Length; ++j)
                 {
                     var group = agentTrees[j].Group;
 
-                    agentTrees[j].SetVariableValue("newTargetName", "Enemy");
+                    agentTrees[j].SetVariableValue("newTargetName", enemyTag);
                     if (j == (int)BehaviorSelectionType.Hold || j == (int)BehaviorSelectionType.Defend)
                     {
                         agentTrees[j].SetVariableValue("newDefendObject", defendObject);
                     }
-                    if (!child.gameObject.name.Contains("Hero")) {
+                    if (!child.gameObject.name.ToUpper().Contains("HERO")) {
                         agentTrees[j].SetVariableValue("newLeader", hero);
                     }
                     else

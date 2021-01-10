@@ -26,7 +26,12 @@ public class RTSPlayer : NetworkBehaviour
     private Color teamColor = new Color();
     private List<Unit> myUnits = new List<Unit>();
     private List<Building> myBuildings = new List<Building>();
+    private int playerID = 0;
 
+    public int GetPlayerID()
+    {
+        return playerID;
+    }
     public string GetDisplayName()
     {
         return displayName;
@@ -104,6 +109,12 @@ public class RTSPlayer : NetworkBehaviour
         Unit.ServerOnUnitDespawned -= ServerHandleUnitDespawned;
         Building.ServerOnBuildingSpawned -= ServerHandleBuildingSpawned;
         Building.ServerOnBuildingDespawned -= ServerHandleBuildingDespawned;
+    }
+
+    [Server]
+    public void SetPlayerID(int id)
+    {
+        this.playerID = id;
     }
 
     [Server]

@@ -12,6 +12,10 @@ TagManager:
   - AgentTB
   - CombatSystem
   - PlayerBase
+  - Player0
+  - Player1
+  - PlayerBase0
+  - PlayerBase1
   layers:
   - Default
   - TransparentFX
