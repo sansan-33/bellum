@@ -20,6 +20,7 @@ public class BehaviorSelection :  NetworkBehaviour
         private int playerid = 0;
         private int enemyid = 0;
         private string enemyTag = "";
+        private string PLAYERTAG = "";
 
         void Start()
         {
@@ -27,6 +28,8 @@ public class BehaviorSelection :  NetworkBehaviour
             playerid = player.GetPlayerID();
             enemyid = playerid == 0 ? 1 : 0;
             enemyTag = "Player" + enemyid;
+            PLAYERTAG = "Player" + playerid;
+
             Debug.Log($" BehaviorSelection --> player id {playerid} / enemyTag {enemyTag}");
             StartCoroutine("AssignTagTB");
         }
@@ -36,7 +39,7 @@ public class BehaviorSelection :  NetworkBehaviour
 
             GameObject hero=null;
             
-            GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + playerid);
+            GameObject[] armies = GameObject.FindGameObjectsWithTag(PLAYERTAG);
             Debug.Log($"2 Object with Player tag   {armies.Length} ");
 
             foreach (GameObject child in armies)
@@ -170,40 +173,43 @@ public class BehaviorSelection :  NetworkBehaviour
         }
 
     private void SelectionChanged()
-        {
-            StopCoroutine("EnableBehavior");
-            for (int i = 0; i < agentBehaviorTreeGroup[(int)prevSelectionType].Count; ++i) {
-                agentBehaviorTreeGroup[(int)prevSelectionType][i].DisableBehavior();
-            }
-            StartCoroutine("EnableBehavior");
+    {
+        StopCoroutine("CmdEnableBehavior");
+        for (int i = 0; i < agentBehaviorTreeGroup[(int)prevSelectionType].Count; ++i) {
+            agentBehaviorTreeGroup[(int)prevSelectionType][i].DisableBehavior();
         }
+        StartCoroutine("CmdEnableBehavior");
+    }
+    [Command]
+    public void CmdEnableBehavior()
+    {
+        ServerEnableBehavior();
+    }
 
-    private IEnumerator EnableBehavior()
+    [Server]
+    private IEnumerator ServerEnableBehavior()
     {
         //defendObject.SetActive(false);
 
         yield return new WaitForSeconds(0.1f);
-        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] armies = GameObject.FindGameObjectsWithTag(PLAYERTAG);
         foreach (GameObject army in armies)
         {
             army.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("wait");
 
         }
-
-
         //Debug.Log($"(int)selectionType {(int)selectionType} agentBehaviorTreeGroup count {agentBehaviorTreeGroup.Count} ");
         for (int i = 0; i < agentBehaviorTreeGroup[(int)selectionType].Count; ++i)
         {
             agentBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
             //Debug.Log($"(int)selectionType {(int)selectionType} / {i} ==== {agentBehaviorTreeGroup[(int)selectionType][i]}");
         }
-
         foreach (GameObject army in armies)
         {
             army.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("run");
-
         }
     }
+
     private IEnumerator AssignTagTB()
     {
         yield return new WaitForSeconds(10f);
@@ -240,7 +246,7 @@ public class BehaviorSelection :  NetworkBehaviour
                 Debug.Log($"Checking unit: {unit } / unit.hasAuthority {unit.hasAuthority}");
 
                 if (unit.hasAuthority) {
-                    army.tag = "Player" + playerid;
+                    army.tag = PLAYERTAG;
                 }
                 else {
                     army.tag = enemyTag;

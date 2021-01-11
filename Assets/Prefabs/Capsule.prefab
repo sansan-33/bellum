@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4783751491286199165}
   - component: {fileID: 3566724839051673120}
   - component: {fileID: 950303654465580169}
+  - component: {fileID: 6120489122721430602}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: PlayerBase
@@ -166,7 +167,7 @@ MonoBehaviour:
   syncInterval: 0.1
   buildingPreview: {fileID: 0}
   resourceCost: 10
-  health: {fileID: 0}
+  health: {fileID: 6120489122721430602}
   unitMovement: {fileID: 0}
   id: -1
   isEmeny: 0
@@ -179,3 +180,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   unitType: 0
+--- !u!114 &6120489122721430602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154580023765660033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9720b78f991e38444b22ee6da4435ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  ourType: 
+  maxHealth: 100
+  defense: 0
