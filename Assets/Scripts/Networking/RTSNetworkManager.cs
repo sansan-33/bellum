@@ -84,6 +84,7 @@ public class RTSNetworkManager : NetworkManager
             UnityEngine.Random.Range(0f, 1f)
         ));
         player.SetPlayerID(Players.Count - 1);
+        player.SetEnemyID(player.GetPlayerID() == 0 ? 1 : 0);
         player.SetPartyOwner(Players.Count == 1);
     }
 
@@ -107,7 +108,6 @@ public class RTSNetworkManager : NetworkManager
                 baseInstance.SetActive(true);
                 NetworkServer.Spawn(baseInstance, player.connectionToClient);
 
-                Debug.Log($"What is unitbase tag | {baseInstance.tag} | playerID |{player.GetPlayerID()}|  ? ");               
                 militaryList.Clear();
                 militaryList.Add(Unit.UnitType.ARCHER,  4 );
                 militaryList.Add(Unit.UnitType.SPEARMAN, 0 );

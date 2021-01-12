@@ -27,43 +27,43 @@ public class BehaviorSelection : MonoBehaviour
     // called zero
     void Start()
     {
-        Debug.Log("Start");
+        //Debug.Log("Start");
     }
 
     // called first
     void OnEnable()
     {
-        Debug.Log("OnEnable called");
+        //Debug.Log("OnEnable called");
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // called second
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        Debug.Log(mode);
+        //Debug.Log("OnSceneLoaded: " + scene.name);
+        //Debug.Log(mode);
     }
 
     // called when the game is terminated
     void OnDisable()
     {
-        Debug.Log("OnDisable");
+        //Debug.Log("OnDisable");
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     // called zero
     void Awake()
     {
-        Debug.Log("Awake");
+        //Debug.Log("Awake");
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-            playerid = player.GetPlayerID();
-            enemyid = playerid == 0 ? 1 : 0;
-            enemyTag = "Player" + enemyid;
-            PLAYERTAG = "Player" + playerid;
+        playerid = player.GetPlayerID();
+        enemyid = playerid == 0 ? 1 : 0;
+        enemyTag = "Player" + enemyid;
+        PLAYERTAG = "Player" + playerid;
 
-            Debug.Log($"1 BehaviorSelection --> player id {playerid} / enemyTag {enemyTag}");
-            StartCoroutine("AssignTagTB");
-            Debug.Log($"2 called BehaviorSelection");
+        //Debug.Log($"1 BehaviorSelection --> player id {playerid} / enemyTag {enemyTag}");
+        StartCoroutine("AssignTagTB");
+        //Debug.Log($"2 called BehaviorSelection");
 
     }
     private void startMilitaryTB()
@@ -72,7 +72,7 @@ public class BehaviorSelection : MonoBehaviour
             GameObject hero=null;
             
             GameObject[] armies = GameObject.FindGameObjectsWithTag(PLAYERTAG);
-            Debug.Log($"2 Object with Player tag   {armies.Length} ");
+            //Debug.Log($"2 Object with Player tag   {armies.Length} ");
 
             foreach (GameObject child in armies)
             {
@@ -83,12 +83,12 @@ public class BehaviorSelection : MonoBehaviour
                 }
             }
 
-            Debug.Log($"agentGroup. .childCount  {agentGroup.transform.childCount} ");
+            //Debug.Log($"agentGroup. .childCount  {agentGroup.transform.childCount} ");
             
             for (int i = 0; i < agentGroup.transform.childCount; ++i)
             {
                 var child = agentGroup.transform.GetChild(i);
-                Debug.Log($" {i} {child} ");
+                //Debug.Log($" {i} {child} ");
                 var agentTrees = child.GetComponents<BehaviorTree>();
                 for (int j = 0; j < agentTrees.Length; ++j)
                 {
@@ -237,11 +237,11 @@ public class BehaviorSelection : MonoBehaviour
 
     private IEnumerator AssignTagTB()
     {
-        Debug.Log($"1.2 AssignTagTB | {defendObject} | ? ");
+        //Debug.Log($"1.2 AssignTagTB | {defendObject} | ? ");
         yield return new WaitForSeconds(3f);
-        Debug.Log($"1.3");
+        //Debug.Log($"1.3");
         GameObject[] playerBases = GameObject.FindGameObjectsWithTag("PlayerBase");
-        Debug.Log($"1.4 playerBases size: {playerBases.Length}");
+        //Debug.Log($"1.4 playerBases size: {playerBases.Length}");
         foreach (GameObject playerBase in playerBases)
         {
             if (playerBase.TryGetComponent<Unit>(out Unit unit))
@@ -250,7 +250,7 @@ public class BehaviorSelection : MonoBehaviour
                 {
                     playerBase.tag = "PlayerBase" + playerid;
                     defendObject = playerBase;
-                    Debug.Log($"1.1.1 Defend Object | {defendObject} | playerBase {playerBase }? ");
+                    //Debug.Log($"1.1.1 Defend Object | {defendObject} | playerBase {playerBase }? ");
 
                 }
                 else
@@ -262,16 +262,16 @@ public class BehaviorSelection : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         //defendObject = GameObject.FindGameObjectWithTag("PlayerBase" + playerid);
-        Debug.Log($"1.3 Defend Object | {defendObject} | ? ");
+        //Debug.Log($"1.3 Defend Object | {defendObject} | ? ");
 
 
         GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log($"1.4 AssignTagTB --> Armies Size: {armies.Length }");
+        //Debug.Log($"1.4 AssignTagTB --> Armies Size: {armies.Length }");
         foreach (GameObject army in armies)
         {
             if (army.TryGetComponent<Unit>(out Unit unit))
             {
-                Debug.Log($"Checking unit: {unit } / unit.hasAuthority {unit.hasAuthority}");
+                //Debug.Log($"Checking unit: {unit } / unit.hasAuthority {unit.hasAuthority}");
 
                 if (unit.hasAuthority) {
                     army.tag = PLAYERTAG;
