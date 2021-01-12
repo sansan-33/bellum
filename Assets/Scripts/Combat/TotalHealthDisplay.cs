@@ -19,14 +19,13 @@ public class TotalHealthDisplay : NetworkBehaviour
     string PLAYERTAG = "";
     string ENEMYTAG = "";
 
-    public override void OnStartServer()
+    public override void OnStartClient()
     {
+        Debug.Log("On start client ... ");
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         PLAYERTAG = "Player" + player.GetPlayerID();
         ENEMYTAG = "Player" + player.GetEnemyID();
-
     }
-
     private void Update()
     {
         TotalPlayerHealthdisplay();
@@ -52,7 +51,7 @@ public class TotalHealthDisplay : NetworkBehaviour
     }
     private void TotalEnemyHealth()
     {
-
+        //Debug.Log($"ENEMYTAG {ENEMYTAG}");
         EnermymilitarySize = 0;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(ENEMYTAG);
         foreach (GameObject EnermyArmy in enemies)
