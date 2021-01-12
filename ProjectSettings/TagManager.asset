@@ -16,6 +16,7 @@ TagManager:
   - Player1
   - PlayerBase0
   - PlayerBase1
+  - Card(clone)
   layers:
   - Default
   - TransparentFX
