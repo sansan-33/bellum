@@ -266,7 +266,7 @@ using UnityEngine.UI;
         var rotationVector = transform.rotation.eulerAngles;
         rotationVector.x = 90;
         cardTransform.rotation = Quaternion.Euler(rotationVector);
-        cardTransform.localScale += new Vector3((float)0.5, 25, 1);
+        cardTransform.localScale += new Vector3((float)22, 25, 1);
       
          yield return null;
         }

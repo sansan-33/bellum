@@ -43,7 +43,8 @@ using UnityEngine.UI;
         [SerializeField] List<Player> players = new List<Player>();
 
         [SerializeField] List<CardFace> cardDeck = new List<CardFace>();
-        [SerializeField] List<CardFace> cardDeckUsed = new List<CardFace>();
+    [SerializeField] List<string> attackType = new List<string>();
+    [SerializeField] List<CardFace> cardDeckUsed = new List<CardFace>();
 
         bool cardSpawned = false;
         Card lastCard;
@@ -127,11 +128,11 @@ using UnityEngine.UI;
                     ShuffleDeck();
                 }
                 CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count - 1)];
-            
+            string cardid = attackType[UnityEngine.Random.Range(0, attackType.Count)];
                 cardDeckUsed.Add(randomCard);
-                lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard));
-
-                cardDeck.Remove(randomCard);
+                lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard), cardid);
+            //lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard));
+            cardDeck.Remove(randomCard);
 
                 cardSpawned = false;
                 cardDispenserAnimator.SetBool("Dealing", true);

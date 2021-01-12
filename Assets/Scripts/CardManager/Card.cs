@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Card : MonoBehaviour
     float X = (float)90;
     
     [SerializeField] Transform button;
-    [SerializeField] GameObject gameobject;
+    [SerializeField] Button gameobject;
 
 
     void Awake()
@@ -27,11 +28,22 @@ public class Card : MonoBehaviour
             cardFrontMat = cardRenderer.materials[0];
         }
 
-        public void SetCard(CardFace _cardFace, CardFaceCoords coord)
+        public void SetCard(CardFace _cardFace, CardFaceCoords coord, string cardid)
     {
-
         
-           cardFace = _cardFace;
+        GameObject other = GameObject.FindGameObjectWithTag("Card(clone)");
+        BehaviorSelection a = other.GetComponent<BehaviorSelection>();
+        string attack = "attack";
+        if (cardid == attack)
+        {
+            
+            gameobject.onClick.AddListener(a.TryAttack); //subscribe to the onClick 
+          
+        }
+        
+             //subscribe to the onClick
+       
+        cardFace = _cardFace;
         
         
         if (coord != null)
@@ -41,9 +53,9 @@ public class Card : MonoBehaviour
                 cardRenderer.materials[0] = cardFrontMat;
             }
         }
+
    
-   
-    public void OnPointerDown()
+    void OnPointerDown()
     {
         Debug.Log(this.cardFace.suit);
         Debug.Log(this.cardFace.numbers);
