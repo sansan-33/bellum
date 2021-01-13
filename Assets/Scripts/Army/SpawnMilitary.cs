@@ -15,15 +15,13 @@ public class SpawnMilitary : NetworkBehaviour
     
     [SerializeField]
     private float spawnInterval = 60000f;
-    private float stoppingDistance = 1;
     private int spawnMoveRange = 1;
 
-    private float chaseRange = 1;
     private int spawnArcherCount=4;
     private int spawnFootmanCount = 0;
     private int spawnKnightCount = 0;
     private int spawnHeroCount = 1;
-    private float lastFireTime;
+
     [SerializeField] private float fireRate = 6000f;
     private RTSPlayer player;
     public override void OnStartServer()
@@ -144,17 +142,6 @@ public class SpawnMilitary : NetworkBehaviour
         }
     }
     
-    private bool CanFireAtTarget(Vector3 target, GameObject unit)
-    {
-        bool canfire = true;
-        if ((target - unit.transform.position).sqrMagnitude > fireRange * fireRange)
-            canfire = false;
-        if (unit.GetComponent<Targeter>().targeterAttackType != Targeter.AttackType.Shoot)
-            canfire = false;
-        //Debug.Log($"(target - unit.transform.position).sqrMagnitude {(target - unit.transform.position).sqrMagnitude} , fireRange * fireRange {fireRange * fireRange} , canfire ? {canfire}");
-        return canfire;
-    }
-
     public GameObject findNearest(string enemyTag, int range)
     {
 
