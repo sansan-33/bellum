@@ -40,10 +40,6 @@ public class RTSPlayer : NetworkBehaviour
     {
         return playerID;
     }
-    public int GetEnemyID()
-    {
-        return enemyID;
-    }
     public string GetDisplayName()
     {
         return displayName;
@@ -89,18 +85,18 @@ public class RTSPlayer : NetworkBehaviour
         {
             return false;
         }
-       
-       
-       // foreach (Building building in myBuildings)
-     //   {
-       //     if ((point - building.transform.position).sqrMagnitude
-       //         <= halfOfScreenSize)
-         //   {
-                return true;
-          //  }
-       // }
 
-       // return false;
+
+        // foreach (Building building in myBuildings)
+        //   {
+        //     if ((point - building.transform.position).sqrMagnitude
+        //         <= halfOfScreenSize)
+        //   {
+        return true;
+        //  }
+        // }
+
+        // return false;
     }
 
     #region Server
@@ -133,11 +129,7 @@ public class RTSPlayer : NetworkBehaviour
     {
         this.playerID = id;
     }
-    [Server]
-    public void SetEnemyID(int id)
-    {
-        this.enemyID = id;
-    }
+
     [Server]
     public void SetDisplayName(string displayName)
     {
@@ -185,13 +177,13 @@ public class RTSPlayer : NetworkBehaviour
         }
 
         if (unitToPlace == null) { return; }
-        
+
         if (resources < unitToPlace.GetPrice()) { return; }
-      
+
         BoxCollider buildingCollider = unitToPlace.GetComponent<BoxCollider>();
 
         if (!CanPlaceBuilding(buildingCollider, point)) { return; }
-       
+
         GameObject unitInstance =
             Instantiate(unitToPlace.gameObject, point, unitToPlace.transform.rotation);
 
@@ -211,7 +203,7 @@ public class RTSPlayer : NetworkBehaviour
     private void ServerHandleUnitDespawned(Unit unit)
     {
 
-        if (!unit.isEnemy() &&  unit.connectionToClient.connectionId != connectionToClient.connectionId) { return; }
+        if (!unit.isEnemy() && unit.connectionToClient.connectionId != connectionToClient.connectionId) { return; }
 
         myUnits.Remove(unit);
     }
@@ -251,7 +243,7 @@ public class RTSPlayer : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
 
         ((RTSNetworkManager)NetworkManager.singleton).Players.Add(this);
-        
+
     }
 
     public override void OnStopClient()
@@ -281,10 +273,6 @@ public class RTSPlayer : NetworkBehaviour
     }
 
     private void ClientHandlePlayerIDUpdated(int oldPlayerID, int newPlayerID)
-    {
-        ClientOnInfoUpdated?.Invoke();
-    }
-    private void ClientHandleEnemyIDUpdated(int oldEnemyID, int newEnemyID)
     {
         ClientOnInfoUpdated?.Invoke();
     }

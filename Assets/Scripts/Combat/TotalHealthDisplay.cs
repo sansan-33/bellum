@@ -22,12 +22,6 @@ public class TotalHealthDisplay : NetworkBehaviour
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
 
-    public override void OnStartClient()
-    {
-        Debug.Log("On start client ... ");
-        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        PLAYERTAG = "Player" + player.GetPlayerID();
-        ENEMYTAG = "Player" + player.GetEnemyID();
     }
     private void Update()
     {
@@ -38,28 +32,32 @@ public class TotalHealthDisplay : NetworkBehaviour
     }
     private void TotalPlayerHealthdisplay()
     {
-        
+
         militarySize = 0;
-        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + player.GetPlayerID() );
-        if(armies is null || armies.Length ==0) { return;  } 
+        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + player.GetPlayerID());
+        if (armies is null || armies.Length == 0) { return; }
 
         foreach (GameObject army in armies)
         {
             float newProgress;
+
             militarySize += army.GetComponent<Health>().getCurrentHealth();
             if (militarySize > MaxmilitarySize)
             {
 
                 MaxmilitarySize = militarySize;
             }
-            newProgress = (float) militarySize / (float) MaxmilitarySize;
+
+            newProgress = (float)militarySize / (float)MaxmilitarySize;
             TotalPlayerhealth.fillAmount = newProgress;
             TotalPlayerhealths.text = militarySize.ToString();
         }
+
+
     }
-    private void TotalEnemyHealth()
+    private void totalEnermyhealth()
     {
-        
+
         EnermymilitarySize = 0;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Player" + player.GetEnemyID());
         foreach (GameObject EnermyArmy in enemies)
@@ -71,11 +69,13 @@ public class TotalHealthDisplay : NetworkBehaviour
                 MaxEnermymilitarySize = EnermymilitarySize;
 
             }
+
             newProgress = (float)EnermymilitarySize / (float)MaxEnermymilitarySize;
             TotalEnermyhealths.text = EnermymilitarySize.ToString();
             TotalEnermyhealth.fillAmount = newProgress;
         }
 
     }
-}
 
+
+}

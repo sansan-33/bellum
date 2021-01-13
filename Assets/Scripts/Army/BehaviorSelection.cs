@@ -54,6 +54,8 @@ public class BehaviorSelection : MonoBehaviour
     // called zero
     void Awake()
     {
+        if (agentGroup is null) { return; }
+
         //Debug.Log("Awake");
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerid = player.GetPlayerID();
@@ -61,9 +63,9 @@ public class BehaviorSelection : MonoBehaviour
         enemyTag = "Player" + enemyid;
         PLAYERTAG = "Player" + playerid;
 
-            //Debug.Log($"1 BehaviorSelection --> player id {playerid} / enemyTag {enemyTag}");
-            StartCoroutine("AssignTagTB");
-            //Debug.Log($"2 called BehaviorSelection");
+        //Debug.Log($"1 BehaviorSelection --> player id {playerid} / enemyTag {enemyTag}");
+        StartCoroutine("AssignTagTB");
+        //Debug.Log($"2 called BehaviorSelection");
 
     }
     private void startMilitaryTB()
@@ -206,6 +208,8 @@ public class BehaviorSelection : MonoBehaviour
 
     private void SelectionChanged()
     {
+        if(agentGroup is null) { return; }
+
         StopCoroutine("EnableBehavior");
         for (int i = 0; i < agentBehaviorTreeGroup[(int)prevSelectionType].Count; ++i) {
             agentBehaviorTreeGroup[(int)prevSelectionType][i].DisableBehavior();

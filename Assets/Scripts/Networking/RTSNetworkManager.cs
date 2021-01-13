@@ -13,7 +13,7 @@ public class RTSNetworkManager : NetworkManager
     [SerializeField] private GameObject knightPrefab = null;
     [SerializeField] private GameObject heroPrefab = null;
     [SerializeField] private GameObject spearmanPrefab = null;
- 
+
     [SerializeField] private GameOverHandler gameOverHandlerPrefab = null;
 
     public static event Action ClientOnConnected;
@@ -95,8 +95,8 @@ public class RTSNetworkManager : NetworkManager
             GameOverHandler gameOverHandlerInstance = Instantiate(gameOverHandlerPrefab);
 
             NetworkServer.Spawn(gameOverHandlerInstance.gameObject);
-            
-            foreach(RTSPlayer player in Players)
+
+            foreach (RTSPlayer player in Players)
             {
                 Vector3 pos = GetStartPosition().position;
 
@@ -110,13 +110,14 @@ public class RTSNetworkManager : NetworkManager
 
                 //Debug.Log($"What is unitbase tag | {baseInstance.tag} | playerID |{player.GetPlayerID()}|  ? ");               
                 militaryList.Clear();
-                militaryList.Add(Unit.UnitType.ARCHER,  4 );
-                militaryList.Add(Unit.UnitType.SPEARMAN, 0 );
-                militaryList.Add(Unit.UnitType.KNIGHT,  0 );
-                militaryList.Add(Unit.UnitType.HERO ,  1 );
-     
-                foreach(Unit.UnitType unitType in militaryList.Keys ) {
-                    StartCoroutine(loadMilitary(2f, player, pos, unitDict[unitType], unitType.ToString() , militaryList[unitType]));
+                militaryList.Add(Unit.UnitType.ARCHER, 4);
+                militaryList.Add(Unit.UnitType.SPEARMAN, 0);
+                militaryList.Add(Unit.UnitType.KNIGHT, 0);
+                militaryList.Add(Unit.UnitType.HERO, 1);
+
+                foreach (Unit.UnitType unitType in militaryList.Keys)
+                {
+                    StartCoroutine(loadMilitary(2f, player, pos, unitDict[unitType], unitType.ToString(), militaryList[unitType]));
                 }
             }
         }
