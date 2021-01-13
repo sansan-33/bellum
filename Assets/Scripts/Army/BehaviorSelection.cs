@@ -61,9 +61,9 @@ public class BehaviorSelection : MonoBehaviour
         enemyTag = "Player" + enemyid;
         PLAYERTAG = "Player" + playerid;
 
-        //Debug.Log($"1 BehaviorSelection --> player id {playerid} / enemyTag {enemyTag}");
-        StartCoroutine("AssignTagTB");
-        //Debug.Log($"2 called BehaviorSelection");
+            //Debug.Log($"1 BehaviorSelection --> player id {playerid} / enemyTag {enemyTag}");
+            StartCoroutine("AssignTagTB");
+            //Debug.Log($"2 called BehaviorSelection");
 
     }
     private void startMilitaryTB()
@@ -221,16 +221,17 @@ public class BehaviorSelection : MonoBehaviour
         foreach (GameObject army in armies)
         {
             army.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("wait");
-
         }
         //Debug.Log($"(int)selectionType {(int)selectionType} agentBehaviorTreeGroup count {agentBehaviorTreeGroup.Count} ");
         for (int i = 0; i < agentBehaviorTreeGroup[(int)selectionType].Count; ++i)
         {
-            agentBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
+            if(agentBehaviorTreeGroup[(int)selectionType][i] != null)
+                agentBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
             //Debug.Log($"(int)selectionType {(int)selectionType} / {i} ==== {agentBehaviorTreeGroup[(int)selectionType][i]}");
         }
         foreach (GameObject army in armies)
         {
+            //Debug.Log($"BS -> EnableBehavior -> NetworkAnimator -> {army} -> run");
             army.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("run");
         }
     }
@@ -251,7 +252,6 @@ public class BehaviorSelection : MonoBehaviour
                     playerBase.tag = "PlayerBase" + playerid;
                     defendObject = playerBase;
                     //Debug.Log($"1.1.1 Defend Object | {defendObject} | playerBase {playerBase }? ");
-
                 }
                 else
                 {
@@ -260,10 +260,6 @@ public class BehaviorSelection : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(1f);
-
-        //defendObject = GameObject.FindGameObjectWithTag("PlayerBase" + playerid);
-        //Debug.Log($"1.3 Defend Object | {defendObject} | ? ");
-
 
         GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
         //Debug.Log($"1.4 AssignTagTB --> Armies Size: {armies.Length }");

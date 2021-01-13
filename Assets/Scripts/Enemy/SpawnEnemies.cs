@@ -53,8 +53,8 @@ public class SpawnEnemies : NetworkBehaviour
             StartCoroutine(loadEnemy(2f));
             
             InvokeRepeating("addBehaviourToMilitary", 5f, 6000000f);
-            InvokeRepeating("TryDefend", 10f, 6000000f);
-            //InvokeRepeating("TrySurround", 30f, 6000000f);
+            //InvokeRepeating("TryDefend", 10f, 6000000f);
+            InvokeRepeating("TryFlank", 5f, 6000000f);
         }
     }
    
@@ -206,14 +206,28 @@ public class SpawnEnemies : NetworkBehaviour
     private IEnumerator EnableBehavior()
     {
         //defendObject.SetActive(false);
+        GameObject[] armies = GameObject.FindGameObjectsWithTag(ENEMY_TAG);
 
+        yield return new WaitForSeconds(0.1f);
+        foreach (GameObject army in armies)
+        {
+            //Debug.Log($"SE -> EnableBehavior -> NetworkAnimator -> {army} -> wait");
+            army.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("wait");
+        }
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < enemyBehaviorTreeGroup[(int)selectionType].Count; ++i)
         {
-            enemyBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
+            if (enemyBehaviorTreeGroup[(int)selectionType][i] != null)
+                enemyBehaviorTreeGroup[(int)selectionType][i].EnableBehavior();
             //Debug.Log($"(int)selectionType {(int)selectionType} / {i} ==== {agentBehaviorTreeGroup[(int)selectionType][i]}");
         }
+        foreach (GameObject army in armies)
+        {
+            //Debug.Log($"SE -> EnableBehavior -> NetworkAnimator -> {army} -> run");
+            army.GetComponent<Unit>().GetUnitMovement().unitNetworkAnimator.SetTrigger("run");
+        }
+
     }
 
 
