@@ -256,7 +256,7 @@ public class Player : MonoBehaviour
             yield return null;
         }
 
-        cardTransform.position = new Vector3(x, 50, -13);
+        cardTransform.position = new Vector3(x, 50, (float)-22.7);
         x += (float)5;
 
         //   cardTransform.localEulerAngles = targetPosition;
@@ -265,8 +265,9 @@ public class Player : MonoBehaviour
         card?.Flip(index);
         var rotationVector = transform.rotation.eulerAngles;
         rotationVector.x = 90;
+        rotationVector.z = 5;
         cardTransform.rotation = Quaternion.Euler(rotationVector);
-        cardTransform.localScale += new Vector3((float)0.5, 25, 1);
+        cardTransform.localScale = new Vector3((float)17, 17, 1);
 
         yield return null;
     }
