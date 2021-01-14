@@ -2,7 +2,7 @@ using UnityEngine;
 using BehaviorDesigner.Runtime.Tasks;
 using Tooltip = BehaviorDesigner.Runtime.Tasks.TooltipAttribute;
 using HelpURL = BehaviorDesigner.Runtime.Tasks.HelpURLAttribute;
-
+using UnityEngine.AI;
 
 namespace BehaviorDesigner.Runtime.Tactical.Tasks
 {
@@ -62,8 +62,16 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     offset.x += separation.Value * ((formationIndex / groupCount) % 2 == 0 ? -1 : 1) * (((groupIndex / 2) + 1));
                     destination = TransformPoint(destination, offset, Quaternion.LookRotation(attackCenter - destination));
                 }
-                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdMove(destination);
-                tacticalAgent.SetDestination(destination);
+                if (NavMesh.SamplePosition(destination, out NavMeshHit hit, 10f, NavMesh.AllAreas))
+                {
+                    tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdMove(destination);
+                    tacticalAgent.SetDestination(destination);
+                }
+                else
+                {
+                    Debug.Log($"Flank move outside screen area {destination}");
+                    tacticalAgent.AttackPosition = true;
+                }
                 // Set AttackPosition to true when the agent arrived at the destination. This will put the agent in attack mode and start to rotate towards
                 // the target.
                 if (tacticalAgent.HasArrived()) {
