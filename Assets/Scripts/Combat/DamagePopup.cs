@@ -5,7 +5,6 @@ using DG.Tweening;
 [RequireComponent(typeof(TMP_Text))]
 public class DamagePopup : MonoBehaviour
 {
-    
     // Start is called before the first frame update
     void Start()
     {

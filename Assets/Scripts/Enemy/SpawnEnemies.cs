@@ -22,7 +22,7 @@ public class SpawnEnemies : NetworkBehaviour
     private GameObject enemy;
     private float stoppingDistance = 1;
     private float chaseRange = 1;
-    private int spawncount=5;
+    private int spawncount=3;
     private float lastFireTime;
     [SerializeField] private float fireRate = 6000f;
     private RTSPlayer player;
@@ -79,7 +79,7 @@ public class SpawnEnemies : NetworkBehaviour
             spawnOffset.y = spawnPosition.y;
             enemy = Instantiate(enemyPrefab, spawnPosition + spawnOffset, Quaternion.identity) as GameObject;
             enemy.tag = ENEMY_TAG;
-            enemy.GetComponent<Unit>().unitType = Unit.UnitType.ARCHER;
+            enemy.GetComponent<Unit>().unitType = Unit.UnitType.SPEARMAN;
 
             //Debug.Log($"spawnEnemy connectionToClient {player.connectionToClient}");
             NetworkServer.Spawn(enemy, player.connectionToClient);

@@ -17,6 +17,8 @@ TagManager:
   - PlayerBase1
   - Card(clone)
   - AgentGroup
+  - CamPlayer0
+  - CamPlayer1
   layers:
   - Default
   - TransparentFX

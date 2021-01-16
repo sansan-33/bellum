@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class DamageTextHolder : NetworkBehaviour
 {
+    public Color CriticalColor = new Color();
+    public Color NormalColor = new Color();
+    public Color WeakColor = new Color();
+
     [SyncVar]
     public string displayText = "Default";
     [SyncVar]

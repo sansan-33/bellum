@@ -13,9 +13,10 @@ public class StretchToAspectRatio : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         Vector3 newScale = transform.localScale;
         newScale.x = Camera.main.aspect;
         transform.localScale = newScale;
-
+        */
     }
 }

@@ -103,7 +103,7 @@ public class RTSNetworkManager : NetworkManager
                 militaryList.Clear();
                 militaryList.Add(Unit.UnitType.ARCHER, 3);
                 militaryList.Add(Unit.UnitType.SPEARMAN, 0);
-                militaryList.Add(Unit.UnitType.KNIGHT, 1);
+                militaryList.Add(Unit.UnitType.KNIGHT, 0);
                 militaryList.Add(Unit.UnitType.HERO, 1);
 
                 foreach (Unit.UnitType unitType in militaryList.Keys)

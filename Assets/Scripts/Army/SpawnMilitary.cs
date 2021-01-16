@@ -17,7 +17,7 @@ public class SpawnMilitary : NetworkBehaviour
     private float spawnInterval = 60000f;
     private int spawnMoveRange = 1;
 
-    private int spawnArcherCount=4;
+    private int spawnArcherCount=2;
     private int spawnFootmanCount = 0;
     private int spawnKnightCount = 0;
     private int spawnHeroCount = 1;

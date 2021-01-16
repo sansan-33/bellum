@@ -31,17 +31,14 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
     // The last time the agent attacked
     private float lastAttackTime;
     private StrengthWeakness strengthWeakness;
-
-    void Start()
-    {
-        damageToDealOriginal += damageToDeal;
-        lastAttackTime = -repeatAttackDelay;
-        strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
-
-    }
+    RTSPlayer player;
 
     public override void OnStartServer()
     {
+        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        damageToDealOriginal += damageToDeal;
+        lastAttackTime = -repeatAttackDelay;
+        strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
         //Use this to ensure that the Gizmos are being drawn when in Play Mode.
         m_Started = true;
     }
@@ -66,9 +63,9 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
             other = hitColliders[i];
             if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
             {
-                if (networkIdentity.connectionToClient == connectionToClient && other.tag != "Enemy") { return; }  //check to see if it belongs to the player, if it does, do nothing
+                if (networkIdentity.connectionToClient == connectionToClient && other.tag !=  "Player" + player.GetEnemyID() ) { return; }  //check to see if it belongs to the player, if it does, do nothing
             }
-            //Debug.Log($"Attack --> {other} ");
+            Debug.Log($"Attack {targeter} --> Enemy {other} ");
 
             if (other.TryGetComponent<Health>(out Health health))
             {
@@ -76,8 +73,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
                 damageToDeal = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeal);
                 health.DealDamage(damageToDeal);
                 //Debug.Log($"Strength Weakness damage {damageToDeal}");
-                cmdDamageText(other.transform.position);
-                cmdCMVirtual();
+                cmdDamageText(other.transform.position, damageToDeal, damageToDealOriginal);
+                cmdCMFreeLook();
                 break;
             }
             i++;
@@ -102,12 +99,26 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
 
 
     [Command]   
-    private void cmdDamageText(Vector3 targetPos)
+    private void cmdDamageText(Vector3 targetPos, int damageToDeals , int damageToDealOriginal)
     {
         GameObject floatingText = Instantiate(textPrefab, targetPos, Quaternion.identity);
-        floatingText.GetComponent<DamageTextHolder>().displayColor = Color.blue;
-        floatingText.GetComponent<DamageTextHolder>().displayText = damageToDeal + "";
+        Color textColor;
+        string dmgText;
+        if (damageToDeals > damageToDealOriginal)
+        {
+            textColor = floatingText.GetComponent<DamageTextHolder>().CriticalColor;
+            dmgText = damageToDeals + " Critical";
+        }
+        else
+        {
+            textColor = floatingText.GetComponent<DamageTextHolder>().NormalColor;
+            dmgText = damageToDeals + "";
+        }
+        floatingText.GetComponent<DamageTextHolder>().displayColor = textColor;
+        floatingText.GetComponent<DamageTextHolder>().displayText = dmgText;
         NetworkServer.Spawn(floatingText, connectionToClient);
+
+
     }
     [Command]
     private void cmdCMVirtual()
@@ -125,7 +136,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
         if (GameObject.Find("camVirtual") == null)
         {
             GameObject cam = Instantiate(camFreeLookPrefab, new Vector3(0, 0, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-            cam.GetComponent<CMFreeLook>().ThirdCamera(GameObject.FindGameObjectWithTag("Player"), GameObject.FindGameObjectWithTag("Enemy"));
+            cam.GetComponent<CMFreeLook>().ThirdCamera(GameObject.FindGameObjectWithTag("Player" + player.GetPlayerID()), GameObject.FindGameObjectWithTag("Player" + player.GetEnemyID()));
             NetworkServer.Spawn(cam, connectionToClient);
         }
     }
