@@ -10,6 +10,7 @@ public class CMFreeLook : NetworkBehaviour
 
 
     [SerializeField] private CinemachineFreeLook cinemachineFreeLook;
+    Cinemachine.CinemachineImpulseSource source;
     private float shakeTimer = 3f;
     private float shakeTimerTotal = .1f;
     private float startingIntensity = 15f;
@@ -24,7 +25,6 @@ public class CMFreeLook : NetworkBehaviour
 
         cinemachineFreeLook.LookAt = tLookAtTarget;
         cinemachineFreeLook.Follow = tFollowTarget;
-
     }
     private void Update()
     {

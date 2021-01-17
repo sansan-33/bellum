@@ -59,9 +59,10 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             if ((attackCenter - transform.position).magnitude < safeDistance.Value) {
                 safe = false;
                 var targetPosition = TransformPoint(transform.position, safeOffset, direction);
-                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdMove(targetPosition);
+                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("run");
                 tacticalAgent.SetDestination(targetPosition);
             } else {
+                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("wait");
                 tacticalAgent.Stop();
             }
 

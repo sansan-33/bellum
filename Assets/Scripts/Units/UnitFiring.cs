@@ -14,7 +14,6 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent
     [SerializeField] private float fireRange = 300f;
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private float rotationSpeed = 100f;
-    [SerializeField] public NetworkAnimator unitNetworkAnimator = null;
 
     private float lastFireTime;
 
@@ -33,7 +32,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent
         Targetable target = targeter.GetTarget();
 
         if (target == null) { return; }
-        Debug.Log($"targeter targeterAttackType {targeter.targeterAttackType}");
+        //Debug.Log($"targeter targeterAttackType {targeter.targeterAttackType}");
         if (targeter.targeterAttackType != Targeter.AttackType.Shoot) { return; }
         if (!CanFireAtTarget()) { return; }
 
@@ -94,7 +93,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent
     public void Attack(Vector3 targetPosition)
     {
         //Debug.Log("unit firing now ");
-        unitNetworkAnimator.SetTrigger("attack");
+        targeter.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("attack");
         CmdFireProjectile(targetPosition);
         lastAttackTime = Time.time;
     }

@@ -62,16 +62,19 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     offset.x += separation.Value * ((formationIndex / groupCount) % 2 == 0 ? -1 : 1) * (((groupIndex / 2) + 1));
                     destination = TransformPoint(destination, offset, Quaternion.LookRotation(attackCenter - destination));
                 }
+                //Debug.Log($" agent {tacticalAgent.transform.GetComponent<Unit>().unitType } move to  {destination}   ");
 
-                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdMove(destination);
+                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("run");
                 tacticalAgent.SetDestination(destination);
                 
                 // Set AttackPosition to true when the agent arrived at the destination. This will put the agent in attack mode and start to rotate towards
                 // the target.
                 if (tacticalAgent.HasArrived()) {
+                    tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("wait");
                     tacticalAgent.AttackPosition = true;
                 }
             } else if (MoveToAttackPosition()) {
+                //Debug.Log($" Flank inside move to attack position  ");
                 // The agent isn't in position yet. One case of MoveToAttackPosition returning false is when the agent still needs to rotate to face the target.
                 inPosition = true;
                 // Notify the leader when the agent is in position.
@@ -81,14 +84,14 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     UpdateInPosition(formationIndex, true);
                 }
             }
-
+            //Debug.Log($" agent {tacticalAgent.transform.GetComponent<Unit>().unitType} inPosition {inPosition}   " );
             if (inPosition && (canAttack || !waitForAttack.Value)) {
                 tacticalAgent.TryAttack();
             }
 
             return TaskStatus.Running;
         }
-
+        
         public override void OnReset()
         {
             base.OnReset();

@@ -84,13 +84,14 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 var targetPosition = defendObject.Value.transform.TransformPoint(radius.Value * Mathf.Sin(theta * formationIndex), 0, radius.Value * Mathf.Cos(theta * formationIndex));
                 tacticalAgent.UpdateRotation(true);
                 tacticalAgent.SetDestination(targetPosition);
-                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdMove(targetPosition);
-
+                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("run");
+                
                 if (tacticalAgent.HasArrived()) {
                     // Face away from the defending object.
                     var direction = targetPosition - defendObject.Value.transform.position;
                     direction.y = 0;
                     tacticalAgent.RotateTowards(Quaternion.LookRotation(direction));
+                    tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("wait");
                 }
             }
 

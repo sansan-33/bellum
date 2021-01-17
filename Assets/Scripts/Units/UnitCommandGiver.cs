@@ -32,6 +32,7 @@ public class UnitCommandGiver : MonoBehaviour
     private void Update()
     {
 
+        if (true) { return; }
         isClicked = false;
         Vector3 pos = new Vector3() ;
        
@@ -46,6 +47,7 @@ public class UnitCommandGiver : MonoBehaviour
             {
                 pos = Mouse.current.position.ReadValue();
                 isClicked = true;
+                //Debug.Log("Mouse Clicked");
             }
             else if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Space))
             {
@@ -72,7 +74,7 @@ public class UnitCommandGiver : MonoBehaviour
                 Debug.Log($"Target ");
                 if (target.hasAuthority)
                 {
-                    //Debug.Log($"Right Clicked Mouse try move {hit.point}");
+                    Debug.Log($"Right Clicked Mouse try move {hit.point} , screen point {pos} ");
                     TryMove(hit.point, Targeter.AttackType.Nothing);
                     return;
                 }
@@ -80,6 +82,7 @@ public class UnitCommandGiver : MonoBehaviour
                 TryTarget(target, Targeter.AttackType.Shoot);
                 return;
             }
+            Debug.Log($"Right Clicked Mouse try move {hit.point} , screen point {pos} ");
             TryMove(hit.point, Targeter.AttackType.Nothing);
         }
     }
