@@ -56,6 +56,17 @@ public class UnitMovement : NetworkBehaviour
 
         agent.ResetPath();
     }
+    [Command]
+    public void CmdTrigger(string animationType)
+    {
+        ServerTrigger(animationType);
+    }
+
+    [Server]
+    public void ServerTrigger(string animationType)
+    {
+        unitNetworkAnimator.SetTrigger(animationType);
+    }
 
     [Command]
     public void CmdMove(Vector3 position)
@@ -66,13 +77,22 @@ public class UnitMovement : NetworkBehaviour
     [Server]
     public void ServerMove(Vector3 position)
     {
+        position.y = agent.destination.y;
+        if (agent.destination != position)
+        {
+            //Debug.Log($"ServerMove: {agent.destination} /  {position} ");
+            agent.SetDestination(position);
+        }
+        
+    }
+    public void OLDServerMove(Vector3 position)
+    {
         targeter.ClearTarget();
 
         if (!NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) { return; }
 
         agent.SetDestination(hit.position);
     }
-
     [Server]
     private void ServerHandleGameOver()
     {

@@ -39,7 +39,6 @@ MonoBehaviour:
   fireRange: 15
   fireRate: 1
   rotationSpeed: 100
-  unitNetworkAnimator: {fileID: 7917527286526284323}
   repeatAttackDelay: 1
   attackAngle: 1
 --- !u!114 &7917527286526284323
@@ -91,11 +90,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4828794282021128, guid: 203e6f50696c68649a2f8d16f3f8f159, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0036343336
       objectReference: {fileID: 0}
     - target: {fileID: 4828794282021128, guid: 203e6f50696c68649a2f8d16f3f8f159, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.020301163
       objectReference: {fileID: 0}
     - target: {fileID: 4828794282021128, guid: 203e6f50696c68649a2f8d16f3f8f159, type: 3}
       propertyPath: m_LocalRotation.w
@@ -145,6 +144,14 @@ PrefabInstance:
     - target: {fileID: 1430969508781407035, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_AssetId
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3087878123819642891, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3087878123819642893, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4649854274305143349, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_RootOrder

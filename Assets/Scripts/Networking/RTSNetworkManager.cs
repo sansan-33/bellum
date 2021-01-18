@@ -13,6 +13,7 @@ public class RTSNetworkManager : NetworkManager
     [SerializeField] private GameObject knightPrefab = null;
     [SerializeField] private GameObject heroPrefab = null;
     [SerializeField] private GameObject spearmanPrefab = null;
+    [SerializeField] private GameObject sampleUnitPrefab = null;
 
     [SerializeField] private GameOverHandler gameOverHandlerPrefab = null;
 
@@ -63,6 +64,8 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(Unit.UnitType.HERO, heroPrefab);
         unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
         unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
+        unitDict.Add(Unit.UnitType.SAMPLE, sampleUnitPrefab);
+
 
         ServerChangeScene("Scene_Map_01");
     }
@@ -101,17 +104,34 @@ public class RTSNetworkManager : NetworkManager
                 //Debug.Log($"What is unitbase tag | {baseInstance.tag} | playerID |{player.GetPlayerID()}|  ? ");               
                 SetupBase(pos, player);
                 militaryList.Clear();
-                militaryList.Add(Unit.UnitType.ARCHER, 3);
+                militaryList.Add(Unit.UnitType.ARCHER, 2);
                 militaryList.Add(Unit.UnitType.SPEARMAN, 0);
                 militaryList.Add(Unit.UnitType.KNIGHT, 0);
                 militaryList.Add(Unit.UnitType.HERO, 1);
-
+                militaryList.Add(Unit.UnitType.SAMPLE, 0);
+                foreach (Unit.UnitType unitType in militaryList.Keys)
+                {
+                    StartCoroutine(loadMilitary(0.1f, player, pos, unitDict[unitType], unitType.ToString(), militaryList[unitType]));
+                }
+            }
+        }else if (SceneManager.GetActiveScene().name.StartsWith("Scene_Testing_01"))
+        {
+         
+            foreach (RTSPlayer player in Players)
+            {
+                Vector3 pos = GetStartPosition().position;
+                SetupBase(pos, player);
+                militaryList.Clear();
+                militaryList.Add(Unit.UnitType.SAMPLE, 3);
+                //militaryList.Add(Unit.UnitType.ARCHER, 2);
+                //militaryList.Add(Unit.UnitType.HERO, 1);
                 foreach (Unit.UnitType unitType in militaryList.Keys)
                 {
                     StartCoroutine(loadMilitary(0.1f, player, pos, unitDict[unitType], unitType.ToString(), militaryList[unitType]));
                 }
             }
         }
+
     }
 
     private void SetupBase(Vector3 pos, RTSPlayer player)

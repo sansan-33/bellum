@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,12 +14,13 @@ public class Unit : NetworkBehaviour
     [SerializeField] private UnitMovement unitMovement = null;
     [SerializeField] private int id = -1;
     [SerializeField] private bool isEmeny = false;
+    [SerializeField] private TMP_Text taskStatus;
     [SerializeField] private int price = 100;
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private UnityEvent onSelected = null;
     [SerializeField] private UnityEvent onDeselected = null;
 
-    public enum UnitType { ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN ,HERO };
+    public enum UnitType { ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN ,HERO, SAMPLE };
     public UnitType unitType;
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;
@@ -37,7 +39,10 @@ public class Unit : NetworkBehaviour
     {
         return unitMovement;
     }
-
+    public TMP_Text GetTaskStatus()
+    {
+        return taskStatus;
+    }
     public Targeter GetTargeter()
     {
         return targeter;
@@ -54,6 +59,10 @@ public class Unit : NetworkBehaviour
     public int GetPrice()
     {
         return price;
+    }
+    public void SetTaskStatus(string status)
+    {
+        taskStatus.text = status;
     }
     public override void OnStartServer()
     {

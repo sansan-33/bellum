@@ -17,8 +17,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private float attackRange=5f;
     [SerializeField] private LayerMask layerMask = new LayerMask();
-    [SerializeField] public NetworkAnimator unitNetworkAnimator = null;
-
+ 
     private int id;
     private int damageToDealOriginal ;
     
@@ -61,11 +60,20 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
         while (i < hitColliders.Length)
         {
             other = hitColliders[i];
-            if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
+            
+            if (FindObjectOfType<NetworkManager>().numPlayers == 1)
             {
-                if (networkIdentity.connectionToClient == connectionToClient && other.tag !=  "Player" + player.GetEnemyID() ) { return; }  //check to see if it belongs to the player, if it does, do nothing
+                if (other.tag == "Player" + player.GetPlayerID() && targeter.tag == "Player" + player.GetPlayerID()) {return;}  //check to see if it belongs to the player, if it does, do nothing
+                if (other.tag == "Player" + player.GetEnemyID() && targeter.tag == "Player" + player.GetEnemyID()) {return;}  //check to see if it belongs to the player, if it does, do nothing
             }
-            Debug.Log($"Attack {targeter} --> Enemy {other} ");
+            else // Multi player seneriao
+            {
+                if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
+                {
+                    if (networkIdentity.connectionToClient == connectionToClient) { return; }  //check to see if it belongs to the player, if it does, do nothing
+                }
+            }
+            Debug.Log($"Attack {targeter} --> Enemy {other} tag {other.tag}");
 
             if (other.TryGetComponent<Health>(out Health health))
             {
@@ -73,8 +81,10 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
                 damageToDeal = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeal);
                 health.DealDamage(damageToDeal);
                 //Debug.Log($"Strength Weakness damage {damageToDeal}");
+                other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
                 cmdDamageText(other.transform.position, damageToDeal, damageToDealOriginal);
-                cmdCMFreeLook();
+                cmdCMVirtual();
+                //cmdCMFreeLook();
                 break;
             }
             i++;
@@ -124,6 +134,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
     private void cmdCMVirtual()
     {
         if(GameObject.Find("camVirtual") == null) {
+            //Debug.Log($" Spawn  camVirtual {GameObject.Find("camVirtual")}");
             //GameObject cam = Instantiate(camPrefab, new Vector2(0,300), Quaternion.Euler(new Vector3(90, 0, 0)));
             GameObject cam = Instantiate(camPrefab, new Vector3(0,0,0), Quaternion.Euler(new Vector3(0, 0, 0)));
             cam.GetComponent<CinemachineShake>().ShakeCamera()  ;
@@ -158,7 +169,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
     public void Attack(Vector3 targetPosition)
     {
         //Debug.Log("unit weapon attacking now ");
-        unitNetworkAnimator.SetTrigger("attack");
+        targeter.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("attack");
         Attack();
         lastAttackTime = Time.time;
     }
