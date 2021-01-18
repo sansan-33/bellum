@@ -32,8 +32,14 @@ using UnityEngine.UI;
 
     public class CardDealer : MonoBehaviour
     {
-
-        [SerializeField] Transform cardDispenserSpawn;
+  
+    public List<Card> cards;
+    public List<Button> buttons;
+    public int i = 1;
+    public int a = 2;
+    int b = -2;
+    int z = 0;
+    [SerializeField] Transform cardDispenserSpawn;
         [SerializeField] Animator cardDispenserAnimator;
         [SerializeField] GameObject cardPrefab;
 
@@ -77,10 +83,11 @@ using UnityEngine.UI;
            
         }
 
-        void DealCard(Player player, bool left = true)
+        void DealCard(Player player,int j, bool left = true)
         {
-            Debug.Log("Dealing Card to " + player.playerName);
-            StartCoroutine(DealingCard(player, left));
+  
+        Debug.Log("Dealing Card to " + player.playerName);
+            StartCoroutine(DealingCard(player, j, left));
         }
 
         public void SpawnCard()
@@ -113,44 +120,57 @@ using UnityEngine.UI;
             cardSpawned = true;
         }
 
-        IEnumerator DealingCard(Player player, bool left = true)
+        IEnumerator DealingCard(Player player, int j, bool left = true)
         {
-            if ((left && !player.leftBust) || (!left && !player.rightBust))
+           // if ((left && !player.leftBust) || (!left && !player.rightBust))
             { //Check for bust
 
                 lastCard = Instantiate(cardPrefab).GetComponent<Card>();
               //  Debug.Log($"1 DealingCard -- > last card | {lastCard} |?? ");
                 lastCard.transform.localScale = Vector3.zero;
-
-                if (cardDeck.Count < 10)
-                {
-                    ShuffleDeck();
-                }
-                CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count - 1)];
-            
-                cardDeckUsed.Add(randomCard);
-                lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard));
-
-                cardDeck.Remove(randomCard);
-
-                cardSpawned = false;
-                cardDispenserAnimator.SetBool("Dealing", true);
-                //Play dealing animation first
-                cardDispenserAnimator.SetTrigger("Deal");
-                //Card slides out to a point in front of the dispenser
-              //  while (!cardSpawned)
-             //  {
-                    yield return null;
+           
+            //if (cardDeck.Count < 10)
+              //  {
+               //    ShuffleDeck();
                // }
+          
+           // CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count - 13)];
+            CardFace randomCard = cardDeck[1];
 
-                cardDispenserAnimator.SetBool("Dealing", false);
+            cardDeckUsed.Add(randomCard);
+          
+            lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard));
+         
+           // cardDeck.Remove(randomCard);
+   
+            cardSpawned = false;
+           
+            cardDispenserAnimator.SetBool("Dealing", true);
+            //Play dealing animation first
+           
+            cardDispenserAnimator.SetTrigger("Deal");
+            //Card slides out to a point in front of the dispenser
+            //  while (!cardSpawned)
+            
+            yield return null;
+            // }
+          
+            cardDispenserAnimator.SetBool("Dealing", false);
 
             //Player takes card
-           // Debug.Log($"2 DealingCard -- > Try Player add card | {lastCard} | ");
-
+            // Debug.Log($"2 DealingCard -- > Try Player add card | {lastCard} | ");
+        
             player.AddCard(lastCard, left);
             numbers++;
-            lastCard.setputtonposition(numbers);
+            if (numbers >= 3)
+            {
+                numbers = 3;
+            }
+            if (j == 12345)
+            {
+                //numbers = 10000;
+            }
+            lastCard.setbuttonposition(numbers);
             }
         }
 
@@ -211,8 +231,96 @@ using UnityEngine.UI;
                 player.pot[1] = 0;
             }
         }*/
+       public void mergeCard(Card card, Button button)
+     {
 
-        IEnumerator DealCards(int numberOfCards, float delay, float waitTime, Player player, bool left = true, bool reveal = false)
+        
+       
+        cards.Add(card);
+        buttons.Add(button);
+       
+        foreach (Card Carda in cards)
+        {
+            
+            //Debug.Log(z);
+           // Debug.Log(cards.Count);
+            b++;
+          
+            if(b>= 0)
+            {
+                if (cards[cards.Count -2] == null) { return; }
+                Card cardbefore = cards[cards.Count - 2];
+                
+                while ((int)cardbefore.cardFace.numbers > 13)
+                {
+                cardbefore.cardFace.numbers -= 13;
+                }
+              
+          
+                 if (cards[cards.Count - 1] == null) { return; }
+                Card cardnow = cards[cards.Count-1];
+               
+                while ((int)cardnow.cardFace.numbers > 13)
+                {
+                    cardnow.cardFace.numbers -= 13;
+                }
+                if (cardbefore.cardFace.numbers == cardnow.cardFace.numbers && buttons[buttons.Count - 2].GetComponent<Image>().color != Color.gray)
+                {
+                    Debug.Log($"try merge");
+
+                    if (cardnow == null) { return; }
+                    cardnow.GetComponent<Card>().destroy();
+                    buttons[buttons.Count - 2].GetComponent<Image>().color = Color.gray;
+                    buttons[buttons.Count - 2].tag = "Card(clone Gray)";
+                    if (z == 1)
+                    {
+                        
+                        buttons[buttons.Count - 2]
+                        .transform.localPosition =
+                        new Vector3(buttons[buttons.Count - 2]
+                        .transform.localPosition.x - 100, -200, 0);
+                    }
+                    z++;
+                    
+                    bigMerge(cardbefore, buttons[buttons.Count - 2]);
+                    //Debug.Log(b); Debug.Log(n);
+
+                }
+
+            }
+        }
+     }
+    public void bigMerge(Card cardbefore, Button button)
+    {
+        Debug.Log(3);
+        if (b >= 2)
+        {
+            Debug.Log(cards[cards.IndexOf(cardbefore) - 1]);
+            if (cards[cards.IndexOf(cardbefore)-1] != null)
+            {
+                Card cardBeforeMore = cards[cards.IndexOf(cardbefore) - 1];
+                Debug.Log(2);
+                while ((int)cardBeforeMore.cardFace.numbers > 13)
+                {
+                    cardBeforeMore.cardFace.numbers -= 13;
+
+
+                }
+                if (cardbefore.cardFace.numbers == cardBeforeMore.cardFace.numbers && buttons[buttons.IndexOf(button) - 1].tag == "Card(clone Gray)")
+                {
+                    if (cardBeforeMore == null) { return; }
+                    cardbefore.GetComponent<Card>().destroy();
+                    buttons[buttons.Count - 1].GetComponent<Image>().color = Color.yellow;
+                    Debug.Log($"try big merge");
+                    Hitmerge();
+                }
+            }
+            
+           
+        }
+        Hitmerge();
+    }
+        IEnumerator DealCards(int numberOfCards, float delay, float waitTime, int j,Player player, bool left = true, bool reveal = false)
         {
             float currentWait = waitTime;
 
@@ -225,8 +333,9 @@ using UnityEngine.UI;
             for (int i = 0; i < numberOfCards; i++)
             {
                 if (players.Count > 0)
-                {
-                    DealCard(player, left);
+            {
+               
+                DealCard(player,j, left);
                 }
 
                 currentWait = waitTime;
@@ -268,9 +377,9 @@ using UnityEngine.UI;
         [ContextMenu("Play Blackjack")]
         public void DealBegin()
         {
-        Debug.Log(2);
+       
             //Deal two cards to player
-            StartCoroutine(DealCards(3, 0f, 0.5f, players[0]));
+            StartCoroutine(DealCards(3, 0f, 0.5f, 1,players[0]));
           //  StartCoroutine(DealCards(2, 1f, 0.5f, dealer));
 
             players[0].Transfer(-2, 0);
@@ -286,8 +395,8 @@ using UnityEngine.UI;
             if (players.Count > 0)
             {
                 players[0].SplitHand();
-                StartCoroutine(DealCards(7, 0f, 0.5f, players[0], true));
-                StartCoroutine(DealCards(7, 0.5f, 0.5f, players[0], false));
+                StartCoroutine(DealCards(7, 0f, 0.5f, 1,players[0], true));
+                StartCoroutine(DealCards(7, 0.5f, 0.5f,1, players[0], false));
 
               //  testHit.gameObject.SetActive(false);
                // testHitLeft.gameObject.SetActive(true);
@@ -298,39 +407,49 @@ using UnityEngine.UI;
 
         [ContextMenu("Hit")]
         public void Hit()
-        {
-            //testSplit.gameObject.SetActive(false);
-            Debug.Log(1);
-            StartCoroutine(DealCards(1, 0f, 0.5f, players[0]));
+    {
+        float Timer = 1;
+        while (Timer > 0) { Timer -= Time.deltaTime; }
+        
+        
+        //testSplit.gameObject.SetActive(false);
+        
+        StartCoroutine(DealCards(1, 0f, 0.5f, 1,players[0]));
         }
+    public void Hitmerge()
+    {
+       
+        //testSplit.gameObject.SetActive(false);
 
-      /*  [ContextMenu("Hit")]
-        public void HitLeft()
-        {
-            StartCoroutine(DealCards(1, 0f, 0.5f, players[0], true));
-        }
-
-        [ContextMenu("Hit")]
-        public void HitRight()
-        {
-            StartCoroutine(DealCards(1, 0f, 0.5f, players[0], false));
-        }
-
-        [ContextMenu("Reveal")]
-        public void Reveal()
-        {
-            players.ForEach(player => player.Reveal());
-            dealer.Reveal();
-            CalculateHands();
-
-        }
-
-        [ContextMenu("Reset")]
-        public void Reset()
-        {
-            players.ForEach(player => player.Reset());
-            dealer.Reset();
-
-        }*/
-
+        StartCoroutine(DealCards(1, 0f, 0.5f, 12345, players[0]));
     }
+    /*  [ContextMenu("Hit")]
+      public void HitLeft()
+      {
+          StartCoroutine(DealCards(1, 0f, 0.5f, players[0], true));
+      }
+
+      [ContextMenu("Hit")]
+      public void HitRight()
+      {
+          StartCoroutine(DealCards(1, 0f, 0.5f, players[0], false));
+      }
+
+      [ContextMenu("Reveal")]
+      public void Reveal()
+      {
+          players.ForEach(player => player.Reveal());
+          dealer.Reveal();
+          CalculateHands();
+
+      }
+
+      [ContextMenu("Reset")]
+      public void Reset()
+      {
+          players.ForEach(player => player.Reset());
+          dealer.Reset();
+
+      }*/
+
+}

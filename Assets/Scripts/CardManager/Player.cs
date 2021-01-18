@@ -255,21 +255,24 @@ public class Player : MonoBehaviour
             //  cardTransform.localEulerAngles = Vector3.Lerp(cardTransform.localEulerAngles, v360, Time.deltaTime * 5);
             yield return null;
         }
+        if (cardTransform != null)
+        {
 
-        cardTransform.position = new Vector3(x, 38, (float)-22.7);
-        x += (float)5;
+            cardTransform.position = new Vector3(x, 38, (float)-22.7);
+            x += (float)5;
 
-        //   cardTransform.localEulerAngles = targetPosition;
+            //   cardTransform.localEulerAngles = targetPosition;
 
-        //Flip Card
-        card?.Flip(index);
-        var rotationVector = transform.rotation.eulerAngles;
-        rotationVector.x = 90;
-        rotationVector.z = 5;
-        cardTransform.rotation = Quaternion.Euler(rotationVector);
-        cardTransform.localScale = new Vector3((float)17, 17, 1);
+            //Flip Card
+            card?.Flip(index);
+            var rotationVector = transform.rotation.eulerAngles;
+            rotationVector.x = 90;
+            rotationVector.z = 5;
+            cardTransform.rotation = Quaternion.Euler(rotationVector);
+            cardTransform.localScale = new Vector3((float)17, 17, 1);
 
-        yield return null;
+            yield return null;
+        }
     }
 
     IEnumerator RemoveFromTable(Transform cardTransform, Vector3 targetPosition)

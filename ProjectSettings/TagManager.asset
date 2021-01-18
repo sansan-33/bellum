@@ -19,6 +19,8 @@ TagManager:
   - AgentGroup
   - CamPlayer0
   - CamPlayer1
+  - DealManager
+  - Card(clone Gray)
   layers:
   - Default
   - TransparentFX

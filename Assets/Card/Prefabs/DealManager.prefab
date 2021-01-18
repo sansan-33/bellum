@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4662178990753255469}
   m_Layer: 0
   m_Name: DealManager
-  m_TagString: Untagged
+  m_TagString: DealManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3025b259db94cf2b7299fe62f21aa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  i: 1
   cardDispenserSpawn: {fileID: 6631136002751569695}
   cardDispenserAnimator: {fileID: 4662178991453117285}
   cardPrefab: {fileID: 2068810399220974159, guid: 3f795295713aa43718badf6c515510cd, type: 3}
@@ -259,7 +260,6 @@ MonoBehaviour:
   players:
   - {fileID: -8209060698620193296, guid: 8088e0aaf709443abbf96095f0aea78c, type: 3}
   cardDeck: []
-  attackType: []
   cardDeckUsed: []
   testHit: {fileID: 0}
 --- !u!1 &4662178991453117280
