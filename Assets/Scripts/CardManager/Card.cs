@@ -122,7 +122,7 @@ public class Card : MonoBehaviour
             cardsTransform -= new Vector3(90, 0, 0);
             cards.transform.localPosition = cardsTransform;
         }
-        GameObject[] g = GameObject.FindGameObjectsWithTag("Card(clone Gray)");
+        GameObject[] g = GameObject.FindGameObjectsWithTag("Card(clone gray)");
         foreach (GameObject cards in g)
         {
 

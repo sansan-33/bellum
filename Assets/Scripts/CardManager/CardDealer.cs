@@ -271,7 +271,7 @@ using UnityEngine.UI;
                     if (cardnow == null) { return; }
                     cardnow.GetComponent<Card>().destroy();
                     buttons[buttons.Count - 2].GetComponent<Image>().color = Color.gray;
-                    buttons[buttons.Count - 2].tag = "Card(clone Gray)";
+                    buttons[buttons.Count - 2].tag = "Card(clone gray)";
                     if (z == 1)
                     {
                         
