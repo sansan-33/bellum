@@ -104,11 +104,17 @@ public class RTSNetworkManager : NetworkManager
                 //Debug.Log($"What is unitbase tag | {baseInstance.tag} | playerID |{player.GetPlayerID()}|  ? ");               
                 SetupBase(pos, player);
                 militaryList.Clear();
-                militaryList.Add(Unit.UnitType.ARCHER, 2);
-                militaryList.Add(Unit.UnitType.SPEARMAN, 0);
-                militaryList.Add(Unit.UnitType.KNIGHT, 0);
-                militaryList.Add(Unit.UnitType.HERO, 1);
-                militaryList.Add(Unit.UnitType.SAMPLE, 0);
+                if (player.GetPlayerID() == 0)
+                {
+                    militaryList.Add(Unit.UnitType.ARCHER, 2);
+                    militaryList.Add(Unit.UnitType.KNIGHT, 0);
+                    militaryList.Add(Unit.UnitType.HERO, 1);
+                    militaryList.Add(Unit.UnitType.SAMPLE, 0);
+                }
+                else
+                {
+                    militaryList.Add(Unit.UnitType.SPEARMAN, 3);
+                }
                 foreach (Unit.UnitType unitType in militaryList.Keys)
                 {
                     StartCoroutine(loadMilitary(0.1f, player, pos, unitDict[unitType], unitType.ToString(), militaryList[unitType]));

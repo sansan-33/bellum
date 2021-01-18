@@ -1,11 +1,12 @@
-﻿using Mirror;
+﻿using Cinemachine;
+using Mirror;
 using UnityEngine;
 
 public class FlipCamera : MonoBehaviour
 {
 
-    public Camera camPlayer0;
-    public Camera camPlayer1;
+    public CinemachineVirtualCamera camPlayer0;
+    public CinemachineVirtualCamera camPlayer1;
     public GameObject groundPlayer0;
     public GameObject groundPlayer1;
     public Light lightPlayer0;
