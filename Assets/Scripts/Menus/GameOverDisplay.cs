@@ -8,7 +8,7 @@ public class GameOverDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverDisplayParent = null;
     [SerializeField] private TMP_Text winnerNameText = null;
-    private float Timer = 183;
+    private float Timer = 1830;
     private void Update()
     {
         Timer -= Time.deltaTime;

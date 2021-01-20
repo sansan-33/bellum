@@ -10,7 +10,7 @@ public class GameStartDisplay : MonoBehaviour
     [SerializeField] private TMP_Text StartTime = null;
     [SerializeField] private TMP_Text Times = null;
     private float startTime = 3;
-    private float Timer = 183;
+    private float Timer = 1830;
     private void Start()
     {
         
@@ -31,10 +31,6 @@ public class GameStartDisplay : MonoBehaviour
         if (startTime <= 0)
         {
 
-            
-
-
-
             float minutes = Mathf.FloorToInt(Timer / 60);
             float seconds = Mathf.FloorToInt(Timer % 60);
             if (Timer <= 0) { return; }
@@ -42,7 +38,7 @@ public class GameStartDisplay : MonoBehaviour
             startTime = 0;
            
         }
-        if (startTime <= 3 && startTime > 0)
+        if (startTime <= 30 && startTime > 0)
         {
             StartTime.text = startTime.ToString("0");
             

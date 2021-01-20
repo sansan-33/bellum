@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     public bool leftBust = false;
     public bool rightBust = false;
     public int handTotal;
-    float x = (float)-28;
+    float cardPosX = (float) 100;
     int l = 1;
 
     public bool dealer = false;
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(MoveCardTo(card.transform, splitHandStartRight.position + ((playerHand[1].Count - 1) * cardOffset), card, playerHand[1].IndexOf(card)));
             }
         }
-        mergeCard(card);
+        //mergeCard(card);
     }
     public void mergeCard(Card card)
     {
@@ -224,33 +224,12 @@ public class Player : MonoBehaviour
 
     IEnumerator MoveCardTo(Transform cardTransform, Vector3 targetPosition, Card card = null, int index = 0)
     {
-        Vector3 v360 = new Vector3(0, 0, 180);
-        // while ((cardTransform.position - targetPosition).sqrMagnitude > 0.00000001f)
-        {
-
-            //cardTransform.position = Vector3.MoveTowards(cardTransform.position, targetPosition, Time.deltaTime * cardMoveSpeed);
-
-            //  cardTransform.localEulerAngles = Vector3.Lerp(cardTransform.localEulerAngles, v360, Time.deltaTime * 5);
-            yield return null;
-        }
-        if (cardTransform != null)
-        {
-
-            cardTransform.position = new Vector3(x, 38, (float)-22.7);
-            x += (float)5;
-
-            //   cardTransform.localEulerAngles = targetPosition;
-
-            //Flip Card
-            card?.Flip(index);
-            var rotationVector = transform.rotation.eulerAngles;
-            rotationVector.x = 90;
-            rotationVector.z = 5;
-            cardTransform.rotation = Quaternion.Euler(rotationVector);
-            cardTransform.localScale = new Vector3((float)17, 17, 1);
-
-            yield return null;
-        }
+        yield return new WaitForSeconds(0.5f);
+        Vector3 pos = new Vector3(cardPosX, 400, 0);
+        cardPosX += 40;
+        card.cardSpawnButton.transform.position = pos;
+        Debug.Log($"Card Button Position {card.cardSpawnButton.transform.position} {card.transform.localScale}");
+        yield return null;
     }
 
     IEnumerator RemoveFromTable(Transform cardTransform, Vector3 targetPosition)

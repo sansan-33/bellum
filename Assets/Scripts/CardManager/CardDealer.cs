@@ -119,49 +119,36 @@ public class CardDealer : MonoBehaviour
 
     IEnumerator DealingCard(Player player, int j, bool left = true)
     {
-        // if ((left && !player.leftBust) || (!left && !player.rightBust))
-        //{ //Check for bust
 
-            lastCard = Instantiate(cardPrefab).GetComponent<Card>();
-            //  Debug.Log($"1 DealingCard -- > last card | {lastCard} |?? ");
-            lastCard.transform.localScale = Vector3.zero;
+        lastCard = Instantiate(cardPrefab).GetComponent<Card>();
 
-            //if (cardDeck.Count < 10)
-            //  {
-            //    ShuffleDeck();
-            // }
+        // CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count - 13)];
+        CardFace randomCard = cardDeck[1];
+        cardDeckUsed.Add(randomCard);
 
-            // CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count - 13)];
-            CardFace randomCard = cardDeck[1];
+        lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard));
 
-            cardDeckUsed.Add(randomCard);
+        // cardDeck.Remove(randomCard);
 
-            lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard));
+        cardSpawned = false;
 
-            // cardDeck.Remove(randomCard);
+        //cardDispenserAnimator.SetBool("Dealing", true);
+        //Play dealing animation first
 
-            cardSpawned = false;
+        //cardDispenserAnimator.SetTrigger("Deal");
+        //Card slides out to a point in front of the dispenser
+        //  while (!cardSpawned)
+        yield return null;
+        // }
 
-            cardDispenserAnimator.SetBool("Dealing", true);
-            //Play dealing animation first
+        //cardDispenserAnimator.SetBool("Dealing", false);
 
-            cardDispenserAnimator.SetTrigger("Deal");
-            //Card slides out to a point in front of the dispenser
-            //  while (!cardSpawned)
-
-            yield return null;
-            // }
-
-            cardDispenserAnimator.SetBool("Dealing", false);
-
-            //Player takes card
-            // Debug.Log($"2 DealingCard -- > Try Player add card | {lastCard} | ");
-
-            player.AddCard(lastCard, left);
-            // ===================================== 
-            // Set Button
-            numbers++;
-            if (numbers >= 3)
+        //Player takes card
+        player.AddCard(lastCard, left);
+        // ===================================== 
+        // Set Button
+        numbers++;
+        if (numbers >= 3)
             {
                 numbers = 3;
             }

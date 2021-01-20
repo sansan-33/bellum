@@ -22,14 +22,13 @@ public class Card : MonoBehaviour
     float X = (float)-800;
     public int a;
     public float cardTimer = 0;
-    [SerializeField] Button button;
-    [SerializeField] Image gameobject;
     [SerializeField] List<Sprite> sprite = new List<Sprite>();
     private GameObject unitPreviewInstance;
     private Renderer unitRendererInstance;
     private Camera mainCamera;
 
     [SerializeField] public TMP_Text cardStar;
+    [SerializeField] public Button cardSpawnButton;
 
     void Awake()
     {
@@ -43,39 +42,12 @@ public class Card : MonoBehaviour
 
         if (unitPreviewInstance == null) { return; }
 
-        UpdateBuildingPreview();
     }
-    private void UpdateBuildingPreview()
-    {
-        try
-        {
-            Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
-
-            Ray ray = mainCamera.ScreenPointToRay(pos);
-
-            if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) { return; }
-
-            unitPreviewInstance.transform.position = hit.point;
-
-            if (!unitPreviewInstance.activeSelf)
-            {
-                unitPreviewInstance.SetActive(true);
-            }
-
-            //  Color color = player.CanPlaceBuilding(unitCollider, hit.point) ? Color.green : Color.red;
-
-            //  unitRendererInstance.material.SetColor("_BaseColor", color);
-        }
-        catch (Exception) { }
-
-    }
+   
     public void onBeginDrag(PointerEventData eventData)
     {
 
         Debug.Log($"Begin Drag");
-
-
-
         unitRendererInstance = unitPreviewInstance.GetComponentInChildren<Renderer>();
         //testing
 
@@ -88,14 +60,9 @@ public class Card : MonoBehaviour
 
         Ray ray = mainCamera.ScreenPointToRay(eventData.position);
 
-
-
-
     }
     public void SetCard(CardFace _cardFace, CardFaceCoords coord)
     {
-
-
         cardFace = _cardFace;
         a = (int)cardFace.numbers;
         if (a == 13)
@@ -103,12 +70,9 @@ public class Card : MonoBehaviour
             a = 12;
         }
         // gameobject = GetComponent<Button>();
-
-        gameobject.sprite = sprite[a];
-
+        //gameobject.sprite = sprite[a];
         if (coord != null)
         {
-
             cardFrontMat.SetTextureOffset("_BaseMap", coord.coord);
             cardRenderer.materials[0] = cardFrontMat;
         }
@@ -117,6 +81,7 @@ public class Card : MonoBehaviour
 
     public void OnPointerDown()
     {
+        Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} ");
         Destroy(gameObject);
         GameObject[] b = GameObject.FindGameObjectsWithTag("Card(clone)");
         foreach (GameObject cards in b)
