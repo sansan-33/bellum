@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -27,6 +28,9 @@ public class Card : MonoBehaviour
     private GameObject unitPreviewInstance;
     private Renderer unitRendererInstance;
     private Camera mainCamera;
+
+    [SerializeField] public TMP_Text cardStar;
+
     void Awake()
     {
         mainCamera = Camera.main;
@@ -218,18 +222,7 @@ public class Card : MonoBehaviour
             i++;
         }
     }
-    public void setbuttonposition(int number)
-    {
-        GameObject DealManagers = GameObject.FindGameObjectWithTag("DealManager");
-        //DealManagers.GetComponent<CardDealer>().mergeCard(this, button);
-        while (number > 0)
-        {
-            button.transform.localPosition= new Vector3(X, -200, 0);
-            X += 100;
-            number--;
-        }
-    }
-
+   
 }
 
     public enum Card_Suits
@@ -239,7 +232,12 @@ public class Card : MonoBehaviour
         Clubs,
         Spades
     }
-
+    public enum Card_Stars
+    {
+        Bronze,
+        Silver,
+        Gold
+    }
     public enum Card_Numbers
     {
         Ace,

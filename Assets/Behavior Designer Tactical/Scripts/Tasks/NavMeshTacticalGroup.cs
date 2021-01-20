@@ -40,7 +40,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 if (navMeshAgent.destination != destination) {
                     navMeshAgent.GetComponentInParent<Unit>().GetUnitMovement().CmdTrigger("run");
                     navMeshAgent.GetComponentInParent<Unit>().GetUnitMovement().CmdMove(destination);
-                    navMeshAgent.GetComponentInParent<Unit>().GetUnitMovement().CmdShowLine();
+                    navMeshAgent.GetComponentInParent<Unit>().GetUnitMovement().ShowLine();
                     //navMeshAgent.SetDestination(destination);
                     navMeshAgent.isStopped = false;
                 }
@@ -51,8 +51,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             /// </summary>
             public override bool HasArrived()
             {
-                navMeshAgent.GetComponentInParent<Unit>().GetUnitMovement().CmdHideLine();
-
+                navMeshAgent.GetComponentInParent<Unit>().GetUnitMovement().HideLine();
                 return destinationSet && !navMeshAgent.pathPending && (transform.position - navMeshAgent.destination).magnitude <= navMeshAgent.stoppingDistance;
             }
 

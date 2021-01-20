@@ -73,32 +73,7 @@ public class UnitMovement : NetworkBehaviour
     {
         unitNetworkAnimator.SetTrigger(animationType);
     }
-    [Command]
-    public void CmdHideLine()
-    {
-        ServerHideLine();
-    }
-    public void ServerHideLine()
-    {
-        circleMarker.SetActive(false);
-        lineRenderer.enabled = false;
-    }
-    [Command]
-    public void CmdShowLine()
-    {
-        ServerShowLine();
-    }
-    [Server]
-    public void ServerShowLine()
-    {
-        if (agent.path.corners.Length < 2) return;
-        lineRenderer.enabled = true;
-        lineRenderer.sharedMaterial.SetColor("_Color", Color.gray);
-        lineRenderer.positionCount = agent.path.corners.Length;
-        lineRenderer.SetPositions(agent.path.corners);
-        circleMarker.SetActive(true);
-        circleMarker.transform.position = agent.destination;
-    }
+    
 
     [Command]
     public void CmdMove(Vector3 position)
@@ -181,5 +156,22 @@ public class UnitMovement : NetworkBehaviour
         }
 
         return stoppingDistance;
+    }
+    public void HideLine()
+    {
+        circleMarker.SetActive(false);
+        lineRenderer.enabled = false;
+    }
+    public void ShowLine()
+    {
+        if (agent.path.corners.Length < 2) return;
+
+        //Debug.Log($"ServerShowLine ... ");
+        lineRenderer.enabled = true;
+        lineRenderer.sharedMaterial.SetColor("_Color", Color.gray);
+        lineRenderer.positionCount = agent.path.corners.Length;
+        lineRenderer.SetPositions(agent.path.corners);
+        circleMarker.SetActive(true);
+        circleMarker.transform.position = agent.destination;
     }
 }

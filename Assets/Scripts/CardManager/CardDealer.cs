@@ -10,11 +10,13 @@ public struct CardFace
 {
     public Card_Suits suit;
     public Card_Numbers numbers;
+    public Card_Stars star;
 
-    public CardFace(Card_Suits suit, Card_Numbers numbers)
+    public CardFace(Card_Suits suit, Card_Numbers numbers, Card_Stars star)
     {
         this.suit = suit;
         this.numbers = numbers;
+        this.star = star;
     }
 }
 
@@ -73,16 +75,15 @@ public class CardDealer : MonoBehaviour
         {
             foreach (Card_Numbers number in Enum.GetValues(typeof(Card_Numbers)))
             {
-                cardDeck.Add(new CardFace(suit, number));
+                cardDeck.Add(new CardFace(suit, number, Card_Stars.Bronze));
             }
         }
         // }
-
     }
 
     void DealCard(Player player, int j, bool left = true)
     {
-        Debug.Log("Dealing Card to " + player.playerName);
+        //Debug.Log("Dealing Card to " + player.playerName);
         StartCoroutine(DealingCard(player, j, left));
     }
 
@@ -98,7 +99,7 @@ public class CardDealer : MonoBehaviour
         {
             if (card.cardFace.suit == cardFace.suit && card.cardFace.numbers == cardFace.numbers)
             {
-                Debug.Log(card);
+                //Debug.Log(card);
                 return card;
             }
         }
@@ -164,7 +165,7 @@ public class CardDealer : MonoBehaviour
             {
                 numbers = 3;
             }
-            lastCard.setbuttonposition(numbers);
+           
             // ============================
         //}
     }
@@ -213,9 +214,6 @@ public class CardDealer : MonoBehaviour
 
         players[0].Transfer(-2, 0);
 
-        //testHit.gameObject.SetActive(false);
-
-
     }
 
     [ContextMenu("Split Player Hand")]
@@ -236,15 +234,10 @@ public class CardDealer : MonoBehaviour
         float Timer = 1;
         while (Timer > 0) { Timer -= Time.deltaTime; }
 
-
-        //testSplit.gameObject.SetActive(false);
-
         StartCoroutine(DealCards(1, 0f, 0.5f, 1, players[0]));
     }
     public void Hitmerge()
     {
-
-        //testSplit.gameObject.SetActive(false);
 
         StartCoroutine(DealCards(1, 0f, 0.5f, 12345, players[0]));
     }

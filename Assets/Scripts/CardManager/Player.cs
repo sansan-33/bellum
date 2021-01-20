@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -119,7 +120,7 @@ public class Player : MonoBehaviour
 
     public void AddCard(Card card, bool left = true)
     {
-        Debug.Log($"Add Card {card}");
+        //Debug.Log($"Add Card {card}");
         card.SetOwner(this);
         card.transform.SetParent(cardParent);
         if (!handSplit)
@@ -148,35 +149,26 @@ public class Player : MonoBehaviour
     public void mergeCard(Card card)
     {
         Debug.Log($"number card player in Hand  {playerHand[0].Count}");
-        //IF only one card in Hand, ignore merge
-        if (playerHand[0].Count == 1) { return; }
+        //At least 2 cards in Hand, otherwise  ignore merge
+        if (! (playerHand[0].Count >= 2) ) { return; }
         int lastCardBefore = playerHand[0].Count - 2;
-        //for (int i = 0; i < playerHand[0].Count - 1; i++)
-        //{
-
-            if (playerHand[0][lastCardBefore].cardFace.numbers == card.cardFace.numbers && playerHand[0][lastCardBefore].GetComponentInChildren<Image>().color != Color.gray)
+        int maxmerge = playerHand[0].Count - 1;
+        while (maxmerge > 0) {
+            if (lastCardBefore < 0) { return; }
+            // Check if last card before is same card number and same card star  
+            Debug.Log($"Card Number {playerHand[0][lastCardBefore].cardFace.numbers} Star: {playerHand[0][lastCardBefore].cardFace.star} VS Number {card.cardFace.numbers} Star {card.cardFace.star} ");
+            if (playerHand[0][lastCardBefore].cardFace.numbers == card.cardFace.numbers && playerHand[0][lastCardBefore].cardFace.star == card.cardFace.star)
             {
-                Debug.Log($"try merge");
-
-                //card.destroy();
                 playerHand[0][lastCardBefore + 1].destroy();
-                playerHand[0][lastCardBefore].GetComponentInChildren<Image>().color = Color.gray;
-                playerHand[0][lastCardBefore].GetComponentInChildren<Image>().tag = "Card(clone gray)";
+                // Text is setting + 2 , becuase the enum cardFace.star start with 0 
+                playerHand[0][lastCardBefore].cardStar.text = "" + ((int) card.cardFace.star + 2);
+                Debug.Log($" star {playerHand[0][lastCardBefore].cardStar.text} / {((int)card.cardFace.star + 2)}  ");
+                playerHand[0][lastCardBefore].cardFace.star = (Card_Stars) ((int) card.cardFace.star) + 1;
                 playerHand[0].RemoveAt(lastCardBefore + 1);
-
-                /*
-                if (z == 1)
-                {
-                    buttons[buttons.Count - 2]
-                    .transform.localPosition =
-                    new Vector3(buttons[buttons.Count - 2]
-                    .transform.localPosition.x - 100, -200, 0);
-                }
-                z++;
-                */
-                //bigMerge(cardbefore, buttons[buttons.Count - 2]);
+                lastCardBefore = playerHand[0].Count - 2;
             }
-        //}
+            maxmerge--;
+        }
     }
     /*
     public void bigMerge(Card cardbefore, Button button)
@@ -210,6 +202,26 @@ public class Player : MonoBehaviour
         Hitmerge();
     }
     */
+    IEnumerator MoveCardToOLD(Transform cardTransform, Vector3 targetPosition, Card card = null, int index = 0)
+    {
+        Vector3 v360 = new Vector3(0, 0, 180);
+        if (cardTransform != null)
+        {
+            //while ((cardTransform.position - targetPosition).sqrMagnitude > 0.00000001f)
+            //{
+            cardTransform.position = Vector3.MoveTowards(cardTransform.position, targetPosition, Time.deltaTime * cardMoveSpeed);
+            cardTransform.localEulerAngles = Vector3.Lerp(cardTransform.localEulerAngles, v360, Time.deltaTime * 5);
+            yield return null;
+            //}
+            cardTransform.position = targetPosition;
+            cardTransform.localEulerAngles = Vector3.zero;
+
+            //Flip Card
+            card?.Flip(index);
+        }
+        yield return null;
+    }
+
     IEnumerator MoveCardTo(Transform cardTransform, Vector3 targetPosition, Card card = null, int index = 0)
     {
         Vector3 v360 = new Vector3(0, 0, 180);
