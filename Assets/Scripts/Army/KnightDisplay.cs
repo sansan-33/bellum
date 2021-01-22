@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class KnightDisplay : NetworkBehaviour
 {
     [SerializeField] private TMP_Text NumberOfKnight = null;
-    [SerializeField] private SpawnMilitary spawnMilitary = null; 
     private RTSPlayer player;
 
     private void Start()

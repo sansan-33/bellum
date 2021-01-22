@@ -171,7 +171,7 @@ public class CardDealer : MonoBehaviour
         }
 
         int handTotal = player.GetHandTotal();
-        Debug.Log($"DealCards ==> handTotal: {handTotal} MAXTOTALHAND :{MAXTOTALHAND}  Players count {players.Count} ");
+        //Debug.Log($"DealCards ==> handTotal: {handTotal} MAXTOTALHAND :{MAXTOTALHAND}  Players count {players.Count} ");
         while (handTotal < MAXTOTALHAND)
         {
             if (players.Count > 0)

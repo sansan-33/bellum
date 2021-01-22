@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,7 +29,8 @@ public class Card : MonoBehaviour
     private GameObject unitPreviewInstance;
     private Renderer unitRendererInstance;
     private Camera mainCamera;
-    
+    private UnitFactory localFactory;
+
     [SerializeField] public TMP_Text cardStar;
     [SerializeField] public Button cardSpawnButton;
 
@@ -85,7 +87,15 @@ public class Card : MonoBehaviour
     {
         Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} ");
         Destroy(gameObject);
-        GameObject.FindGameObjectWithTag("UnitSpawner").GetComponent<SpawnMilitary>().SpawnUnit( (Unit.UnitType) (int)this.cardFace.numbers, (int) this.cardFace.star + 1);
+        foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
+        {
+            if (factroy.GetComponent<UnitFactory>().hasAuthority)
+            {
+                localFactory = factroy.GetComponent<UnitFactory>();
+                localFactory.CmdSpawnUnit((Unit.UnitType)(int)this.cardFace.numbers, (int)this.cardFace.star + 1, NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID() );
+                Debug.Log($"Card Awake Authority ? == > {factroy.GetComponent<UnitFactory>().hasAuthority} local factory ? {localFactory.hasAuthority} PLayer ID { NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID()}");
+            }
+        }
         GameObject.FindObjectOfType<TacticalBehavior>().TryReinforce();
         GameObject DealManagers = GameObject.FindGameObjectWithTag("DealManager");
         this.GetComponentInParent<Player>().RemoveCardAt(this.cardPlayerHandIndex);

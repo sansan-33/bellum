@@ -14,6 +14,7 @@ public class RTSNetworkManager : NetworkManager
     [SerializeField] private GameObject heroPrefab = null;
     [SerializeField] private GameObject spearmanPrefab = null;
     [SerializeField] private GameObject sampleUnitPrefab = null;
+    [SerializeField] private GameObject unitFactoryPrefab = null;
 
     [SerializeField] private GameOverHandler gameOverHandlerPrefab = null;
 
@@ -104,6 +105,7 @@ public class RTSNetworkManager : NetworkManager
                 Vector3 pos = GetStartPosition().position;
                 //Debug.Log($"What is unitbase tag | {baseInstance.tag} | playerID |{player.GetPlayerID()}|  ? ");               
                 SetupBase(pos, player);
+                SetupUnitFactory(pos, player);
                 militaryList.Clear();
                 if (player.GetPlayerID() == 0)
                 {
@@ -121,22 +123,6 @@ public class RTSNetworkManager : NetworkManager
                     StartCoroutine(loadMilitary(0.1f, player, pos, unitDict[unitType], unitType.ToString(), militaryList[unitType]));
                 }
             }
-        }else if (SceneManager.GetActiveScene().name.StartsWith("Scene_Testing_01"))
-        {
-         
-            foreach (RTSPlayer player in Players)
-            {
-                Vector3 pos = GetStartPosition().position;
-                SetupBase(pos, player);
-                militaryList.Clear();
-                militaryList.Add(Unit.UnitType.SAMPLE, 3);
-                //militaryList.Add(Unit.UnitType.ARCHER, 2);
-                //militaryList.Add(Unit.UnitType.HERO, 1);
-                foreach (Unit.UnitType unitType in militaryList.Keys)
-                {
-                    StartCoroutine(loadMilitary(0.1f, player, pos, UnitDictionary.unitDict[unitType], unitType.ToString(), militaryList[unitType]));
-                }
-            }
         }
 
     }
@@ -150,6 +136,15 @@ public class RTSNetworkManager : NetworkManager
         baseInstance.SetActive(true);
         //The Tag will not be set in client machine
         //baseInstance.tag = "PlayerBase" + player.GetPlayerID();
+        NetworkServer.Spawn(baseInstance, player.connectionToClient);
+    }
+    private void SetupUnitFactory(Vector3 pos, RTSPlayer player)
+    {
+        GameObject baseInstance = Instantiate(
+                   unitFactoryPrefab,
+                   pos,
+                   Quaternion.identity);
+        baseInstance.SetActive(true);
         NetworkServer.Spawn(baseInstance, player.connectionToClient);
     }
 

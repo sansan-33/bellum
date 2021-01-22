@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
     }
     public void AddCard(Card card, bool left = true)
     {
-        Debug.Log($"AddCard ==> {card.cardFace.suit.ToString() }");
+        //Debug.Log($"AddCard ==> {card.cardFace.suit.ToString() }");
         card.SetOwner(this);
         card.transform.SetParent(cardParent);
         card.cardPlayerHandIndex = playerHand[0].Count;
@@ -189,7 +189,7 @@ public class Player : MonoBehaviour
                 lastCardBefore = playerHand[0].Count - 2;
             }
             maxmerge--;
-            Debug.Log($"Card in hand  {PrintAllCards(playerHand[0])} , checking card index {lastCardBefore} / {lastCardBefore + 1} , megre round remain : {maxmerge} ");
+            //Debug.Log($"Card in hand  {PrintAllCards(playerHand[0])} , checking card index {lastCardBefore} / {lastCardBefore + 1} , megre round remain : {maxmerge} ");
         }
         yield return new WaitForSeconds(0.2f);
     }
