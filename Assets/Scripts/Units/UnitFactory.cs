@@ -13,6 +13,8 @@ public class UnitFactory : NetworkBehaviour
     [SerializeField] private GameObject heroPrefab = null;
     [SerializeField] private GameObject spearmanPrefab = null;
     [SerializeField] private GameObject sampleUnitPrefab = null;
+    [SerializeField] private GameObject miniSkeletonUnitPrefab = null;
+
 
     public Dictionary<Unit.UnitType, GameObject> unitDict = new Dictionary<Unit.UnitType, GameObject>();
 
@@ -37,7 +39,7 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
         unitDict.Add(Unit.UnitType.MAGE, magePrefab);
         unitDict.Add(Unit.UnitType.CAVALRY, cavalryPrefab);
-
+        unitDict.Add(Unit.UnitType.MINISKELETON, miniSkeletonUnitPrefab);
     }
     private void Update()
     {

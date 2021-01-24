@@ -3564,7 +3564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  enemyPrefab: {fileID: 2167622696325403091, guid: 067d8033daf724e4dbdb70a750e873fe, type: 3}
+  enemyPrefab: {fileID: 1343937371748594526, guid: 0ce1ae312268442f89ba4e0ed3c5d1f7, type: 3}
   bossPrefab: {fileID: 6066761372371802492, guid: 991776090257c449d83d6ed8c3b387e7, type: 3}
   unitBasePrefab: {fileID: 1154580023765660033, guid: afa08bfd55e6544f8b05300bd5205191, type: 3}
   projectilePrefab: {fileID: 4320547883732887694, guid: 1f417d3b8d95c42019ae44358c2e75e7, type: 3}

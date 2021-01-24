@@ -10,6 +10,7 @@ public class RTSNetworkManager : NetworkManager
 {
     [SerializeField] private GameObject unitBasePrefab = null;
     [SerializeField] private GameObject archerPrefab = null;
+    [SerializeField] private GameObject miniSkeletonPrefab = null;
     [SerializeField] private GameObject knightPrefab = null;
     [SerializeField] private GameObject heroPrefab = null;
     [SerializeField] private GameObject spearmanPrefab = null;
@@ -66,7 +67,7 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(Unit.UnitType.HERO, heroPrefab);
         unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
         unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
-       
+        unitDict.Add(Unit.UnitType.MINISKELETON, miniSkeletonPrefab);
         ServerChangeScene("Scene_Map_01");
     }
 

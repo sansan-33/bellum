@@ -22,7 +22,7 @@ public class SpawnEnemies : NetworkBehaviour
     private GameObject enemy;
     private float stoppingDistance = 1;
     private float chaseRange = 1;
-    private int initSpawnCount=1;
+    private int initSpawnCount=5;
     private float lastFireTime;
     [SerializeField] private float fireRate = 6000f;
     private RTSPlayer player;
@@ -54,7 +54,7 @@ public class SpawnEnemies : NetworkBehaviour
             
             InvokeRepeating("addBehaviourToMilitary", 5f, 25f);
             InvokeRepeating("TryAttack", 6f, 30f);
-            StartCoroutine(loadEnemy(30f, true, 1));
+            //StartCoroutine(loadEnemy(30f, true, 1));
 
         }
     }
