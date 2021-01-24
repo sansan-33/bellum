@@ -221,6 +221,8 @@ MonoBehaviour:
   playerName: Player
   chips: 100
   cardParent: {fileID: 7334827987617121275}
+  cardSlotParent: {fileID: 0}
+  cardSlot: {fileID: 1427372038518026486, guid: 308c4a8e961b8491c836362eeec36c57, type: 3}
   button: {fileID: 0}
   singleHandStart: {fileID: 0}
   splitHandStartLeft: {fileID: 0}
