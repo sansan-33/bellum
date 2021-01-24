@@ -50,17 +50,19 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   targeter: {fileID: 8101672447202448}
-  damageToDeal: 5
+  damageToDeal: 10
   destroyAfterSeconds: 1
   textPrefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}
   camPrefab: {fileID: 1434666941670536975, guid: d482d6539d9c6472e83a38c9c0fa768e, type: 3}
   camFreeLookPrefab: {fileID: 795373343299834476, guid: 7dba4376eea514bdd8c393791a18d23a, type: 3}
   attackPoint: {fileID: 9209867609052111376}
-  attackRange: 5
+  attackRange: 10
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  repeatAttackDelay: 1
+  specialEffectPrefab: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  IsAreaOfEffect: 1
+  repeatAttackDelay: 2
   attackAngle: 1
 --- !u!1001 &619569005086212312
 PrefabInstance:
@@ -210,6 +212,70 @@ PrefabInstance:
       propertyPath: unitType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143328, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143328, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143329, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143329, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143330, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143330, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143331, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143331, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143332, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143332, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143333, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143333, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143334, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143334, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143335, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143335, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4649854274305143336, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Speed
       value: 5
@@ -217,6 +283,38 @@ PrefabInstance:
     - target: {fileID: 4649854274305143336, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Radius
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143340, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143340, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143341, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143341, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143342, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143342, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143343, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: gizmoViewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649854274305143343, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: showBehaviorDesignerGizmo
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4649854274305143349, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_RootOrder
@@ -284,7 +382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5531517098549734394, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: maxHealth
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6960025489075234182, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_RootOrder
