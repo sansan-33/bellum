@@ -17,7 +17,9 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private float attackRange=5f;
     [SerializeField] private LayerMask layerMask = new LayerMask();
- 
+    [SerializeField] private GameObject specialEffectPrefab  = null;
+    [SerializeField] private bool IsAreaOfEffect = false;
+
     private int id;
     private int damageToDealOriginal ;
     
@@ -87,9 +89,11 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
                 //Debug.Log($"Strength Weakness damage {damageToDeal}");
                 other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
                 cmdDamageText(other.transform.position, damageToDeal, damageToDealOriginal);
+                cmdSpecialEffect(other.transform.position);
                 //if (damageToDeal > damageToDealOriginal) { cmdCMVirtual(); }
                 //cmdCMFreeLook();
-                break;
+                if(!IsAreaOfEffect)
+                    break;
             }
 
         }
@@ -133,6 +137,12 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
         NetworkServer.Spawn(floatingText, connectionToClient);
 
 
+    }
+    [Command]
+    private void cmdSpecialEffect(Vector3 position)
+    {
+        GameObject effect = Instantiate(specialEffectPrefab, position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        NetworkServer.Spawn(effect, connectionToClient);
     }
     [Command]
     private void cmdCMVirtual()

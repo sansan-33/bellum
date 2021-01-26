@@ -68,7 +68,7 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
         unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
         unitDict.Add(Unit.UnitType.MINISKELETON, miniSkeletonPrefab);
-        ServerChangeScene("Scene_Map_01");
+        ServerChangeScene("Scene_Map_02");
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn)
@@ -109,7 +109,9 @@ public class RTSNetworkManager : NetworkManager
                 if (player.GetPlayerID() == 0)
                 {
                     //militaryList.Add(Unit.UnitType.ARCHER, 2);
-                    militaryList.Add(Unit.UnitType.KNIGHT, 1);
+                    //militaryList.Add(Unit.UnitType.KNIGHT, 1);
+                    militaryList.Add(Unit.UnitType.MINISKELETON, 10);
+                    
                     //militaryList.Add(Unit.UnitType.HERO, 1);
                 }
                 else
