@@ -79,7 +79,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
                     if (networkIdentity.connectionToClient == connectionToClient) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
-            //Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
+            Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
 
             if (other.TryGetComponent<Health>(out Health health))
             {
@@ -90,7 +90,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
                 other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
                 cmdDamageText(other.transform.position, damageToDeal, damageToDealOriginal);
                 cmdSpecialEffect(other.transform.position);
-                //if (damageToDeal > damageToDealOriginal) { cmdCMVirtual(); }
+                if (damageToDeal > damageToDealOriginal) { cmdCMVirtual(); }
                 //cmdCMFreeLook();
                 if(!IsAreaOfEffect)
                     break;

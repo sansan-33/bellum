@@ -70,5 +70,6 @@ MonoBehaviour:
   spearmanPrefab: {fileID: 2167622696325403091, guid: 067d8033daf724e4dbdb70a750e873fe, type: 3}
   sampleUnitPrefab: {fileID: 6472490757384385474, guid: bcb7a06f3ea88485592f178fcc061a34, type: 3}
   miniSkeletonUnitPrefab: {fileID: 1068480089202617534, guid: c8ce6b4bae235c6478b0c0e75fa68e5e, type: 3}
+  giantUnitPrefab: {fileID: 3253525976206441461, guid: 9a3a4b3a1b289ef4288e782e324644fd, type: 3}
   spawnInterval: 60000
   fireRate: 6000

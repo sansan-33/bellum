@@ -60,7 +60,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  specialEffectPrefab: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  specialEffectPrefab: {fileID: 0}
   IsAreaOfEffect: 0
   repeatAttackDelay: 1
   attackAngle: 1

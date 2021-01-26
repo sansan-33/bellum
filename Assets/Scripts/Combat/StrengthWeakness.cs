@@ -19,6 +19,7 @@ public class StrengthWeakness : MonoBehaviour
         strengthWeakness.Add(Unit.UnitType.CAVALRY, new Unit.UnitType[] { Unit.UnitType.MAGE, Unit.UnitType.KNIGHT });
         strengthWeakness.Add(Unit.UnitType.MINISKELETON, new Unit.UnitType[] { Unit.UnitType.HERO, Unit.UnitType.MAGE });
         strengthWeakness.Add(Unit.UnitType.MAGE, new Unit.UnitType[] { Unit.UnitType.MINISKELETON, Unit.UnitType.KNIGHT });
+        strengthWeakness.Add(Unit.UnitType.GIANT, new Unit.UnitType[] { Unit.UnitType.MAGE, Unit.UnitType.ARCHER });
 
     }
     public int calculateDamage(Unit.UnitType player, Unit.UnitType enemy, int damage)
