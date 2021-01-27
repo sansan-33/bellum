@@ -1034,7 +1034,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1146467055292154545, guid: 8b15887dc36de47adbf25d43aab9b180, type: 3}
       propertyPath: m_Name
-      value: GroundPlayer (1)
+      value: GroundEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 1146467055292154558, guid: 8b15887dc36de47adbf25d43aab9b180, type: 3}
       propertyPath: m_RootOrder
@@ -1050,7 +1050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1146467055292154558, guid: 8b15887dc36de47adbf25d43aab9b180, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21.62
+      value: -21.99
       objectReference: {fileID: 0}
     - target: {fileID: 1146467055292154558, guid: 8b15887dc36de47adbf25d43aab9b180, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5396,6 +5396,10 @@ PrefabInstance:
     - target: {fileID: 1146467055292154545, guid: 8b15887dc36de47adbf25d43aab9b180, type: 3}
       propertyPath: m_Name
       value: GroundPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1146467055292154545, guid: 8b15887dc36de47adbf25d43aab9b180, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1146467055292154558, guid: 8b15887dc36de47adbf25d43aab9b180, type: 3}
       propertyPath: m_RootOrder
