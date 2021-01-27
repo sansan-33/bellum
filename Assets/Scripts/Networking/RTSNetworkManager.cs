@@ -68,7 +68,6 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
         unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
         unitDict.Add(Unit.UnitType.MINISKELETON, miniSkeletonPrefab);
-        unitDict.Add(Unit.UnitType.SAMPLEUNIT, sampleUnitPrefab);
 
         ServerChangeScene("Scene_Map_02");
     }
