@@ -41,6 +41,7 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(Unit.UnitType.CAVALRY, cavalryPrefab);
         unitDict.Add(Unit.UnitType.MINISKELETON, miniSkeletonUnitPrefab);
         unitDict.Add(Unit.UnitType.GIANT, giantUnitPrefab);
+        unitDict.Add(Unit.UnitType.SAMPLEUNIT , sampleUnitPrefab);
     }
     private void Update()
     {
