@@ -140,6 +140,7 @@ public class TacticalBehavior : MonoBehaviour
         type = type % System.Enum.GetNames(typeof(BehaviorSelectionType)).Length;
         prevSelectionType = selectionType;
         selectionType = (BehaviorSelectionType)type;
+        Debug.Log($"Try TB playerID {playerID} {selectionType.ToString()}");
         SelectionChanged(playerID);
     }
     public void TryReinforce(int playerID, int enemyID)
@@ -164,6 +165,7 @@ public class TacticalBehavior : MonoBehaviour
     private IEnumerator EnableBehavior(int playerID)
     {
         yield return new WaitForSeconds(0.1f);
+        Debug.Log($"EnableBehavior {selectionType} Unit Count { behaviorTreeGroups[playerID][(int)selectionType].Count} for player ID {playerID}");
         for (int i = 0; i < behaviorTreeGroups[playerID][(int)selectionType].Count; ++i)
         {
             if (behaviorTreeGroups[playerID][(int)selectionType][i] != null)

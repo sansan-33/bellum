@@ -64,7 +64,8 @@ public class UnitFactory : NetworkBehaviour
             GameObject unit = Instantiate(unitPrefab, spawnPosition + spawnOffset, Quaternion.identity) as GameObject;
             unit.name = unitName;
             unit.tag = "Player" + playerID;
-            if(spawnAuthority)
+            // Cannot remove this one otherwise Tactical Behavior error
+            //if(spawnAuthority)
                 NetworkServer.Spawn(unit, connectionToClient);
             
             spawnCount--;

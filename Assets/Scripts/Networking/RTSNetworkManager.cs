@@ -68,6 +68,8 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
         unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
         unitDict.Add(Unit.UnitType.MINISKELETON, miniSkeletonPrefab);
+        unitDict.Add(Unit.UnitType.SAMPLEUNIT, sampleUnitPrefab);
+
         ServerChangeScene("Scene_Map_02");
     }
 
@@ -108,10 +110,12 @@ public class RTSNetworkManager : NetworkManager
                 militaryList.Clear();
                 if (player.GetPlayerID() == 0)
                 {
-                    //militaryList.Add(Unit.UnitType.ARCHER, 2);
+                    militaryList.Add(Unit.UnitType.ARCHER, 3);
                     //militaryList.Add(Unit.UnitType.KNIGHT, 1);
-                    militaryList.Add(Unit.UnitType.MINISKELETON, 10);
+                    //militaryList.Add(Unit.UnitType.MINISKELETON, 10);
                     //militaryList.Add(Unit.UnitType.HERO, 1);
+                    //militaryList.Add(Unit.UnitType.SAMPLEUNIT, 5);
+
                 }
                 else
                 {

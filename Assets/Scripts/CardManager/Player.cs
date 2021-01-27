@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
         if (playerHand[0].Count > 0)
         {
             playerHand[0][index].destroy();
-            Debug.Log(index);
+            //Debug.Log(index);
             playerHand[0].RemoveAt(index);
         }
         if (!isShiftCard) { return; }
@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
                 playerHand[0][cardMovingindex].cardPlayerHandIndex--;
                 playerHand[0][cardMovingindex + 1].cardPlayerHandIndex++;
                 StartCoroutine(MoveCardTo(playerHand[0][cardMovingindex].transform, singleHandStart.position + new Vector3((cardMovingindex+1) * cardOffset, 0, 0), playerHand[0][cardMovingindex]));
-                Debug.Log(cardMovingindex + 1 * cardOffset);
+                //Debug.Log(cardMovingindex + 1 * cardOffset);
 
             }
         }
@@ -174,12 +174,12 @@ public class Player : MonoBehaviour
     {
         if(index== playerHand[0].Count - 1&& playerHand[0].Count-1 == 6)
         {
-            Debug.Log($"index  last {index}");
+            //Debug.Log($"index  last {index}");
             RemoveCardAt(index, false);
         }
         else
         {
-            Debug.Log($"index not last{ index}");
+            //Debug.Log($"index not last{ index}");
             RemoveCardAt(index, true);
         }
         
@@ -210,7 +210,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator mergeCard()
     {
-        Debug.Log($"Calling Mereg {PrintAllCards(playerHand[0])}");
+       // Debug.Log($"Calling Mereg {PrintAllCards(playerHand[0])}");
 
         //Debug.Log($"Start merge cards in hand  {playerHand[0].Count}");
         //At least 2 cards in Hand, otherwise  ignore merge
@@ -225,14 +225,14 @@ public class Player : MonoBehaviour
             beforeNewCard = playerHand[0][lastCardBefore];
             card = playerHand[0][lastCardBefore + 1];
             // Check if last card before is same card number and same card star  
-            Debug.Log($"Card {beforeNewCard.cardFace.suit} Star: {beforeNewCard.cardFace.star} VS Card {card.cardFace.suit} Star {card.cardFace.star} ");
+            //Debug.Log($"Card {beforeNewCard.cardFace.suit} Star: {beforeNewCard.cardFace.star} VS Card {card.cardFace.suit} Star {card.cardFace.star} ");
             if (beforeNewCard.cardFace.suit == card.cardFace.suit && beforeNewCard.cardFace.star == card.cardFace.star && ((int)beforeNewCard.cardFace.star + 1) < MAXCARDSTAR)
             {
                 //Increase 1 star to before card,  Text is setting + 2 , becuase the enum cardFace.star start with 0 
                 beforeNewCard.cardStar.text = "" + ((int)card.cardFace.star + 2);
                 beforeNewCard.cardFace.star = (Card_Stars)((int)card.cardFace.star) + 1;
                 playerHand[0][lastCardBefore] = beforeNewCard;
-                Debug.Log($"Merged card {lastCardBefore } ==> star {beforeNewCard.cardStar.text}  ");
+                //Debug.Log($"Merged card {lastCardBefore } ==> star {beforeNewCard.cardStar.text}  ");
 
                 //playerHand[0][lastCardBefore + 1].destroy();
                 //playerHand[0].RemoveAt(lastCardBefore + 1);
@@ -243,7 +243,7 @@ public class Player : MonoBehaviour
             }
             lastCardBefore--;
             maxmerge--;
-            Debug.Log($"Leaving Card in hand  {PrintAllCards(playerHand[0])} , checking card index {lastCardBefore} / {lastCardBefore + 1} , megre round remain : {maxmerge} ");
+            //Debug.Log($"Leaving Card in hand  {PrintAllCards(playerHand[0])} , checking card index {lastCardBefore} / {lastCardBefore + 1} , megre round remain : {maxmerge} ");
         }
         yield return new WaitForSeconds(0.2f);
     }
