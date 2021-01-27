@@ -26,7 +26,7 @@ public class Card : MonoBehaviour
 
     public int a;
     public float cardTimer = 0;
-    [SerializeField] List<Sprite> sprite = new List<Sprite>();
+    [SerializeField] public List<Sprite> sprite = new List<Sprite>();
     private GameObject unitPreviewInstance;
     private Renderer unitRendererInstance;
     private Camera mainCamera;
@@ -36,6 +36,7 @@ public class Card : MonoBehaviour
     
     [SerializeField] public TMP_Text cardStar;
     [SerializeField] public Button cardSpawnButton;
+    [SerializeField] public Image charIcon;
 
     void Awake()
     {
