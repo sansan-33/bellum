@@ -72,10 +72,14 @@ public class CardDealer : MonoBehaviour
     private void Update()
     {
         eleixerTimer -= Time.deltaTime;
-        if (eleixerTimer <= 0&& eleixer< maxEleixer)
+        if (eleixerTimer <= 0 )
         {
-            //eleixer += 1;
             eleixerTimer = 1f;
+            if (eleixer < maxEleixer)
+            {
+                eleixer += 1;
+
+            }
         }
         
     }
