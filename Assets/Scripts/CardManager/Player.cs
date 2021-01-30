@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
         foreach (Card card in playerHand[0])
         {
             card.cardPlayerHandIndex = i-1;
-            StartCoroutine(MoveCardTo(card.transform, new Vector3(660, 150, 0) + new Vector3(i * cardOffset, 0, 0), card));
+            StartCoroutine(MoveCardTo(card.transform, singleHandStart.transform.position + new Vector3(i * cardOffset, 0, 0), card));
             i++;
         }
     }
@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
                 playerHand[0][cardMovingindex] = cardBefore;
                 playerHand[0][cardMovingindex ].cardPlayerHandIndex++;
                 playerHand[0][cardMovingindex-1].cardPlayerHandIndex--;
-                StartCoroutine(MoveCardTo(playerHand[0][cardMovingindex].transform, new Vector3(660, 150, 0) + new Vector3((cardMovingindex+1) * cardOffset, 0, 0), playerHand[0][cardMovingindex]));
+                StartCoroutine(MoveCardTo(playerHand[0][cardMovingindex].transform, singleHandStart.transform.position + new Vector3((cardMovingindex+1) * cardOffset, 0, 0), playerHand[0][cardMovingindex]));
 
             }
             else
@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
                 playerHand[0][cardMovingindex] = cardAfter;
                 playerHand[0][cardMovingindex].cardPlayerHandIndex--;
                 playerHand[0][cardMovingindex + 1].cardPlayerHandIndex++;
-                StartCoroutine(MoveCardTo(playerHand[0][cardMovingindex].transform, new Vector3(1000, 150, 0) + new Vector3((cardMovingindex+1) * cardOffset, 0, 0), playerHand[0][cardMovingindex]));
+                StartCoroutine(MoveCardTo(playerHand[0][cardMovingindex].transform, singleHandStart.transform.position + new Vector3((cardMovingindex+1) * cardOffset, 0, 0), playerHand[0][cardMovingindex]));
                 //Debug.Log(cardMovingindex + 1 * cardOffset);
 
             }
@@ -202,7 +202,7 @@ public class Player : MonoBehaviour
             cardslot.transform.SetParent(cardSlotParent);
             totalCardSlot++;
             RectTransform rt = cardslot.GetComponent<RectTransform>();//= new Vector3(300, 150, 0) + new Vector3(totalCardSlot * cardOffset, 0, 0);
-            rt.anchoredPosition = new Vector3(-700, 150, 0) + new Vector3(totalCardSlot * cardOffset, 0, 0);
+            rt.anchoredPosition = new Vector3(-710, 95, 0) + new Vector3(totalCardSlot * (cardOffset*2), 0, 0);
             // cardslot.transform.position = new Vector3(1000, 150, 0) + new Vector3(totalCardSlot * cardOffset , 0, 0);
             Debug.Log(cardslot);
 
@@ -210,7 +210,7 @@ public class Player : MonoBehaviour
            
         }
         card.transform.SetParent(cardSlotlist[playerHand[0].Count-1].transform);
-        StartCoroutine(MoveCardTo(card.transform, new Vector3(1000, 150,0) + new Vector3(playerHand[0].Count * cardOffset, 0, 0), card));
+        StartCoroutine(MoveCardTo(card.transform, singleHandStart.transform.position + new Vector3(playerHand[0].Count * cardOffset, 0, 0), card));
         StartCoroutine(mergeCard());
 
     }
@@ -273,9 +273,11 @@ public class Player : MonoBehaviour
         //IF Card is not merged
         if (card != null)
         {
-
-            card.GetComponent<RectTransform>().localPosition = targetPosition;
-           // card.cardSpawnButton.transform.position = targetPositionds;
+            Debug.Log(targetPosition);
+            RectTransform rt = card.GetComponent<RectTransform>();
+            rt.anchoredPosition = new Vector3(-80,100,0);
+            Debug.Log(rt.anchoredPosition);
+            //card.cardSpawnButton.transform.position = targetPosition;
         }
         yield return new WaitForSeconds(0.5f);
     }
