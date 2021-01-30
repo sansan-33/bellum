@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     [SerializeField] Text chipsText;
     [SerializeField] Text pot1Text;
     [SerializeField] Text pot2Text;
-
+    private  List<CardSlot> cardSlotlist = new List<CardSlot>();
     void Awake()
     {
         Reset();
@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
                 playerHand[0][cardMovingindex] = cardAfter;
                 playerHand[0][cardMovingindex].cardPlayerHandIndex--;
                 playerHand[0][cardMovingindex + 1].cardPlayerHandIndex++;
-                StartCoroutine(MoveCardTo(playerHand[0][cardMovingindex].transform, new Vector3(660, 150, 0) + new Vector3((cardMovingindex+1) * cardOffset, 0, 0), playerHand[0][cardMovingindex]));
+                StartCoroutine(MoveCardTo(playerHand[0][cardMovingindex].transform, new Vector3(1000, 150, 0) + new Vector3((cardMovingindex+1) * cardOffset, 0, 0), playerHand[0][cardMovingindex]));
                 //Debug.Log(cardMovingindex + 1 * cardOffset);
 
             }
@@ -201,11 +201,16 @@ public class Player : MonoBehaviour
             cardslot = Instantiate(cardSlot).GetComponent<CardSlot>();
             cardslot.transform.SetParent(cardSlotParent);
             totalCardSlot++;
-            cardslot.transform.position = new Vector3(660, 150, 0) + new Vector3(totalCardSlot * cardOffset , 0, 0);
-            
+            RectTransform rt = cardslot.GetComponent<RectTransform>();//= new Vector3(300, 150, 0) + new Vector3(totalCardSlot * cardOffset, 0, 0);
+            rt.anchoredPosition = new Vector3(-700, 150, 0) + new Vector3(totalCardSlot * cardOffset, 0, 0);
+            // cardslot.transform.position = new Vector3(1000, 150, 0) + new Vector3(totalCardSlot * cardOffset , 0, 0);
+            Debug.Log(cardslot);
+
+            cardSlotlist.Add(cardslot);
+           
         }
-        card.transform.SetParent(cardslot.transform);
-        StartCoroutine(MoveCardTo(card.transform, new Vector3(660,150,0) + new Vector3(playerHand[0].Count * cardOffset, 0, 0), card));
+        card.transform.SetParent(cardSlotlist[playerHand[0].Count-1].transform);
+        StartCoroutine(MoveCardTo(card.transform, new Vector3(1000, 150,0) + new Vector3(playerHand[0].Count * cardOffset, 0, 0), card));
         StartCoroutine(mergeCard());
 
     }
@@ -268,7 +273,9 @@ public class Player : MonoBehaviour
         //IF Card is not merged
         if (card != null)
         {
-            card.cardSpawnButton.transform.position = targetPosition;
+
+            card.GetComponent<RectTransform>().localPosition = targetPosition;
+           // card.cardSpawnButton.transform.position = targetPositionds;
         }
         yield return new WaitForSeconds(0.5f);
     }
