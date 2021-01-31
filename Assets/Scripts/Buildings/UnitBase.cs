@@ -31,7 +31,8 @@ public class UnitBase : NetworkBehaviour
     [Server]
     private void ServerHandleDie()
     {
-        ServerOnPlayerDie?.Invoke(connectionToClient.connectionId);
+        if (connectionToClient != null)
+            ServerOnPlayerDie?.Invoke(connectionToClient.connectionId);
 
         NetworkServer.Destroy(gameObject);
     }

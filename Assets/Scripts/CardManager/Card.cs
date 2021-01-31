@@ -102,11 +102,11 @@ public class Card : MonoBehaviour
             return;
         }
         DealManagers.GetComponent<CardDealer>().eleixer -= ((int)this.cardFace.star+1);
-        Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} ");
+        //Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} ");
 
-        Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} playerID {playerID} localFactory is null ? {localFactory == null} ");
         Destroy(gameObject);
         int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(Unit.UnitType)).Length;
+        Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / PlayerHand index {this.cardPlayerHandIndex} playerID {playerID} localFactory is null ? {localFactory == null} ");
         if (localFactory == null) {
             foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
             {
@@ -116,7 +116,6 @@ public class Card : MonoBehaviour
                 }
             }
         }
-
 
         localFactory.CmdSpawnUnit((Unit.UnitType) type , (int)this.cardFace.star + 1, playerID, true );
         FindObjectOfType<TacticalBehavior>().TryReinforce(playerID, enemyID);
@@ -224,17 +223,5 @@ public class Card : MonoBehaviour
     }
     public enum Card_Numbers
     {
-        Ace,
-        Two,
-        Three,
-        Four,
-        Five,
-        Six,
-        Seven,
-        Eight,
-        Nine,
-        Ten,
-        Jack,
-        Queen,
-        King
-    }
+    ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN, HERO, MINISKELETON, GIANT
+}
