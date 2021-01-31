@@ -64,7 +64,7 @@ public class MatchMaking : MonoBehaviour
         jsonResult = JSON.Parse(rawJson);
         Debug.Log($"jsonResult {webReq.url } {jsonResult["namehk"]}");
         // display the results on screen
-        tmp_text.text =  jsonResult["namehk"];
+        //tmp_text.text =  jsonResult["namehk"];
     }
 
 

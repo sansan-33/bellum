@@ -68,8 +68,7 @@ MonoBehaviour:
   cavalryPrefab: {fileID: 8850852520293422630, guid: c5a475fa0872443c5a3028c2d53b1f2c, type: 3}
   heroPrefab: {fileID: 4342462246138444538, guid: 6ac39bdc16e104ef6b89acba52c27d9b, type: 3}
   spearmanPrefab: {fileID: 2167622696325403091, guid: 067d8033daf724e4dbdb70a750e873fe, type: 3}
-  sampleUnitPrefab: {fileID: 6472490757384385474, guid: bcb7a06f3ea88485592f178fcc061a34, type: 3}
   miniSkeletonUnitPrefab: {fileID: 1068480089202617534, guid: c8ce6b4bae235c6478b0c0e75fa68e5e, type: 3}
-  giantUnitPrefab: {fileID: 3253525976206441461, guid: 9a3a4b3a1b289ef4288e782e324644fd, type: 3}
+  giantUnitPrefab: {fileID: 1467851458867212187, guid: 9a3a4b3a1b289ef4288e782e324644fd, type: 3}
   spawnInterval: 60000
   fireRate: 6000
