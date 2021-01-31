@@ -11,7 +11,6 @@ using TMPro;
 public class MatchMaking : MonoBehaviour
 {
 
-    private const string API_KEY = "88169749096b61e3b85398905927f53c";
     private const float API_CHECK_MAXTIME = 10 * 60.0f; //10 minutes
     public GameObject addressPanel;
     public GameObject serverIP;
@@ -26,16 +25,16 @@ public class MatchMaking : MonoBehaviour
 
     void Start()
     {
-        CheckLobbyStatus();
+        //CheckLobbyStatus();
     }
     void Update()
     {
-        apiCheckCountdown -= Time.deltaTime;
-        if (apiCheckCountdown <= 0)
-        {
-            CheckLobbyStatus();
-            apiCheckCountdown = API_CHECK_MAXTIME;
-        }
+        //apiCheckCountdown -= Time.deltaTime;
+        //if (apiCheckCountdown <= 0)
+        //{
+        //    CheckLobbyStatus();
+        //    apiCheckCountdown = API_CHECK_MAXTIME;
+        //}
     }
     public void CheckLobbyStatus()
     {
