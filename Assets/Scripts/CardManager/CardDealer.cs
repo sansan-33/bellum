@@ -143,7 +143,7 @@ public class CardDealer : MonoBehaviour
         cardDeckUsed.Add(randomCard);
 
         lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard));
-        lastCard.cardSpawnButton.GetComponentInChildren<Text>().text = randomCard.suit.ToString();
+        lastCard.cardSpawnButton.GetComponentInChildren<Text>().text = randomCard.numbers.ToString();
         int cardnumber = (int)randomCard.numbers;
         cardnumber = cardnumber % lastCard.GetComponent<Card>().sprite.Count;
 
