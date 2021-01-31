@@ -124,7 +124,7 @@ public class Card : MonoBehaviour
 
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
         DealManagers.GetComponent<CardDealer>().Hit();
-       
+        Debug.Log("end of poiterDown");
     }
 
     public void FadeOut()
