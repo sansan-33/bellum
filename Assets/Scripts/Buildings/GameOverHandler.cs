@@ -41,12 +41,12 @@ public class GameOverHandler : NetworkBehaviour
     [Server]
     private void ServerHandleUnitDespawned(Unit unit)
     {
-        Debug.Log($"Total Units {unit.tag} count {units[unit.tag].Count}");
+        //Debug.Log($"Total Units {unit.tag} count {units[unit.tag].Count}");
         units[unit.tag].Remove(unit);
 
         if (units[unit.tag].Count != 0 ) { return; }
 
-        RpcGameOver($"Player {unit.tag}");
+        RpcGameOver($"{unit.tag}");
 
         ServerOnGameOver?.Invoke();
     }

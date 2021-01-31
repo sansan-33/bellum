@@ -21,7 +21,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
     [SerializeField] private bool IsAreaOfEffect = false;
 
     private int id;
-    private int damageToDealOriginal ;
+    private int calculatedDamageToDeal ;
     
     bool m_Started;
     // The amount of time it takes for the agent to be able to attack again
@@ -31,25 +31,26 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
 
     // The last time the agent attacked
     private float lastAttackTime;
-    private StrengthWeakness strengthWeakness;
+    public StrengthWeakness strengthWeakness;
     RTSPlayer player;
 
     public override void OnStartAuthority()
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        damageToDealOriginal += damageToDeal;
+        calculatedDamageToDeal = damageToDeal;
         //lastAttackTime = -repeatAttackDelay;
         strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
+        Debug.Log($"Is strengthWeakness is null ? {strengthWeakness == null}");
         //Use this to ensure that the Gizmos are being drawn when in Play Mode.
         m_Started = true;
     }
     
     [Command]
-    public void cmdAttack()
+    public void TryAttack()
     {
         //Debug.Log($"Attacker {targeter} attacking .... ");
 
-        damageToDeal = damageToDealOriginal;
+        calculatedDamageToDeal = damageToDeal;
         //Use the OverlapBox to detect if there are any other colliders within this box area.
         //Use the GameObject's centre, half the size (as a radius) and rotation. This creates an invisible box around your GameObject.
         Collider[] hitColliders = Physics.OverlapBox(attackPoint.transform.position, transform.localScale * attackRange, Quaternion.identity, layerMask);
@@ -79,13 +80,16 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
             if (other.TryGetComponent<Health>(out Health health))
             {
                 Debug.Log($"Original damage {damageToDeal}, {this.GetComponent<Unit>().unitType} , {other.GetComponent<Unit>().unitType} ");
-                damageToDeal = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeal);
-                health.DealDamage(damageToDeal);
-                Debug.Log($"Strength Weakness damage {damageToDeal}");
+                if(strengthWeakness == null) {
+                    strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
+                }
+                calculatedDamageToDeal = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeal);
+                health.DealDamage(calculatedDamageToDeal);
+                Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
                 other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
-                cmdDamageText(other.transform.position, damageToDeal, damageToDealOriginal);
+                cmdDamageText(other.transform.position, calculatedDamageToDeal , damageToDeal );
                 cmdSpecialEffect(other.transform.position);
-                if (damageToDeal > damageToDealOriginal) { cmdCMVirtual(); }
+                if (calculatedDamageToDeal > damageToDeal ) { cmdCMVirtual(); }
                 //cmdCMFreeLook();
                 if(!IsAreaOfEffect)
                     break;
@@ -112,20 +116,20 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
 
 
     [Command]   
-    private void cmdDamageText(Vector3 targetPos, int damageToDeals , int damageToDealOriginal)
+    private void cmdDamageText(Vector3 targetPos, int damageNew , int damgeOld)
     {
         GameObject floatingText = Instantiate(textPrefab, targetPos, Quaternion.identity);
         Color textColor;
         string dmgText;
-        if (damageToDeals > damageToDealOriginal)
+        if (damageNew > damgeOld)
         {
             textColor = floatingText.GetComponent<DamageTextHolder>().CriticalColor;
-            dmgText = damageToDeals + " Critical";
+            dmgText = damageNew + " Critical";
         }
         else
         {
             textColor = floatingText.GetComponent<DamageTextHolder>().NormalColor;
-            dmgText = damageToDeals + "";
+            dmgText = damageNew + "";
         }
         floatingText.GetComponent<DamageTextHolder>().displayColor = textColor;
         floatingText.GetComponent<DamageTextHolder>().displayText = dmgText;
@@ -181,7 +185,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
         lastAttackTime = Time.time;
         //Debug.Log($"unit {targeter.transform.GetComponent<Unit>().name } attacking now, lastAttackTime: {lastAttackTime} ");
         targeter.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("attack");
-        cmdAttack();
+        TryAttack();
 
     }
 }
