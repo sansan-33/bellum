@@ -250,7 +250,7 @@ RectTransform:
   m_GameObject: {fileID: 2068810399220974159}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 3127072866336025735}
   - {fileID: 3422969861682629335}
@@ -336,6 +336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardParent: {fileID: 4590956966355113817}
+  startPosition: {x: 0, y: 0, z: 0}
+  startParent: {fileID: 0}
   cardPlayerHandIndex: 0
 --- !u!225 &7822742786630516621
 CanvasGroup:

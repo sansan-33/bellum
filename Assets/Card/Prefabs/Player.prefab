@@ -91,7 +91,7 @@ MonoBehaviour:
   singleHandStart: {fileID: 0}
   splitHandStartLeft: {fileID: 0}
   splitHandStartRight: {fileID: 0}
-  cardOffset: 60
+  cardOffset: 100
   cardMoveSpeed: 10
   MAXCARDSTAR: 2
   leftBust: 0
