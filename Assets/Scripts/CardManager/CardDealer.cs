@@ -167,6 +167,7 @@ public class CardDealer : MonoBehaviour
         //cardDispenserAnimator.SetBool("Dealing", false);
 
         //Player takes card
+       
         player.AddCard(lastCard, left);
         // ===================================== 
         // Set Button

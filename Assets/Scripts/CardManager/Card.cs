@@ -96,6 +96,7 @@ public class Card : MonoBehaviour
 
     public void OnPointerDown()
     {
+        Debug.Log(cardPlayerHandIndex);
         GameObject DealManagers = GameObject.FindGameObjectWithTag("DealManager");
         if (DealManagers.GetComponent<CardDealer>().eleixer < 1)
         {
@@ -106,7 +107,7 @@ public class Card : MonoBehaviour
 
         Destroy(gameObject);
         int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(Unit.UnitType)).Length;
-        Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / PlayerHand index {this.cardPlayerHandIndex} playerID {playerID} localFactory is null ? {localFactory == null} ");
+      //  Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / PlayerHand index {this.cardPlayerHandIndex} playerID {playerID} localFactory is null ? {localFactory == null} ");
         if (localFactory == null) {
             foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
             {
@@ -123,7 +124,7 @@ public class Card : MonoBehaviour
 
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
         DealManagers.GetComponent<CardDealer>().Hit();
-        Debug.Log("end of poiterDown");
+       
     }
 
     public void FadeOut()

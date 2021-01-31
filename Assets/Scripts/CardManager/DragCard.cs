@@ -7,8 +7,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 {
     public static GameObject objBeingDraged;
     [SerializeField] Card CardParent;
-    private Vector3 startPosition;
-    private Transform startParent;
+    public Vector3 startPosition;
+    public Transform startParent;
     private CanvasGroup canvasGroup;
     private Transform itemDraggerParent;
     public int cardPlayerHandIndex = 0;
@@ -67,7 +67,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (SecBeforePosition.x - transform.position.x > 0)
         {
             SecBeforePosition = transform.position;
-            Debug.Log("moveing left");
+            //moveing left
             //move left
 
            
@@ -86,14 +86,14 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         else
         {
             SecBeforePosition = transform.position;
-            Debug.Log("moveing right");
+          //moveing right
             //move right
             
                  SpaceBetweenTwoCard = cardAfterTransform - transform.position.x;
         
                 if (SpaceBetweenTwoCard <= 31)
                 {
-                    Debug.Log("Moving card right to left");
+                    //Moving card right to left
                     cardAfterTransform = transform.position.x + 120;
                     CardParent.GetComponentInParent<Player>().moveCardAt(cardPlayerHandIndex, false);
                 cardBeforeTransform = transform.position.x+60;

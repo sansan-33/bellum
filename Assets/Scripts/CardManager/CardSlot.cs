@@ -16,16 +16,16 @@ public class CardSlot : MonoBehaviour, IDropHandler
         {
             item = DragCard.objBeingDraged;
             item.transform.SetParent(transform);
-            item.transform.position = transform.position;
+           // item.transform.position = transform.position;
             cardNow = item;
         }
-        /*else
+        else
         {
-            Debug.Log(item);
-            item = DragCard.objBeingDraged;
-            item.transform.SetParent(transform);
-            item.transform.position = transform.position;
-        }*/
+            //item.transform.position = item.GetComponent<DragCard>().startPosition;
+            //item = DragCard.objBeingDraged;
+           // item.transform.SetParent(transform);
+            //item.transform.position = transform.position;
+        }
     }
 
     private void Update()

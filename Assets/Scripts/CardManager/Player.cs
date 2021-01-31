@@ -45,8 +45,10 @@ public class Player : MonoBehaviour
     [SerializeField] Text pot1Text;
     [SerializeField] Text pot2Text;
     private  List<CardSlot> cardSlotlist = new List<CardSlot>();
+   
     void Awake()
     {
+       
         Reset();
     }
 
@@ -207,6 +209,7 @@ public class Player : MonoBehaviour
             cardSlotlist.Add(cardslot);
            
         }
+       
         card.transform.SetParent(cardSlotlist[playerHand[0].Count-1].transform);
         StartCoroutine(MoveCardTo(card.transform, singleHandStart.transform.position + new Vector3(playerHand[0].Count * cardOffset, 0, 0), card));
         StartCoroutine(mergeCard());
@@ -214,7 +217,8 @@ public class Player : MonoBehaviour
     }
     IEnumerator mergeCard()
     {
-       // Debug.Log($"Calling Mereg {PrintAllCards(playerHand[0])}");
+        
+        // Debug.Log($"Calling Mereg {PrintAllCards(playerHand[0])}");
 
         //Debug.Log($"Start merge cards in hand  {playerHand[0].Count}");
         //At least 2 cards in Hand, otherwise  ignore merge
@@ -241,8 +245,9 @@ public class Player : MonoBehaviour
                 //playerHand[0][lastCardBefore + 1].destroy();
                 //playerHand[0].RemoveAt(lastCardBefore + 1);
                 //yield return new WaitForSeconds(0.5f);
+               
                 RemoveLastCard(lastCardBefore + 1);
-
+               
                 //lastCardBefore = playerHand[0].Count - 2;
             }
             lastCardBefore--;
@@ -260,7 +265,7 @@ public class Player : MonoBehaviour
         string result = "";
         for (int i = 0; i < cards.Count; i++)
         {
-            result += "" + (i + 1) + ":" + cards[i].cardFace.suit + ":" + cards[i].cardFace.star + ",";
+            result += "" + (i + 1) + ":" + cards[i].cardFace.numbers + ":" + cards[i].cardFace.star + ",";
         }
 
         return result;
@@ -297,16 +302,17 @@ public class Player : MonoBehaviour
     }
     public void moveCard(int index, bool isShiftCard = true)
     {
-        Debug.Log(index);
-        
+       
         if (playerHand[0].Count > 0)
         {
             playerHand[0][index].destroy();
             //Debug.Log(index);
             playerHand[0].RemoveAt(index);
+            
         }
         if (!isShiftCard) { return; }
         int i = 0;
+        
         foreach(Card card in playerHand[0])
         {
             card.cardPlayerHandIndex = i;
@@ -314,11 +320,15 @@ public class Player : MonoBehaviour
             card.GetComponent<RectTransform>().anchoredPosition = new Vector3(-80, 100, 0);
             i++;
         }
-              
+        
     }
     public void moveTwoCard(int index)
     {
         playerHand[0][index].transform.SetParent(cardSlotlist[index].transform);
         playerHand[0][index].GetComponent<RectTransform>().anchoredPosition = new Vector3(-80, 100, 0);
+    }
+    private void Update()
+    {
+        Debug.Log(PrintAllCards(playerHand[0]));
     }
 }
