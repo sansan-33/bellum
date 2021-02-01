@@ -26,6 +26,8 @@ TagManager:
   - UnitSpawner
   - UnitFactory
   - CardDraggerParent
+  - FxTemporaire
+  - SpawnPointEnemy
   layers:
   - Default
   - TransparentFX

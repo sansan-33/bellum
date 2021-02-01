@@ -41,7 +41,7 @@ public class SpawnEnemies : MonoBehaviour
 
     private void SpawnEnemyBase()
     {
-        Vector3 pos = GameObject.FindGameObjectsWithTag("SpawnPoint")[1].transform.position;
+        Vector3 pos = GameObject.FindGameObjectWithTag("SpawnPointEnemy").transform.position;
         GameObject defendObject = Instantiate(capsulePrefab, pos, Quaternion.identity);
         defendObject.tag = "PlayerBase" + enemyID;
         defendObject.SetActive(true);
