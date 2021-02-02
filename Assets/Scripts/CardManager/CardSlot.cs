@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,9 +15,11 @@ public class CardSlot : MonoBehaviour, IDropHandler
 
         if (!item)
         {
+            Debug.Log("Drop succes");
             item = DragCard.objBeingDraged;
             item.transform.SetParent(transform);
-           // item.transform.position = transform.position;
+           
+            item.GetComponent<RectTransform>().anchoredPosition = new Vector2(-80,100);
             cardNow = item;
         }
         else
@@ -36,5 +39,10 @@ public class CardSlot : MonoBehaviour, IDropHandler
             item = null;
         }
 
+    }
+
+    internal object GetComponenInchild<T>()
+    {
+        throw new NotImplementedException();
     }
 }

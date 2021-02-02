@@ -28,6 +28,7 @@ TagManager:
   - CardDraggerParent
   - FxTemporaire
   - SpawnPointEnemy
+  - CardSlot
   layers:
   - Default
   - TransparentFX

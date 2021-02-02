@@ -10,7 +10,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public Transform startParent;
     private Transform itemDraggerParent;
     
-    public Vector2 startPos;
+    public static Vector2 startPos;
     public string direction;
     public bool directionChosen;
     [SerializeField] private GameObject DragPoint;
@@ -31,8 +31,10 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("OnBeginDrag");
+        objBeingDraged = gameObject;
         startPos = this.transform.position;
         lastXPos = Input.mousePosition.x;
+        transform.SetParent(itemDraggerParent);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -103,6 +105,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         Debug.Log("OnEndDrag");
+        objBeingDraged = null;
         CardParent.GetComponentInParent<Player>().dragCardMerge();
         if (transform.parent == itemDraggerParent)
         {

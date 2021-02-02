@@ -98,11 +98,11 @@ public class Card : MonoBehaviour
     {
         Debug.Log(cardPlayerHandIndex);
         GameObject DealManagers = GameObject.FindGameObjectWithTag("DealManager");
-        if (DealManagers.GetComponent<CardDealer>().eleixer < 1)
+        if (DealManagers.GetComponent<CardDealer>().eleixer < (int)this.cardFace.star + 1)
         {
             return;
         }
-        DealManagers.GetComponent<CardDealer>().eleixer -= ((int)this.cardFace.star+1);
+        DealManagers.GetComponent<CardDealer>().eleixer -= (int)this.cardFace.star+1;
         //Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} ");
 
         Destroy(gameObject);

@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
     }*/
     public void moveCardAt(int cardMovingindex, string direction)
     {
-
+        Debug.Log($"{cardMovingindex},{ direction}");
         bool isMoveLeft = direction == "left" ? true : false;
         if (playerHand[0].Count > 0)
         {
@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
                 playerHand[0][cardMovingindex] = cardBefore;
                 playerHand[0][cardMovingindex ].cardPlayerHandIndex++;
                 playerHand[0][cardMovingindex-1].cardPlayerHandIndex--;
-                moveTwoCard(cardMovingindex);
+                moveOneCard(cardMovingindex);
             }
             else
             {
@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
                 playerHand[0][cardMovingindex] = cardAfter;
                 playerHand[0][cardMovingindex].cardPlayerHandIndex--;
                 playerHand[0][cardMovingindex + 1].cardPlayerHandIndex++;
-                moveTwoCard(cardMovingindex);
+                moveOneCard(cardMovingindex);
 
             }
         }
@@ -236,7 +236,7 @@ public class Player : MonoBehaviour
             card = playerHand[0][lastCardBefore + 1];
             // Check if last card before is same card number and same card star  
             //Debug.Log($"Card {beforeNewCard.cardFace.suit} Star: {beforeNewCard.cardFace.star} VS Card {card.cardFace.suit} Star {card.cardFace.star} ");
-            if (beforeNewCard.cardFace.suit == card.cardFace.suit && beforeNewCard.cardFace.star == card.cardFace.star && ((int)beforeNewCard.cardFace.star + 1) < MAXCARDSTAR)
+            if (beforeNewCard.cardFace.numbers == card.cardFace.numbers && beforeNewCard.cardFace.star == card.cardFace.star && ((int)beforeNewCard.cardFace.star + 1) < MAXCARDSTAR)
             {
                 //Increase 1 star to before card,  Text is setting + 2 , becuase the enum cardFace.star start with 0 
                 beforeNewCard.cardStar.text = "" + ((int)card.cardFace.star + 2);
@@ -304,7 +304,7 @@ public class Player : MonoBehaviour
     }
     public void moveCard(int index, bool isShiftCard = true)
     {
-       
+        Debug.Log(1);
         if (playerHand[0].Count > 0)
         {
             playerHand[0][index].destroy();
@@ -312,25 +312,28 @@ public class Player : MonoBehaviour
             playerHand[0].RemoveAt(index);
             
         }
-        if (!isShiftCard) { return; }
+        Debug.Log(2);
+        //if (!isShiftCard) { return; }
         int i = 0;
-        
-        foreach(Card card in playerHand[0])
+        Debug.Log(3);
+        foreach (Card card in playerHand[0])
         {
             card.cardPlayerHandIndex = i;
             card.transform.SetParent(cardSlotlist[i].transform);
+            Debug.Log(4);
+            Debug.Log(cardSlotlist);
             card.GetComponent<RectTransform>().anchoredPosition = new Vector3(-80, 100, 0);
             i++;
         }
         
     }
-    public void moveTwoCard(int index)
+    public void moveOneCard(int index)
     {
         playerHand[0][index].transform.SetParent(cardSlotlist[index].transform);
         playerHand[0][index].GetComponent<RectTransform>().anchoredPosition = new Vector3(-80, 100, 0);
     }
     private void Update()
     {
-        Debug.Log(PrintAllCards(playerHand[0]));
+      
     }
 }
