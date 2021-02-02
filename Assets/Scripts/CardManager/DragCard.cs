@@ -18,6 +18,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private bool m_Started = true;
     private int dragRange = 80;
     private float lastXPos = 0;
+    private float deltaPos = 2f; // At least move 1 pixels
+    private Dictionary<int, string> hittedDict = new Dictionary<int, string>();
 
     private void Start()
     {
@@ -30,11 +32,16 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         Debug.Log("OnBeginDrag");
         startPos = this.transform.position;
+        lastXPos = Input.mousePosition.x;
+
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        direction = Input.mousePosition.x > lastXPos ? "right" : "left";
+        if (Mathf.Abs(Input.mousePosition.x - lastXPos) < deltaPos) { return; } // At least move deltaPos pixels
+
+        direction = Input.mousePosition.x > lastXPos  ? "right" : "left";
+        //Debug.Log($"On Drag Mouse Direction {Input.mousePosition.x} lastPos {lastXPos}  , {direction} ");
         MoveCard();
         ShiftCard();
         lastXPos = Input.mousePosition.x;
@@ -49,6 +56,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         Collider[] hitColliders = Physics.OverlapBox(DragPoint.transform.position, transform.localScale * dragRange, Quaternion.identity, layerMask);
         int i = 0;
         Collider other;
+        bool isMove = false;
         //Check when there is a new collider coming into contact with the box
         while (i < hitColliders.Length)
         {
@@ -56,9 +64,26 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             if (other.TryGetComponent<Card>(out Card hittedCard))
             {
                 if (dragCardPlayerHandIndex == hittedCard.cardPlayerHandIndex) { continue; }
-                Debug.Log($"Shift Card  {dragCardPlayerHandIndex } to  {hittedCard.cardPlayerHandIndex } / direction {direction} ");
-                CardParent.GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex , direction );
-                break;
+                
+                if (hittedDict.TryGetValue(hittedCard.cardPlayerHandIndex, out string hittedCardDirection ) )
+                {
+                    if(hittedCardDirection != direction)
+                    {
+                        isMove = true;
+                        hittedDict[hittedCard.cardPlayerHandIndex] = direction;
+                    }
+                }
+                else
+                {
+                    hittedDict.Add(hittedCard.cardPlayerHandIndex, direction);
+                    isMove = true;
+                }
+                if (isMove)
+                {
+                    CardParent.GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex, direction);
+                    Debug.Log($"Shift Card  {dragCardPlayerHandIndex } to  {hittedCard.cardPlayerHandIndex } / direction {direction} ");
+                    break;
+                }
             }
         }
     }
