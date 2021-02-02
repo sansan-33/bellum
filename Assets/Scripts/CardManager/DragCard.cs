@@ -16,7 +16,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     [SerializeField] private GameObject DragPoint;
     [SerializeField] private LayerMask layerMask = new LayerMask();
     private bool m_Started = true;
-    private int dragRange = 80;
+    private int dragRange = 50;
     private float lastXPos = 0;
     private float deltaPos = 2f; // At least move 1 pixels
     private Dictionary<int, string> hittedDict = new Dictionary<int, string>();
