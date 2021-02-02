@@ -33,22 +33,23 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         Debug.Log("OnBeginDrag");
         startPos = this.transform.position;
         lastXPos = Input.mousePosition.x;
-
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (Mathf.Abs(Input.mousePosition.x - lastXPos) < deltaPos) { return; } // At least move deltaPos pixels
-
-        direction = Input.mousePosition.x > lastXPos  ? "right" : "left";
-        //Debug.Log($"On Drag Mouse Direction {Input.mousePosition.x} lastPos {lastXPos}  , {direction} ");
-        MoveCard();
-        ShiftCard();
-        lastXPos = Input.mousePosition.x;
+        TryDragCard(Input.mousePosition.x);
     }
-    private void MoveCard()
+    private void TryDragCard(float mouseOrTouchPosX)
     {
-        this.transform.position = new Vector3(Input.mousePosition.x, startPos.y, 0f);
+        if (Mathf.Abs(mouseOrTouchPosX - lastXPos) < deltaPos) { return; } // At least move deltaPos pixels
+
+        direction = mouseOrTouchPosX > lastXPos ? "right" : "left";
+        //Debug.Log($"On Drag Mouse Direction {mouseOrTouchPosX} lastPos {lastXPos}  , {direction} ");
+
+        this.transform.position = new Vector3(mouseOrTouchPosX, startPos.y, 0f);
+
+        ShiftCard();
+        lastXPos = mouseOrTouchPosX;
     }
     private void ShiftCard()
     {
@@ -64,16 +65,17 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             if (other.TryGetComponent<Card>(out Card hittedCard))
             {
                 if (dragCardPlayerHandIndex == hittedCard.cardPlayerHandIndex) { continue; }
-                
-                if (hittedDict.TryGetValue(hittedCard.cardPlayerHandIndex, out string hittedCardDirection ) )
+
+                // Check whehter move card , new hitted card or old hitted card but different direction can move 
+                if (hittedDict.TryGetValue(hittedCard.cardPlayerHandIndex, out string hittedCardDirection ) ) // hiited card 
                 {
-                    if(hittedCardDirection != direction)
+                    if(hittedCardDirection != direction) 
                     {
                         isMove = true;
                         hittedDict[hittedCard.cardPlayerHandIndex] = direction;
                     }
                 }
-                else
+                else // new hitted card
                 {
                     hittedDict.Add(hittedCard.cardPlayerHandIndex, direction);
                     isMove = true;
@@ -141,8 +143,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
                 // Determine direction by comparing the current touch position with the initial one.
                 case TouchPhase.Moved:
-                    direction = touch.position.x > lastXPos ? "right" : "left";  //touch.position - startPos;
-                    lastXPos = touch.position.x;
+                    TryDragCard(touch.position.x);
                     break;
 
                 // Report that a direction has been chosen when the finger is lifted.
