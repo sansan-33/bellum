@@ -58,6 +58,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 if (dragCardPlayerHandIndex == hittedCard.cardPlayerHandIndex) { continue; }
                 Debug.Log($"Shift Card  {dragCardPlayerHandIndex } to  {hittedCard.cardPlayerHandIndex } / direction {direction} ");
                 CardParent.GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex , direction );
+                break;
             }
         }
     }
