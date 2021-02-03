@@ -86,11 +86,13 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     UpdateInPosition(formationIndex, true);
                 }
             }
-            //Debug.Log($" agent {tacticalAgent.transform.GetComponent<Unit>().unitType} inPosition {inPosition}   " );
+            Debug.Log($" agent leader : index {base.leaderGroupIndex} target {base.targetTag}  " );
             if (inPosition && (canAttack || !waitForAttack.Value)) {
                 tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + " = " + ": Attack " + HEARTBEAT++);
                 tacticalAgent.TryAttack();
             }
+            if (base.leader.Value != null)
+                base.leader.Value.GetComponent<HealthDisplay>().EnableLeaderIcon();
 
             return TaskStatus.Running;
         }

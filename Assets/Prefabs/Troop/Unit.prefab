@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 250}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6624072730440395043
 CanvasRenderer:
@@ -358,8 +358,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,8 +398,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,8 +439,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,8 +479,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,8 +519,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,8 +560,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,8 +600,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,8 +640,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,8 +680,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,8 +720,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,8 +760,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4649854274305143333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,8 +801,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &1430969508781407035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,7 +838,6 @@ MonoBehaviour:
   health: {fileID: 5531517098549734394}
   unitMovement: {fileID: 988132111067734789}
   id: -1
-  isEmeny: 0
   taskStatus: {fileID: 8749233842873657067}
   price: 100
   targeter: {fileID: 1489045426958974518}
@@ -956,6 +955,7 @@ MonoBehaviour:
   healthBarParent: {fileID: 3087878123819642891}
   healthBarImage: {fileID: 3087878124407815446}
   taskStatusParent: {fileID: 5889752831062375512}
+  leaderFrame: {fileID: 8188815753419749526}
 --- !u!114 &1910679349635884098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1602,12 +1602,12 @@ GameObject:
   - component: {fileID: 3656307191126425229}
   - component: {fileID: 9035265939891627195}
   m_Layer: 5
-  m_Name: Frame
+  m_Name: LeaderFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1069859087252494519
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1625,8 +1625,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -0.58, y: 0.08}
-  m_SizeDelta: {x: 399.7934, y: 428.11627}
+  m_AnchoredPosition: {x: -0.79, y: 0.01}
+  m_SizeDelta: {x: 350, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3656307191126425229
 CanvasRenderer:
