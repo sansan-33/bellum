@@ -20,8 +20,8 @@ public class SpawnEnemies : MonoBehaviour
             playerID = player.GetPlayerID();
             tacticalBehavior = GameObject.FindObjectOfType<TacticalBehavior>();
             SpawnEnemyBase();
-            InvokeRepeating("LoadEnemies", 2f, 99999999999f);
-            StartCoroutine(TryTactical(TacticalBehavior.BehaviorSelectionType.Defend));
+            InvokeRepeating("LoadEnemies", 2f, 30f);
+            
         }
     }
 
@@ -33,8 +33,9 @@ public class SpawnEnemies : MonoBehaviour
             if (factroy.GetComponent<UnitFactory>().hasAuthority)
             {
                 localFactory = factroy.GetComponent<UnitFactory>();
-                localFactory.CmdSpawnUnit(Unit.UnitType.GIANT,  1 , enemyID, unitAuthority);
+                localFactory.CmdSpawnUnit(Unit.UnitType.SPEARMAN,  3 , enemyID, unitAuthority);
                 //localFactory.CmdSpawnUnit(Unit.UnitType.MINISKELETON, 10, enemyID, unitAuthority);
+                StartCoroutine(TryTactical(TacticalBehavior.BehaviorSelectionType.Defend));
             }
         }
     }
@@ -49,7 +50,7 @@ public class SpawnEnemies : MonoBehaviour
 
     private IEnumerator TryTactical(TacticalBehavior.BehaviorSelectionType type)
     {
-        Debug.Log($"Spawn Enemy TryTactical --> TacticalFormation enemyID {enemyID}");
+        //Debug.Log($"Spawn Enemy TryTactical --> TacticalFormation enemyID {enemyID}");
         StartCoroutine(tacticalBehavior.TacticalFormation(enemyID, playerID));
         yield return new WaitForSeconds(5f);
         tacticalBehavior.TryTB((int) type , enemyID);

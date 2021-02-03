@@ -75,17 +75,17 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent
                     if (networkIdentity.connectionToClient == connectionToClient) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
-            Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
+            //Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
 
             if (other.TryGetComponent<Health>(out Health health))
             {
-                Debug.Log($"Original damage {damageToDeal}, {this.GetComponent<Unit>().unitType} , {other.GetComponent<Unit>().unitType} ");
+                //Debug.Log($"Original damage {damageToDeal}, {this.GetComponent<Unit>().unitType} , {other.GetComponent<Unit>().unitType} ");
                 if(strengthWeakness == null) {
                     strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
                 }
                 calculatedDamageToDeal = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeal);
                 health.DealDamage(calculatedDamageToDeal);
-                Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
+                //Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
                 other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
                 cmdDamageText(other.transform.position, calculatedDamageToDeal , damageToDeal );
                 cmdSpecialEffect(other.transform.position);

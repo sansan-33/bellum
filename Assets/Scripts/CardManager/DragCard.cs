@@ -23,7 +23,10 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     private void Start()
     {
+        Input.simulateMouseWithTouches = false;
+        objBeingDraged = gameObject;
         itemDraggerParent = GameObject.FindGameObjectWithTag("CardDraggerParent").transform;
+        transform.SetParent(itemDraggerParent);
     }
 
     #region DragFunctions
@@ -31,10 +34,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("OnBeginDrag");
-        objBeingDraged = gameObject;
         startPos = this.transform.position;
         lastXPos = Input.mousePosition.x;
-        transform.SetParent(itemDraggerParent);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -131,6 +132,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private void Update()
     {
         // Track a single touch as a direction control.
+        /*
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -140,7 +142,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             {
                 // Record initial touch position.
                 case TouchPhase.Began:
-                    startPos = touch.position;
+                    startPos = this.transform.position;
+                    lastXPos = touch.position.x;
                     directionChosen = false;
                     break;
 
@@ -159,6 +162,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         {
             // Something that uses the chosen direction...
         }
+       */
 
     }
 }

@@ -166,7 +166,6 @@ public class UnitMovement : NetworkBehaviour
     {
         if (agent.path.corners.Length < 2) return;
 
-        //Debug.Log($"ServerShowLine ... ");
         lineRenderer.enabled = true;
         lineRenderer.sharedMaterial.SetColor("_Color", Color.gray);
         lineRenderer.positionCount = agent.path.corners.Length;

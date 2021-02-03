@@ -54,7 +54,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             var attackCenter = CenterAttackPosition();
             var centerRotation = CenterAttackRotation(attackCenter);
             var groupCount = dualFlank.Value ? 3 : 2;
-
+            tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus("Agent Idle, not in any position " +  HEARTBEAT++ );
             if (!tacticalAgent.AttackPosition) {
                 
                 var groupIndex = formationIndex % groupCount;
@@ -71,7 +71,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 // Set AttackPosition to true when the agent arrived at the destination. This will put the agent in attack mode and start to rotate towards
                 // the target.
                 if (tacticalAgent.HasArrived()) {
-                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + " = " + ": Arrived");
+                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + " = " + ": Arrived " + HEARTBEAT++);
                     tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("wait");
                     tacticalAgent.AttackPosition = true;
                 }
