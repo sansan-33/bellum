@@ -78,6 +78,9 @@ public class UnitFactory : NetworkBehaviour
     {
         unit.GetComponent<Health>().ScaleMaxHealth(star * star);
         unit.GetComponent<IAttack>().ScaleDamageDeal(star * star);
+        unit.GetComponent<IBody>().SetRenderMaterial(star);
+        unit.GetComponent<IBody>().SetUnitSize(star);
+
         return unit;
     }   
 }
