@@ -238,6 +238,7 @@ public class Player : MonoBehaviour
             //Debug.Log($"Card {beforeNewCard.cardFace.suit} Star: {beforeNewCard.cardFace.star} VS Card {card.cardFace.suit} Star {card.cardFace.star} ");
             if (beforeNewCard.cardFace.numbers == card.cardFace.numbers && beforeNewCard.cardFace.star == card.cardFace.star && ((int)beforeNewCard.cardFace.star + 1) < MAXCARDSTAR)
             {
+                
                 //Increase 1 star to before card,  Text is setting + 2 , becuase the enum cardFace.star start with 0 
                 beforeNewCard.cardStar.text = "" + ((int)card.cardFace.star + 2);
                 beforeNewCard.cardFace.star = (Card_Stars)((int)card.cardFace.star) + 1;
@@ -249,7 +250,8 @@ public class Player : MonoBehaviour
                 //yield return new WaitForSeconds(0.5f);
                
                 RemoveLastCard(lastCardBefore + 1);
-               
+                lastCardBefore = playerHand[0].Count - 2;
+                maxmerge = playerHand[0].Count - 1;
                 //lastCardBefore = playerHand[0].Count - 2;
             }
             lastCardBefore--;
@@ -333,6 +335,6 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        
+      //  Debug.Log(PrintAllCards(playerHand[0]));
     }
 }
