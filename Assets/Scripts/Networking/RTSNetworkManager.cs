@@ -38,6 +38,7 @@ public class RTSNetworkManager : NetworkManager
    
     public override void OnServerConnect(NetworkConnection conn)
     {
+        Debug.Log("Server Connected ============== ");
         if (!isGameInProgress) { return; }
 
         conn.Disconnect();

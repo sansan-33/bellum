@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class UnitFactory : NetworkBehaviour
 {
+    [SerializeField] private List<Transform> spawnPoints = null;
     [SerializeField] private GameObject archerPrefab = null;
     [SerializeField] private GameObject knightPrefab = null;
     [SerializeField] private GameObject magePrefab = null;
@@ -30,16 +31,11 @@ public class UnitFactory : NetworkBehaviour
    
     public override void OnStartClient()
     {
-        //Debug.Log("Unit Factory Initialize the unitDic");
-        unitDict.Clear();
-        unitDict.Add(Unit.UnitType.ARCHER, archerPrefab);
-        unitDict.Add(Unit.UnitType.HERO, heroPrefab);
-        unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
-        unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
-        unitDict.Add(Unit.UnitType.MAGE, magePrefab);
-        unitDict.Add(Unit.UnitType.CAVALRY, cavalryPrefab);
-        unitDict.Add(Unit.UnitType.MINISKELETON, miniSkeletonUnitPrefab);
-        unitDict.Add(Unit.UnitType.GIANT, giantUnitPrefab);
+        initUnitDict();
+    }
+    public override void OnStartServer()
+    {
+        initUnitDict();
     }
     private void Update()
     {
@@ -48,8 +44,8 @@ public class UnitFactory : NetworkBehaviour
     [Command]
     public void CmdSpawnUnit(Unit.UnitType unitType, int star, int playerID, bool spawnAuthority)
     {
-        //Debug.Log($" CmdSpawnUnit Player ID {playerID} ");
-        Vector3 spawnPosition = GameObject.FindGameObjectWithTag("PlayerBase" + playerID ).transform.position ;
+        Vector3 spawnPosition = spawnPoints[playerID].position;
+        Debug.Log($" CmdSpawnUnit Player ID {playerID} at postion {spawnPosition}");
         int unitsize = 1;
         if(Unit.UnitSize.TryGetValue(unitType , out int value)){ unitsize = value; }
         StartCoroutine(ServerSpwanUnit(0.1f, playerID, spawnPosition , unitDict[unitType], unitType.ToString(), unitsize, spawnAuthority , star ));
@@ -66,11 +62,14 @@ public class UnitFactory : NetworkBehaviour
             GameObject unit = Instantiate(unitPrefab, spawnPosition + spawnOffset, Quaternion.identity) as GameObject;
             unit.name = unitName;
             unit.tag = "Player" + playerID;
-            unit = powerUp(unit , star);
+            powerUp(unit , star);
             // Cannot remove this one otherwise Tactical Behavior error
             //if(spawnAuthority)
-                NetworkServer.Spawn(unit, connectionToClient);
-            
+            Debug.Log($" ServerSpwanUnit Player ID {playerID} {unitName}");
+
+            NetworkServer.Spawn(unit, connectionToClient);
+            RpcTag(unit, playerID, unitName, star);
+            RpcPowerUp(unit, star);
             spawnCount--;
         }
     }
@@ -82,5 +81,30 @@ public class UnitFactory : NetworkBehaviour
         //unit.GetComponentInChildren<IBody>().SetUnitSize(star);
 
         return unit;
-    }   
+    }
+    private void initUnitDict()
+    {
+
+        unitDict.Clear();
+        unitDict.Add(Unit.UnitType.ARCHER, archerPrefab);
+        unitDict.Add(Unit.UnitType.HERO, heroPrefab);
+        unitDict.Add(Unit.UnitType.KNIGHT, knightPrefab);
+        unitDict.Add(Unit.UnitType.SPEARMAN, spearmanPrefab);
+        unitDict.Add(Unit.UnitType.MAGE, magePrefab);
+        unitDict.Add(Unit.UnitType.CAVALRY, cavalryPrefab);
+        unitDict.Add(Unit.UnitType.MINISKELETON, miniSkeletonUnitPrefab);
+        unitDict.Add(Unit.UnitType.GIANT, giantUnitPrefab);
+    }
+    [ClientRpc]
+    void RpcTag(GameObject unit, int playerID, string unitName, int star)
+    {
+        unit.name = unitName;
+        unit.tag = "Player" + playerID;
+        unit = powerUp(unit, star);
+    }
+    [ClientRpc]
+    void RpcPowerUp(GameObject unit , int star)
+    {
+        powerUp(unit, star);
+    }
 }

@@ -27,8 +27,8 @@ public class RTSPlayer : NetworkBehaviour
 
     public static event Action ClientOnInfoUpdated;
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
-   private float ResourcesTimer = 1f;
-   public int Resources;
+    private float ResourcesTimer = 1f;
+    public int Resources;
     private Color teamColor = new Color();
     private List<Unit> myUnits = new List<Unit>();
     private List<Building> myBuildings = new List<Building>();

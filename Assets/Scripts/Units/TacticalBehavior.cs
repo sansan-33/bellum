@@ -27,6 +27,7 @@ public class TacticalBehavior : MonoBehaviour
 
     public void Awake()
     {
+        if (NetworkClient.connection.identity == null) { return; }
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerid = player.GetPlayerID();
         enemyid = player.GetEnemyID();
@@ -54,7 +55,7 @@ public class TacticalBehavior : MonoBehaviour
                 else
                 {
                     //Only Assing Enemy Base Tag if mulitplayer
-                    if(FindObjectOfType<NetworkManager>().numPlayers > 1)
+                    if(FindObjectOfType<RTSNetworkManager>().Players.Count > 1)
                         playerBase.tag = "PlayerBase" + enemyid;
                 }
             }
@@ -70,7 +71,7 @@ public class TacticalBehavior : MonoBehaviour
                 if (unit.hasAuthority) { army.tag = PLAYERTAG; }
                 else {
                     //Only Assing Enemy Base Tag if mulitplayer
-                    //if (FindObjectOfType<NetworkManager>().numPlayers > 1)
+                    //if (FindObjectOfType<RTSNetworkManager>().Players.Count > 1)
                     army.tag = ENEMYTAG;
                 }
             }

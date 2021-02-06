@@ -17,7 +17,7 @@ public class UnitCommandGiver : MonoBehaviour
     private string targetTag = "Enemy";
     private void Start()
     {
-        targetTag = (FindObjectOfType<NetworkManager>().numPlayers ==1) ? "Enemy" : "Player";
+        targetTag = (FindObjectOfType<RTSNetworkManager>().Players.Count == 1) ? "Enemy" : "Player";
         mainCamera = Camera.main;
 
         GameOverHandler.ClientOnGameOver += ClientHandleGameOver;
@@ -229,7 +229,7 @@ public class UnitCommandGiver : MonoBehaviour
         {
             
             //Debug.Log($"enemy {enemy} / hasAuthority {enemy.GetComponent<Unit>().hasAuthority} , num players : {FindObjectOfType<NetworkManager>().numPlayers }");
-            if(FindObjectOfType<NetworkManager>().numPlayers > 1 && enemy.GetComponent<Unit>().hasAuthority){ continue;}
+            if(FindObjectOfType<RTSNetworkManager>().Players.Count > 1 && enemy.GetComponent<Unit>().hasAuthority){ continue;}
             if (enemy != null && enemy != this.gameObject  )
             {
                 otherPlayerEnemy = enemy;

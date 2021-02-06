@@ -13,11 +13,15 @@ public class SpawnEnemies : MonoBehaviour
     private TacticalBehavior tacticalBehavior;
     void Awake()
     {
-        if (FindObjectOfType<NetworkManager>().numPlayers == 1)
+        if (NetworkClient.connection.identity == null) { return; }
+        Debug.Log($"Spawn Enemies Awake {NetworkClient.connection.identity} NetworkManager number of players ? {FindObjectOfType<RTSNetworkManager>().Players.Count  } ");
+        if (FindObjectOfType<RTSNetworkManager>().Players.Count == 1)
         {
             RTSPlayer player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
             enemyID = player.GetEnemyID();
             playerID = player.GetPlayerID();
+            Debug.Log($"Number of player : {FindObjectOfType<RTSNetworkManager>().Players.Count} enemyID {enemyID} playerID {playerID} ");
+
             tacticalBehavior = GameObject.FindObjectOfType<TacticalBehavior>();
             SpawnEnemyBase();
             InvokeRepeating("LoadEnemies", 2f, 20f);
@@ -50,7 +54,7 @@ public class SpawnEnemies : MonoBehaviour
 
     private IEnumerator TryTactical(TacticalBehavior.BehaviorSelectionType type)
     {
-        //Debug.Log($"Spawn Enemy TryTactical --> TacticalFormation enemyID {enemyID}");
+        Debug.Log($"Spawn Enemy TryTactical --> TacticalFormation enemyID {enemyID}");
         StartCoroutine(tacticalBehavior.TacticalFormation(enemyID, playerID));
         yield return new WaitForSeconds(5f);
         tacticalBehavior.TryTB((int) type , enemyID);

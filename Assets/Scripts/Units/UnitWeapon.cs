@@ -38,14 +38,16 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         calculatedDamageToDeal = damageToDeal;
-        //lastAttackTime = -repeatAttackDelay;
         strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
-        //Debug.Log($"Is strengthWeakness is null ? {strengthWeakness == null}");
+        Debug.Log($"Is strengthWeakness is null ? {strengthWeakness == null}");
         //Use this to ensure that the Gizmos are being drawn when in Play Mode.
         m_Started = true;
     }
-    
-    [Command]
+
+    // Commands are sent from player objects on the client to player objects on the server
+    // IF SERVER SIDE , object refernce not found exception
+    //
+
     public void TryAttack()
     {
         //Debug.Log($"Attacker {targeter} attacking .... ");
@@ -61,21 +63,22 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         {
             other = hitColliders[i++];
                
-            if (FindObjectOfType<NetworkManager>().numPlayers == 1)
+            if (FindObjectOfType<RTSNetworkManager>().Players.Count == 1)
             {
-                //Debug.Log($"Attack {targeter} , Hit Collider {hitColliders.Length} , Player Tag {targeter.tag} vs Other Tag {other.tag}");
+                Debug.Log($"Attack {targeter} , Hit Collider {hitColliders.Length} , Player Tag {targeter.tag} vs Other Tag {other.tag}");
                 if (other.tag == "Player" + player.GetPlayerID() && targeter.tag == "Player" + player.GetPlayerID()) {continue;}  //check to see if it belongs to the player, if it does, do nothing
                 if (other.tag == "Player" + player.GetEnemyID() && targeter.tag == "Player" + player.GetEnemyID()) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 
             }
             else // Multi player seneriao
             {
+                Debug.Log($"Multi player seneriao ");
                 if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
                 {
-                    if (networkIdentity.connectionToClient == connectionToClient) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+                    if (networkIdentity.hasAuthority ) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
-            //Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
+            Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
 
             if (other.TryGetComponent<Health>(out Health health))
             {
@@ -84,7 +87,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                     strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
                 }
                 calculatedDamageToDeal = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeal);
-                health.DealDamage(calculatedDamageToDeal);
+                CmdDealDamage(other.gameObject, calculatedDamageToDeal);
                 //Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
                 other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
                 cmdDamageText(other.transform.position, calculatedDamageToDeal , damageToDeal );
@@ -98,10 +101,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         }
 
     }
-    public int Getids()
-    {
-        return id;
-    }
     //Draw the Box Overlap as a gizmo to show where it currently is testing. Click the Gizmos button to see this
     void OnDrawGizmos()
     {
@@ -114,7 +113,11 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         }
     }
 
-
+    [Command]
+    public void CmdDealDamage(GameObject enemy,  int damge)
+    {
+        enemy.GetComponent<Health>().DealDamage(damge);
+    }
     [Command]   
     private void cmdDamageText(Vector3 targetPos, int damageNew , int damgeOld)
     {

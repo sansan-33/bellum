@@ -41,7 +41,7 @@ public class UnitProjectile : NetworkBehaviour
         //Debug.Log($" Hitted object {other.tag}, Attacker type is {unitType} ");
         damageToDeals = damageToDealOriginal;
         // Not attack same connection client object except AI Enemy
-        if (FindObjectOfType<NetworkManager>().numPlayers == 1) {
+        if (FindObjectOfType<RTSNetworkManager>().Players.Count == 1) {
             if (other.tag == "Player" + player.GetEnemyID() && unitType == "Enemy" ) { return; }  //check to see if it belongs to the player, if it does, do nothing
             if (other.tag == "Player" + player.GetPlayerID() && unitType == "Player") { return; }  //check to see if it belongs to the player, if it does, do nothing
         }

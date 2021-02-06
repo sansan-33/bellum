@@ -40,7 +40,7 @@ public class Card : MonoBehaviour
 
     void Awake()
     {
-        
+        if (NetworkClient.connection.identity == null) { return; }
         mainCamera = Camera.main;
         animator = GetComponent<Animator>();
         cardFrontMat = cardRenderer.materials[0];

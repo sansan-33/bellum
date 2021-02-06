@@ -17,6 +17,7 @@ public class FlipCamera : MonoBehaviour
     public void Awake()
     {
 
+        if (NetworkClient.connection.identity == null) { return; }
         RTSPlayer player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         //Debug.Log($"Flip Cam Player ID  {player.GetPlayerID()} , Enemy ID {player.GetEnemyID()}");
         if (player.GetPlayerID() == 0)
