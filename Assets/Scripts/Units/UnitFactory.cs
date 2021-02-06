@@ -75,8 +75,17 @@ public class UnitFactory : NetworkBehaviour
     }
     private GameObject powerUp(GameObject unit , int star)
     {
-        unit.GetComponent<Health>().ScaleMaxHealth(star * star);
-        unit.GetComponent<IAttack>().ScaleDamageDeal(star * star * star);
+        unit.GetComponent<Health>().ScaleMaxHealth(star);
+       
+        if (star == 1)
+        {
+            unit.GetComponent<IAttack>().ScaleDamageDeal(star);
+        }
+        else
+        {
+            unit.GetComponent<IAttack>().ScaleDamageDeal((star - 1) * 4);
+        }
+       
         unit.GetComponentInChildren<IBody>().SetRenderMaterial(star);
         //unit.GetComponentInChildren<IBody>().SetUnitSize(star);
 
@@ -100,7 +109,6 @@ public class UnitFactory : NetworkBehaviour
     {
         unit.name = unitName;
         unit.tag = "Player" + playerID;
-        unit = powerUp(unit, star);
     }
     [ClientRpc]
     void RpcPowerUp(GameObject unit , int star)

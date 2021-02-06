@@ -87,8 +87,10 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                     strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
                 }
                 calculatedDamageToDeal = strengthWeakness.calculateDamage(this.GetComponent<Unit>().unitType, other.GetComponent<Unit>().unitType, damageToDeal);
+
                 CmdDealDamage(other.gameObject, calculatedDamageToDeal);
                 //Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
+
                 other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
                 cmdDamageText(other.transform.position, calculatedDamageToDeal , damageToDeal );
                 cmdSpecialEffect(other.transform.position);
@@ -199,6 +201,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
 
     public void ScaleDamageDeal(float factor)
     {
+        Debug.Log($"Scale Damage {this.GetComponent<Unit>().unitType} {damageToDeal} {factor} ");
         damageToDeal =  (int)  (damageToDeal * factor);
     }
+
 }
