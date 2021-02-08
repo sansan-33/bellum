@@ -195,6 +195,7 @@ public class RTSNetworkManager : NetworkManager
         Debug.Log($"RTS Network Manager OnStopClient ============================== ");
         Players.Clear();
         isGameInProgress = false;
+        NetworkManager.singleton.StartHost();
     }
 
     #endregion
