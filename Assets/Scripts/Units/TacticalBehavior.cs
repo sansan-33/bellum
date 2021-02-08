@@ -94,7 +94,6 @@ public class TacticalBehavior : MonoBehaviour
         {
             // Set Higher Priority value will avoid lower value 
             //child.GetComponent<NavMeshAgent>().avoidancePriority = 70;
-
             //if (child.GetComponent<Unit>().hasAuthority)
             //{
             if (i == 0)
@@ -193,7 +192,7 @@ public class TacticalBehavior : MonoBehaviour
     }
     public string GetTacticalStatus()
     {
-        string output = String.Format(" Current Tactical {}  {} , Group size {} vs {} ", playerType, enemyType, playerBehaviorTreeGroup[1].Count, enemyBehaviorTreeGroup[1].Count);
+        string output = String.Format(" Current Tactical {}  {}  ", playerType, enemyType);
         Debug.Log(output);
         return output;
     }
