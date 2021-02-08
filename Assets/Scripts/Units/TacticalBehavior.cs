@@ -192,7 +192,7 @@ public class TacticalBehavior : MonoBehaviour
     }
     public string GetTacticalStatus()
     {
-        string output = String.Format(" Current Tactical {}  {}  ", playerType, enemyType);
+        string output = String.Format(" Current Tactical {0}  {1} , Group size {2} vs {3} ", playerType, enemyType, playerBehaviorTreeGroup[1].Count, enemyBehaviorTreeGroup[1].Count);
         Debug.Log(output);
         return output;
     }
