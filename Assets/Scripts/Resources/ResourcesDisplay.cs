@@ -7,52 +7,20 @@ using UnityEngine.UI;
 
 public class ResourcesDisplay : MonoBehaviour
 {
-    [SerializeField] private TMP_Text resourcesText = null;
     [SerializeField] private Image healthBarImage = null;
     int maxEleixer = 0;
     int currentEleixer;
+    private CardDealer cardDealer;
+
     private void Start()
     {
-
-        //if (Screen.height <= 3000 && Screen.width <= 2000)
-       // {
-
-            
-
-          //  RectTransform rt = this.GetComponent<RectTransform>();
-
-
-          //  rt.anchoredPosition = new Vector3(-177, 30, 0);
-           // rt.sizeDelta = new Vector2(300, (float)22.5);
-        //}
-    }/*
-
-    private void OnDestroy()
-    {
-        player.ClientOnResourcesUpdated -= ClientHandleResourcesUpdated;
+        cardDealer = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
+        maxEleixer = cardDealer.maxEleixer;
     }
-
-    private void ClientHandleResourcesUpdated(int resources)
-    {
-        
-        int currentresources;
-        
-        currentresources = player.resources;
-        if (currentresources > maxresources)
-        {
-           
-            maxresources = currentresources;
-        }
-        healthBarImage.fillAmount = (float)currentresources / (float) maxresources;
-        Debug.Log($"{currentresources}/{maxresources}");
-
-    }*/
     private void Update()
     {
-        GameObject DealManagers = GameObject.FindGameObjectWithTag("DealManager");
-
-        currentEleixer = DealManagers.GetComponent<CardDealer>().eleixer;
-        maxEleixer = DealManagers.GetComponent<CardDealer>().maxEleixer;
+        currentEleixer = cardDealer.eleixer;
         healthBarImage.fillAmount = (float)currentEleixer / (float)maxEleixer;
+        
     }
 }

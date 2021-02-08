@@ -19,7 +19,6 @@ TagManager:
   - AgentGroup
   - CamPlayer0
   - CamPlayer1
-  - TestAgentGroup
   - DealManager
   - Card(clone gray)
   - CardStar
@@ -29,6 +28,7 @@ TagManager:
   - FxTemporaire
   - SpawnPointEnemy
   - CardSlot
+  - TacticalSystem
   layers:
   - Default
   - TransparentFX

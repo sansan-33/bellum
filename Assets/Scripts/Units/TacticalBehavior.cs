@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
@@ -23,6 +24,8 @@ public class TacticalBehavior : MonoBehaviour
     private BehaviorSelectionType selectionType = BehaviorSelectionType.Attack;
     private BehaviorSelectionType prevSelectionType = BehaviorSelectionType.Attack;
 
+    private string playerType = "";
+    private string enemyType = "";
     #region Client
 
     public void Awake()
@@ -90,7 +93,7 @@ public class TacticalBehavior : MonoBehaviour
         foreach (GameObject child in armies)
         {
             // Set Higher Priority value will avoid lower value 
-            child.GetComponent<NavMeshAgent>().avoidancePriority = 70;
+            //child.GetComponent<NavMeshAgent>().avoidancePriority = 70;
 
             //if (child.GetComponent<Unit>().hasAuthority)
             //{
@@ -144,7 +147,11 @@ public class TacticalBehavior : MonoBehaviour
         type = type % System.Enum.GetNames(typeof(BehaviorSelectionType)).Length;
         prevSelectionType = selectionType;
         selectionType = (BehaviorSelectionType)type;
-        //Debug.Log($"Try TB playerID {playerID} {selectionType.ToString()}");
+        if (playerID == this.playerid)
+            playerType = selectionType.ToString();
+        else
+            enemyType = selectionType.ToString();
+
         SelectionChanged(playerID);
     }
     public void TryReinforce(int playerID, int enemyID)
@@ -184,7 +191,12 @@ public class TacticalBehavior : MonoBehaviour
             behaviorTreeGroups[playerID][(int)prevSelectionType][i].DisableBehavior();
         }
     }
-
+    public string GetTacticalStatus()
+    {
+        string output = String.Format(" Current Tactical {}  {} , Group size {} vs {} ", playerType, enemyType, playerBehaviorTreeGroup[1].Count, enemyBehaviorTreeGroup[1].Count);
+        Debug.Log(output);
+        return output;
+    }
     public void TryAttack()
     {
         TryAttack(playerid);
