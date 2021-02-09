@@ -109,19 +109,6 @@ public class CardDealer : MonoBehaviour
         StartCoroutine(EndOfFrame());
     }
 
-    CardFaceCoords GetCardFaceCoord(CardFace cardFace)
-    {
-        foreach (CardFaceCoords card in cardFaceCoords)
-        {
-            if (card.cardFace.suit == cardFace.suit && card.cardFace.numbers == cardFace.numbers)
-            {
-                //Debug.Log(card);
-                return card;
-            }
-        }
-        return null;
-    }
-
     IEnumerator EndOfFrame()
     {
         yield return new WaitForEndOfFrame();
@@ -142,7 +129,7 @@ public class CardDealer : MonoBehaviour
         //CardFace randomCard = cardDeck[3];
         cardDeckUsed.Add(randomCard);
 
-        lastCard.GetComponent<Card>().SetCard(randomCard, GetCardFaceCoord(randomCard));
+        lastCard.GetComponent<Card>().SetCard(randomCard);
         lastCard.cardSpawnButton.GetComponentInChildren<Text>().text = randomCard.numbers.ToString();
         int cardnumber = (int)randomCard.numbers;
         cardnumber = cardnumber % lastCard.GetComponent<Card>().sprite.Count;
