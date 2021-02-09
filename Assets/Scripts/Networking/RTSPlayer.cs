@@ -21,7 +21,10 @@ public class RTSPlayer : NetworkBehaviour
     private int playerID = 0;
     [SyncVar(hook = nameof(ClientHandleEnemyIDUpdated))]
     private int enemyID = 0;
-
+    [SyncVar(hook = nameof(ClientHandleTeamColorUpdated))]
+    private Color teamColor = new Color();
+    [SyncVar(hook = nameof(ClientHandleTeamEnemyColorUpdated))]
+    private Color teamEnemyColor = new Color();
 
     public event Action<int> ClientOnResourcesUpdated;
 
@@ -29,8 +32,7 @@ public class RTSPlayer : NetworkBehaviour
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
     private float ResourcesTimer = 1f;
     public int Resources;
-    private Color teamColor = new Color();
-    private Color teamEnemyColor = new Color();
+
     private List<Unit> myUnits = new List<Unit>();
     private List<Building> myBuildings = new List<Building>();
     
@@ -290,7 +292,14 @@ public class RTSPlayer : NetworkBehaviour
     {
         ClientOnInfoUpdated?.Invoke();
     }
-
+    private void ClientHandleTeamColorUpdated(Color oldColor, Color newColor)
+    {
+        ClientOnInfoUpdated?.Invoke();
+    }
+    private void ClientHandleTeamEnemyColorUpdated(Color oldColor, Color newColor)
+    {
+        ClientOnInfoUpdated?.Invoke();
+    }
     private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState)
     {
         if (!hasAuthority) { return; }

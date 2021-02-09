@@ -194,6 +194,5 @@ public class RTSNetworkManager : NetworkManager
         isGameInProgress = false;
         //NetworkManager.singleton.StartHost();
     }
-
     #endregion
 }

@@ -26,6 +26,9 @@ public class TacticalBehavior : MonoBehaviour
 
     private string playerType = "";
     private string enemyType = "";
+    private Color teamColor;
+    private Color teamEnemyColor;
+
     #region Client
 
     public void Awake()
@@ -40,7 +43,8 @@ public class TacticalBehavior : MonoBehaviour
         StartCoroutine(TacticalFormation(playerid, enemyid));
         behaviorTreeGroups.Add(playerid, playerBehaviorTreeGroup);
         behaviorTreeGroups.Add(enemyid, enemyBehaviorTreeGroup);
-
+        teamColor = player.GetTeamColor();
+        teamEnemyColor = player.GetTeamEnemyColor();
     }
     public IEnumerator AssignTag()
     {
@@ -71,10 +75,14 @@ public class TacticalBehavior : MonoBehaviour
         {
             if (army.TryGetComponent<Unit>(out Unit unit))
             {
-                if (unit.hasAuthority) { army.tag = PLAYERTAG; }
+                if (unit.hasAuthority) {
+                    unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
+                    army.tag = PLAYERTAG;
+                }
                 else {
                     //Only Assing Enemy Base Tag if mulitplayer
                     //if (((RTSNetworkManager)NetworkManager.singleton).Players.Count > 1)
+                    unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamEnemyColor);
                     army.tag = ENEMYTAG;
                 }
             }
@@ -193,6 +201,7 @@ public class TacticalBehavior : MonoBehaviour
     }
     public string GetTacticalStatus()
     {
+        if (PLAYERTAG is null || PLAYERTAG == "") { return ""; }
         var sb = new System.Text.StringBuilder();
         GameObject[] armies = GameObject.FindGameObjectsWithTag(PLAYERTAG);
 
