@@ -301,12 +301,6 @@ MonoBehaviour:
     suit: 0
     numbers: 0
     star: 0
-  coord:
-    cardFace:
-      suit: 0
-      numbers: 0
-      star: 0
-    _coord: {x: 0, y: 0}
   cardPlayerHandIndex: 0
   cardRenderer: {fileID: 5401589614665477150}
   cardTimer: 0
@@ -321,6 +315,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a915e807d4dbcb642a0bbd1525765225, type: 3}
   - {fileID: 21300000, guid: 7da5673ccf0282d4e88d1a29dc4e9158, type: 3}
   - {fileID: 21300000, guid: a04f36931801dac4f82947dfcfdcd521, type: 3}
+  eleixier: {fileID: 6056248245271382930, guid: 55544e4dcd9e546e2a93ffd7268de5f1, type: 3}
   cardStar: {fileID: 8240628691007913380}
   cardSpawnButton: {fileID: 4062796193168424272}
   charIcon: {fileID: 8036289248297233899}

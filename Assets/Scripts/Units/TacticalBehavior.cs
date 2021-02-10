@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class TacticalBehavior : MonoBehaviour
 {
     [SerializeField] List<GameObject> group = new List<GameObject>();
-
+    private eleixier Eleixier;
     private RTSPlayer player;
     private int playerid = 0;
     private int enemyid = 0;
@@ -33,6 +33,7 @@ public class TacticalBehavior : MonoBehaviour
 
     public void Awake()
     {
+        Eleixier = FindObjectOfType<eleixier>();
         if (NetworkClient.connection.identity == null) { return; }
 
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
@@ -201,6 +202,7 @@ public class TacticalBehavior : MonoBehaviour
         StopCoroutine(EnableBehavior(playerID));
         StartCoroutine(DisableBehavior(playerID));
         StartCoroutine(EnableBehavior(playerID));
+        Eleixier.speedUpEleixier(GetBehaviorSelectionType());
     }
     private IEnumerator EnableBehavior(int playerID)
     {

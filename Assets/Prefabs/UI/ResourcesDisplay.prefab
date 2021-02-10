@@ -92,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 554589855469093}
   - component: {fileID: 554589855469082}
+  - component: {fileID: 6056248245271382930}
   m_Layer: 0
   m_Name: ResourcesDisplay
   m_TagString: Untagged
@@ -127,6 +128,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarImage: {fileID: 7070047710539699196}
+--- !u!114 &6056248245271382930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554589855469092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6adc892295c3d4964a47d8d81f9acd5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEleixer: 5
+  maxEleixerTimer: 0
+  eleixer: 0
 --- !u!1 &7070047710539699198
 GameObject:
   m_ObjectHideFlags: 0
