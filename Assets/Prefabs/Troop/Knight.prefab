@@ -358,7 +358,7 @@ PrefabInstance:
     - target: {fileID: 3843459825319120970, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: killText
       value: 
-      objectReference: {fileID: 1294950399860131001}
+      objectReference: {fileID: 4517921189017498319}
     - target: {fileID: 3843459825319120970, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: healthBarImage
       value: 
@@ -678,9 +678,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1294950399860131001 stripped
+--- !u!114 &4517921189017498319 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4889098023844545597, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7823851354436235851, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
   m_PrefabInstance: {fileID: 5918018226657706116}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b38562ffce085428b1710277254aa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killText: {fileID: 0}
+  killText: {fileID: 7823851354436235851}
   health: {fileID: 5531517098549734394}
   healthBarParent: {fileID: 3087878123819642891}
   healthBarImage: {fileID: 3087878124407815446}
