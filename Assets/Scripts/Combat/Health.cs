@@ -17,6 +17,8 @@ public class Health : NetworkBehaviour, IDamageable
 
     public event Action<int, int> ClientOnHealthUpdated;
 
+    public float healingSpeed=0.1f;
+
     #region Server
 
     public override void OnStartServer()
