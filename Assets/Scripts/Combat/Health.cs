@@ -17,6 +17,8 @@ public class Health : NetworkBehaviour, IDamageable
 
     public event Action<int, int> ClientOnHealthUpdated;
 
+    public static float healingSpeed=0.1f;
+
     #region Server
 
     public override void OnStartServer()
@@ -36,7 +38,7 @@ public class Health : NetworkBehaviour, IDamageable
     {
         if (connectionToClient.connectionId != connectionId) { return; }
 
-        DealDamage(currentHealth,this.GetComponent<Unit>(),3);
+        DealDamage(currentHealth);
     }
 
     public void ScaleMaxHealth(float factor)
@@ -48,26 +50,27 @@ public class Health : NetworkBehaviour, IDamageable
     {
         currentHealth += currentHealth * healAmount;
     }
-    public void DealDamage(float damageAmount,Unit unit,int IsUnitWeapon)
+    public bool DealDamage(float damageAmount)
     {
-      
-        if (currentHealth == 0) { return; }
-        
-        damageAmount -= defense;
-        if (damageAmount <= 0) { return; }
-        
-        currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
 
-        if (currentHealth != 0) { return; }
-        if (IsUnitWeapon == 0)
+        if (currentHealth != 0)
         {
-            unit.GetComponent<UnitWeapon>().powerUpAfterKill();
-        }else if(IsUnitWeapon == 1)
-        {
-            unit.GetComponent<UnitProjectile>().powerUpAfterKill();
+            damageAmount -= defense;
+            if (damageAmount > 0)
+            {
+                currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
+
+                if (currentHealth == 0)
+                {
+                    ServerOnDie?.Invoke(); // if ServerOnDie not null then invoke
+                    return true;
+                }
+               
+            }
+           
         }
-        
-        ServerOnDie?.Invoke(); // if ServerOnDie not null then invoke 
+
+        return false;
     }
 
     #endregion
