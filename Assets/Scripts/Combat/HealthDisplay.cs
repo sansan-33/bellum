@@ -31,16 +31,6 @@ public class HealthDisplay : MonoBehaviour
         health.ClientOnHealthUpdated -= HandleHealthUpdated;
     }
 
-    private void OnMouseEnter()
-    {
-        healthBarParent.SetActive(true);
-    }
-
-    private void OnMouseExit()
-    {
-        //healthBarParent.SetActive(false);
-    }
-
     public void EnableLeaderIcon()
     {
         leaderFrame.SetActive(true);
@@ -57,8 +47,9 @@ public class HealthDisplay : MonoBehaviour
     }
     public void HandleKillText()
     {
-        kills++;
+        
         killText.text = kills.ToString();
+        kills++;
         Debug.Log(killText.text);
     }
 }
