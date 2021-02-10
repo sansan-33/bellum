@@ -81,8 +81,6 @@ public class RTSNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
-
-        Debug.Log($"RTS Network Manager OnServerAddPlayer Player Count {Players.Count} ============== ");
         base.OnServerAddPlayer(conn);
 
         RTSPlayer player = conn.identity.GetComponent<RTSPlayer>();
@@ -95,6 +93,8 @@ public class RTSNetworkManager : NetworkManager
         player.SetEnemyID(player.GetPlayerID() == 0 ? 1 : 0);
         player.SetTeamEnemyColor(teamsColor[player.GetEnemyID()]);
         player.SetPartyOwner(Players.Count == 1);
+        Debug.Log($"RTS Network Manager OnServerAddPlayer Player Count {Players.Count} ============== ");
+
     }
 
     public override void OnServerSceneChanged(string sceneName)

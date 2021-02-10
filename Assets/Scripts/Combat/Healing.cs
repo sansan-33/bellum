@@ -25,7 +25,7 @@ public class Healing : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isLocalPlayer){return;}
+        if (!hasAuthority){return;}
 
         if (tb.GetBehaviorSelectionType() != TacticalBehavior.BehaviorSelectionType.Defend) { return; }
 
