@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using static TacticalBehavior;
 
 public class eleixier : MonoBehaviour
 {
+    [SerializeField] TMP_Text eleixerTimerImage;
     public int maxEleixer = 5;
     public float maxEleixerTimer;
     private float eleixerTimer = 3f;
@@ -34,10 +37,13 @@ public class eleixier : MonoBehaviour
        
         if (selectionType== BehaviorSelectionType.Attack|| selectionType == BehaviorSelectionType.Flank)
         {
-            
             maxEleixerTimer = 2f;
-  
         }
-       
+        else
+        {
+            maxEleixerTimer = 3f;
+        }
+        eleixerTimerImage.text = $"1 eleixer per {maxEleixerTimer} secound";
+
     }
 }
