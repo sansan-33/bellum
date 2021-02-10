@@ -65,13 +65,12 @@ public class Unit : NetworkBehaviour
         ServerOnUnitSpawned?.Invoke(this);
 
         health.ServerOnDie += ServerHandleDie;
-        Healing.UnitOnHeal += UnitHealing;
     }
 
     public override void OnStopServer()
     {
         health.ServerOnDie -= ServerHandleDie;
-        Healing.UnitOnHeal -= UnitHealing;
+
         ServerOnUnitDespawned?.Invoke(this);
     }
 
@@ -80,15 +79,10 @@ public class Unit : NetworkBehaviour
     {
         NetworkServer.Destroy(gameObject);
     }
+
     #endregion
 
     #region Client
-
-    public void UnitHealing()
-    {
-        //if()
-        health.Healing(health.healingSpeed);
-    }
 
     public override void OnStartAuthority()
     {
@@ -118,6 +112,14 @@ public class Unit : NetworkBehaviour
         onDeselected?.Invoke();
     }
 
-   
+    private void OnMouseEnter()
+    {
+        Select();
+    }
+
+    private void OnMouseExit()
+    {
+        Deselect();
+    }
     #endregion
 }
