@@ -10,16 +10,16 @@ public class ResourcesDisplay : MonoBehaviour
     [SerializeField] private Image healthBarImage = null;
     int maxEleixer = 0;
     int currentEleixer;
-    private CardDealer cardDealer;
+    private eleixier Eleixier;
 
     private void Start()
     {
-        cardDealer = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
-        maxEleixer = cardDealer.maxEleixer;
+        Eleixier = FindObjectOfType<eleixier>();
+        maxEleixer = Eleixier.maxEleixer;
     }
     private void Update()
     {
-        currentEleixer = cardDealer.eleixer;
+        currentEleixer = Eleixier.eleixer;
         healthBarImage.fillAmount = (float)currentEleixer / (float)maxEleixer;
         
     }

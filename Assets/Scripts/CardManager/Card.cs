@@ -26,13 +26,14 @@ public class Card : MonoBehaviour
     int playerID = 0;
     int enemyID = 0;
     Color teamColor;
-    
+    public eleixier eleixers;
     [SerializeField] public TMP_Text cardStar;
     [SerializeField] public Button cardSpawnButton;
     [SerializeField] public Image charIcon;
 
     void Awake()
     {
+        eleixers = FindObjectOfType<eleixier>();
         if (NetworkClient.connection.identity == null) { return; }
         mainCamera = Camera.main;
         animator = GetComponent<Animator>();
@@ -51,11 +52,12 @@ public class Card : MonoBehaviour
     }
     public void OnPointerDown()
     {
-        if (dealManagers.GetComponent<CardDealer>().eleixer < (int)this.cardFace.star + 1)
+        Debug.Log($"{eleixers.eleixer},{this.cardFace.star + 1}");
+        if (eleixers.eleixer < (int)this.cardFace.star + 1)
         {
             return;
         }
-        dealManagers.GetComponent<CardDealer>().eleixer -= (int)this.cardFace.star+1;
+        eleixers.eleixer -= (int)this.cardFace.star+1;
         //Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} ");
 
         Destroy(gameObject);
