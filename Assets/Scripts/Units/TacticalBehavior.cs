@@ -34,6 +34,7 @@ public class TacticalBehavior : MonoBehaviour
     public void Awake()
     {
         if (NetworkClient.connection.identity == null) { return; }
+
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerid = player.GetPlayerID();
         enemyid = player.GetEnemyID();
@@ -45,6 +46,14 @@ public class TacticalBehavior : MonoBehaviour
         behaviorTreeGroups.Add(enemyid, enemyBehaviorTreeGroup);
         teamColor = player.GetTeamColor();
         teamEnemyColor = player.GetTeamEnemyColor();
+
+        Unit.ServerOnUnitDespawned += TryReinforcePlayer;
+        Unit.ServerOnUnitSpawned += TryReinforcePlayer;
+    }
+    public void OnDestroy()
+    {
+        Unit.ServerOnUnitDespawned -= TryReinforcePlayer;
+        Unit.ServerOnUnitSpawned -= TryReinforcePlayer;
     }
     public IEnumerator AssignTag()
     {
@@ -166,6 +175,12 @@ public class TacticalBehavior : MonoBehaviour
             enemyType = selectionType.ToString();
 
         SelectionChanged(playerID);
+    }
+    public void TryReinforcePlayer(Unit unit)
+    {
+        Debug.Log($"Auto Reinforce ..... {unit.name}");
+        if(unit.name.ToLower().Contains("leader"))
+            TryReinforce(playerid, enemyid);
     }
     public void TryReinforce(int playerID, int enemyID)
     {

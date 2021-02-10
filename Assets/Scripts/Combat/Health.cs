@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Health : NetworkBehaviour, IDamageable
 {
-    [SerializeField] private string ourType = null;
+  
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int defense = 0;
     [SyncVar(hook = nameof(HandleHealthUpdated))]

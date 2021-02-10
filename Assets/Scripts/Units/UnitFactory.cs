@@ -45,7 +45,7 @@ public class UnitFactory : NetworkBehaviour
     {
         //Vector3 spawnPosition = spawnPoints[playerID].position;
         Vector3 spawnPosition = NetworkManager.startPositions[playerID].position ;
-        Debug.Log($" CmdSpawnUnit Player ID {playerID} at postion {spawnPosition}");
+        //Debug.Log($" CmdSpawnUnit Player ID {playerID} at postion {spawnPosition}");
         int unitsize = 1;
         if(Unit.UnitSize.TryGetValue(unitType , out int value)){ unitsize = value; }
         StartCoroutine(ServerSpwanUnit(0.1f, playerID, spawnPosition , unitDict[unitType], unitType.ToString(), unitsize, spawnAuthority , star,  teamColor));
@@ -65,7 +65,7 @@ public class UnitFactory : NetworkBehaviour
             powerUp(unit , star);
             // Cannot remove this one otherwise Tactical Behavior error
             //if(spawnAuthority)
-            Debug.Log($" ServerSpwanUnit Player ID {playerID} {unitName}");
+            //Debug.Log($" ServerSpwanUnit Player ID {playerID} {unitName}");
 
             NetworkServer.Spawn(unit, connectionToClient);
             RpcTag(unit, playerID, unitName, star, teamColor);
@@ -109,7 +109,7 @@ public class UnitFactory : NetworkBehaviour
     {
         unit.name = unitName;
         unit.tag = "Player" + playerID;
-        Debug.Log($"RpcTag color is {teamColor}");
+        //Debug.Log($"RpcTag color is {teamColor}");
         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
     }
     [ClientRpc]

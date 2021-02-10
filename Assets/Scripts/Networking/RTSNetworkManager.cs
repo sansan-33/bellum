@@ -115,13 +115,13 @@ public class RTSNetworkManager : NetworkManager
                     //militaryList.Add(Unit.UnitType.ARCHER, 3);
                     //militaryList.Add(Unit.UnitType.GIANT, 1);
                     //militaryList.Add(Unit.UnitType.SPEARMAN, 1);
-                    militaryList.Add(Unit.UnitType.SPEARMAN, 10);
+                    militaryList.Add(Unit.UnitType.SPEARMAN, 1);
                     //militaryList.Add(Unit.UnitType.SAMPLEUNIT, 5);
 
                 }
                 else
                 {
-                    militaryList.Add(Unit.UnitType.SPEARMAN, 10);
+                    militaryList.Add(Unit.UnitType.SPEARMAN, 1);
                 }
                 foreach (Unit.UnitType unitType in militaryList.Keys)
                 {
