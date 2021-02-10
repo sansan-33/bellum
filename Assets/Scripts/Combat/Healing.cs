@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public class Healing : MonoBehaviour
+public class Healing : NetworkBehaviour
 {
     private TacticalBehavior tb;
     private RTSPlayer player;
@@ -12,6 +12,8 @@ public class Healing : MonoBehaviour
     private int healingRange = 5;
     private int repeatHealingDelay = 2;
     private float lastHealingTime;
+    private int healingAmount = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class Healing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer){return;}
 
         if (tb.GetBehaviorSelectionType() != TacticalBehavior.BehaviorSelectionType.Defend) { return; }
 
@@ -34,9 +37,12 @@ public class Healing : MonoBehaviour
         foreach (GameObject army in armies)
         {
             if ((capsule.transform.position - army.transform.position).sqrMagnitude < healingRange * healingRange)
-                army.GetComponent<Health>().Healing(Health.healingSpeed);
-
+                cmdHealing(army, healingAmount);
         }
-        
+    }
+    [Command]
+    public void cmdHealing(GameObject unit , int amount)
+    {
+        unit.GetComponent<Health>().Healing(healingAmount);
     }
 }
