@@ -18,7 +18,7 @@ public class HealthDisplay : MonoBehaviour
     private void Awake()
     {
         health.ClientOnHealthUpdated += HandleHealthUpdated;
-        healthBarParent.SetActive(true);
+        healthBarParent.SetActive(false);
         startRotation = healthBarParent.transform.rotation;
     }
     void Update()
@@ -39,6 +39,9 @@ public class HealthDisplay : MonoBehaviour
     private void HandleHealthUpdated(int currentHealth, int maxHealth)
     {
         healthBarImage.fillAmount = (float)currentHealth / maxHealth;
+        if (currentHealth < maxHealth) {
+            healthBarParent.SetActive(true);
+        }
     }
 
     public void SetHealthBarColor (Color newColor)
