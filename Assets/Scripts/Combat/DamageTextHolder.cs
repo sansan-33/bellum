@@ -13,6 +13,8 @@ public class DamageTextHolder : NetworkBehaviour
     public string displayText = "Default";
     [SyncVar]
     public Color displayColor = Color.green;
+    [SyncVar]
+    public Quaternion displayRotation ;
 
     // Start is called before the first frame update
     void Start()
