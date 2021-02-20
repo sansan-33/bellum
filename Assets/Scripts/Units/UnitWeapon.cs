@@ -59,6 +59,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         Collider[] hitColliders = Physics.OverlapBox(attackPoint.transform.position, transform.localScale * attackRange, Quaternion.identity, layerMask);
         int i = 0;
         Collider other;
+        bool isFlipped = false;
         //Check when there is a new collider coming into contact with the box
         while (i < hitColliders.Length)
         {
@@ -69,13 +70,15 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 //Debug.Log($"Attack {targeter} , Hit Collider {hitColliders.Length} , Player Tag {targeter.tag} vs Other Tag {other.tag}");
                 if (other.tag == "Player" + player.GetPlayerID() && targeter.tag == "Player" + player.GetPlayerID()) {continue;}  //check to see if it belongs to the player, if it does, do nothing
                 if (other.tag == "Player" + player.GetEnemyID() && targeter.tag == "Player" + player.GetEnemyID()) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+                isFlipped = false;
             }
             else // Multi player seneriao
             {
                 //Debug.Log($"Multi player seneriao ");
                 if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
                 {
-                    if (networkIdentity.hasAuthority ) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+                    if (networkIdentity.hasAuthority) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+                    if (player.GetPlayerID() == 0 ) { isFlipped = true; }
                 }
             }
             //Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
@@ -92,7 +95,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 //Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
 
                 other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
-                cmdDamageText(other.transform.position, calculatedDamageToDeal , damageToDeal );
+                cmdDamageText(other.transform.position, calculatedDamageToDeal , damageToDeal, isFlipped );
                 cmdSpecialEffect(other.transform.position);
                 //if (calculatedDamageToDeal > damageToDeal ) { cmdCMVirtual(); }
                 //cmdCMFreeLook();
@@ -126,7 +129,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         }
     }
     [Command]   
-    private void cmdDamageText(Vector3 targetPos, float damageNew , float damgeOld)
+    private void cmdDamageText(Vector3 targetPos, float damageNew , float damgeOld, bool flipText)
     {
         GameObject floatingText = Instantiate(textPrefab, targetPos, Quaternion.identity);
         Color textColor;
@@ -144,7 +147,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         floatingText.GetComponent<DamageTextHolder>().displayColor = textColor;
         floatingText.GetComponent<DamageTextHolder>().displayText = dmgText;
         NetworkServer.Spawn(floatingText, connectionToClient);
-
+        if (flipText) { TargetCommandText(floatingText); }
 
     }
     [Command]
@@ -222,6 +225,12 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         GetComponent<HealthDisplay>().HandleKillText();
         float upGradeAmount = (float)1.1;
         damageToDeal *= upGradeAmount;
-
     }
+    [TargetRpc]
+    public void TargetCommandText(GameObject floatingText)
+    {
+        Debug.Log($"===============================  damage text ");
+        floatingText.GetComponent<DamageTextHolder>().displayRotation.y = 180;
+    }
+
 }
