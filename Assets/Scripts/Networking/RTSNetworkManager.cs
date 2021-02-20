@@ -28,6 +28,8 @@ public class RTSNetworkManager : NetworkManager
     public static event Action ClientOnDisconnected;
    
     private bool isGameInProgress = false;
+    private bool isSinglePlayer = true;
+
     private List<Color> teamsColor = new List<Color>() { new Color(0f,0.6f,1f), new Color(1f,0f,0f)};
     public List<RTSPlayer> Players { get; } = new List<RTSPlayer>();
 
@@ -71,11 +73,11 @@ public class RTSNetworkManager : NetworkManager
         webReq.method = "put";
         webReq.SendWebRequest();
         yield return new WaitForSeconds(10f);
-        Application.Quit();
+        if(!isSinglePlayer) Application.Quit();
     }
     public void StartGame()
     {
-        //if (Players.Count < 2) { return; }
+        if (Players.Count > 1) { isSinglePlayer = false; }
        
         isGameInProgress = true;
 

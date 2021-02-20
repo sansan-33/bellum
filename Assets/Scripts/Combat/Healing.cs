@@ -22,19 +22,19 @@ public class Healing : NetworkBehaviour
         lastHealingTime = Time.time;
     }
     // Update is called once per frame
-    void Update()
+   
+    private void Update()
     {
-        //if (capsules == null)
-        //{
-            capsules = GameObject.FindGameObjectsWithTag("PlayerBase" + player.GetPlayerID());
-        //    Debug.Log($"Update capsule {capsules.Length}");
-        //}
+        if (this.isLocalPlayer) { return; }
+
         if (!hasAuthority){return;}
+
+        capsules = GameObject.FindGameObjectsWithTag("PlayerBase" + player.GetPlayerID());
 
         if (tb.GetBehaviorSelectionType() != TacticalBehavior.BehaviorSelectionType.Defend) {
             foreach (GameObject capsule in capsules)
             {
-                capsule.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                cmdHealingPrefab(capsule, false);
                 //Debug.Log($"Disbale capsule {capsule.name}");
             }
             return;
@@ -52,7 +52,7 @@ public class Healing : NetworkBehaviour
                 if ((capsule.transform.position - army.transform.position).sqrMagnitude < healingRange * healingRange)
                 {
                     cmdHealing(army, healingAmount);
-                    capsule.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                    cmdHealingPrefab(capsule, true);
                 }
             }
         }
@@ -61,5 +61,16 @@ public class Healing : NetworkBehaviour
     public void cmdHealing(GameObject unit , int amount)
     {
         unit.GetComponent<Health>().Healing(healingAmount);
+    }
+    [Command]
+    public void cmdHealingPrefab(GameObject capsule, bool isActive)
+    {
+        RpcHealingPrefab(capsule, isActive);
+    }
+    [ClientRpc]
+    public void RpcHealingPrefab(GameObject capsule, bool isActive)
+    {
+        //Debug.Log($"RpcHealingPrefab {isActive}");
+        capsule.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = isActive;
     }
 }
