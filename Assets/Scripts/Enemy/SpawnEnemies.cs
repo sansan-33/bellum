@@ -27,9 +27,9 @@ public class SpawnEnemies : MonoBehaviour
             //Debug.Log($"Number of player : {((RTSNetworkManager)NetworkManager.singleton).Players.Count} enemyID {enemyID} playerID {playerID} ");
 
             tacticalBehavior = GameObject.FindObjectOfType<TacticalBehavior>();
-            SpawnEnemyBase();
-            InvokeRepeating("LoadEnemies", 2f, 4f);
-
+            SpawnEnemyBase("SpawnPointEnemy",0);
+            SpawnEnemyBase("SpawnPointEnemy",1);
+            InvokeRepeating("LoadEnemies", 2f, 20f);
         }
     }
 
@@ -41,16 +41,16 @@ public class SpawnEnemies : MonoBehaviour
             if (factroy.GetComponent<UnitFactory>().hasAuthority)
             {
                 localFactory = factroy.GetComponent<UnitFactory>();
-                localFactory.CmdSpawnUnit(Unit.UnitType.GIANT, 1, enemyID, unitAuthority, teamColor);
+                localFactory.CmdSpawnUnit(Unit.UnitType.HERO,  1 , enemyID, unitAuthority, teamColor);
                 //localFactory.CmdSpawnUnit(Unit.UnitType.MINISKELETON, 10, enemyID, unitAuthority);
                 StartCoroutine(TryTactical(TacticalBehavior.BehaviorSelectionType.Defend));
             }
         }
     }
 
-    private void SpawnEnemyBase()
+    private void SpawnEnemyBase(string tag , int i)
     {
-        Vector3 pos = GameObject.FindGameObjectWithTag("SpawnPointEnemy").transform.position;
+        Vector3 pos = GameObject.FindGameObjectsWithTag(tag)[i].transform.position;
         GameObject defendObject = Instantiate(capsulePrefab, pos, Quaternion.identity);
         defendObject.tag = "PlayerBase" + enemyID;
         defendObject.SetActive(true);
