@@ -66,7 +66,7 @@ public class LeaderScrollList : MonoBehaviour
 
             UnitButton unitButton = newButton.GetComponent<UnitButton>();
             unitButton.Setup(item, this);
-            if (i == 0) { newButton.GetComponent<Toggle>().isOn = true; }
+            if (!toggleGroup.AnyTogglesOn() && i == 0) { newButton.GetComponent<Toggle>().isOn = true; }
             newButton.GetComponent<Toggle>().group = toggleGroup;
         }
     }
@@ -82,18 +82,18 @@ public class LeaderScrollList : MonoBehaviour
     {
         
     }
-    void TacticalStatusToItem(List<GameObject> heros)
+    void TacticalStatusToItem(Dictionary<int, GameObject> leaders)
     {
         itemList.Clear();
         Item item;
         int i = 0;
-        foreach (GameObject hero in heros)
+        foreach (var leader in leaders)
         {
             item = new Item();
-            item.id = i++;
-            item.name = hero.name;
-            item.icon = icons[(int)hero.GetComponent<Unit>().unitType];
-            item.unitType = hero.GetComponent<Unit>().unitType.ToString();
+            item.id = (int)leader.Value.GetComponent<Unit>().unitType;
+            item.name = leader.Value.name;
+            item.icon = icons[(int)leader.Value.GetComponent<Unit>().unitType];
+            item.unitType = leader.Value.GetComponent<Unit>().unitType.ToString();
             itemList.Add(item);
         }
         RefreshDisplay();

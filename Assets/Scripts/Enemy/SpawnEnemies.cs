@@ -12,7 +12,7 @@ public class SpawnEnemies : MonoBehaviour
     private int playerID = 0;
     private Color teamColor;
 
-    private TacticalBehavior tacticalBehavior;
+    public TacticalBehavior tacticalBehavior;
     void Awake()
     {
         if (NetworkClient.connection.identity == null) { return; }
@@ -26,7 +26,6 @@ public class SpawnEnemies : MonoBehaviour
             teamColor = player.GetTeamEnemyColor();
             //Debug.Log($"Number of player : {((RTSNetworkManager)NetworkManager.singleton).Players.Count} enemyID {enemyID} playerID {playerID} ");
 
-            tacticalBehavior = GameObject.FindObjectOfType<TacticalBehavior>();
             SpawnEnemyBase("SpawnPointEnemy",0);
             SpawnEnemyBase("SpawnPointEnemy",1);
             InvokeRepeating("LoadEnemies", 2f, 20f);

@@ -27,6 +27,7 @@ public class UnitButton : MonoBehaviour
         unitTag.text = item.unitType;
         iconImage.sprite = item.icon;
         unitId.text = item.id.ToString();
+        buttonComponent.isOn = false;
         scrollList = currentScrollList;
     }
     public void HandleClick(bool state)
