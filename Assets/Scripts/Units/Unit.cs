@@ -17,7 +17,8 @@ public class Unit : NetworkBehaviour
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private UnityEvent onSelected = null;
     [SerializeField] private UnityEvent onDeselected = null;
-
+    [SerializeField] private GameObject Cavalry;
+    [SerializeField] private GameObject Knight;
     public enum UnitType { ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN, HERO, MINISKELETON, GIANT, KING };
     public static Dictionary<UnitType, int> UnitSize  = new Dictionary<UnitType, int>() { {UnitType.MINISKELETON , 10} };
     public static Dictionary<UnitType, int> UnitEleixer = new Dictionary<UnitType, int>() { { UnitType.GIANT, 7 },
@@ -32,9 +33,10 @@ public class Unit : NetworkBehaviour
     public UnitType unitType;
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;
-
+    private UnitFactory localFactory;
     public static event Action<Unit> AuthorityOnUnitSpawned;
     public static event Action<Unit> AuthorityOnUnitDespawned;
+    private int i = 0;
     public GameObject GetBuildingPreview()
     {
         return buildingPreview;
@@ -81,8 +83,30 @@ public class Unit : NetworkBehaviour
     [Server]
     private void ServerHandleDie()
     {
-        
-       NetworkServer.Destroy(gameObject);
+        if(this.unitType == UnitType.CAVALRY&&i==0)
+        {
+            
+            if (localFactory == null)
+            {
+                foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
+                {
+                    if (factroy.GetComponent<UnitFactory>().hasAuthority)
+                    {
+                        localFactory = factroy.GetComponent<UnitFactory>();
+                    }
+                }
+            }
+            GetComponent<Health>().Transformhealth();
+            localFactory.Transform(Cavalry, Knight);
+            ChangeType(this,GetComponent<UnitMovement>());
+            RpcChangeType(GetComponent<GameObject>());
+             i++;
+        }
+        else
+        {
+            NetworkServer.Destroy(gameObject);
+        }
+       
     }
 
     #endregion
@@ -125,6 +149,16 @@ public class Unit : NetworkBehaviour
     private void OnMouseExit()
     {
         Deselect();
+    }
+    private void ChangeType(Unit unit , UnitMovement unitMovement)
+    {
+        unit.unitType = UnitType.KNIGHT;
+        unitMovement.GetNavMeshAgent().speed = 6;
+    }
+    [ClientRpc]
+    private void RpcChangeType(GameObject unit)
+    {
+        ChangeType(unit.GetComponent<Unit>(), unit.GetComponent<UnitMovement>());
     }
     #endregion
 }

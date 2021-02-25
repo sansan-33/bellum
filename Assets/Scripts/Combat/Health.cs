@@ -95,5 +95,9 @@ public class Health : NetworkBehaviour, IDamageable
     {
         return currentHealth > 0;
     }
+    public void Transformhealth()
+    {
+        currentHealth = maxHealth;
+    }
     #endregion
 }

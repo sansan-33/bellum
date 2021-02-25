@@ -79,6 +79,7 @@ public class UnitFactory : NetworkBehaviour
             GameObject unit = Instantiate(unitPrefab, spawnPosition + spawnOffset, rotation) as GameObject;
             unit.name = unitName;
             unit.tag = "Player" + playerID;
+            
             powerUp(unit , star);
             // Cannot remove this one otherwise Tactical Behavior error
             //if(spawnAuthority)
@@ -86,12 +87,13 @@ public class UnitFactory : NetworkBehaviour
 
             NetworkServer.Spawn(unit, connectionToClient);
             RpcTag(unit, playerID, unitName, star, teamColor);
-            RpcPowerUp(unit, star);
+           
             spawnCount--;
         }
     }
-    private GameObject powerUp(GameObject unit , int star)
+    public GameObject powerUp(GameObject unit , int star)
     {
+   
         unit.GetComponent<Health>().ScaleMaxHealth(star);
        
         if (star == 1)
@@ -102,11 +104,21 @@ public class UnitFactory : NetworkBehaviour
         {
             unit.GetComponent<IAttack>().ScaleDamageDeal((star - 1) * 4);
         }
-       
+        
         unit.GetComponentInChildren<IBody>().SetRenderMaterial(star);
         //unit.GetComponentInChildren<IBody>().SetUnitSize(star);
-
+        RpcPowerUp(unit, star);
         return unit;
+    }
+    public void Transform(GameObject Cavalry, GameObject Knight)
+    {
+        Cavalry.SetActive(false);
+        Knight.SetActive(true);
+    }
+    [ClientRpc]
+    void rpcTransform(GameObject Cavalry, GameObject Spearman)
+    {
+        Transform(Cavalry, Spearman);
     }
     private void initUnitDict()
     {
@@ -134,6 +146,7 @@ public class UnitFactory : NetworkBehaviour
     [ClientRpc]
     void RpcPowerUp(GameObject unit , int star)
     {
+        
         powerUp(unit, star);
     }
 }

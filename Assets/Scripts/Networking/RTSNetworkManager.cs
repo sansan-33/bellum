@@ -131,13 +131,13 @@ public class RTSNetworkManager : NetworkManager
                 militaryList.Clear();
                 if (player.GetPlayerID() == 0)
                 {
-                    militaryList.Add(Unit.UnitType.HERO, 2);
+                    militaryList.Add(Unit.UnitType.CAVALRY, 1);
                     StartCoroutine(loadMilitary(0.1f, player, GetStartPosition().position, unitDict[Unit.UnitType.KING], Unit.UnitType.KING.ToString(), 1 , Quaternion.identity));
                 }
                 else
                 {
                     Vector3 kingPos = GetStartPosition().position;
-                    militaryList.Add(Unit.UnitType.HERO, 2);
+                    militaryList.Add(Unit.UnitType.CAVALRY, 2);
                     StartCoroutine(loadMilitary(0.1f, player, kingPos, unitDict[Unit.UnitType.KING], Unit.UnitType.KING.ToString(), 1, Quaternion.Euler(0, 180,0)   ));
                 }
                 foreach (Unit.UnitType unitType in militaryList.Keys)

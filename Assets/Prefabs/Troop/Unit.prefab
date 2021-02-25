@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 1910679349635884098}
   - component: {fileID: 1140377478757733173}
   - component: {fileID: 2018631892820340176}
+  - component: {fileID: -4685004167748919957}
   m_Layer: 10
   m_Name: Unit
   m_TagString: Untagged
@@ -889,7 +890,6 @@ MonoBehaviour:
   unitMovement: {fileID: 988132111067734789}
   id: -1
   taskStatus: {fileID: 8749233842873657067}
-  price: 100
   targeter: {fileID: 1489045426958974518}
   onSelected:
     m_PersistentCalls:
@@ -1136,6 +1136,18 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &-4685004167748919957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4649854274305143770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50df5e2879d8844518abda053d97a392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5065429258744081884
 GameObject:
   m_ObjectHideFlags: 0

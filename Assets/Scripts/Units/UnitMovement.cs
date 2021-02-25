@@ -173,4 +173,8 @@ public class UnitMovement : NetworkBehaviour
         circleMarker.SetActive(true);
         circleMarker.transform.position = agent.destination;
     }
+    public NavMeshAgent GetNavMeshAgent()
+    {
+        return agent;
+    }
 }
