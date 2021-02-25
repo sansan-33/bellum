@@ -52,13 +52,14 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             if (tacticalAgent.TargetTransform != null) {
                 // Stop attacking if the target gets too far away from the defend object.
                 if ((transform.position - defendObject.Value.transform.position).magnitude > maxDistance.Value || !tacticalAgent.TargetDamagable.IsAlive()) {
+                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": target " + tacticalAgent.TargetTransform.name + "/" + tacticalAgent.TargetTransform.tag + "  gets too far away from the defend object - [" + (transform.position - defendObject.Value.transform.position).magnitude + " / " +  maxDistance.Value + "]" );
                     tacticalAgent.TargetTransform = null;
                     tacticalAgent.TargetDamagable = null;
                     tacticalAgent.AttackPosition = false;
-                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": target gets too far away from the defend object");
                 }
                 else {
                     // The target is within distance. Keep moving towards it.
+                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": The target " + tacticalAgent.TargetTransform.name + "/" + tacticalAgent.TargetTransform.tag + " is within distance. Keep moving towards it " + HEARTBEAT++);
                     tacticalAgent.AttackPosition = true;
                     if (MoveToAttackPosition()) {
                         tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME +  ": Attack " + HEARTBEAT++);
@@ -67,7 +68,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 }
             } else {
                 // Loop through the possible target transforms and determine which transform is the closest to each agent.
-                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": searching target");
+                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": searching target withing defend radius " + defendRadius.Value  + " .. " + HEARTBEAT++);
                 for (int i = targetTransforms.Count - 1; i > -1; --i) {
                     // The target has to be alive.
                     if (targets[i].IsAlive()) {
@@ -88,14 +89,14 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             if (!tacticalAgent.AttackPosition) {
                 var targetPosition = defendObject.Value.transform.TransformPoint(radius.Value * Mathf.Sin(theta * formationIndex), 0, radius.Value * Mathf.Cos(theta * formationIndex));
                 tacticalAgent.UpdateRotation(true);
-                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + " = " + ": moving distance " + (int) Vector3.Distance(tacticalAgent.transform.position, targetPosition) );
+                //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + " = " + ": moving distance " + (int) Vector3.Distance(tacticalAgent.transform.position, targetPosition) );
                 tacticalAgent.SetDestination(targetPosition);
                 if (tacticalAgent.HasArrived()) {
                     // Face away from the defending object.
                     var direction = targetPosition - defendObject.Value.transform.position;
                     direction.y = 0;
                     tacticalAgent.RotateTowards(Quaternion.LookRotation(direction));
-                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus( TASKNAME + ": Arrived");
+                    //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus( TASKNAME + ": Arrived and Defend " + HEARTBEAT++);
                     tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("defend");
                 }
             }
