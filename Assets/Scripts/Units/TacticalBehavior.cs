@@ -65,14 +65,14 @@ public class TacticalBehavior : MonoBehaviour
         teamColor = player.GetTeamColor();
         teamEnemyColor = player.GetTeamEnemyColor();
        
-        Unit.ServerOnUnitDespawned += TryReinforcePlayer;
-        Unit.ServerOnUnitSpawned += TryReinforcePlayer;
+        Unit.AuthorityOnUnitSpawned += TryReinforcePlayer;
+        Unit.AuthorityOnUnitDespawned += TryReinforcePlayer;
         LeaderScrollList.LeaderSelected += HandleLeaderSelected;
     }
     public void OnDestroy()
     {
-        Unit.ServerOnUnitDespawned -= TryReinforcePlayer;
-        Unit.ServerOnUnitSpawned -= TryReinforcePlayer;
+        Unit.AuthorityOnUnitSpawned -= TryReinforcePlayer;
+        Unit.AuthorityOnUnitDespawned -= TryReinforcePlayer;
         LeaderScrollList.LeaderSelected -= HandleLeaderSelected;
     }
     public IEnumerator AssignTag()
