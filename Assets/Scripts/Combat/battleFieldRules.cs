@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public class battleFieldRules : MonoBehaviour
+public class BattleFieldRules : MonoBehaviour
 {
     private Camera mainCamera;
     RTSPlayer player;
