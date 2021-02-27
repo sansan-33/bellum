@@ -108,8 +108,7 @@ public class UnitMovement : NetworkBehaviour
                 RpcScale(GetComponentInParent<Transform>());
             }else if(GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.KNIGHT)
             {
-                GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
-                agent.speed = 100;
+                SetSpeed();
             }
 
         }
@@ -122,16 +121,32 @@ public class UnitMovement : NetworkBehaviour
 
         
     }
-        private void Scale(Transform tacticalAgent)
-        {
-            tacticalAgent.transform.localScale = new Vector3(3, 3, 3);
-        }
-        [ClientRpc]
-        private void RpcScale(Transform tacticalAgent)
-        {
-            Scale(tacticalAgent);
-        }
-        public void OLDServerMove(Vector3 position)
+    [Command]
+    private void SetSpeed()
+    {
+        GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
+        ResetSpeed(agent);
+        RpcResetSpeed(agent.transform.gameObject);
+    }
+    private void ResetSpeed(NavMeshAgent agent)
+    {
+        agent.speed = 100;
+    }
+    [ClientRpc]
+    private void RpcResetSpeed(GameObject agent)
+    {
+        ResetSpeed(agent.GetComponent<UnitMovement>().GetNavMeshAgent());
+    }
+    private void Scale(Transform tacticalAgent)
+    { 
+       tacticalAgent.transform.localScale = new Vector3(3, 3, 3);
+    }
+    [ClientRpc]
+    private void RpcScale(Transform tacticalAgent)
+    {
+       Scale(tacticalAgent);
+    }
+    public void OLDServerMove(Vector3 position)
     {
         targeter.ClearTarget();
 

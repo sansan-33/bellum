@@ -16,6 +16,7 @@ public class UnitPowerUp : NetworkBehaviour
     {
         
     }
+    [Server]
     public Unit powerUp(Unit unit, int star)
     {
         Debug.Log(unit);
