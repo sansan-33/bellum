@@ -97,7 +97,10 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 cmdDamageText(other.transform.position, player.GetPlayerID(), calculatedDamageToDeal, damageToDeal, isFlipped);
                 CmdDealDamage(other.gameObject, calculatedDamageToDeal);
                 //Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
-
+                if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.KNIGHT)
+                {
+                    GetComponentInParent<UnitMovement>().GetNavMeshAgent().speed = GetComponentInParent<UnitMovement>().OriginoSpeed;
+                }
                 other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
                
                 

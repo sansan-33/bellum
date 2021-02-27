@@ -12,10 +12,14 @@ public class UnitMovement : NetworkBehaviour
     [SerializeField] public NetworkAnimator unitNetworkAnimator = null;
     [SerializeField] public LineRenderer lineRenderer = null;
     [SerializeField] public GameObject circleMarker = null;
-    private UnitFactory localFactory;
+    public float OriginoSpeed;
     private float stoppingDistance = 1f;
     #region Server
     private float startTime = 3;
+    private void Start()
+    {
+        OriginoSpeed = agent.speed;
+    }
     public override void OnStartServer()
     {
         GameOverHandler.ServerOnGameOver += ServerHandleGameOver;
@@ -84,13 +88,19 @@ public class UnitMovement : NetworkBehaviour
     [Server]
     public void ServerMove(Vector3 position)
     {
-        if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN && !GetComponentInParent<battleFieldRules>().IsInField(GetComponentInParent<Transform>()) && CompareTag("Player0"))
+        if ( !GetComponentInParent<battleFieldRules>().IsInField(GetComponentInParent<Transform>()) && CompareTag("Player0"))
         {
-            
-            GetComponentInParent<UnitPowerUp>().powerUp(GetComponentInParent<Unit>(), 3);
-            GetComponentInParent<UnitPowerUp>().RpcPowerUp(GetComponentInParent<Transform>().gameObject, 3);
-            Scale(GetComponentInParent<Transform>());
-            RpcScale(GetComponentInParent<Transform>());
+            if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN)
+            {
+                GetComponentInParent<UnitPowerUp>().powerUp(GetComponentInParent<Unit>(), 3);
+                GetComponentInParent<UnitPowerUp>().RpcPowerUp(GetComponentInParent<Transform>().gameObject, 3);
+                Scale(GetComponentInParent<Transform>());
+                RpcScale(GetComponentInParent<Transform>());
+            }else if(GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.KNIGHT)
+            {
+                agent.speed = 100;
+            }
+
         }
             position.y = agent.destination.y;
             if (agent.destination != position)
