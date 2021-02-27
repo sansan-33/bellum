@@ -86,7 +86,7 @@ public class UnitMovement : NetworkBehaviour
     {
         if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN && !GetComponentInParent<battleFieldRules>().IsInField(GetComponentInParent<Transform>()) && CompareTag("Player0"))
         {
-
+            
             GetComponentInParent<UnitPowerUp>().powerUp(GetComponentInParent<Unit>(), 3);
             GetComponentInParent<UnitPowerUp>().RpcPowerUp(GetComponentInParent<Transform>().gameObject, 3);
             Scale(GetComponentInParent<Transform>());
