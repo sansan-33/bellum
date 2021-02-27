@@ -99,7 +99,7 @@ public class UnitFactory : NetworkBehaviour
         Knight.SetActive(true);
     }
     [ClientRpc]
-    void rpcTransform(GameObject Cavalry, GameObject Spearman)
+    void RpcTransform(GameObject Cavalry, GameObject Spearman)
     {
         Transform(Cavalry, Spearman);
     }

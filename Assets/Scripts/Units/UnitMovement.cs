@@ -84,24 +84,14 @@ public class UnitMovement : NetworkBehaviour
     [Server]
     public void ServerMove(Vector3 position)
     {
-        if (localFactory == null)
-        {
-            foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
-            {
-                if (factroy.GetComponent<UnitFactory>().hasAuthority)
-                {
-                    localFactory = factroy.GetComponent<UnitFactory>();
-                }
-            }
-        }
-        if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN && !GetComponentInParent<battleFieldRules>().IsInField(GetComponentInParent<Transform>())&& CompareTag("Player0"))
+        if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN && !GetComponentInParent<battleFieldRules>().IsInField(GetComponentInParent<Transform>()) && CompareTag("Player0"))
         {
 
             GetComponentInParent<UnitPowerUp>().powerUp(GetComponentInParent<Unit>(), 3);
             GetComponentInParent<UnitPowerUp>().RpcPowerUp(GetComponentInParent<Transform>().gameObject, 3);
             Scale(GetComponentInParent<Transform>());
             RpcScale(GetComponentInParent<Transform>());
-
+        }
             position.y = agent.destination.y;
             if (agent.destination != position)
             {
@@ -109,7 +99,7 @@ public class UnitMovement : NetworkBehaviour
                 agent.SetDestination(position);
             }
 
-        }
+        
     }
         private void Scale(Transform tacticalAgent)
         {
