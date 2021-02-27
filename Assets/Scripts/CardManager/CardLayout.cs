@@ -14,13 +14,15 @@ public class CardLayout : MonoBehaviour
     void Start()
     {
        
-        if (cardindex == 0) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-860, y, 0); }
-        if (cardindex == 1) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-737, y, 0); }
-        if (cardindex == 2) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-567, y, 0); }
-        if (cardindex == 3) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-410, y, 0); }
-        if (cardindex == 4) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-223, y, 0); }
-        if (cardindex == 5) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-67, y, 0); }
-        
+        if (cardindex == 0) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-600, y, 0); }
+        if (cardindex == 1) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-500, y, 0); }
+        if (cardindex == 2) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-400, y, 0); }
+        if (cardindex == 3) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-300, y, 0); }
+        if (cardindex == 4) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-200, y, 0); }
+        if (cardindex == 5) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-100, y, 0); }
+        if (cardindex == 6) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-700, y, 0); }
+        if (cardindex == 7) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-800, y, 0); }
+
     }
 
     // Update is called once per frame
