@@ -89,7 +89,16 @@ public class UnitMovement : NetworkBehaviour
     [Server]
     public void ServerMove(Vector3 position)
     {
-        if ( !GetComponentInParent<BattleFieldRules>().IsInField(GetComponentInParent<Transform>()) && CompareTag("Player0"))
+        bool CanPowerUp = false;
+        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
+        {
+            if (CompareTag("Player0"))
+            {
+                CanPowerUp = true;
+            }
+        }
+        else { CanPowerUp = true; }
+        if ( !GetComponentInParent<BattleFieldRules>().IsInField(GetComponentInParent<Transform>()) && CanPowerUp)
         {
             if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN)
             {

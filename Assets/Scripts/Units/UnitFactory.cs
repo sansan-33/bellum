@@ -92,17 +92,6 @@ public class UnitFactory : NetworkBehaviour
             spawnCount--;
         }
     }
-    
-    public void Transform(GameObject Cavalry, GameObject Knight)
-    {
-        Cavalry.SetActive(false);
-        Knight.SetActive(true);
-    }
-    [ClientRpc]
-    void RpcTransform(GameObject Cavalry, GameObject Spearman)
-    {
-        Transform(Cavalry, Spearman);
-    }
     private void initUnitDict()
     {
 

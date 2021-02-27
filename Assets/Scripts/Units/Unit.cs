@@ -75,21 +75,8 @@ public class Unit : NetworkBehaviour
     {
         if(this.unitType == UnitMeta.UnitType.CAVALRY&&i==0)
         {
-            
-            if (localFactory == null)
-            {
-                foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
-                {
-                    if (factroy.GetComponent<UnitFactory>().hasAuthority)
-                    {
-                        localFactory = factroy.GetComponent<UnitFactory>();
-                    }
-                }
-            }
-            GetComponent<Health>().Transformhealth();
-            localFactory.Transform(Cavalry, Knight);
-            ChangeType(this,GetComponent<UnitMovement>());
-            RpcChangeType(GetComponent<GameObject>());
+            ChangeType(this, Cavalry, Knight);
+            RpcChangeType(this.transform.gameObject, Cavalry, Knight);
             i++;
         }
         else
@@ -140,15 +127,18 @@ public class Unit : NetworkBehaviour
     {
         Deselect();
     }
-    private void ChangeType(Unit unit , UnitMovement unitMovement)
+    private void ChangeType(Unit unit , GameObject Cavalry, GameObject Knight)
     {
+        unit.GetComponentInParent<Health>().Transformhealth();
+        Cavalry.SetActive(false);
+        Knight.SetActive(true);
         unit.unitType = UnitMeta.UnitType.KNIGHT;
-        unitMovement.GetNavMeshAgent().speed = 6;
+        unit.GetComponentInParent<UnitMovement>().GetNavMeshAgent().speed = 6;
     }
     [ClientRpc]
-    private void RpcChangeType(GameObject unit)
+    private void RpcChangeType(GameObject unit, GameObject Cavalry, GameObject Knight)
     {
-        ChangeType(unit.GetComponent<Unit>(), unit.GetComponent<UnitMovement>());
+        ChangeType(unit.GetComponent<Unit>(), Cavalry, Knight);
     }
     #endregion
 }
