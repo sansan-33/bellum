@@ -34,12 +34,10 @@ public class BattleFieldRules : MonoBehaviour
         }
         if (mainCamera.WorldToScreenPoint(unit.position).y < (Screen.height / 2)-200&& unit.CompareTag("Player0"))
         {
-           
             return IsInFields;
         }
         else
         {
-            
             return IsNotInField;
         }
         
