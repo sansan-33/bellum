@@ -41,7 +41,7 @@ public class UnitPowerUp : NetworkBehaviour
             }
             else if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.KNIGHT)
             {
-                GetComponentInParent<Unit>().GetUnitMovement().SetSpeed();
+                //GetComponentInParent<Unit>().GetUnitMovement().SetSpeed();
             }
 
         }
@@ -49,7 +49,7 @@ public class UnitPowerUp : NetworkBehaviour
     [Server]
     public Unit powerUp(Unit unit, int star)
     {
-        Debug.Log(unit);
+        //Debug.Log(unit);
         unit.GetComponent<Health>().ScaleMaxHealth(star);
 
         if (star == 1)

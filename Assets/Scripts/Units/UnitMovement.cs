@@ -98,14 +98,12 @@ public class UnitMovement : NetworkBehaviour
     [Command]
     public void SetSpeed()
     {
-        /*
         if (agent.speed < 100)
         {
             GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
             ResetSpeed(agent);
             RpcResetSpeed(agent.transform.gameObject);
         }
-        */
     }
     private void ResetSpeed(NavMeshAgent agent)
     {
