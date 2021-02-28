@@ -42,8 +42,10 @@ public class Health : NetworkBehaviour, IDamageable
 
     public void ScaleMaxHealth(float factor)
     {
+        
         maxHealth = (int) (maxHealth * factor);
         currentHealth = maxHealth;
+     
     }
     public void Healing(float healAmount)
     {
