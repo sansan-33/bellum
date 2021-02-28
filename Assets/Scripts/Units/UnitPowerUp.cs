@@ -12,6 +12,8 @@ public class UnitPowerUp : NetworkBehaviour
     [Command]
     public void cmdPowerUp()
     {
+        Unit unit = GetComponentInParent<Unit>();
+        Transform unitTransform = GetComponentInParent<Transform>();
         bool CanPowerUp = false;
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
         {
@@ -23,24 +25,24 @@ public class UnitPowerUp : NetworkBehaviour
             CanPowerUp = true;
         }
 
-        if (!GetComponentInParent<BattleFieldRules>().IsInField(GetComponentInParent<Transform>()) && CanPowerUp)
+        if (!GetComponentInParent<BattleFieldRules>().IsInField(unitTransform) && CanPowerUp)
         {
-            if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN&& SPEARMANCanPowerUp)
+            if (unit.unitType == UnitMeta.UnitType.SPEARMAN&& SPEARMANCanPowerUp)
             {
-                powerUp(GetComponentInParent<Unit>(), 3);
-                RpcPowerUp(GetComponentInParent<Transform>().gameObject, 3);
-                Scale(GetComponentInParent<Transform>());
-                RpcScale(GetComponentInParent<Transform>());
+                powerUp(unit.gameObject, 3);
+                RpcPowerUp(unit.gameObject, 3);
+                Scale(unitTransform, unit.gameObject);
+                RpcScale(unitTransform, unit.gameObject);
                 SPEARMANCanPowerUp = false;
             }
-            else if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.KNIGHT)
+            else if (unit.unitType == UnitMeta.UnitType.KNIGHT)
             {
                 ServerSetSpeed();
             }
         }
     }
     [Server]
-    public Unit powerUp(Unit unit, int star)
+    public Unit powerUp(GameObject unit, int star)
     {
         //Debug.Log(unit);
         unit.GetComponent<Health>().ScaleMaxHealth(star);
@@ -57,22 +59,23 @@ public class UnitPowerUp : NetworkBehaviour
         unit.GetComponentInChildren<IBody>().SetRenderMaterial(star);
         //unit.GetComponentInChildren<IBody>().SetUnitSize(star);
 
-        return unit;
+        return unit.GetComponent<Unit>();
     }
     [ClientRpc]
     public void RpcPowerUp(GameObject unit, int star)
     {
 
-        powerUp(unit.GetComponent<Unit>(), star);
+        powerUp(unit, star);
     }
-    private void Scale(Transform tacticalAgent)
+    private void Scale(Transform unitTransform, GameObject unit)
     {
-        tacticalAgent.transform.localScale = new Vector3(3, 3, 3);
+        unitTransform.localScale = new Vector3(2, 2, 2);
+        unit.GetComponent<IAttack>().ScaleAttackRange(1.5f) ;
     }
     [ClientRpc]
-    private void RpcScale(Transform tacticalAgent)
+    private void RpcScale(Transform unitTransform, GameObject unit)
     {
-        Scale(tacticalAgent);
+        Scale(unitTransform, unit);
     }
     [Server]
     public void ServerSetSpeed()

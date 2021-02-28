@@ -220,11 +220,13 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     {
         repeatAttackDelay =  repeatAttackDelay * factor ;
     }
-
     public void ScaleDamageDeal(float factor)
     {
-        //Debug.Log($"Scale Damage {this.GetComponent<Unit>().unitType} {damageToDeal} {factor} ");
         damageToDeal =  (int)  (damageToDeal * factor);
+    }
+    public void ScaleAttackRange(int factor)
+    {
+        attackRange = attackRange * factor;
     }
     public void powerUpAfterKill()
     {

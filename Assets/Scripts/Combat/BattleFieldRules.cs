@@ -19,7 +19,7 @@ public class BattleFieldRules : MonoBehaviour
     public bool IsInField(Transform unit)
     {
         //return false;
-        
+        /*
        
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
         {
@@ -36,6 +36,7 @@ public class BattleFieldRules : MonoBehaviour
             IsInFields = true;
             IsNotInField = false;
         }
+        */
         if (MiddleLine.transform.position.z> unit.position.z)
         {
           //  Debug.Log($"IsInFields-->{IsInFields}");

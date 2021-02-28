@@ -96,6 +96,10 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     {
         damageToDealFactor = factor;
     }
+    public void ScaleAttackRange(int factor)
+    {
+        fireRange = fireRange * factor;
+    }
     public void OnHandleKilled()
     {
         GetComponent<HealthDisplay>().HandleKillText();
