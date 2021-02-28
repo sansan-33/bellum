@@ -131,7 +131,7 @@ public class RTSNetworkManager : NetworkManager
                 militaryList.Clear();
                 if (player.GetPlayerID() == 0)
                 {
-                    militaryList.Add(UnitMeta.UnitType.KNIGHT, 10);
+                    militaryList.Add(UnitMeta.UnitType.KNIGHT, 5);
                     StartCoroutine(loadMilitary(0.1f, player, GetStartPosition().position, unitDict[UnitMeta.UnitType.KING], UnitMeta.UnitType.KING.ToString(), 1 , Quaternion.identity));
                 }
                 else
