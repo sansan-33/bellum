@@ -96,7 +96,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     {
         damageToDealFactor = factor;
     }
-    public void ScaleAttackRange(int factor)
+    public void ScaleAttackRange(float factor)
     {
         fireRange = fireRange * factor;
     }

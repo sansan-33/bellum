@@ -80,7 +80,7 @@ public class UnitFactory : NetworkBehaviour
             unit.name = unitName;
             unit.tag = "Player" + playerID;
             
-            unit.GetComponent<UnitPowerUp>().powerUp(unit.GetComponent<Unit>() , star);
+            unit.GetComponent<UnitPowerUp>().powerUp(unit , star);
             unit.GetComponent<UnitPowerUp>().RpcPowerUp(unit, star);
             // Cannot remove this one otherwise Tactical Behavior error
             //if(spawnAuthority)

@@ -6,45 +6,34 @@ using UnityEngine;
 public class BattleFieldRules : MonoBehaviour
 {
     public  GameObject MiddleLine;
-    private Camera mainCamera;
-    RTSPlayer player;
+    public Transform unitTransform;
     void Start()
     {
         MiddleLine = GameObject.FindGameObjectWithTag("MiddleLine");
-           player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        mainCamera = Camera.main;
     }
-    public bool IsInField(Transform unit)
+    public bool IsInField()
     {
         //return false;
 
-        if (unit.GetComponent<NetworkIdentity>().hasAuthority)
+        if (unitTransform.GetComponent<NetworkIdentity>().hasAuthority)
         {
-            if (MiddleLine.transform.position.z > unit.position.z)
+            if (MiddleLine.transform.position.z > unitTransform.position.z)
             {
-                Debug.Log($"PlayerID == 0 -- true{player.GetPlayerID()}");
-                //  Debug.Log($"IsInFields-->{IsInFields}");
                 return true;
             }
             else
             {
-                Debug.Log($"PlayerID == 0 -- false{player.GetPlayerID()}");
-                //Debug.Log($"IsNotInFields-->{IsNotInField}");
                 return false;
             }
         }
         else
         {
-            if (MiddleLine.transform.position.z < unit.position.z)
+            if (MiddleLine.transform.position.z < unitTransform.position.z)
             {
-                Debug.Log($"PlayerID != 0 -- true{player.GetPlayerID()}");
-                //  Debug.Log($"IsInFields-->{IsInFields}");
                 return true;
             }
             else
             {
-                Debug.Log($"PlayerID != 0 -- false{player.GetPlayerID()}");
-                //Debug.Log($"IsNotInFields-->{IsNotInField}");
                 return false;
             }
         }

@@ -8,6 +8,8 @@ public class UnitPowerUp : NetworkBehaviour
 {
     [SerializeField] private NavMeshAgent agent = null;
     [SerializeField] private GameObject specialEffectPrefab = null;
+    [SerializeField] private BattleFieldRules battleFieldRules = null;
+
     private bool SPEARMANCanPowerUp = true;
     [Command]
     public void cmdPowerUp()
@@ -25,7 +27,7 @@ public class UnitPowerUp : NetworkBehaviour
             CanPowerUp = true;
         }
 
-        if (!GetComponentInParent<BattleFieldRules>().IsInField(unitTransform) && CanPowerUp)
+        if (!battleFieldRules.IsInField() && CanPowerUp)
         {
             if (unit.unitType == UnitMeta.UnitType.SPEARMAN&& SPEARMANCanPowerUp)
             {

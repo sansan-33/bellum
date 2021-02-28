@@ -215,7 +215,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         TryAttack();
 
     }
-
     public void ScaleAttackDelay(int factor)
     {
         repeatAttackDelay =  repeatAttackDelay * factor ;
@@ -224,7 +223,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     {
         damageToDeal =  (int)  (damageToDeal * factor);
     }
-    public void ScaleAttackRange(int factor)
+    public void ScaleAttackRange(float factor)
     {
         attackRange = attackRange * factor;
     }
