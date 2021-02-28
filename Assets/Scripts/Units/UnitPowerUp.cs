@@ -8,7 +8,7 @@ public class UnitPowerUp : NetworkBehaviour
 {
     [SerializeField] private NavMeshAgent agent = null;
     [SerializeField] private GameObject specialEffectPrefab = null;
-
+    private bool SPEARMANCanPowerUp = true;
     [Command]
     public void cmdPowerUp()
     {
@@ -25,16 +25,17 @@ public class UnitPowerUp : NetworkBehaviour
 
         if (!GetComponentInParent<BattleFieldRules>().IsInField(GetComponentInParent<Transform>()) && CanPowerUp)
         {
-            if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN)
+            if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.SPEARMAN&& SPEARMANCanPowerUp)
             {
-                GetComponentInParent<UnitPowerUp>().powerUp(GetComponentInParent<Unit>(), 3);
-                GetComponentInParent<UnitPowerUp>().RpcPowerUp(GetComponentInParent<Transform>().gameObject, 3);
+                powerUp(GetComponentInParent<Unit>(), 3);
+                RpcPowerUp(GetComponentInParent<Transform>().gameObject, 3);
                 Scale(GetComponentInParent<Transform>());
                 RpcScale(GetComponentInParent<Transform>());
+                SPEARMANCanPowerUp = false;
             }
             else if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.KNIGHT)
             {
-                 SetSpeed();
+                ServerSetSpeed();
             }
         }
     }
@@ -73,14 +74,16 @@ public class UnitPowerUp : NetworkBehaviour
     {
         Scale(tacticalAgent);
     }
-    [Command]
-    public void SetSpeed()
+    [Server]
+    public void ServerSetSpeed()
     {
+        Debug.Log($"SetSpeed {agent.speed}");
         if (agent.speed < 100)
         {
             GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
             ResetSpeed(agent);
             RpcResetSpeed(agent.transform.gameObject);
+            NetworkServer.Spawn(specialEffect, connectionToClient);
         }
     }
     private void ResetSpeed(NavMeshAgent agent)

@@ -5,19 +5,21 @@ using UnityEngine;
 
 public class BattleFieldRules : MonoBehaviour
 {
+    public  GameObject MiddleLine;
     private Camera mainCamera;
     RTSPlayer player;
     bool IsInFields = true;
     bool IsNotInField = false;
     void Start()
     {
-        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        MiddleLine = GameObject.FindGameObjectWithTag("MiddleLine");
+           player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         mainCamera = Camera.main;
     }
     public bool IsInField(Transform unit)
     {
-        return false;
-        /*
+        //return false;
+        
        
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
         {
@@ -34,7 +36,7 @@ public class BattleFieldRules : MonoBehaviour
             IsInFields = true;
             IsNotInField = false;
         }
-        if (mainCamera.WorldToScreenPoint(unit.position).y < (Screen.height / 2) - 200)
+        if (MiddleLine.transform.position.z> unit.position.z)
         {
           //  Debug.Log($"IsInFields-->{IsInFields}");
             return IsInFields;
@@ -44,7 +46,7 @@ public class BattleFieldRules : MonoBehaviour
             //Debug.Log($"IsNotInFields-->{IsNotInField}");
             return IsNotInField;
         }
-        */
+        
         
     }
     // Update is called once per frame
