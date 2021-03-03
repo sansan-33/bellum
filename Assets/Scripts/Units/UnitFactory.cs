@@ -124,6 +124,7 @@ public class UnitFactory : NetworkBehaviour
         unit.tag = "Player" + playerID;
         //Debug.Log($"RpcTag color is {teamColor}");
         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
+        unit.GetComponent<UnitBody>().SetRenderMaterial(playerID, 1);
     }
-   
+
 }
