@@ -129,8 +129,7 @@ public class TacticalBehavior : MonoBehaviour
                 foreach (GameObject board in GameObject.FindGameObjectsWithTag("GameBoardSystem"))
                 {
                     gameBoardHandlerPrefab = board.GetComponent<GameBoardHandler>();
-                    if (PLAYERID == 1)
-                        gameBoardHandlerPrefab.initPlayerGameBoard();
+                    gameBoardHandlerPrefab.initPlayerGameBoard();
                 }
             }
             yield return new WaitForSeconds(2f);
