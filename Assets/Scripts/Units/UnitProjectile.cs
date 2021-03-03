@@ -15,6 +15,7 @@ public class UnitProjectile : NetworkBehaviour
     [SerializeField] private GameObject camPrefab = null;
     [SerializeField] private string unitType;
     [SerializeField] private GameObject specialEffectPrefab = null;
+    NetworkIdentity opponentIdentity;
     public static event Action onKilled;
     private float damageToDealOriginal;
     private StrengthWeakness strengthWeakness;
@@ -40,7 +41,7 @@ public class UnitProjectile : NetworkBehaviour
     [ServerCallback]
     private void OnTriggerEnter(Collider other) //sphere collider is used to differentiate between the unit itself, and the attack range (fireRange)
     {
-
+        bool isFlipped = false;
         //Debug.Log($" Hitted object {other.tag}, Attacker type is {unitType} ");
         damageToDeals = damageToDealOriginal;
         // Not attack same connection client object except AI Enemy
@@ -50,6 +51,7 @@ public class UnitProjectile : NetworkBehaviour
         }
         else // Multi player seneriao
         {
+            isFlipped = true;
             if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
             {
                 if (networkIdentity.hasAuthority) { return; }  //check to see if it belongs to the player, if it does, do nothing
@@ -60,12 +62,20 @@ public class UnitProjectile : NetworkBehaviour
         //Debug.Log($"Health {other} / {other.GetComponent<Health>()} ");
         if (other.TryGetComponent<Health>(out Health health))
         {
+            if (player.GetPlayerID() == 1)
+            {
+                opponentIdentity = GetComponent<NetworkIdentity>();
+            }
+            else
+            {
+                opponentIdentity = other.GetComponent<NetworkIdentity>();
+            }
             //Destroy the arrow faster prevent showing arror after hit
             gameObject.GetComponent<MeshRenderer>().enabled = false;
             gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals}");
             damageToDeals = strengthWeakness.calculateDamage(UnitMeta.UnitType.ARCHER, other.GetComponent<Unit>().unitType, damageToDeals);
-            cmdDamageText(other.transform.position, damageToDeals, damageToDealOriginal);
+            cmdDamageText(other.transform.position, damageToDeals, damageToDealOriginal, opponentIdentity, isFlipped);
             cmdSpecialEffect(other.transform.position);
             //if (damageToDeals > damageToDealOriginal) { cmdCMVirtual(); }
             other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
@@ -78,7 +88,7 @@ public class UnitProjectile : NetworkBehaviour
         }
     }
     [Command]
-    private void cmdDamageText(Vector3 targetPos, float damageToDeals, float damageToDealOriginal)
+    private void cmdDamageText(Vector3 targetPos, float damageToDeals, float damageToDealOriginal, NetworkIdentity opponentIdentity, bool flipText)
     {
         GameObject floatingText = Instantiate(textPrefab, targetPos, Quaternion.identity);
         Color textColor;
@@ -95,7 +105,11 @@ public class UnitProjectile : NetworkBehaviour
         floatingText.GetComponent<DamageTextHolder>().displayColor = textColor;
         floatingText.GetComponent<DamageTextHolder>().displayText = dmgText;
         NetworkServer.Spawn(floatingText, connectionToClient);
+        if (opponentIdentity == null) { return; }
+
+        if (flipText) { TargetCommandText(opponentIdentity.connectionToClient, floatingText, opponentIdentity); }
     }
+
     [Command]
     private void cmdCMVirtual()
     {
@@ -117,6 +131,11 @@ public class UnitProjectile : NetworkBehaviour
     {
         NetworkServer.Destroy(gameObject);
     }
-   
+    [TargetRpc]
+    public void TargetCommandText(NetworkConnection other, GameObject floatingText, NetworkIdentity others)
+    {
+       // Debug.Log("TargetCommandText");
+        floatingText.GetComponent<DamageTextHolder>().displayRotation.y = 180;
+    }
 
 }

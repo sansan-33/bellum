@@ -87,12 +87,12 @@ public class Unit : NetworkBehaviour
     [Server]
     private void ServerHandleDie()
     {
-        if(this.unitType == UnitMeta.UnitType.CAVALRY&&i==0)
-        {
-            GetComponentInChildren<UnitBody>().ServeChangeType(this);
-            i++;
-        }
-        else
+        //if(this.unitType == UnitMeta.UnitType.CAVALRY&&i==0)
+       // {
+          //  GetComponentInChildren<UnitBody>().ServeChangeType(this);
+         //   i++;
+       // }
+        //else
         {
             NetworkServer.Destroy(gameObject);
         }

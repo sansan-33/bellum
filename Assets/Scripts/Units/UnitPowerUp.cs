@@ -102,7 +102,7 @@ public class UnitPowerUp : NetworkBehaviour
     private void ResetSpeed(NavMeshAgent agent)
     {
         agent.speed += 10;
-        Debug.Log(agent.speed);
+       
     }
     [ClientRpc]
     private void RpcResetSpeed(GameObject agent)

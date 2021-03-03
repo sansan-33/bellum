@@ -13,12 +13,14 @@ public class UnitBody : NetworkBehaviour, IBody
     public void SetRenderMaterial(int star)
     {
         int playerid = NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID();
-        unitRenderer.sharedMaterial = material[playerid ==0 ? star - 1 : 3 + star - 1 ];
+        int index = playerid == 0 ? star - 2 : 3 + star - 2;
+     
+        unitRenderer.sharedMaterial = material[playerid ==0 ? star - 2 : 3 + star - 2 ];
     }
     public void SetRenderMaterial(int playerid, int star)
     {
         int index = playerid == 0 ? star - 1 : 3 + star - 1;
-        Debug.Log($"SetRenderMaterial Player ID {playerid} star {star} index {index}");
+  
         unitRenderer.sharedMaterial = material[index];
     }
     public void SetUnitSize(int star)

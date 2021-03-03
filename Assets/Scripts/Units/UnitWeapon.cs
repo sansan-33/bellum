@@ -175,7 +175,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
 
         
         if (opponentIdentity == null) { return; }
-      
+     
         if (flipText) { TargetCommandText(opponentIdentity.connectionToClient, floatingText, opponentIdentity); }    }
     [Command]
     private void cmdSpecialEffect(Vector3 position)
