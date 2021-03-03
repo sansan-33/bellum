@@ -2,7 +2,6 @@
 using Mirror;
 using UnityEngine;
 
-
 public class UnitBody : NetworkBehaviour, IBody
 {
 
