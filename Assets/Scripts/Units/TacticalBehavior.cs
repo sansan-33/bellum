@@ -240,7 +240,7 @@ public class TacticalBehavior : MonoBehaviour
 
         if (playerid == 0 || ((RTSNetworkManager)NetworkManager.singleton).Players.Count > 1)
         {
-            Debug.Log($"LeaderUpdated?.Invoke playerid {playerid} count {((RTSNetworkManager)NetworkManager.singleton).Players.Count} ");
+            //Debug.Log($"LeaderUpdated?.Invoke playerid {playerid} count {((RTSNetworkManager)NetworkManager.singleton).Players.Count} ");
             LeaderUpdated?.Invoke(leaders[playerid]);
         }
 
@@ -401,7 +401,7 @@ public class TacticalBehavior : MonoBehaviour
     {
         foreach (var leaderid in leaders[playerid].Keys.ToList())
         {
-            Debug.Log($"Auto Run leader {playerid} {leaderid}");
+            //Debug.Log($"Auto Run leader {playerid} {leaderid}");
             SelectionChanged(playerid , leaderid);
         }
         //AttackOnlyUnit();

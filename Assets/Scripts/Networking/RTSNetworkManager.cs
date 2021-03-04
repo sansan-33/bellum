@@ -124,11 +124,11 @@ public class RTSNetworkManager : NetworkManager
 
             foreach (RTSPlayer player in Players)
             {
-                Vector3 pos = GetStartPosition().position;
+                //Vector3 pos = GetStartPosition().position;
                 //Debug.Log($"What is unitbase tag | {baseInstance.tag} | playerID |{player.GetPlayerID()}|  ? ");               
-                SetupBase(pos, player);
-                SetupBase(GetStartPosition().position, player);
-                SetupUnitFactory(pos, player);
+                //SetupBase(pos, player);
+                //SetupBase(GetStartPosition().position, player);
+                SetupUnitFactory(new Vector3(0,0,0), player);
                 //SetupKing(GetStartPosition().position, player);
                 
                 militaryList.Clear();
