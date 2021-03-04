@@ -41,10 +41,10 @@ public class TacticalBehavior : MonoBehaviour
     private GameBoardHandler gameBoardHandlerPrefab = null;
     #region Client
 
-    public void Awake()
+    public void Start()
     {
         Eleixier = FindObjectOfType<eleixier>();
-        if (NetworkClient.connection.identity == null) { return; }
+        //if (NetworkClient.connection.identity == null) { return; }
 
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         PLAYERID = player.GetPlayerID();
@@ -52,16 +52,13 @@ public class TacticalBehavior : MonoBehaviour
         ENEMYTAG = "Player" + ENEMYID;
         PLAYERTAG = "Player" + PLAYERID;
         StartCoroutine(AssignTag());
-        //StartCoroutine(TacticalFormation(PLAYERID, ENEMYID));
+
         behaviorTreeGroups.Add(PLAYERID, playerBehaviorTreeGroup);
         behaviorTreeGroups.Add(ENEMYID, enemyBehaviorTreeGroup);
         leaderTacticalType.Add(PLAYERID, new Dictionary<int, List<BehaviorSelectionType>>() );
         leaderTacticalType.Add(ENEMYID, new Dictionary<int, List<BehaviorSelectionType>>() );
         leaders.Add(PLAYERID, new Dictionary<int, GameObject>());
         leaders.Add(ENEMYID, new Dictionary<int, GameObject>());
-
-        //defendObjects.Add(PLAYERID, new List<GameObject>());
-        //defendObjects.Add(ENEMYID,  new List<GameObject>());
 
         teamColor = player.GetTeamColor();
         teamEnemyColor = player.GetTeamEnemyColor();
@@ -83,29 +80,9 @@ public class TacticalBehavior : MonoBehaviour
         {
             //Debug.Log("AssignTag ============================ START");
             yield return new WaitForSeconds(1f);
-            //Debug.Log("WAIT FOR 1 Sec");
-            GameObject[] playerBases = GameObject.FindGameObjectsWithTag("PlayerBase");
-            foreach (GameObject playerBase in playerBases)
-            {
-                if (playerBase.TryGetComponent<UnitBase>(out UnitBase unit))
-                {
-                    if (unit.hasAuthority)
-                    {
-                        playerBase.tag = "PlayerBase" + PLAYERID;
-                    }
-                    else
-                    {
-                        //Only Assing Enemy Base Tag if mulitplayer
-                        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count > 1)
-                            playerBase.tag = "PlayerBase" + ENEMYID;
-                    }
-                }
-            }
-            //Debug.Log("Finished playerbase tag");
-
-            yield return new WaitForSeconds(0.1f);
-
+            
             GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
+            //Debug.Log($"Size of armies with [Player] Tag {armies.Length} ");
             foreach (GameObject army in armies)
             {
                 if (army.TryGetComponent<Unit>(out Unit unit))
@@ -133,16 +110,12 @@ public class TacticalBehavior : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(2f);
-            //Debug.Log($"playerBases: {playerBases.Length} / PlayerBase0: {GameObject.FindGameObjectsWithTag("PlayerBase0").Length} / PlayerBase1: {GameObject.FindGameObjectsWithTag("PlayerBase1").Length}");
-            //if ( GameObject.FindGameObjectsWithTag("PlayerBase0").Length > 0 && GameObject.FindGameObjectsWithTag("PlayerBase1").Length > 0)
-            //{
+            //Debug.Log($"player0: {GameObject.FindGameObjectsWithTag("Player0").Length} / Player2 : {GameObject.FindGameObjectsWithTag("Player1").Length}");
+            if ( GameObject.FindGameObjectsWithTag("Player0").Length > 0 && GameObject.FindGameObjectsWithTag("Player1").Length > 0)
+            {
                 ISTAGGED = true;
-                //defendObjects[0].Add(GameObject.FindGameObjectsWithTag("PlayerBase0")[0]);
-                //defendObjects[0].Add(GameObject.FindGameObjectsWithTag("PlayerBase0")[1]);
-                //defendObjects[1].Add(GameObject.FindGameObjectsWithTag("PlayerBase1")[0]);
-                //defendObjects[1].Add(GameObject.FindGameObjectsWithTag("PlayerBase1")[1]);
                 yield return TacticalFormation(PLAYERID, ENEMYID);
-            //}
+            }
 
         }
         //Debug.Log("AssignTag ============================ END ");
@@ -153,18 +126,10 @@ public class TacticalBehavior : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        if (gameBoardHandlerPrefab == null)
-        {
-            foreach (GameObject board in GameObject.FindGameObjectsWithTag("GameBoardSystem"))
-            {
-                gameBoardHandlerPrefab = board.GetComponent<GameBoardHandler>();
-                gameBoardHandlerPrefab.initPlayerGameBoard();
-            }
-        }
-
+        
         GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + playerid);
         GameObject defendObject;
-        if (playerid == 999)
+        if (playerid == 77)
             Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Length}");
 
         leaders[playerid].Clear();
@@ -255,7 +220,7 @@ public class TacticalBehavior : MonoBehaviour
         InitSetupSelectedLeaderID(playerid);
         AutoRun(playerid);
         stopwatch.Stop();
-        if (playerid == 999)
+        if (playerid == 77)
             Debug.Log($"TacticalFormation ============================ End {stopwatch.ElapsedMilliseconds} milli seconrds. !!!! playerid {playerid} , Leader Count {leaders[playerid].Count} ");
     }
     public void HandleLeaderSelected(int leaderId)
@@ -287,7 +252,7 @@ public class TacticalBehavior : MonoBehaviour
     {
         if (unit.tag == ENEMYTAG) { return; }
         if (!unit.name.ToLower().Contains("leader")) { return; }
-        Debug.Log($"Auto TryUpdateLeader ..... {unit.name} {unit.unitType} is killed !!!");
+        //Debug.Log($"Auto TryUpdateLeader ..... {unit.name} {unit.unitType} is killed !!!");
         StartCoroutine(TacticalFormation(PLAYERID, ENEMYID));
     }
 
