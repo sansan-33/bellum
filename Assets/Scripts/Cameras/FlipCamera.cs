@@ -11,7 +11,8 @@ public class FlipCamera : MonoBehaviour
     public GameObject groundPlayer1;
     public Light lightPlayer0;
     public Light lightPlayer1;
-
+    public Light lightSecondaryPlayer0;
+    public Light lightSecondaryPlayer1;
 
 
     public void Awake()
@@ -24,18 +25,22 @@ public class FlipCamera : MonoBehaviour
         {
             camPlayer0.enabled = true;
             lightPlayer0.enabled = true;
+            lightSecondaryPlayer0.enabled = true;
             groundPlayer0.SetActive(true);
             camPlayer1.enabled = false;
             lightPlayer1.enabled = false;
+            lightSecondaryPlayer1.enabled = false;
             groundPlayer1.SetActive(false);
         }
         else
         {
             camPlayer1.enabled = true;
             lightPlayer1.enabled = true;
+            lightSecondaryPlayer1.enabled = true;
             groundPlayer1.SetActive(true);
             camPlayer0.enabled = false;
             lightPlayer0.enabled = false;
+            lightSecondaryPlayer0.enabled = false;
             groundPlayer0.SetActive(false);
         }
      }
