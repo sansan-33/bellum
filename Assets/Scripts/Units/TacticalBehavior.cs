@@ -29,7 +29,6 @@ public class TacticalBehavior : MonoBehaviour
 
     private Dictionary<int, Dictionary<int, Dictionary<int, List<BehaviorTree>>>> behaviorTreeGroups = new Dictionary<int, Dictionary < int, Dictionary<int, List<BehaviorTree>>>>();
 
-    //private Dictionary<int, List<GameObject>> defendObjects = new Dictionary<int, List<GameObject>>();
     public enum BehaviorSelectionType { Attack, Charge, MarchingFire, Flank, Ambush, ShootAndScoot, Leapfrog, Surround, Defend, Hold, Retreat, Reinforcements, Last }
 
     private Dictionary<int, Dictionary<int, GameObject>> leaders = new Dictionary<int, Dictionary<int, GameObject>>();
@@ -248,6 +247,19 @@ public class TacticalBehavior : MonoBehaviour
     public void TryTB(int type )
     {
         TryTB(type, PLAYERID);
+    }
+    public void TryTB(int type, UnitMeta.UnitType unitType)
+    {
+        int leaderid = 0;
+        foreach (var leader in leaders[PLAYERID] )
+        {
+            if(leader.Value.GetComponent<Unit>().unitType == unitType)
+            {
+                leaderid = leader.Key;
+                break;
+            }
+        }
+        TryTB(type, PLAYERID, leaderid);
     }
     public void TryTB(int type, int playerid)
     {

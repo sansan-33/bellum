@@ -118,7 +118,7 @@ public class Unit : NetworkBehaviour
     [Client]
     public void Select()
     {
-        if (!hasAuthority) { return; }
+        if (!hasAuthority || this.tag.ToLower() == "player1" ) { return; }
 
         onSelected?.Invoke();
     }
@@ -126,7 +126,7 @@ public class Unit : NetworkBehaviour
     [Client]
     public void Deselect()
     {
-        if (!hasAuthority) { return; }
+        if (!hasAuthority || this.tag.ToLower() == "player1") { return; }
 
         onDeselected?.Invoke();
     }
