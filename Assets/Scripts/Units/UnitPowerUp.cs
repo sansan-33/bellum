@@ -77,6 +77,7 @@ public class UnitPowerUp : NetworkBehaviour
     private void Scale(Transform unitTransform, GameObject unit)
     {
         unitTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        unit.GetComponent<IAttack>().ScaleAttackRange(1.2f) ;
     }
     [ClientRpc]
     private void RpcScale(Transform unitTransform, GameObject unit)
