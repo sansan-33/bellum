@@ -25,7 +25,7 @@ public class TacticalDisplay : MonoBehaviour
 
     IEnumerator LateCall()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         gameObject.SetActive(false);
     }
 }
