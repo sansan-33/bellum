@@ -11,6 +11,8 @@ public class UnitPowerUp : NetworkBehaviour
     [SerializeField] private BattleFieldRules battleFieldRules = null;
     public bool canSpawnEffect = true;
     private bool SPEARMANCanPowerUp = true;
+    public bool CanHalfSpeed = true;
+    public bool CanTimeSpeed = true;
     [Command]
     public void cmdPowerUp()
     {
@@ -42,11 +44,27 @@ public class UnitPowerUp : NetworkBehaviour
                 ServerSetSpeed();
             }
         }
+       
+        if (battleFieldRules.IsInField() && CanHalfSpeed)
+        {
+           
+            agent.speed /= 2;
+            
+            CanHalfSpeed = false;
+            CanTimeSpeed = true;
+        }
+        else if(!battleFieldRules.IsInField() && CanTimeSpeed)
+        {
+            agent.speed *= 2;
+            
+            CanTimeSpeed = false;
+            CanHalfSpeed = true;
+        }
     }
     [Server]
     public void ServerPowerUp(GameObject unit, int star)
     {
-        Debug.Log("ServerPowerUp");
+        
         RpcPowerUp(unit.gameObject, star);
     }
     public void powerUp(GameObject unit, int star)

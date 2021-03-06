@@ -257,7 +257,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     [TargetRpc]
     public void TargetCommandText(NetworkConnection other , GameObject floatingText, NetworkIdentity others)
     {
-        Debug.Log("TargetCommandText");
+        //Debug.Log("TargetCommandText");
         floatingText.GetComponent<DamageTextHolder>().displayRotation.y = 180; 
 
 
