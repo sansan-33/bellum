@@ -276,14 +276,14 @@ public class TacticalBehavior : MonoBehaviour
     public void TryReinforcePlayer(Unit unit)
     {
         //if (unit.tag == ENEMYTAG) { return; }
-        Debug.Log($"Auto Reinforce ..... {unit.name}");
+        //Debug.Log($"Auto Reinforce ..... {unit.name}");
         StartCoroutine(TacticalFormation(PLAYERID, ENEMYID));
     }
     public void TryUpdateLeader(Unit unit)
     {
         //if (unit.tag == ENEMYTAG) { return; }
         if (!unit.name.ToLower().Contains("leader")) { return; }
-        //Debug.Log($"Auto TryUpdateLeader ..... {unit.name} {unit.unitType} is killed !!!");
+        Debug.Log($"Auto TryUpdateLeader ..... {unit.name} {unit.unitType} is killed !!!");
         StartCoroutine(TacticalFormation(PLAYERID, ENEMYID));
     }
 
