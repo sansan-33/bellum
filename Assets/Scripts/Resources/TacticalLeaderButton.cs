@@ -16,7 +16,7 @@ public class TacticalLeaderButton : MonoBehaviour
     {
         tb = GameObject.FindGameObjectWithTag("TacticalSystem").GetComponent<TacticalBehavior>();
         buttonComponent.onClick.AddListener(HandleClick);
-    }
+     }
     
     public void HandleClick()
     {

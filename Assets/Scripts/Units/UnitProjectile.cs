@@ -47,8 +47,7 @@ public class UnitProjectile : NetworkBehaviour
     private void OnTriggerEnter(Collider other) //sphere collider is used to differentiate between the unit itself, and the attack range (fireRange)
     {
         bool isFlipped = false;
-        //Debug.Log($" Hitted object {other.tag}, Attacker type is {unitType} ");
-        Debug.Log($"damageToDeals{damageToDeals}damageToDealOriginal{damageToDealOriginal}");
+        Debug.Log($" Hitted object {other.tag}, Attacker type is {unitType} ");
         damageToDeals = damageToDealOriginal;
         // Not attack same connection client object except AI Enemy
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1) {
@@ -60,11 +59,10 @@ public class UnitProjectile : NetworkBehaviour
             isFlipped = true;
             if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
             {
-                Debug.Log(networkIdentity.hasAuthority);
-                if (networkIdentity.hasAuthority) { return; }  //check to see if it belongs to the player, if it does, do nothing
-                //if (networkIdentity.connectionToClient == connectionToClient) { return; }  //check to see if it belongs to the player, if it does, do nothing
+                Debug.Log($" Hitted object {other.tag} hasAuthority {networkIdentity.hasAuthority} // networkIdentity.connectionToClient: {networkIdentity.connectionToClient}  connectionToClient: {connectionToClient} ");
+                //if (networkIdentity.hasAuthority) { return; }  //check to see if it belongs to the player, if it does, do nothing
+                if (networkIdentity.connectionToClient == connectionToClient) { return; }  //check to see if it belongs to the player, if it does, do nothing
             }
-
         }
         //Debug.Log($"Health {other} / {other.GetComponent<Health>()} ");
         if (other.TryGetComponent<Health>(out Health health))
