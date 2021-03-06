@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,9 +14,14 @@ public class TacticalDisplay : MonoBehaviour
     {
         tacticalBarParent.SetActive(false);
         startRotation = tacticalBarParent.transform.rotation;
+        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 2 && NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID() == 1 )
+        {
+            startRotation *= Quaternion.Euler(0, 180f, 0);
+        }
     }
     void Update()
     {
+        
         tacticalBarParent.transform.rotation = startRotation;
         StartCoroutine(LateCall());
     }
