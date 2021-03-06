@@ -54,7 +54,7 @@ public class Health : NetworkBehaviour, IDamageable
     }
     public bool DealDamage(float damageAmount)
     {
-
+        Debug.Log($"DealDamage{damageAmount}");
         if (currentHealth != 0)
         {
             damageAmount -= defense;

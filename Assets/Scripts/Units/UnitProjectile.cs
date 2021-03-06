@@ -9,6 +9,7 @@ public class UnitProjectile : NetworkBehaviour
 {
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] private float damageToDeals = 0;
+    [SerializeField] private float damageToDealOriginal = 0;
     [SerializeField] private float destroyAfterSeconds = 5f;
     [SerializeField] private float launchForce = 10f;
     [SerializeField] private GameObject textPrefab = null;
@@ -17,17 +18,20 @@ public class UnitProjectile : NetworkBehaviour
     [SerializeField] private GameObject specialEffectPrefab = null;
     NetworkIdentity opponentIdentity;
     public static event Action onKilled;
-    private float damageToDealOriginal;
+   // private float damageToDealOriginal;
     private StrengthWeakness strengthWeakness;
     RTSPlayer player;
-    
+    int playerid = 0;
+
     public override void OnStartClient()
     {
         if (NetworkClient.connection.identity == null) { return; }
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        damageToDealOriginal += damageToDeals;
-        rb.velocity = transform.forward * launchForce;
-        strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
+        playerid = player.GetPlayerID();
+        Debug.Log($"damageToDealOriginal {damageToDealOriginal}damageToDeals{damageToDeals}");
+        //damageToDealOriginal += damageToDeals;
+        Debug.Log($"damageToDealOriginal after added{damageToDealOriginal}damageToDeals{damageToDeals}");
+        rb.velocity = transform.forward * launchForce; 
     }
 
     public override void OnStartServer()
@@ -36,6 +40,7 @@ public class UnitProjectile : NetworkBehaviour
     }
     public void SetDamageToDeal(float newDamageToDealFactor)
     {
+        Debug.Log($"damageToDealOriginal {damageToDealOriginal}newDamageToDealFactor{newDamageToDealFactor}");
         damageToDealOriginal = (int) (damageToDealOriginal * newDamageToDealFactor);
     }
     [ServerCallback]
@@ -43,6 +48,7 @@ public class UnitProjectile : NetworkBehaviour
     {
         bool isFlipped = false;
         //Debug.Log($" Hitted object {other.tag}, Attacker type is {unitType} ");
+        Debug.Log($"damageToDeals{damageToDeals}damageToDealOriginal{damageToDealOriginal}");
         damageToDeals = damageToDealOriginal;
         // Not attack same connection client object except AI Enemy
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1) {
@@ -54,6 +60,7 @@ public class UnitProjectile : NetworkBehaviour
             isFlipped = true;
             if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
             {
+                Debug.Log(networkIdentity.hasAuthority);
                 if (networkIdentity.hasAuthority) { return; }  //check to see if it belongs to the player, if it does, do nothing
                 //if (networkIdentity.connectionToClient == connectionToClient) { return; }  //check to see if it belongs to the player, if it does, do nothing
             }
@@ -62,8 +69,8 @@ public class UnitProjectile : NetworkBehaviour
         //Debug.Log($"Health {other} / {other.GetComponent<Health>()} ");
         if (other.TryGetComponent<Health>(out Health health))
         {
-            Debug.Log($"player ID {player.GetPlayerID()}");
-            if (player.GetPlayerID() == 1)
+            //Debug.Log($"player ID {player.GetPlayerID()}");
+            if (playerid == 1)
             {
                 opponentIdentity = GetComponent<NetworkIdentity>();
             }
@@ -72,14 +79,17 @@ public class UnitProjectile : NetworkBehaviour
                 opponentIdentity = other.GetComponent<NetworkIdentity>();
             }
             //Destroy the arrow faster prevent showing arror after hit
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
-            //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals}");
+            //gameObject.GetComponent<MeshRenderer>().enabled = false;
+            //gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals}"); 
+            strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
+            Debug.Log($"before strengthWeakness{damageToDeals}");
             damageToDeals = strengthWeakness.calculateDamage(UnitMeta.UnitType.ARCHER, other.GetComponent<Unit>().unitType, damageToDeals);
             cmdDamageText(other.transform.position, damageToDeals, damageToDealOriginal, opponentIdentity, isFlipped);
             cmdSpecialEffect(other.transform.position);
             //if (damageToDeals > damageToDealOriginal) { cmdCMVirtual(); }
             other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
+            Debug.Log($"health{health}other{other}");
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals} / {damageToDealOriginal}");
             bool iskilled = health.DealDamage(damageToDeals);
             if (iskilled){
