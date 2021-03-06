@@ -29,10 +29,9 @@ TagManager:
   - CardSlot
   - TacticalSystem
   - Eleixier
-  - PointKing0
-  - PointKing1
   - MiddleLine
   - GameBoardSystem
+  - FloatButton
   layers:
   - Default
   - TransparentFX
