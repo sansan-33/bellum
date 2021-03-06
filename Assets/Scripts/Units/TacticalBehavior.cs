@@ -188,7 +188,7 @@ public class TacticalBehavior : MonoBehaviour
                 defendRadius = 3;
             }
             else {
-                //Debug.Log($"Player {playerid} Unit {(UnitMeta.UnitType)leaderUnitTypeID } Spawn Point Index {child.GetComponent<Unit>().GetSpawnPointIndex()} gameBoardHandlerPrefab: {gameBoardHandlerPrefab == null} ");
+                Debug.Log($"Player {playerid} Unit {(UnitMeta.UnitType)leaderUnitTypeID } Spawn Point Index {child.GetComponent<Unit>().GetSpawnPointIndex()} gameBoardHandlerPrefab: {gameBoardHandlerPrefab == null} ");
                 defendObject = gameBoardHandlerPrefab.GetSpawnPointObjectByIndex( (UnitMeta.UnitType) leaderUnitTypeID , playerid, child.GetComponent<Unit>().GetSpawnPointIndex());
                 //defendObject = king;
                 defendRadius = 0.1f;

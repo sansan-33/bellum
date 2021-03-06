@@ -24,6 +24,7 @@ public class GameBoardHandler : NetworkBehaviour
     }
     public GameObject GetSpawnPointObjectByIndex(UnitMeta.UnitType unitType, int playerid, int index)
     {
+        Debug.Log($"GetSpawnPointObjectByIndex {unitType} , playerid {playerid} index {index}");
         return playerGameBoards[playerid].GetUnitPointByIndex(unitType , index);
     }
 }

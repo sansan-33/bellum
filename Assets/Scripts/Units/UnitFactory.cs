@@ -81,15 +81,14 @@ public class UnitFactory : NetworkBehaviour
             GameObject unit = Instantiate(unitPrefab, spawnPosition + spawnOffset, rotation) as GameObject;
             unit.name = unitName;
             unit.tag = "Player" + playerID;
-            unit.GetComponent<Unit>().SetSpawnPointIndex(spawnPointIndex);
+            //unit.GetComponent<Unit>().SetSpawnPointIndex(spawnPointIndex);
 
-            
             // Cannot remove this one otherwise Tactical Behavior error
             //if(spawnAuthority)
             //Debug.Log($" ServerSpwanUnit Player ID {playerID} {unitName}");
 
             NetworkServer.Spawn(unit, connectionToClient);
-            RpcTag(unit, playerID, unitName, star, teamColor);
+            RpcTag(unit, playerID, unitName, star, teamColor, spawnPointIndex);
             unit.GetComponent<UnitPowerUp>().ServerPowerUp(unit, star);
             //unit.GetComponent<UnitPowerUp>().RpcPowerUp(unit, star);
             //Debug.Log($"unit.GetComponent<UnitPowerUp>().RpcPowerUp(unit, star){unit.GetComponent<UnitPowerUp>()}");
@@ -112,14 +111,14 @@ public class UnitFactory : NetworkBehaviour
 
     }
     [ClientRpc]
-    void RpcTag(GameObject unit, int playerID, string unitName, int star, Color teamColor)
+    void RpcTag(GameObject unit, int playerID, string unitName, int star, Color teamColor, int spawnPointIndex)
     {
         unit.name = unitName;
         unit.tag = "Player" + playerID;
         //Debug.Log($"RpcTag color is {teamColor}");
         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
-      
         unit.GetComponentInChildren<UnitBody>().ServerChangeUnitRenderer(unit,playerID, star);
+        unit.GetComponent<Unit>().SetSpawnPointIndex(spawnPointIndex);
     }
 
 }

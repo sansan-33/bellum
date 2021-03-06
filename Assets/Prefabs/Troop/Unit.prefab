@@ -1282,6 +1282,8 @@ MonoBehaviour:
   specialEffectPrefab: {fileID: 100000, guid: 3d4907e6bd39f474b8fd8220920e65c4, type: 3}
   battleFieldRules: {fileID: -862902047010876210}
   canSpawnEffect: 1
+  CanHalfSpeed: 1
+  CanTimeSpeed: 1
 --- !u!114 &-862902047010876210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2483,7 +2485,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2349075251761173953}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5408762522751654892}
+        m_TargetAssemblyTypeName: TacticalLeaderButton, Assembly-CSharp
+        m_MethodName: HandleClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5408762522751654892
 MonoBehaviour:
   m_ObjectHideFlags: 0

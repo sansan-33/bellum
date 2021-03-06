@@ -9,7 +9,8 @@ public class GameBoard : MonoBehaviour
     private static Dictionary<UnitMeta.UnitPosition, int> roundRobinPointIndex = new Dictionary<UnitMeta.UnitPosition, int>();
     public void initGameBoard()
     {
-        foreach(SpawnPoint unitPoint in transform.GetComponentsInChildren<SpawnPoint>())
+        board.Clear();
+        foreach (SpawnPoint unitPoint in transform.GetComponentsInChildren<SpawnPoint>())
         {
             List<SpawnPoint> unitTypePoints;
             if (!board.TryGetValue(unitPoint.GetPointType(), out unitTypePoints))
@@ -19,7 +20,7 @@ public class GameBoard : MonoBehaviour
             }
             unitTypePoints.Add(unitPoint);
         }
-        //printGameBoard();
+        printGameBoard();
     }
     void printGameBoard()
     {
@@ -49,10 +50,10 @@ public class GameBoard : MonoBehaviour
             //Debug.Log($"GetUnitPoint not found {UnitMeta.DefaultUnitPosition[unitType]} ");
             roundRobinPointIndex.Add(UnitMeta.DefaultUnitPosition[unitType], 0);
         }
-
-        rr = (rr + 1) % points.Count;
+        Debug.Log($"GetUnitPoint OLD roundRobinPoint {rr} , points.Count % points.Count {points.Count % points.Count}");
+        rr = (rr + 1) % points.Count ;
         roundRobinPointIndex[UnitMeta.DefaultUnitPosition[unitType]] = rr;
-        //Debug.Log($"GetUnitPoint {UnitMeta.DefaultUnitPosition[unitType]} roundRobinPoint {rr}");
+        Debug.Log($"GetUnitPoint {UnitMeta.DefaultUnitPosition[unitType]} roundRobinPoint {rr} , points.Count {points.Count}");
         points[rr].spawnPointIndex = rr;
         return points[rr].GetSpawnPointObject();
     }
