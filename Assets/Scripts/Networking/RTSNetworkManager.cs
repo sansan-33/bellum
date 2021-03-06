@@ -90,7 +90,7 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(UnitMeta.UnitType.MAGE, magePrefab);
         unitDict.Add(UnitMeta.UnitType.CAVALRY, cavalryPrefab);
         unitDict.Add(UnitMeta.UnitType.KING, kingPrefab);
-        ServerChangeScene("Scene_Map_02");
+        ServerChangeScene("Scene_Map_03");
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn)
