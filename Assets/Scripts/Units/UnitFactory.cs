@@ -44,6 +44,17 @@ public class UnitFactory : NetworkBehaviour
             }
         }
     }
+    public override void OnStartServer()
+    {
+        initUnitDict();
+        if (gameBoardHandlerPrefab == null)
+        {
+            foreach (GameObject board in GameObject.FindGameObjectsWithTag("GameBoardSystem"))
+            {
+                gameBoardHandlerPrefab = board.GetComponent<GameBoardHandler>();
+            }
+        }
+    }
     private void Update()
     {
        

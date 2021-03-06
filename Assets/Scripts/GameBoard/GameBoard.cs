@@ -20,7 +20,7 @@ public class GameBoard : MonoBehaviour
             }
             unitTypePoints.Add(unitPoint);
         }
-        printGameBoard();
+        //printGameBoard();
     }
     void printGameBoard()
     {
@@ -50,10 +50,10 @@ public class GameBoard : MonoBehaviour
             //Debug.Log($"GetUnitPoint not found {UnitMeta.DefaultUnitPosition[unitType]} ");
             roundRobinPointIndex.Add(UnitMeta.DefaultUnitPosition[unitType], 0);
         }
-        Debug.Log($"GetUnitPoint OLD roundRobinPoint {rr} , points.Count % points.Count {points.Count % points.Count}");
+        //Debug.Log($"GetUnitPoint OLD roundRobinPoint {rr} , points.Count % points.Count {points.Count % points.Count}");
         rr = (rr + 1) % points.Count ;
         roundRobinPointIndex[UnitMeta.DefaultUnitPosition[unitType]] = rr;
-        Debug.Log($"GetUnitPoint {UnitMeta.DefaultUnitPosition[unitType]} roundRobinPoint {rr} , points.Count {points.Count}");
+        //Debug.Log($"GetUnitPoint {UnitMeta.DefaultUnitPosition[unitType]} roundRobinPoint {rr} , points.Count {points.Count}");
         points[rr].spawnPointIndex = rr;
         return points[rr].GetSpawnPointObject();
     }

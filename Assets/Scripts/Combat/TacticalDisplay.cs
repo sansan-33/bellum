@@ -14,7 +14,7 @@ public class TacticalDisplay : MonoBehaviour
     {
         tacticalBarParent.SetActive(false);
         startRotation = tacticalBarParent.transform.rotation;
-        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 2 && NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID() == 1 )
+        if (NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID() == 1 )
         {
             startRotation *= Quaternion.Euler(0, 180f, 0);
         }
