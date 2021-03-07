@@ -45,7 +45,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         protected Behavior leaderTree;
         protected List<IDamageable> targets = new List<IDamageable>();
         protected List<Transform> targetTransforms = new List<Transform>();
-       
+        private Transform king;
         /// <summary>
         /// Listen for any agents that want to join the group.
         /// </summary>
@@ -406,29 +406,33 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         {
             Transform target = null;
             IDamageable damageable = null;
-
+            //Debug.Log($"TG-->Tag{tacticalAgent.transform.tag}  {tacticalAgent.TargetTransform}");
+           // Debug.Log($"isAlive{tacticalAgent.TargetDamagable}");
+            //Debug.Log(tacticalAgent.TargetDamagable);
             if (tacticalAgent.isCollide(tacticalAgent))
             {
                 IDamageable collideTarget = tacticalAgent.collideTarget();
                 CollideTarget(transform, collideTarget, ref target, ref damageable);
-
-            } else if (tacticalAgent.TargetTransform == null || !tacticalAgent.TargetDamagable.IsAlive())
+               // Debug.Log($"Change target to {tacticalAgent.TargetTransform}");
+            } else if (tacticalAgent.TargetTransform == null )//|| !tacticalAgent.TargetDamagable.IsAlive())
             {
-                
-                    ClosestTarget(transform, ref target, ref damageable);
-                    if (useTargetBone.Value)
+
+                /*ClosestTarget(transform, ref target, ref damageable);
+                if (useTargetBone.Value)
+                {
+                    Animator targetAnimator;
+                    if ((targetAnimator = target.GetComponent<Animator>()) != null)
                     {
-                        Animator targetAnimator;
-                        if ((targetAnimator = target.GetComponent<Animator>()) != null)
+                        var bone = targetAnimator.GetBoneTransform(targetBone);
+                        if (bone != null)
                         {
-                            var bone = targetAnimator.GetBoneTransform(targetBone);
-                            if (bone != null)
-                            {
-                                target = bone;
-                            }
+                            target = bone;
                         }
                     }
-                    tacticalAgent.TargetTransform = target;
+                }*/
+               // Debug.Log($"Tag-->{tacticalAgent.transform.tag}  {tacticalAgent.transform.GetComponent<Unit>().unitType}    {tacticalAgent.transform.GetComponent<Unit>().GetTargeter().GetTarget()}");  
+                    tacticalAgent.TargetTransform = tacticalAgent.transform.GetComponent<Unit>().GetTargeter().GetTarget().transform;
+
                     tacticalAgent.TargetDamagable = damageable;
                 
 
