@@ -21,6 +21,7 @@ public class RTSNetworkManager : NetworkManager
     [SerializeField] private GameObject cavalryPrefab = null;
     [SerializeField] private GameObject kingPrefab = null;
     [SerializeField] private GameObject undeadHeroPrefab = null;
+    [SerializeField] private GameObject archerHumanPrefab = null;
 
     [SerializeField] private GameOverHandler gameOverHandlerPrefab = null;
     [SerializeField] private GameBoardHandler gameBoardHandlerPrefab = null;
@@ -92,6 +93,7 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(UnitMeta.UnitType.CAVALRY, cavalryPrefab);
         unitDict.Add(UnitMeta.UnitType.KING, kingPrefab);
         unitDict.Add(UnitMeta.UnitType.UNDEADHERO, undeadHeroPrefab);
+        unitDict.Add(UnitMeta.UnitType.ARCHERHUMAN, archerHumanPrefab);
         ServerChangeScene("Scene_Map_03");
     }
 
@@ -135,7 +137,7 @@ public class RTSNetworkManager : NetworkManager
                 if (player.GetPlayerID() == 0)
                 {
                     militaryList.Add(UnitMeta.UnitType.UNDEADHERO, 2);
-                    militaryList.Add(UnitMeta.UnitType.ARCHER, 1);
+                    militaryList.Add(UnitMeta.UnitType.ARCHERHUMAN, 1);
                     militaryList.Add(UnitMeta.UnitType.CAVALRY, 1);
 
                     StartCoroutine(loadMilitary(0.1f, player, gameBoardHandlerInstance, UnitMeta.UnitType.KING, 1 , Quaternion.identity));

@@ -16,6 +16,7 @@ public class UnitFactory : NetworkBehaviour
     [SerializeField] private GameObject giantUnitPrefab = null;
     [SerializeField] private GameObject kingPrefab = null;
     [SerializeField] private GameObject undeadHeroPrefab = null;
+    [SerializeField] private GameObject archerHumanPrefab = null;
     [SerializeField] private GameBoardHandler gameBoardHandlerPrefab = null;
 
     public Dictionary<UnitMeta.UnitType, GameObject> unitDict = new Dictionary<UnitMeta.UnitType, GameObject>();
@@ -120,6 +121,7 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(UnitMeta.UnitType.GIANT, giantUnitPrefab);
         unitDict.Add(UnitMeta.UnitType.KING, kingPrefab);
         unitDict.Add(UnitMeta.UnitType.UNDEADHERO, undeadHeroPrefab);
+        unitDict.Add(UnitMeta.UnitType.ARCHERHUMAN, archerPrefab);
 
     }
     [ClientRpc]
