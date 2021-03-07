@@ -90,10 +90,10 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + " = " + ": Attack " + (tacticalAgent.TargetTransform.name != null ? tacticalAgent.TargetTransform.name : "LOST TARGET" )+ " - "  + HEARTBEAT++);
                 tacticalAgent.TryAttack();
             }
-            if (base.leader.Value != null)
-                base.leader.Value.GetComponent<HealthDisplay>().EnableLeaderIcon();
+            //if (base.leader.Value != null)
+            //    base.leader.Value.GetComponent<HealthDisplay>().EnableLeaderIcon();
 
-            tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().circleMarker.SetActive(false);
+            //tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().circleMarker.SetActive(false);
 
             return TaskStatus.Running;
         }

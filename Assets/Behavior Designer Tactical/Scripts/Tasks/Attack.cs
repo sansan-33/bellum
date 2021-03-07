@@ -27,10 +27,10 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 tacticalAgent.TryAttack();
             }
 
-            if (base.leader.Value != null)
-                base.leader.Value.GetComponent<HealthDisplay>().EnableLeaderIcon();
+            //if (base.leader.Value != null)
+            //    base.leader.Value.GetComponent<HealthDisplay>().EnableLeaderIcon();
 
-            tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().circleMarker.SetActive(false);
+            //tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().circleMarker.SetActive(false);
 
             return TaskStatus.Running;
         }

@@ -5,6 +5,7 @@ public class UnitMeta
 {
     public enum UnitType { ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN, HERO, MINISKELETON, GIANT, KING, UNDEADHERO, ARCHERHUMAN };
     public enum UnitPosition { FORWARD, MIDFIELDER, DEFENDER, GOALIE};
+    public enum Race { HUMAN, UNDEAD, ELF };
     public static Dictionary<UnitType, int> UnitSize = new Dictionary<UnitType, int>() { { UnitType.MINISKELETON, 10 } };
     public static Dictionary<UnitType, int> UnitEleixer = new Dictionary<UnitType, int>()
     {

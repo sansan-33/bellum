@@ -100,11 +100,11 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("defend");
                 }
             }
-            if (base.leader.Value != null)
-                base.leader.Value.GetComponent<HealthDisplay>().EnableLeaderIcon();
+            //if (base.leader.Value != null)
+            //    base.leader.Value.GetComponent<HealthDisplay>().EnableLeaderIcon();
 
-            tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().circleMarker.SetActive(true);
-            tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().circleMarker.transform.localScale = new Vector3(defendRadius.Value / 100, defendRadius.Value / 100, defendRadius.Value / 100);
+            //tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().circleMarker.SetActive(true);
+            //tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().circleMarker.transform.localScale = new Vector3(defendRadius.Value / 100, defendRadius.Value / 100, defendRadius.Value / 100);
 
             return TaskStatus.Running;
         }
