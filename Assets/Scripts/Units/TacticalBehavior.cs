@@ -78,9 +78,9 @@ public class TacticalBehavior : MonoBehaviour
         // Need to Assing Tag for player 1 in multi player mode
         // Rpc Client Tag not implement in RTS Network Manager
         bool ISTAGGED = false;
+        Unit king = null ;
         while (!ISTAGGED)
         {
-            
             yield return new WaitForSeconds(1f);
             
             GameObject[] armies = GameObject.FindGameObjectsWithTag("Player");
@@ -92,7 +92,6 @@ public class TacticalBehavior : MonoBehaviour
                 {
                     if (unit.hasAuthority)
                     {
-                        
                         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
                         unit.GetComponent<UnitBody>().SetRenderMaterial(unit.transform.gameObject, player.GetPlayerID(), 1); 
                         army.tag = PLAYERTAG;
@@ -100,23 +99,23 @@ public class TacticalBehavior : MonoBehaviour
                     else
                     {
                         //Only Assing Enemy Base Tag if mulitplayer
-                       
                         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamEnemyColor);
-                        //unit.GetComponent<UnitBody>().ServerChangeUnitRenderer(unit.transform.gameObject, player.GetPlayerID(), 1);
                         army.tag = ENEMYTAG;
+                        if(unit.unitType == UnitMeta.UnitType.KING)
+                        king = unit ;
                     }
                 }
             }
-            /*
+            
             GameObject[] playerArmy  = GameObject.FindGameObjectsWithTag(PLAYERTAG);
             foreach (GameObject army in playerArmy)
             {
                 if (army.TryGetComponent<Unit>(out Unit unit))
                 {
-                    unit.GetComponent<UnitPowerUp>().ServerPowerUp(unit.transform.gameObject, 2);
+                    unit.SetTargeter(king.GetTargeter());
                 }
             }
-            */
+            
             if (gameBoardHandlerPrefab == null)
             {
                 foreach (GameObject board in GameObject.FindGameObjectsWithTag("GameBoardSystem"))

@@ -53,6 +53,10 @@ public class Unit : NetworkBehaviour
     {
         return targeter;
     }
+    public void SetTargeter(Targeter target)
+    {
+        targeter = target;
+    }
     public int GetSpawnPointIndex( )
     {
         return spawnPointIndex;
