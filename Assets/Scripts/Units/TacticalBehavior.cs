@@ -209,6 +209,8 @@ public class TacticalBehavior : MonoBehaviour
                 defendObject = king;
                 defendObject.name = "King";
                 defendRadius = 3;
+                int radius = 5;
+                king.GetComponent<Unit>().GetUnitMovement().circleMarker.transform.localScale = new Vector3(radius / 100, radius / 100, radius / 100);
             }
             else {
                 //Debug.Log($"Player {playerid} Unit {(UnitMeta.UnitType)leaderUnitTypeID } Spawn Point Index {child.GetComponent<Unit>().GetSpawnPointIndex()} gameBoardHandlerPrefab: {gameBoardHandlerPrefab == null} ");
