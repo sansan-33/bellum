@@ -26,13 +26,11 @@ public class Targeter : NetworkBehaviour
     }
 
     [Command]
-    public void CmdSetTarget(GameObject targetGameObject, AttackType attackType)
+    public void CmdSetTarget(GameObject targetGameObject)
     {
         if (!targetGameObject.TryGetComponent<Targetable>(out Targetable newTarget)) { return; }
 
         target = newTarget;
-        targeterAttackType = attackType;
-
     }
     [Command]
     public void CmdSetAttackType( AttackType attackType)
