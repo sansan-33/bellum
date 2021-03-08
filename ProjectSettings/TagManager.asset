@@ -38,6 +38,7 @@ TagManager:
   - Unit
   - King0
   - King1
+  - Test
   layers:
   - Default
   - TransparentFX
