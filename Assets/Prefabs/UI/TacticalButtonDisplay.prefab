@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1052637772128349735
 RectTransform:
   m_ObjectHideFlags: 0
@@ -232,8 +232,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardindex: 0
-  x: 0
-  y: 350
   cardPrefab: {fileID: 1052637772128349722}
 --- !u!114 &1052637772128349725
 MonoBehaviour:
@@ -272,7 +270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1052637772128349728
 RectTransform:
   m_ObjectHideFlags: 0
@@ -424,8 +422,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardindex: 1
-  x: 0
-  y: 350
   cardPrefab: {fileID: 1052637772128349723}
 --- !u!114 &1052637772128349724
 MonoBehaviour:
@@ -571,7 +567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1052637772128349712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -750,8 +746,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardindex: 4
-  x: 0
-  y: 350
   cardPrefab: {fileID: 1052637772128349702}
 --- !u!114 &1052637772128349713
 MonoBehaviour:
@@ -790,7 +784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1052637772128349741
 RectTransform:
   m_ObjectHideFlags: 0
@@ -942,8 +936,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardindex: 2
-  x: 0
-  y: 350
   cardPrefab: {fileID: 1052637772128349720}
 --- !u!114 &1052637772128349726
 MonoBehaviour:
@@ -982,7 +974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1052637772128349718
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1134,8 +1126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardindex: 3
-  x: 0
-  y: 350
   cardPrefab: {fileID: 1052637772128349721}
 --- !u!114 &1052637772128349727
 MonoBehaviour:
@@ -1329,7 +1319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1052637772571527681
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1461,8 +1451,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardindex: 5
-  x: 0
-  y: 350
   cardPrefab: {fileID: 1052637772571527683}
 --- !u!114 &1052637772571527687
 MonoBehaviour:
@@ -2448,8 +2436,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardindex: 7
-  x: 0
-  y: 350
   cardPrefab: {fileID: 0}
 --- !u!1 &3441401417542837114
 GameObject:
@@ -2698,8 +2684,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardindex: 6
-  x: 0
-  y: 350
   cardPrefab: {fileID: 0}
 --- !u!1 &5892470907508879720
 GameObject:
