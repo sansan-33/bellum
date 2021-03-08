@@ -24,10 +24,7 @@ public class SpawnEnemies : MonoBehaviour
             playerID = player.GetPlayerID();
             teamColor = player.GetTeamColor();
             teamColor = player.GetTeamEnemyColor();
-            //Debug.Log($"Number of player : {((RTSNetworkManager)NetworkManager.singleton).Players.Count} enemyID {enemyID} playerID {playerID} ");
-
-            //SpawnEnemyBase("SpawnPointEnemy",0);
-            //SpawnEnemyBase("SpawnPointEnemy",1);
+           
             InvokeRepeating("LoadEnemies", 2f, 10f);
         }
     }
@@ -67,7 +64,9 @@ public class SpawnEnemies : MonoBehaviour
     private int isUnitAlive(UnitMeta.UnitType unitType)
     {
         int isAlive = 0;
-        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player1");
+        GameObject[] armies = GameObject.FindGameObjectsWithTag(UnitMeta.ENEMYTAG);
+        GameObject[] king = GameObject.FindGameObjectsWithTag(UnitMeta.KINGENEMYTAG);
+        king.CopyTo(armies,0);
         foreach (GameObject child in armies)
         {
             if (child.GetComponent<Unit>().unitType == unitType) { 

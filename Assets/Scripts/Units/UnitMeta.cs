@@ -5,11 +5,13 @@ public class UnitMeta
 {
     public static string PLAYERTAG = "Player0";
     public static string ENEMYTAG = "Player1";
+    public static string KINGPLAYERTAG = "King0";
+    public static string KINGENEMYTAG = "King1";
     public enum UnitKey { ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN, HERO, MINISKELETON, GIANT, KING, UNDEADHERO, UNDEADARCHER, UNDEADKING, RIDER, LICH };
     public enum UnitType { ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN, HERO, KING };
     public enum UnitPosition { FORWARD, MIDFIELDER, DEFENDER, GOALIE};
     public enum Race { HUMAN, UNDEAD, ELF, ALL };
-    public static Dictionary<UnitType, int> UnitSize = new Dictionary<UnitType, int>() { { UnitType.FOOTMAN, 5 } };
+    public static Dictionary<UnitType, int> UnitSize = new Dictionary<UnitType, int>() { { UnitType.FOOTMAN, 3 } };
     public static Dictionary<UnitType, int> UnitEleixer = new Dictionary<UnitType, int>()
     {
         { UnitType.ARCHER, 2 },

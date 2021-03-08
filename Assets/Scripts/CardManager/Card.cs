@@ -114,5 +114,5 @@ public class Card : MonoBehaviour
     }
     public enum Card_Numbers
     {
-        ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN, HERO, MINISKELETON, GIANT
-    }
+    ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN, HERO
+}

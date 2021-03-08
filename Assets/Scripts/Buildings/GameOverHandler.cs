@@ -21,8 +21,8 @@ public class GameOverHandler : NetworkBehaviour
     {
         Unit.ServerOnUnitSpawned += ServerHandleUnitSpawned;
         Unit.ServerOnUnitDespawned += ServerHandleUnitDespawned;
-        units.Add(UnitMeta.PLAYERTAG, new List<Unit>());
-        units.Add(UnitMeta.ENEMYTAG, new List<Unit>());
+        units.Add(UnitMeta.KINGPLAYERTAG, new List<Unit>());
+        units.Add(UnitMeta.KINGENEMYTAG, new List<Unit>());
     }
 
     public override void OnStopServer()
@@ -47,7 +47,7 @@ public class GameOverHandler : NetworkBehaviour
         //if (units[unit.tag].Count != 0 ) { return; }
         if (unit.unitType != UnitMeta.UnitType.KING ) { return; }
 
-        RpcGameOver($"{ (unit.tag == UnitMeta.PLAYERTAG ? UnitMeta.ENEMYTAG : UnitMeta.PLAYERTAG) }");
+        RpcGameOver($"{ (unit.tag == UnitMeta.KINGPLAYERTAG ? UnitMeta.ENEMYTAG : UnitMeta.PLAYERTAG) }");
 
         ServerOnGameOver?.Invoke();
     }

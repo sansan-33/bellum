@@ -36,7 +36,8 @@ TagManager:
   - Defender
   - Forward
   - Unit
-  - King
+  - King0
+  - King1
   layers:
   - Default
   - TransparentFX

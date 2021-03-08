@@ -95,18 +95,9 @@ public class UnitFactory : NetworkBehaviour
             Vector3 spawnOffset = Random.insideUnitSphere * spawnMoveRange;
             spawnOffset.y = spawnPosition.y;
             GameObject unit = Instantiate(unitPrefab, spawnPosition + spawnOffset, rotation) as GameObject;
-            unit.name = unitName;
-            unit.tag = "Player" + playerID;
-            //unit.GetComponent<Unit>().SetSpawnPointIndex(spawnPointIndex);
-
-            // Cannot remove this one otherwise Tactical Behavior error
-            //if(spawnAuthority)
-            //Debug.Log($" ServerSpwanUnit Player ID {playerID} {unitName}");
-
             NetworkServer.Spawn(unit, connectionToClient);
             RpcTag(unit, playerID, unitName, star, teamColor, spawnPointIndex);
             unit.GetComponent<UnitPowerUp>().ServerPowerUp(unit, star);
-            //unit.GetComponent<UnitPowerUp>().RpcPowerUp(unit, star);
             //Debug.Log($"unit.GetComponent<UnitPowerUp>().RpcPowerUp(unit, star){unit.GetComponent<UnitPowerUp>()}");
             spawnCount--;
         }
@@ -127,15 +118,16 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(UnitMeta.UnitKey.UNDEADHERO, undeadHeroPrefab);
         unitDict.Add(UnitMeta.UnitKey.UNDEADARCHER, undeadArcherPrefab);
         unitDict.Add(UnitMeta.UnitKey.RIDER, riderPrefab);
-        unitDict.Add(UnitMeta.UnitKey.LICH, magePrefab);
-        unitDict.Add(UnitMeta.UnitKey.UNDEADKING, kingPrefab);
+        unitDict.Add(UnitMeta.UnitKey.LICH, undeadLichPrefab);
+        unitDict.Add(UnitMeta.UnitKey.UNDEADKING, undeadKingPrefab);
 
     }
     [ClientRpc]
     void RpcTag(GameObject unit, int playerID, string unitName, int star, Color teamColor, int spawnPointIndex)
     {
         unit.name = unitName;
-        unit.tag = "Player" + playerID;
+        //unit.tag = "Player" + playerID;
+        unit.tag = ((unit.GetComponent<Unit>().unitType == UnitMeta.UnitType.KING) ? "King" : "Player") + playerID;
         //Debug.Log($"RpcTag color is {teamColor}");
         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
         unit.GetComponentInChildren<UnitBody>().ServerChangeUnitRenderer(unit,playerID, star);
