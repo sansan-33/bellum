@@ -19,9 +19,7 @@ public class TacticalBehavior : MonoBehaviour
     private RTSPlayer player;
     private int PLAYERID = 0;
     private int ENEMYID = 0;
-    private string ENEMYTAG = "";
-    private string PLAYERTAG = "";
-
+    
     private Dictionary<int, List<BehaviorTree>> leaderPlayerBehaviorTreeGroup = new Dictionary<int, List<BehaviorTree>>();
     private Dictionary<int, List<BehaviorTree>> leaderEnemyBehaviorTreeGroup = new Dictionary<int, List<BehaviorTree>>();
     private Dictionary<int, Dictionary<int, List<BehaviorTree>>> playerBehaviorTreeGroup = new Dictionary<int, Dictionary<int, List<BehaviorTree>>>();
@@ -49,8 +47,7 @@ public class TacticalBehavior : MonoBehaviour
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         PLAYERID = player.GetPlayerID();
         ENEMYID = player.GetEnemyID();
-        ENEMYTAG = "Player" + ENEMYID;
-        PLAYERTAG = "Player" + PLAYERID;
+
         StartCoroutine(AssignTag());
 
         behaviorTreeGroups.Add(PLAYERID, playerBehaviorTreeGroup);
@@ -97,13 +94,13 @@ public class TacticalBehavior : MonoBehaviour
                         //Debug.Log("unit.hasAuthority");
                         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
                         unit.GetComponent<UnitBody>().SetRenderMaterial(unit.transform.gameObject, player.GetPlayerID(), 1); 
-                        army.tag = PLAYERTAG;
+                        army.tag = UnitMeta.PLAYERTAG;
                     }
                     else
                     {
                         //Only Assing Enemy Base Tag if mulitplayer
                         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamEnemyColor);
-                        army.tag = ENEMYTAG;
+                        army.tag = UnitMeta.ENEMYTAG;
                     }
                 }
             }
@@ -315,9 +312,9 @@ public class TacticalBehavior : MonoBehaviour
     }
     public string GetTacticalStatus()
     {
-        if (PLAYERTAG is null || PLAYERTAG == "") { return ""; }
+        if (UnitMeta.PLAYERTAG is null || UnitMeta.PLAYERTAG == "") { return ""; }
         var sb = new System.Text.StringBuilder();
-        GameObject[] armies = GameObject.FindGameObjectsWithTag(PLAYERTAG);
+        GameObject[] armies = GameObject.FindGameObjectsWithTag(UnitMeta.PLAYERTAG);
 
         foreach (GameObject army in armies) {
             
