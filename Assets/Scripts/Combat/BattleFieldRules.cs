@@ -11,7 +11,7 @@ public class BattleFieldRules : MonoBehaviour
     {
         MiddleLine = GameObject.FindGameObjectWithTag("MiddleLine");
     }
-    public bool IsInField()
+    public bool IsInOwnField()
     {
         //return true;
 
