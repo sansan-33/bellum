@@ -80,7 +80,7 @@ public class TacticalBehavior : MonoBehaviour
         while (!ISTAGGED)
         {
             yield return new WaitForSeconds(1f);
-            
+
             GameObject[] armies = GameObject.FindGameObjectsWithTag("Unit");
             //Debug.Log($"army{armies.Length}");
             foreach (GameObject army in armies)
@@ -96,7 +96,10 @@ public class TacticalBehavior : MonoBehaviour
                         unit.GetComponent<UnitBody>().SetRenderMaterial(unit.transform.gameObject, player.GetPlayerID(), 1);
                         army.tag = "Player" + player.GetPlayerID();
                         if (unit.unitType == UnitMeta.UnitType.KING)
+                        {
                             army.tag = "King" + player.GetPlayerID();
+                            KINGBOSS[player.GetPlayerID()] = army;
+                        }
                     }
                     else
                     {
@@ -104,7 +107,10 @@ public class TacticalBehavior : MonoBehaviour
                         unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamEnemyColor);
                         army.tag = "Player" + player.GetEnemyID();
                         if (unit.unitType == UnitMeta.UnitType.KING)
+                        {
                             army.tag = "King" + player.GetEnemyID();
+                            KINGBOSS[player.GetEnemyID()] = army;
+                        }
                     }
                 }
             }
@@ -133,22 +139,19 @@ public class TacticalBehavior : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         if (gameBoardHandlerPrefab == null) { yield break; }
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
+        //var stopwatch = new Stopwatch();
+        //stopwatch.Start();
         
         GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + playerid);
         GameObject defendObject;
-        if (playerid == 77)
-            Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Length}");
+        //if (playerid == 0)
+        //    Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Length}");
 
         leaders[playerid].Clear();
         int i = 0;
         behaviorTreeGroups[playerid].Clear();
         int leaderUnitTypeID = 0;
-        //int randBase = 0;
-        GameObject king = GameObject.FindGameObjectWithTag("King" + playerid);
-        KINGBOSS[playerid] = king;
-
+     
         float defendRadius = 0.1f;
         foreach (GameObject child in armies)
         {
@@ -165,8 +168,6 @@ public class TacticalBehavior : MonoBehaviour
                 if(!child.name.Contains("*"))
                     child.name = "*" + child.name;
             }
-            //child.name = child.name.Length > 6 ? child.name.Substring(0, 6) : child.name;
-            //child.name = "[" + i + "]\t" + child.name;
             child.transform.parent = PlayerEnemyGroup[playerid].transform;
             i++;
         }
@@ -174,17 +175,14 @@ public class TacticalBehavior : MonoBehaviour
         {
             var child = PlayerEnemyGroup[playerid].transform.GetChild(j);
             leaderUnitTypeID = (int)child.GetComponent<Unit>().unitType;
-            //randBase = randBase == 0 ? 1 : 0;
-
+      
             if (child.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO) {
-                defendObject = king;
-                defendObject.name = "KING";
+                defendObject = KINGBOSS[playerid];
                 defendRadius = 3;
             }
             else {
                 //Debug.Log($"Player {playerid} Unit {(UnitMeta.UnitType)leaderUnitTypeID } Spawn Point Index {child.GetComponent<Unit>().GetSpawnPointIndex()} gameBoardHandlerPrefab: {gameBoardHandlerPrefab == null} ");
                 defendObject = gameBoardHandlerPrefab.GetSpawnPointObjectByIndex( (UnitMeta.UnitType) leaderUnitTypeID , playerid, child.GetComponent<Unit>().GetSpawnPointIndex());
-                //defendObject = king;
                 defendRadius = 0.1f;
             }
             var agentTrees = child.GetComponents<BehaviorTree>();
@@ -223,17 +221,16 @@ public class TacticalBehavior : MonoBehaviour
         }
         //printTB();
 
-        if (playerid == 0 || ((RTSNetworkManager)NetworkManager.singleton).Players.Count > 1)
-        {
+        //if (playerid == 0 || ((RTSNetworkManager)NetworkManager.singleton).Players.Count > 1)
+        //{
             //Debug.Log($"LeaderUpdated?.Invoke playerid {playerid} count {((RTSNetworkManager)NetworkManager.singleton).Players.Count} ");
-            LeaderUpdated?.Invoke(leaders[playerid]);
-        }
+            //LeaderUpdated?.Invoke(leaders[playerid]);
+        //}
 
-        //InitSetupSelectedLeaderID(playerid);
         AutoRun(playerid);
-        stopwatch.Stop();
-        if (playerid == 77)
-            Debug.Log($"TacticalFormation ============================ End {stopwatch.ElapsedMilliseconds} milli seconrds. !!!! playerid {playerid} , Leader Count {leaders[playerid].Count} ");
+        //stopwatch.Stop();
+        //if (playerid == 0)
+        //    Debug.Log($"TacticalFormation ============================ End {stopwatch.ElapsedMilliseconds} milli seconrds. !!!! playerid {playerid} , Leader Count {leaders[playerid].Count} ");
     }
     public void HandleLeaderSelected(int leaderId)
     {
@@ -324,7 +321,7 @@ public class TacticalBehavior : MonoBehaviour
 
         foreach (GameObject army in armies) {
             
-            sb.Append( String.Format("{0} \t\t {1} \n", army.name, army.GetComponent<Unit>().GetTaskStatus().text )) ;
+            sb.Append( String.Format("{0} \t {1} \n", army.name.PadRight(15), army.GetComponent<Unit>().GetTaskStatus().text )) ;
         }
 
         return sb.ToString();
