@@ -20,6 +20,7 @@ public class Unit : NetworkBehaviour
     [SerializeField] private UnityEvent onDeselected = null;
    
     public UnitMeta.UnitType unitType;
+    public UnitMeta.Race race;
     public static event Action<Unit> ServerOnUnitSpawned;
     public static event Action<Unit> ServerOnUnitDespawned;
     public static event Action<Unit> AuthorityOnUnitSpawned;
