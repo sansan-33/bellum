@@ -177,7 +177,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         //Debug.Log("OnEndDrag");
         objBeingDraged = null;
-        CardParent.GetComponentInParent<Player>().dragCardMerge();
+        
         if (unitPreviewInstance != null)
         {
             Ray ray = mainCamera.ScreenPointToRay(eventData.position);
@@ -201,18 +201,20 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 GetComponent<Card>().eleixers.eleixer -= uniteleixer;
                 Debug.Log("hit");
                 GetComponent<Card>().DropUnit(hit.point);
-                Destroy(this);
+               
                 Destroy(unitPreviewInstance);
                 this.GetComponentInParent<Player>().moveCard(GetComponent<Card>().cardPlayerHandIndex);
                 dealManagers.GetComponent<CardDealer>().Hit();
             }
         }
-            if (transform.parent == itemDraggerParent)
-            {
+        Debug.Log("destroy card");
+        CardParent.GetComponentInParent<Player>().dragCardMerge();
+        if (transform.parent == itemDraggerParent)
+        {
                 //Debug.Log("drop failer");
                 transform.position = startPos;
                 transform.SetParent(startParent);
-            }
+        }
 
         
     }
@@ -274,7 +276,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
             unitPreviewInstance.transform.position = hit.point;
 
-            Debug.Log(hit.point);
+            //Debug.Log(hit.point);
            
         }
         catch (Exception) { }
