@@ -76,7 +76,7 @@ public class SpawnEnemies : MonoBehaviour
     }
     public void HandleGameOver(string winner)
     {
-        Debug.Log($"Spawn Enemies ==> HandleGameOver");
+        //Debug.Log($"Spawn Enemies ==> HandleGameOver");
         ISGAMEOVER = true;
     }
 }

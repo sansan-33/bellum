@@ -379,7 +379,7 @@ public class TacticalBehavior : MonoBehaviour
     }
     public void HandleGameOver(string winner)
     {
-        Debug.Log($"Tactical Behavior ==> HandleGameOver");
+        //Debug.Log($"Tactical Behavior ==> HandleGameOver");
         foreach (var playerid in leaders.Keys.ToList())
         {
             foreach (var leaderid in leaders[PLAYERID].Keys.ToList())
