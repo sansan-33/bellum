@@ -362,7 +362,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 30510218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.8, y: -4.9, z: -15.480001}
+  m_LocalPosition: {x: 37.8, y: -10, z: -7.1000004}
   m_LocalScale: {x: 11, y: 0, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -676,7 +676,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95928186}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 40.69994, y: -5, z: -48.8}
+  m_LocalPosition: {x: 40.69994, y: -70, z: 19.5}
   m_LocalScale: {x: 5, y: 8, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4491,7 +4491,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1132634193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.8, y: -4.9, z: -79.979996}
+  m_LocalPosition: {x: 37.8, y: -10, z: -71.59999}
   m_LocalScale: {x: 11, y: 0, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4599,7 +4599,7 @@ MonoBehaviour:
   camPlayer0: {fileID: 1175903914}
   camPlayer1: {fileID: 1422161990}
   groundPlayer0: {fileID: 95928186}
-  groundPlayer1: {fileID: 0}
+  groundPlayer1: {fileID: 1533415284}
   lightPlayer0: {fileID: 1453154198}
   lightPlayer1: {fileID: 1453154198}
   lightSecondaryPlayer0: {fileID: 131115436}
@@ -5325,7 +5325,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382084790}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.8, y: -4.9, z: -47.68}
+  m_LocalPosition: {x: 37.8, y: -10, z: -39.3}
   m_LocalScale: {x: 33, y: 0, z: 63}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5794,7 +5794,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533415284}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 34.9, y: -5, z: -46.6}
+  m_LocalPosition: {x: 34.9, y: -70, z: -91.5}
   m_LocalScale: {x: 5, y: 8, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
