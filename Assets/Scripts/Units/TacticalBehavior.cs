@@ -62,13 +62,15 @@ public class TacticalBehavior : MonoBehaviour
        
         Unit.AuthorityOnUnitSpawned += TryReinforcePlayer;
         Unit.AuthorityOnUnitDespawned += TryUpdateLeader;
-        LeaderScrollList.LeaderSelected += HandleLeaderSelected;
+        //LeaderScrollList.LeaderSelected += HandleLeaderSelected;
+        GameOverHandler.ClientOnGameOver += HandleGameOver;
     }
     public void OnDestroy()
     {
         Unit.AuthorityOnUnitSpawned -= TryReinforcePlayer;
         Unit.AuthorityOnUnitDespawned -= TryUpdateLeader;
-        LeaderScrollList.LeaderSelected -= HandleLeaderSelected;
+        GameOverHandler.ClientOnGameOver -= HandleGameOver;
+        //LeaderScrollList.LeaderSelected -= HandleLeaderSelected;
     }
     public IEnumerator AssignTag()
     {
@@ -280,13 +282,9 @@ public class TacticalBehavior : MonoBehaviour
 
     private void SelectionChanged(int playerID, int leaderid)
     {
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
         StopCoroutine(EnableBehavior(playerID, leaderid));
         StartCoroutine(DisableBehavior(playerID, leaderid));
         StartCoroutine(EnableBehavior(playerID, leaderid));
-        stopwatch.Stop();
-        //Debug.Log($"SelectionChanged total running time {stopwatch.ElapsedMilliseconds} milli seconrds");
     }
     private IEnumerator EnableBehavior(int playerid, int leaderid)
     {
@@ -379,20 +377,15 @@ public class TacticalBehavior : MonoBehaviour
         }
         Debug.Log(sb.ToString());
     }
-    void InitSetupSelectedLeaderID(int playerID)
+    public void HandleGameOver(string winner)
     {
-        System.Random rand = new System.Random();
-
-        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
+        Debug.Log($"Tactical Behavior ==> HandleGameOver");
+        foreach (var playerid in leaders.Keys.ToList())
         {
-            if (playerID == 1)
-                selectedEnemyLeaderId = behaviorTreeGroups[playerID].ElementAt(rand.Next(0, behaviorTreeGroups[playerID].Count)).Key;
-            else
+            foreach (var leaderid in leaders[PLAYERID].Keys.ToList())
             {
-                if (selectedLeaderId == 0)
-                {
-                    selectedLeaderId = behaviorTreeGroups[playerID].ElementAt(0).Key;
-                }
+                StopCoroutine(EnableBehavior(playerid, leaderid));
+                StartCoroutine(DisableBehavior(playerid, leaderid));
             }
         }
     }
