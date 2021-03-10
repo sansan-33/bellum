@@ -17,16 +17,17 @@ public class UnitPowerUp : NetworkBehaviour
     Transform unitTransform;
     public override void OnStartAuthority()
     {
-        unit = GetComponentInParent<Unit>();
-        unitTransform = GetComponentInParent<Transform>();
+        
     }
     [Command]
     public void cmdPowerUp()
     {
+        unit = GetComponentInParent<Unit>();
+        unitTransform = GetComponentInParent<Transform>();
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1 && CompareTag("Player1")){
             CanPowerUp = false;
         }
-        Debug.Log($"cmdPowerUp CanPowerUp ? {CanPowerUp} battleFieldRules.IsInField() {battleFieldRules.IsInOwnField()}");
+        //Debug.Log($"cmdPowerUp CanPowerUp ? {CanPowerUp} battleFieldRules Is In Own Field() {battleFieldRules.IsInOwnField()}");
         if (!battleFieldRules.IsInOwnField() && CanPowerUp)
         {
             //Debug.Log($"cmdPowerUp {unit.unitType}");
@@ -94,7 +95,7 @@ public class UnitPowerUp : NetworkBehaviour
         unitTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         unit.GetComponent<IAttack>().ScaleAttackRange(1.2f) ;
         unit.GetComponent<Unit>().isScaled = true;
-        Debug.Log($"Scale Up {unit.GetComponent<Unit>().unitType}");
+        //Debug.Log($"Scale Up {unit.GetComponent<Unit>().unitType}");
     }
     [ClientRpc]
     private void RpcScale(Transform unitTransform, GameObject unit)

@@ -342,7 +342,9 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 32
+  unitPreviewInstance: {fileID: 0}
   unitPrefab: {fileID: 3461276531514663453, guid: 957e84e0d85334b2cafe41c35a784471, type: 3}
+  EmptyCard: {fileID: 872181511125864227}
 --- !u!225 &7822742786630516621
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
@@ -28,6 +29,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     Transform SpawnLine;
     Camera mainCamera;
     [SerializeField] GameObject unitPrefab;
+    public GameObject EmptyCard;
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -44,6 +47,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Debug.Log("OnBeginDrag");
+        if (unitPreviewInstance != null) Destroy(unitPreviewInstance);
         startPos = this.transform.position;
         lastXPos = Input.mousePosition.x;
     }
@@ -58,9 +62,18 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (Mathf.Abs(mouseOrTouchPosX - lastXPos) < deltaPos) { return; } // At least move deltaPos pixels
 
         direction = mouseOrTouchPosX > lastXPos ? "right" : "left";
+
         //Debug.Log($"On Drag Mouse Direction {mouseOrTouchPosX} lastPos {lastXPos}  , {direction} ");
 
-        this.transform.position = new Vector3(mouseOrTouchPosX, mouseOrTouchPosY, 0f);
+        // Prevent drag card to the bottom.
+        mouseOrTouchPosY = mouseOrTouchPosY < startPos.y ? startPos.y : mouseOrTouchPosY;
+        mouseOrTouchPosX = mouseOrTouchPosY > startPos.y + deltaPos ? startPos.x : mouseOrTouchPosX;
+
+        // Freeze the card position if unit preview instance spawned
+        if (unitPreviewInstance != null)
+            transform.position = startPos;
+        else
+            transform.position = new Vector3(mouseOrTouchPosX, mouseOrTouchPosY, 0f);
 
         ShiftCard(mouseOrTouchPosX, mouseOrTouchPosY);
         lastXPos = mouseOrTouchPosX;
@@ -78,20 +91,14 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             other = hitColliders[i++];
             if (SpawnLine.position.y <= mouseOrTouchPosY)
             {
-                //Debug.Log("call MoveUnitInstance");
+                Debug.Log($"call MoveUnitInstance mouseOrTouchPosX {mouseOrTouchPosX} mouseOrTouchPosY {mouseOrTouchPosY} ");
                 MoveUnitInstance(new Vector2(mouseOrTouchPosX, mouseOrTouchPosY));
-
             }
             else
             {
                 //Debug.Log($"unitPreviewInstance{unitPreviewInstance}");
-                this.transform.GetChild(1).gameObject.SetActive(true);
-                this.transform.GetChild(2).gameObject.SetActive(true);
-                this.transform.GetChild(4).gameObject.SetActive(true);
-                this.transform.GetChild(5).gameObject.SetActive(true);
-                if (unitPreviewInstance != null) { Destroy(unitPreviewInstance); ; }
-
-
+                EmptyCard.GetComponentInChildren<Image>().color = Color.white;
+                if (unitPreviewInstance != null) { Destroy(unitPreviewInstance); }
             }
 
             if (other.TryGetComponent<Card>(out Card hittedCard))
@@ -134,10 +141,10 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 }
             }
         }
-        this.transform.GetChild(1).gameObject.SetActive(false);
-        this.transform.GetChild(2).gameObject.SetActive(false);
-        this.transform.GetChild(4).gameObject.SetActive(false);
-        this.transform.GetChild(5).gameObject.SetActive(false);
+        Debug.Log($"MoveUnitInstance {mousePos}");
+        EmptyCard.GetComponentInChildren<Image>().color = Color.black;
+
+        // Create unit preview
         int type = (int)GetComponent<Card>().cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
         if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
         GameObject UnitPrefab = localFactory.GetUnitPrefab((UnitMeta.Race)GetComponent<Card>().playerID, (UnitMeta.UnitType)type);
@@ -151,14 +158,13 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             }
             Transform unitBody = Instantiate(UnitPrefab.transform.GetChild(i));
             unitBody.SetParent(unitPreviewInstance.transform);
-           // unitPreviewInstance.transform.SetParent(transform);
+            //unitPreviewInstance.transform.SetParent(transform);
             unitPreviewInstance.transform.position = new Vector3();
             unitBody.position = new Vector3();
         }
-
         // unitPreviewInstance.transform.position = mousePos;
+       
         //Debug.Log(unitPreviewInstance.transform.position);
-
     }
 
     /*
@@ -177,7 +183,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         //Debug.Log("OnEndDrag");
         objBeingDraged = null;
-        
+
         if (unitPreviewInstance != null)
         {
             Ray ray = mainCamera.ScreenPointToRay(eventData.position);
@@ -189,34 +195,30 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
                 if (GetComponent<Card>().eleixers.eleixer < uniteleixer)
                 {
-                    this.transform.GetChild(1).gameObject.SetActive(true);
-                    this.transform.GetChild(2).gameObject.SetActive(true);
-                    this.transform.GetChild(4).gameObject.SetActive(true);
-                    this.transform.GetChild(5).gameObject.SetActive(true);
                     Destroy(unitPreviewInstance);
-                    transform.position = startPos;
-                    transform.SetParent(startParent);
+                    EmptyCard.GetComponentInChildren<Image>().color = Color.white;
+                    //transform.position = startPos;
+                    //transform.SetParent(startParent);
                     return;
                 }
                 GetComponent<Card>().eleixers.eleixer -= uniteleixer;
-                Debug.Log("hit");
+                //Debug.Log("hit");
                 GetComponent<Card>().DropUnit(hit.point);
-               
+
                 Destroy(unitPreviewInstance);
                 this.GetComponentInParent<Player>().moveCard(GetComponent<Card>().cardPlayerHandIndex);
                 dealManagers.GetComponent<CardDealer>().Hit();
             }
-        }
-        Debug.Log("destroy card");
-        CardParent.GetComponentInParent<Player>().dragCardMerge();
-        if (transform.parent == itemDraggerParent)
-        {
+        } else { 
+            //Debug.Log("destroy card");
+            CardParent.GetComponentInParent<Player>().dragCardMerge();
+            if (transform.parent == itemDraggerParent)
+            {
                 //Debug.Log("drop failer");
                 transform.position = startPos;
                 transform.SetParent(startParent);
+            }
         }
-
-        
     }
         //Draw the Box Overlap as a gizmo to show where it currently is testing. Click the Gizmos button to see this
         void OnDrawGizmos()
@@ -234,52 +236,20 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
         private void Update()
         {
-        // Track a single touch as a direction control.
-        /*
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-
-            // Handle finger movements based on touch phase.
-            switch (touch.phase)
+      
+            try
             {
-                // Record initial touch position.
-                case TouchPhase.Began:
-                    startPos = this.transform.position;
-                    lastXPos = touch.position.x;
-                    directionChosen = false;
-                    break;
+                Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
 
-                // Determine direction by comparing the current touch position with the initial one.
-                case TouchPhase.Moved:
-                    TryDragCard(touch.position.x);
-                    break;
+                Ray ray = mainCamera.ScreenPointToRay(pos);
 
-                // Report that a direction has been chosen when the finger is lifted.
-                case TouchPhase.Ended:
-                    directionChosen = true;
-                    break;
-            }
-        }
-        if (directionChosen)
-        {
-            // Something that uses the chosen direction...
-        }
-      */
-        try
-        {
-            Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
+                if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
 
-            Ray ray = mainCamera.ScreenPointToRay(pos);
+                unitPreviewInstance.transform.position = hit.point;
 
-            if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
-
-            unitPreviewInstance.transform.position = hit.point;
-
-            //Debug.Log(hit.point);
+                //Debug.Log(hit.point);
            
+            }
+            catch (Exception) { }
         }
-        catch (Exception) { }
-         
-    }
 } 

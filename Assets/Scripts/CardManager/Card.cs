@@ -23,8 +23,8 @@ public class Card : MonoBehaviour
     private Camera mainCamera;
     private UnitFactory localFactory;
     private GameObject dealManagers;
-   public int playerID = 0;
-    int enemyID = 0;
+    public int playerID = 0;
+    //int enemyID = 0;
     Color teamColor;
     public eleixier eleixers;
     [SerializeField] public TMP_Text cardStar;
@@ -39,10 +39,20 @@ public class Card : MonoBehaviour
         animator = GetComponent<Animator>();
         RTSPlayer player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerID = player.GetPlayerID();
-        enemyID = player.GetEnemyID();
+        //enemyID = player.GetEnemyID();
         teamColor = player.GetTeamColor();
         dealManagers = GameObject.FindGameObjectWithTag("DealManager");
-      
+        if (localFactory == null)
+        {
+            foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
+            {
+                if (factroy.GetComponent<UnitFactory>().hasAuthority)
+                {
+                    localFactory = factroy.GetComponent<UnitFactory>();
+                }
+            }
+        }
+
     }
     public void Update()
     {
@@ -70,16 +80,6 @@ public class Card : MonoBehaviour
         dealManagers.GetComponent<CardDealer>().Hit();
         
         //Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / PlayerHand index {this.cardPlayerHandIndex} playerID {playerID} localFactory is null ? {localFactory == null} ");
-        if (localFactory == null) {
-            foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
-            {
-                if (factroy.GetComponent<UnitFactory>().hasAuthority)
-                {
-                    localFactory = factroy.GetComponent<UnitFactory>();
-                }
-            }
-        }
-
         localFactory.CmdSpawnUnit( (UnitMeta.Race) playerID, (UnitMeta.UnitType) type , (int)this.cardFace.star + 1, playerID, true, teamColor );
         //FindObjectOfType<TacticalBehavior>().TryReinforce(playerID, enemyID);
        
