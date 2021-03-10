@@ -18,8 +18,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     [SerializeField] public LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject specialEffectPrefab  = null;
     [SerializeField] private bool IsAreaOfEffect = false;
-    [SerializeField] private GameObject tacticalGroup;
-    private int id;
     private float calculatedDamageToDeal ;
     NetworkIdentity opponentIdentity;
     bool m_Started;
@@ -32,6 +30,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     private float lastAttackTime;
     public StrengthWeakness strengthWeakness;
     RTSPlayer player;
+    float upGradeAmount =  1.01f;
+
 
     public override void OnStartAuthority()
     {
@@ -242,7 +242,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     public void powerUpAfterKill(GameObject unit)
     {
         unit.GetComponent<HealthDisplay>().HandleKillText();
-        float upGradeAmount = (float)1.1;
         damageToDeal *= upGradeAmount;
         
     }
@@ -250,7 +249,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     public void RpcpowerUpAfterKill(GameObject unit)
     {
         unit.GetComponent<HealthDisplay>().HandleKillText();
-        float upGradeAmount = (float)1.1;
         damageToDeal *= upGradeAmount;
     }
     [TargetRpc]

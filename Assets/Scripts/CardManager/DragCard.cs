@@ -22,11 +22,11 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private int dragRange = 50;
     private float lastXPos = 0;
     private float deltaPos = 2f; // At least move 1 pixels
+    private float spawnLinePos = 25f; // At least move 1 pixels
     private Dictionary<int, string> hittedDict = new Dictionary<int, string>();
     public GameObject unitPreviewInstance;
     private UnitFactory localFactory;
     private CardDealer dealManagers;
-    Transform SpawnLine;
     Camera mainCamera;
     [SerializeField] GameObject unitPrefab;
     public GameObject EmptyCard;
@@ -35,7 +35,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
-        SpawnLine = GameObject.FindGameObjectWithTag("SpawnLine").transform;
+        //SpawnLine = GameObject.FindGameObjectWithTag("SpawnLine").transform;
         Input.simulateMouseWithTouches = false;
         objBeingDraged = gameObject;
         itemDraggerParent = GameObject.FindGameObjectWithTag("CardDraggerParent").transform;
@@ -89,9 +89,9 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         while (i < hitColliders.Length)
         {
             other = hitColliders[i++];
-            if (SpawnLine.position.y <= mouseOrTouchPosY)
+            if (spawnLinePos <= mouseOrTouchPosY - startPos.y)
             {
-                Debug.Log($"call MoveUnitInstance mouseOrTouchPosX {mouseOrTouchPosX} mouseOrTouchPosY {mouseOrTouchPosY} ");
+                //Debug.Log($"call MoveUnitInstance mouseOrTouchPosX {mouseOrTouchPosX} mouseOrTouchPosY {mouseOrTouchPosY} ");
                 MoveUnitInstance(new Vector2(mouseOrTouchPosX, mouseOrTouchPosY));
             }
             else
@@ -141,7 +141,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 }
             }
         }
-        Debug.Log($"MoveUnitInstance {mousePos}");
+        //Debug.Log($"MoveUnitInstance {mousePos}");
         EmptyCard.GetComponentInChildren<Image>().color = Color.black;
 
         // Create unit preview

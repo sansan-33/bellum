@@ -468,10 +468,17 @@ public class TacticalBehavior : MonoBehaviour
             {
                 child.GetComponent<Unit>().GetUnitMovement().circleMarker.SetActive(true);
                 child.GetComponent<Unit>().GetUnitMovement().circleMarker.transform.localScale = defendRadius;
-                KINGBOSS[playerid].GetComponent<Unit>().GetUnitMovement().circleMarker.SetActive(true);
-                KINGBOSS[playerid].GetComponent<Unit>().GetUnitMovement().circleMarker.transform.localScale = radius;
+                if (KINGBOSS[playerid].TryGetComponent<Unit>(out Unit kingboss))
+                {
+                    kingboss.GetUnitMovement().circleMarker.SetActive(true);
+                    kingboss.GetUnitMovement().circleMarker.transform.localScale = radius;
+                }
             }
         }
+    }
+    public void SetKingBoss(int enemyid, GameObject boss)
+    {
+        KINGBOSS[enemyid] = boss;
     }
     #endregion
 }

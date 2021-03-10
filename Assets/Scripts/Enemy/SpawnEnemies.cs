@@ -25,7 +25,7 @@ public class SpawnEnemies : MonoBehaviour
             playerID = player.GetPlayerID();
             teamColor = player.GetTeamColor();
             teamColor = player.GetTeamEnemyColor();
-            InvokeRepeating("LoadEnemies", 2f, 6f);
+            InvokeRepeating("LoadEnemies", 2f, 3f);
         }
         GameOverHandler.ClientOnGameOver += HandleGameOver;
     }
@@ -42,15 +42,16 @@ public class SpawnEnemies : MonoBehaviour
                 {
                     localFactory.CmdSpawnUnitRotation(UnitMeta.Race.UNDEAD,  UnitMeta.UnitType.KING, 1, enemyID, unitAuthority, teamColor, Quaternion.Euler(0, 180, 0));
                 }
-                //if (isUnitAlive(UnitMeta.UnitType.HERO) < 1)
-                //{
-                //    localFactory.CmdSpawnUnit(UnitMeta.Race.UNDEAD, UnitMeta.UnitType.HERO, 1, enemyID, unitAuthority, teamColor);
-                //    StartCoroutine(TryTactical(UnitMeta.UnitType.HERO, TacticalBehavior.BehaviorSelectionType.Defend));
-                //}
-                //else { 
+                if (isUnitAlive(UnitMeta.UnitType.HERO ) < 4)
+                {
+                    localFactory.CmdSpawnUnit(UnitMeta.Race.UNDEAD, UnitMeta.UnitType.HERO, 1, enemyID, unitAuthority, teamColor);
+                    StartCoroutine(TryTactical(UnitMeta.UnitType.HERO, TacticalBehavior.BehaviorSelectionType.Defend));
+                } else {
+                    localFactory.CmdSpawnUnit(UnitMeta.Race.UNDEAD, UnitMeta.UnitType.TANK, 1, enemyID, unitAuthority, teamColor);
+                    StartCoroutine(TryTactical(UnitMeta.UnitType.TANK, TacticalBehavior.BehaviorSelectionType.Attack));
                     localFactory.CmdSpawnUnit(UnitMeta.Race.UNDEAD, UnitMeta.UnitType.FOOTMAN, 1, enemyID, unitAuthority, teamColor);
                     StartCoroutine(TryTactical(UnitMeta.UnitType.FOOTMAN, TacticalBehavior.BehaviorSelectionType.Attack));
-                //}
+                }
             }
         }
     }
@@ -58,7 +59,8 @@ public class SpawnEnemies : MonoBehaviour
     private IEnumerator TryTactical(UnitMeta.UnitType unitType , TacticalBehavior.BehaviorSelectionType selectionType)
     {
         //Debug.Log($"Spawn Enemy TryTactical --> TacticalFormation enemyID {enemyID}");
-        //StartCoroutine(tacticalBehavior.TacticalFormation(enemyID, playerID));
+        if (GameObject.FindGameObjectsWithTag(UnitMeta.PLAYERTAG).Length == 0) { yield break; }
+        tacticalBehavior.SetKingBoss(enemyID, GameObject.FindGameObjectWithTag(UnitMeta.KINGENEMYTAG));
         yield return tacticalBehavior.TacticalFormation(enemyID, playerID);
         tacticalBehavior.TryTB((int)selectionType, enemyID, (int) unitType);
     }
