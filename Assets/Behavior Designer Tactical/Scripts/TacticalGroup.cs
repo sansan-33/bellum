@@ -403,6 +403,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             IDamageable damageable = null;
             if ( tacticalAgent.isCollide(tacticalAgent) && !UnitMeta.CanCollide.ContainsKey(  UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][tacticalAgent.transform.GetComponent<Unit>().unitType] ) )
             {
+                if (tacticalAgent.transform.name.ToLower().Contains("hero"))
+                    Debug.Log($"{tacticalAgent.transform.name} FindAttackTarget -- collide {tacticalAgent.collideTargetTransform().name} ");
                 IDamageable collideTarget = tacticalAgent.collideTarget();
                 Transform collideTargetTransform = tacticalAgent.collideTargetTransform();
                 tacticalAgent.TargetTransform = collideTargetTransform;
@@ -411,6 +413,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             }
             else if (tacticalAgent.TargetTransform == null || !tacticalAgent.TargetDamagable.IsAlive())
             {
+                if (tacticalAgent.transform.name.ToLower().Contains("hero"))
+                    Debug.Log($"FindAttackTarget -- ClosestTarget");
 
                 ClosestTarget(transform, ref target, ref damageable);
                 if (useTargetBone.Value)
@@ -496,9 +500,11 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 tacticalAgent.SetDestination(tacticalAgent.TargetTransform.position);
                 tacticalAgent.UpdateRotation(true);
                 tacticalAgent.AttackPosition = true;
-            } else {
+                if(tacticalAgent.transform.name.ToLower().Contains("hero"))
+                    Debug.Log($"{tacticalAgent.transform.name} Can See Target {tacticalAgent.CanSeeTarget() } {tacticalAgent.TargetTransform.transform.name  } ? ");
+            }
+            else {
                 tacticalAgent.Stop();
-
                 return tacticalAgent.RotateTowardsPosition(tacticalAgent.TargetTransform.position);
             }
             return false;

@@ -131,5 +131,5 @@ public class Card : MonoBehaviour
     }
     public enum Card_Numbers
     {
-    ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN, HERO
+    ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN
 }

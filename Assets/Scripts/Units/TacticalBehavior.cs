@@ -143,8 +143,16 @@ public class TacticalBehavior : MonoBehaviour
         if (gameBoardHandlerPrefab == null) { yield break; }
         //var stopwatch = new Stopwatch();
         //stopwatch.Start();
-        
+
         GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + playerid);
+        GameObject king = GameObject.FindGameObjectWithTag("King" + playerid);
+        string temp = king != null ? king.tag : "EMPTY";
+        if (playerid == 0) { 
+            Debug.Log($"Player id {playerid} , king {temp} ");
+            Debug.Log($"armies size b4 {armies.Length}");
+            armies.Append(king);
+            Debug.Log($"armies size after {armies.Length}");
+        }
         GameObject defendObject;
         //if (playerid == 0)
         //    Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Length}");
@@ -178,15 +186,15 @@ public class TacticalBehavior : MonoBehaviour
             var child = PlayerEnemyGroup[playerid].transform.GetChild(j);
             leaderUnitTypeID = (int)child.GetComponent<Unit>().unitType;
       
-            if (child.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO) {
-                defendObject = KINGBOSS[playerid];
-                defendRadius = 3;
-            }
-            else {
+            //if (child.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO) {
+            //    defendObject = KINGBOSS[playerid];
+            //    defendRadius = 10;
+            //}
+            //else {
                 //Debug.Log($"Player {playerid} Unit {(UnitMeta.UnitType)leaderUnitTypeID } Spawn Point Index {child.GetComponent<Unit>().GetSpawnPointIndex()} gameBoardHandlerPrefab: {gameBoardHandlerPrefab == null} ");
                 defendObject = gameBoardHandlerPrefab.GetSpawnPointObjectByIndex( (UnitMeta.UnitType) leaderUnitTypeID , playerid, child.GetComponent<Unit>().GetSpawnPointIndex());
                 defendRadius = 0.1f;
-            }
+            //}
             var agentTrees = child.GetComponents<BehaviorTree>();
             for (int k = 0; k < agentTrees.Length; ++k)
             {

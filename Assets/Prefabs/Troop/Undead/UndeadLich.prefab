@@ -50,19 +50,17 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   targeter: {fileID: 8101672447202448}
-  damageToDeal: 15
-  destroyAfterSeconds: 1
+  damageToDeal: 5
   textPrefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}
   camPrefab: {fileID: 1434666941670536975, guid: d482d6539d9c6472e83a38c9c0fa768e, type: 3}
   camFreeLookPrefab: {fileID: 795373343299834476, guid: 7dba4376eea514bdd8c393791a18d23a, type: 3}
   attackPoint: {fileID: 9209867609052111376}
-  attackRange: 20
+  attackRange: 13
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
   specialEffectPrefab: {fileID: 100006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
   IsAreaOfEffect: 1
-  tacticalGroup: {fileID: 0}
   repeatAttackDelay: 3
   attackAngle: 1
   strengthWeakness: {fileID: 0}
@@ -422,7 +420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5531517098549734394, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: maxHealth
-      value: 70
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5883809445942868411, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: unitRenderer

@@ -59,9 +59,10 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 }
                 else {
                     // The target is within distance. Keep moving towards it.
-                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": The target " + tacticalAgent.TargetTransform.name + "/" + tacticalAgent.TargetTransform.tag + " is within distance. Keep moving towards it " + HEARTBEAT++);
+                    //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": The target " + tacticalAgent.TargetTransform.name + "/" + tacticalAgent.TargetTransform.tag + " is within distance. Keep moving towards it " + HEARTBEAT++);
                     tacticalAgent.AttackPosition = true;
                     if (MoveToAttackPosition()) {
+                        Debug.Log("tacticalAgent.TryAttack()");
                         tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME +  ": Attack " + HEARTBEAT++);
                         tacticalAgent.TryAttack();
                     }

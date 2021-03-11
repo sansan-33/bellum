@@ -31,7 +31,7 @@ public class UnitMeta
         { UnitType.FOOTMAN, TacticalBehavior.BehaviorSelectionType.Attack },
         { UnitType.HERO, TacticalBehavior.BehaviorSelectionType.Defend },
         { UnitType.TANK, TacticalBehavior.BehaviorSelectionType.Attack },
-        { UnitType.KING, TacticalBehavior.BehaviorSelectionType.Attack }
+        { UnitType.KING, TacticalBehavior.BehaviorSelectionType.Defend }
     };
     public static Dictionary<UnitType, UnitPosition> DefaultUnitPosition = new Dictionary<UnitType, UnitPosition>()
     {
