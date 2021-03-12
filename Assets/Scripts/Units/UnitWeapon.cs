@@ -68,8 +68,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
             if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
             {
                 //Debug.Log($"Attack {targeter} , Hit Collider {hitColliders.Length} , Player Tag {targeter.tag} vs Other Tag {other.tag}");
-                if ( (other.tag == "Player" + player.GetPlayerID() || other.tag == "King" + player.GetPlayerID() ) && targeter.tag == "Player" + player.GetPlayerID() ) {continue;}  //check to see if it belongs to the player, if it does, do nothing
-                if ( (other.tag == "Player" + player.GetEnemyID() || other.tag == "King" + player.GetEnemyID() ) && targeter.tag == "Player" + player.GetEnemyID() ) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+                if ( (other.tag == "Player" + player.GetPlayerID() || other.tag == "King" + player.GetPlayerID() ) && (targeter.tag == "Player" + player.GetPlayerID() || targeter.tag == "King" + player.GetPlayerID())) {continue;}  //check to see if it belongs to the player, if it does, do nothing
+                if ( (other.tag == "Player" + player.GetEnemyID() || other.tag == "King" + player.GetEnemyID() ) && (targeter.tag == "Player" + player.GetEnemyID() || targeter.tag == "King" + player.GetEnemyID() ) ) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                
             }
             else // Multi player seneriao
@@ -84,6 +84,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                     if (networkIdentity.hasAuthority) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
+            //if(targeter.tag.ToLower().Contains("king"))
             //Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
 
             if (other.TryGetComponent<Health>(out Health health))
@@ -108,7 +109,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 cmdDamageText(other.transform.position, player.GetPlayerID(), calculatedDamageToDeal, damageToDeal, opponentIdentity, isFlipped);
                 if (GetComponentInParent<UnitMovement>().GetNavMeshAgent().speed == GetComponentInParent<UnitMovement>().maxSpeed) { calculatedDamageToDeal += 20; }
                 CmdDealDamage(other.gameObject, calculatedDamageToDeal);
-                //Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
+                //if (targeter.tag.ToLower().Contains("king"))
+                //    Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
                 if (GetComponentInParent<Unit>().unitType == UnitMeta.UnitType.TANK)
                 {
                     GetComponentInParent<UnitMovement>().GetNavMeshAgent().speed = GetComponentInParent<UnitMovement>().originalSpeed;

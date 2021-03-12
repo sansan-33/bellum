@@ -63,7 +63,7 @@ public class SpawnEnemies : MonoBehaviour
     private IEnumerator TryTactical(UnitMeta.UnitType unitType , TacticalBehavior.BehaviorSelectionType selectionType)
     {
         //Debug.Log($"Spawn Enemy TryTactical --> TacticalFormation enemyID {enemyID}");
-        if (GameObject.FindGameObjectsWithTag(UnitMeta.PLAYERTAG).Length == 0) { yield break; }
+        if (GameObject.FindGameObjectsWithTag(UnitMeta.KINGPLAYERTAG).Length == 0) { yield break; }
         tacticalBehavior.SetKingBoss(enemyID, GameObject.FindGameObjectWithTag(UnitMeta.KINGENEMYTAG));
         yield return tacticalBehavior.TacticalFormation(enemyID, playerID);
         tacticalBehavior.TryTB((int)selectionType, enemyID, (int) unitType);

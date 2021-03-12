@@ -148,7 +148,8 @@ public class TacticalBehavior : MonoBehaviour
         GameObject king = GameObject.FindGameObjectWithTag("King" + playerid);
         List<GameObject> armies = new List<GameObject>();
         armies = units.ToList();
-        armies.Add(king);
+        if(king!=null)
+            armies.Add(king);
         GameObject defendObject;
 
         //if (playerid == 0)
@@ -162,6 +163,8 @@ public class TacticalBehavior : MonoBehaviour
         float defendRadius = 0.1f;
         foreach (GameObject child in armies)
         {
+            if (child == null) { continue; }
+
             leaderUnitTypeID = (int)child.GetComponent<Unit>().unitType;
         
             if (child.name.Contains("]"))
@@ -269,7 +272,7 @@ public class TacticalBehavior : MonoBehaviour
     public void TryTB(int type, int playerid, int leaderid)
     {
         LeaderTacticalType(playerid, leaderid, (BehaviorSelectionType)type);
-        Eleixier.speedUpEleixier(GetBehaviorSelectionType(playerid));
+        //Eleixier.speedUpEleixier(GetBehaviorSelectionType(playerid));
         SelectionChanged(playerid, leaderid);
     }
     public void TryReinforcePlayer(Unit unit)

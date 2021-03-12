@@ -47,7 +47,7 @@ public class UnitProjectile : NetworkBehaviour
     private void OnTriggerEnter(Collider other) //sphere collider is used to differentiate between the unit itself, and the attack range (fireRange)
     {
         bool isFlipped = false;
-       // Debug.Log($" Hitted object {other.tag}, Attacker type is {unitType} ");
+        //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
         damageToDeals = damageToDealOriginal;
         // Not attack same connection client object except AI Enemy
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1) {
