@@ -86,7 +86,7 @@ public class UnitProjectile : NetworkBehaviour
             damageToDeals = strengthWeakness.calculateDamage(UnitMeta.UnitType.ARCHER, other.GetComponent<Unit>().unitType, damageToDeals);
             //Debug.Log("call spawn text");
             cmdDamageText(other.transform.position, damageToDeals, damageToDealOriginal, opponentIdentity, isFlipped);
-            cmdSpecialEffect(other.transform.position);
+            cmdSpecialEffect(other.transform.GetComponent<Unit>().GetTargeter().GetAimAtPoint().position);
             //if (damageToDeals > damageToDealOriginal) { cmdCMVirtual(); }
             other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
             //Debug.Log($"health{health}other{other}");

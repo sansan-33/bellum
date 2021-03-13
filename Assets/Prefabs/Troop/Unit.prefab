@@ -1200,7 +1200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  targeterAttackType: 4
+  aimAtPoint: {fileID: 3336110099694315676}
 --- !u!114 &5531517098549734394
 MonoBehaviour:
   m_ObjectHideFlags: 0
