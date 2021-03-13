@@ -207,22 +207,29 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
                 if (GetComponent<Card>().eleixers.eleixer < uniteleixer)
                 {
+                    Debug.Log("hit");
                     Destroy(unitPreviewInstance);
                     EmptyCard.GetComponentInChildren<Image>().color = Color.white;
-                    //transform.position = startPos;
-                    //transform.SetParent(startParent);
+                    transform.position = startPos;
+                  //  transform.SetParent(startParent);
                     return;
                 }
+                
                 GetComponent<Card>().eleixers.eleixer -= uniteleixer;
-                //Debug.Log("hit");
+                
                 GetComponent<Card>().DropUnit(unitPreviewInstance.transform.position);
 
                 Destroy(unitPreviewInstance);
+                Debug.Log("destroy card");
                 this.GetComponentInParent<Player>().moveCard(GetComponent<Card>().cardPlayerHandIndex);
                 dealManagers.GetComponent<CardDealer>().Hit();
             }
+            if(EmptyCard != null)
+            {
+                EmptyCard.GetComponentInChildren<Image>().color = Color.white;
+            }
         } else { 
-            //Debug.Log("destroy card");
+            Debug.Log("destroy card");
             CardParent.GetComponentInParent<Player>().dragCardMerge();
             if (transform.parent == itemDraggerParent)
             {

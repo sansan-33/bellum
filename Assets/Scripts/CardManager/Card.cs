@@ -74,7 +74,7 @@ public class Card : MonoBehaviour
         }
         eleixers.eleixer -= uniteleixer;
         //Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} ");
-
+        Debug.Log("Destroy");
         Destroy(gameObject);
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
         dealManagers.GetComponent<CardDealer>().Hit();
