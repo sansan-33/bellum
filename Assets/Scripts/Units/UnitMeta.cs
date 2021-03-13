@@ -87,9 +87,11 @@ public class UnitMeta
         { UnitKey.UNDEADKING , UnitType.KING  }
     };
     public static Dictionary<UnitKey, bool> CanCollide = new Dictionary<UnitKey, bool>(){
-
         { UnitKey.RIDER,true }
-
+    };
+    public static Dictionary<UnitKey, bool> ShakeCamera = new Dictionary<UnitKey, bool>(){
+        { UnitKey.KING,true },
+        { UnitKey.UNDEADKING,true }
     };
 
 }

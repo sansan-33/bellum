@@ -121,7 +121,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 
                 
                 cmdSpecialEffect(other.transform.position);
-                //if (calculatedDamageToDeal > damageToDeal ) { cmdCMVirtual(); }
+                if (calculatedDamageToDeal > damageToDeal ) { cmdCMVirtual(); }
                 //cmdCMFreeLook();
                 if(!IsAreaOfEffect)
                     break;
