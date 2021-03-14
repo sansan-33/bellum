@@ -38,7 +38,7 @@ public class KingSP : MonoBehaviour
     {
         if(attackPoint == null) { return; }
         
-        if(SPAmount != SPCost) { return; }
+        //if(SPAmount != SPCost) { return; }
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         Collider[] hitColliders = Physics.OverlapBox(attackPoint.transform.position, transform.localScale * attackRange, Quaternion.identity, layerMask);
         var distance = float.MaxValue;
