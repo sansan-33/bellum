@@ -9181,6 +9181,14 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3531140776
       objectReference: {fileID: 0}
+    - target: {fileID: 6254626941700526057, guid: 54ec06da0d0fe447eb4646f507c4ec0d, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626754190098079910, guid: 54ec06da0d0fe447eb4646f507c4ec0d, type: 3}
+      propertyPath: sceneId
+      value: 656101998
+      objectReference: {fileID: 0}
     - target: {fileID: 7837522962347921431, guid: 54ec06da0d0fe447eb4646f507c4ec0d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0

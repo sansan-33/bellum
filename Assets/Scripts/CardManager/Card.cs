@@ -42,6 +42,9 @@ public class Card : MonoBehaviour
         //enemyID = player.GetEnemyID();
         teamColor = player.GetTeamColor();
         dealManagers = GameObject.FindGameObjectWithTag("DealManager");
+    }
+    public void Update()
+    {
         if (localFactory == null)
         {
             foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
@@ -52,37 +55,31 @@ public class Card : MonoBehaviour
                 }
             }
         }
-
-    }
-    public void Update()
-    {
     }
     public void SetCard(CardFace _cardFace)
     {
         cardFace = _cardFace;
     }
     public void OnPointerDown()
-    {if(GetComponent<DragCard>().unitPreviewInstance != null) { return; }
+    {
+        Debug.Log($" Card OnPointerDown ");
+        if (GetComponent<DragCard>().unitPreviewInstance != null) { return; }
         int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
         int uniteleixer = 1;
-        //Debug.Log($"{eleixers.eleixer},{ uniteleixer}");
         if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
-        
+        Debug.Log($"eleixer {eleixers.eleixer}, { (UnitMeta.UnitType)type}:{ uniteleixer}");
         if (eleixers.eleixer < uniteleixer)
         {
             return;
         }
         eleixers.eleixer -= uniteleixer;
-        //Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} ");
-        Debug.Log("Destroy");
+        Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / index {this.cardPlayerHandIndex} ");
+        if(type != (int) UnitMeta.UnitType.WALL)
         Destroy(gameObject);
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
         dealManagers.GetComponent<CardDealer>().Hit();
-        
-        //Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / PlayerHand index {this.cardPlayerHandIndex} playerID {playerID} localFactory is null ? {localFactory == null} ");
+        Debug.Log($"Card ==> OnPointerDown {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / PlayerHand index {this.cardPlayerHandIndex} playerID {playerID} localFactory is null ? {localFactory == null} ");
         localFactory.CmdSpawnUnit( (UnitMeta.Race) playerID, (UnitMeta.UnitType) type , (int)this.cardFace.star + 1, playerID, true, teamColor );
-        //FindObjectOfType<TacticalBehavior>().TryReinforce(playerID, enemyID);
-       
     }
     public void DropUnit(Vector3 SpwanPoint)
     {
@@ -105,9 +102,6 @@ public class Card : MonoBehaviour
     {
         if (gameObject != null){Destroy(gameObject);}
     }
-    void OnDisable()
-    {
-    }
     
     public void SetOwner(Player player)
     {
@@ -116,20 +110,22 @@ public class Card : MonoBehaviour
    
 }
 
-    public enum Card_Suits
-    {
-        Hearts,
-        Diamonds,
-        Clubs,
-        Spades
-    }
-    public enum Card_Stars
-    {
-        Bronze,
-        Silver,
-        Gold
-    }
-    public enum Card_Numbers
-    {
-    ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN
+public enum Card_Suits
+{
+    Hearts,
+    Diamonds,
+    Clubs,
+    Spades
 }
+public enum Card_Stars
+{
+    Bronze,
+    Silver,
+    Gold
+}
+public enum Card_Numbers
+{ 
+    ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN, WALL
+}
+
+

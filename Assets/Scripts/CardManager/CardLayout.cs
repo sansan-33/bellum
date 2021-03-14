@@ -20,6 +20,7 @@ public class CardLayout : MonoBehaviour
         //if (cardindex == 5) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-100, y, 0); }
         if (cardindex == 6) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-60, y, 0); }
         if (cardindex == 7) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-160, y, 0); }
+        if (cardindex == 8) { this.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, y, 0); }
     }
     // Update is called once per frame
     void Update()
