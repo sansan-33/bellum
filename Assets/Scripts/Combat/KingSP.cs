@@ -10,7 +10,7 @@ public class KingSP : MonoBehaviour
      private TacticalBehavior TB;
     [SerializeField] private LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject attackPoint;
-    public int minAttackRange = 200;
+    public int minAttackRange;
     private Image SPImage;
     private TMP_Text SPText;
     public float SPCost =10;
@@ -24,6 +24,7 @@ public class KingSP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        minAttackRange = (int)(transform.localScale.x * attackRange / 2);
         SPImage = GameObject.FindGameObjectWithTag("SP Bar").GetComponent<Image>();
         SPText = GameObject.FindGameObjectWithTag("SP Text").GetComponent<TextMeshProUGUI>();
         Debug.Log(SPText);
