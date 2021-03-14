@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class UnitFactory : NetworkBehaviour
 {
+    // Human
     [SerializeField] private GameObject archerPrefab = null;
     [SerializeField] private GameObject knightPrefab = null;
     [SerializeField] private GameObject magePrefab = null;
@@ -13,6 +14,9 @@ public class UnitFactory : NetworkBehaviour
     [SerializeField] private GameObject heroPrefab = null;
     [SerializeField] private GameObject spearmanPrefab = null;
     [SerializeField] private GameObject kingPrefab = null;
+    [SerializeField] private GameObject humanWallPrefab = null;
+
+    // Undead
     [SerializeField] private GameObject miniSkeletonPrefab = null;
     [SerializeField] private GameObject giantPrefab = null;
     [SerializeField] private GameObject riderPrefab = null;
@@ -117,7 +121,7 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(UnitMeta.UnitKey.RIDER, riderPrefab);
         unitDict.Add(UnitMeta.UnitKey.LICH, undeadLichPrefab);
         unitDict.Add(UnitMeta.UnitKey.UNDEADKING, undeadKingPrefab);
-
+        unitDict.Add(UnitMeta.UnitKey.HUMANWALL, humanWallPrefab);
     }
     [ClientRpc]
     void RpcTag(GameObject unit, int playerID, string unitName, int star, Color teamColor, int spawnPointIndex)

@@ -7,9 +7,9 @@ public class UnitMeta
     public static string ENEMYTAG = "Player1";
     public static string KINGPLAYERTAG = "King0";
     public static string KINGENEMYTAG = "King1";
-    public enum UnitKey { ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN, HERO, MINISKELETON, GIANT, KING, UNDEADHERO, UNDEADARCHER, UNDEADKING, RIDER, LICH };
-    public enum UnitType { ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN, HERO, KING };
-    public enum UnitPosition { FORWARD, MIDFIELDER, DEFENDER, GOALIE};
+    public enum UnitKey { ARCHER, KNIGHT, MAGE, CAVALRY, SPEARMAN, HERO, MINISKELETON, GIANT, KING, UNDEADHERO, UNDEADARCHER, UNDEADKING, RIDER, LICH,HUMANWALL, UNDEADWALL };
+    public enum UnitType { ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN, WALL, HERO, KING  };
+    public enum UnitPosition { FORWARD, MIDFIELDER, DEFENDER, GOALIE, WALL};
     public enum Race { HUMAN, UNDEAD, ELF, ALL };
   
     public static Dictionary<UnitType, int> UnitSize = new Dictionary<UnitType, int>() { { UnitType.FOOTMAN, 3 }, { UnitType.ARCHER, 2 } };
@@ -20,8 +20,9 @@ public class UnitMeta
         { UnitType.TANK, 4 },
         { UnitType.HERO, 5 },
         { UnitType.FOOTMAN, 1 },
-        { UnitType.MAGIC, 3 }
-       
+        { UnitType.MAGIC, 3 },
+        { UnitType.WALL, 1 }
+
     };
     public static Dictionary<UnitType, TacticalBehavior.BehaviorSelectionType> DefaultUnitTactical = new Dictionary<UnitType, TacticalBehavior.BehaviorSelectionType>()
     {
@@ -41,7 +42,8 @@ public class UnitMeta
         { UnitType.TANK, UnitPosition.FORWARD },
         { UnitType.FOOTMAN, UnitPosition.FORWARD },
         { UnitType.HERO, UnitPosition.DEFENDER },
-        { UnitType.KING, UnitPosition.GOALIE }
+        { UnitType.KING, UnitPosition.GOALIE },
+        { UnitType.WALL, UnitPosition.WALL }
     };
     public static Dictionary<UnitType, UnitKey> HumanTypeKey = new  Dictionary<UnitType, UnitKey>() {
 
@@ -51,7 +53,8 @@ public class UnitMeta
         { UnitType.MAGIC, UnitKey.MAGE },
         { UnitType.FOOTMAN, UnitKey.SPEARMAN },
         { UnitType.HERO, UnitKey.HERO },
-        { UnitType.KING, UnitKey.KING }
+        { UnitType.KING, UnitKey.KING },
+        { UnitType.WALL, UnitKey.HUMANWALL }
     };
     public static Dictionary<UnitType, UnitKey> UndeadTypeKey = new Dictionary<UnitType, UnitKey>()
     {
@@ -61,7 +64,8 @@ public class UnitMeta
         { UnitType.MAGIC, UnitKey.LICH },
         { UnitType.FOOTMAN, UnitKey.MINISKELETON },
         { UnitType.HERO, UnitKey.UNDEADHERO },
-        { UnitType.KING, UnitKey.UNDEADKING }
+        { UnitType.KING, UnitKey.UNDEADKING },
+        { UnitType.WALL, UnitKey.UNDEADWALL }
     };
     public static Dictionary<Race, Dictionary<UnitType,UnitKey>> UnitRaceTypeKey = new Dictionary<Race, Dictionary<UnitType, UnitKey>>()
     {
@@ -77,6 +81,7 @@ public class UnitMeta
         { UnitKey.SPEARMAN , UnitType.FOOTMAN},
         { UnitKey.HERO , UnitType.HERO},
         { UnitKey.KING , UnitType.KING },
+        { UnitKey.HUMANWALL , UnitType.WALL },
 
         { UnitKey.UNDEADARCHER , UnitType.ARCHER   } ,
         { UnitKey.GIANT , UnitType.TANK  } ,
@@ -84,7 +89,8 @@ public class UnitMeta
         { UnitKey.LICH , UnitType.MAGIC },
         { UnitKey.MINISKELETON , UnitType.FOOTMAN  },
         { UnitKey.UNDEADHERO , UnitType.HERO  },
-        { UnitKey.UNDEADKING , UnitType.KING  }
+        { UnitKey.UNDEADKING , UnitType.KING  },
+        { UnitKey.UNDEADWALL , UnitType.WALL }
     };
     public static Dictionary<UnitKey, bool> CanCollide = new Dictionary<UnitKey, bool>(){
         { UnitKey.RIDER,true }

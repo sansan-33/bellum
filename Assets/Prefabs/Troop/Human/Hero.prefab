@@ -425,7 +425,7 @@ PrefabInstance:
       objectReference: {fileID: 7525015083586778902}
     - target: {fileID: 4237456972027882872, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: unitType
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4237456972027882872, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: unitMovement
