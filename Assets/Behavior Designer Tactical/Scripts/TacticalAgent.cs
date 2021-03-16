@@ -24,6 +24,7 @@ namespace BehaviorDesigner.Runtime.Tactical
         public bool AttackPosition { get { return attackPosition; } set { attackPosition = value; } }
         public Vector3 AttackOffset { set { attackOffset = value; } }
         public Vector3 TargetOffset { set { targetOffset = value; } }
+        private string debugTarget = "footman";
         /// <summary>
         /// Caches the component referneces.
         /// </summary>
@@ -85,19 +86,29 @@ namespace BehaviorDesigner.Runtime.Tactical
         {
             var distance = (transform.position - targetTransform.position).magnitude;
             if (distance >= attackAgent.AttackDistance()) {
-                return false;
+                 return false;
             }
             RaycastHit hit;
+            //if (transform.name.ToLower().Contains(debugTarget))
+            //    Debug.Log($"CanSeeTarget ray transform {transform}/{transform.TransformPoint(attackOffset)} , targetTransform {targetTransform}/{targetTransform.TransformPoint(targetOffset) }");
+
             if (Physics.Linecast(transform.TransformPoint(attackOffset), targetTransform.TransformPoint(targetOffset), out hit, ignoreRaycast)) {
+                //if (transform.name.ToLower().Contains(debugTarget))
+                //    Debug.Log($"ray hit {hit}");
+
                 if (ContainsTransform(targetTransform, hit.transform)) {
                     return true; // return the target object meaning it is within sight
                 }
             } else if (targetTransform.GetComponent<Collider>() == null || targetTransform.GetComponent<CharacterController>() != null) {
                 // If the linecast doesn't hit anything then that the target object doesn't have a collider and there is nothing in the way
                 if (targetTransform.gameObject.activeSelf) {
+                    //if (transform.name.ToLower().Contains(debugTarget))
+                    //    Debug.Log("CanSeeTarget collide");
                     return true;
                 }
             }
+            //if (transform.name.ToLower().Contains(debugTarget))
+            //    Debug.Log("CanSeeTarget end with all failed");
             return false;
         }
      

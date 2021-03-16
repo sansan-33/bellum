@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 public class UnitMeta
 {
+
+    /*
+     * Attack checking 
+     * 1) Unit radius usually 2, attack range at least 5
+     * 2) Box collider big enough to trigger TacticalAgent can see target Physics.Linecast
+     * 3) Defend radius not too large otherwise some attack outside the circle
+     */
     public static string PLAYERTAG = "Player0";
     public static string ENEMYTAG = "Player1";
     public static string KINGPLAYERTAG = "King0";
@@ -13,6 +20,7 @@ public class UnitMeta
     public enum Race { HUMAN, UNDEAD, ELF, ALL };
   
     public static Dictionary<UnitType, int> UnitSize = new Dictionary<UnitType, int>() { { UnitType.FOOTMAN, 3 }, { UnitType.ARCHER, 2 } };
+    public static Dictionary<UnitType, float> DefendRadius = new Dictionary<UnitType, float>() { { UnitType.HERO, 5f }, { UnitType.KING, 5.5f } };
     public static Dictionary<UnitType, int> UnitSelfDestory = new Dictionary<UnitType, int>() { { UnitType.WALL, 30 }  };
     public static Dictionary<UnitType, int> UnitEleixer = new Dictionary<UnitType, int>()
     {

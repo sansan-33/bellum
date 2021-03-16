@@ -89,8 +89,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                     if (networkIdentity.hasAuthority) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
-            //if(targeter.tag.ToLower().Contains("king"))
-            //Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
+            if(targeter.tag.ToLower().Contains("footman"))
+            Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
 
             if (other.TryGetComponent<Health>(out Health health))
             {
