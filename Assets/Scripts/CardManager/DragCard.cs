@@ -33,8 +33,10 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     [SerializeField] GameObject unitPrefab;
     public GameObject EmptyCard;
     int i = 0;
+  
     private void Start()
     {
+        
         whereCanNotPlaceUnitImage = GameObject.FindGameObjectWithTag("WhereCanNotPlaceUnitImage");
         MiddleLine = GameObject.FindGameObjectWithTag("MiddleLine");
         mainCamera = Camera.main;
@@ -238,10 +240,10 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 Ray ray = mainCamera.ScreenPointToRay(pos);
 
                 if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
-           
-            if (hit.point.z > -70&&i>0)
+            //Debug.Log(Screen.height / 2);
+            if (pos.y > Screen.height / 16*7 && i>0)
             {
-                unitPreviewInstance.transform.position = new Vector3(hit.point.x, hit.point.y,-71);
+                unitPreviewInstance.transform.position = new Vector3(hit.point.x, hit.point.y, -68);
                 //Debug.Log(unitPreviewInstance.transform.position);
                 return;
             }
