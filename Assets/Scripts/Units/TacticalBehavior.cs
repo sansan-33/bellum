@@ -62,15 +62,16 @@ public class TacticalBehavior : MonoBehaviour
         teamColor = player.GetTeamColor();
         teamEnemyColor = player.GetTeamEnemyColor();
        
-        Unit.AuthorityOnUnitSpawned += TryReinforcePlayer;
-        Unit.AuthorityOnUnitDespawned += TryUpdateLeader;
+        //Make sure if enemy spawned, need to update TB formation for new target
+        Unit.ClientOnUnitSpawned += TryReinforce;
+        Unit.ClientOnUnitDespawned += TryReinforce;
         //LeaderScrollList.LeaderSelected += HandleLeaderSelected;
         GameOverHandler.ClientOnGameOver += HandleGameOver;
     }
     public void OnDestroy()
     {
-        Unit.AuthorityOnUnitSpawned -= TryReinforcePlayer;
-        Unit.AuthorityOnUnitDespawned -= TryUpdateLeader;
+        Unit.ClientOnUnitSpawned -= TryReinforce;
+        Unit.ClientOnUnitDespawned -= TryReinforce;
         GameOverHandler.ClientOnGameOver -= HandleGameOver;
         //LeaderScrollList.LeaderSelected -= HandleLeaderSelected;
     }
@@ -129,9 +130,10 @@ public class TacticalBehavior : MonoBehaviour
             }
             yield return new WaitForSeconds(2f);
             //Debug.Log($"player0: {GameObject.FindGameObjectsWithTag("Player0").Length} / Player2 : {GameObject.FindGameObjectsWithTag("Player1").Length}");
-            if ( GameObject.FindGameObjectsWithTag("Player0").Length > 0 && GameObject.FindGameObjectsWithTag("Player1").Length > 0 )
+            if ( GameObject.FindGameObjectsWithTag("Player0").Length > 0 && GameObject.FindGameObjectsWithTag("King0").Length > 0  && GameObject.FindGameObjectsWithTag("Player1").Length > 0 && GameObject.FindGameObjectsWithTag("King1").Length > 0)
             {
                 ISTAGGED = true;
+                yield return new WaitForSeconds(1f);
                 yield return TacticalFormation(PLAYERID, ENEMYID);
             }
 
@@ -295,17 +297,9 @@ public class TacticalBehavior : MonoBehaviour
         //Eleixier.speedUpEleixier(GetBehaviorSelectionType(playerid));
         SelectionChanged(playerid, leaderid);
     }
-    public void TryReinforcePlayer(Unit unit)
+    public void TryReinforce(Unit unit)
     {
-        //if (unit.tag == ENEMYTAG) { return; }
-        Debug.Log($"Auto Reinforce ..... tag {unit.tag} , name {unit.name}");
-        StartCoroutine(TacticalFormation(PLAYERID, ENEMYID));
-    }
-    public void TryUpdateLeader(Unit unit)
-    {
-        //if (unit.tag == ENEMYTAG) { return; }
-        if (! unit.isLeader) { return; }
-        //Debug.Log($"Auto TryUpdateLeader ..... {unit.name} {unit.unitType} is killed !!!");
+        //Make sure if enemy spawned, need to update TB formation for new target
         StartCoroutine(TacticalFormation(PLAYERID, ENEMYID));
     }
 

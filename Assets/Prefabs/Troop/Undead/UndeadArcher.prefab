@@ -52,7 +52,7 @@ MonoBehaviour:
   targeter: {fileID: 5752155033445569806}
   projectilePrefab: {fileID: 4320547883732887694, guid: 1f417d3b8d95c42019ae44358c2e75e7, type: 3}
   projectileSpawnPoint: {fileID: 2540618437846389826}
-  fireRange: 30
+  fireRange: 100
   rotationSpeed: 100
   repeatAttackDelay: 1
   attackAngle: 1
@@ -151,19 +151,19 @@ PrefabInstance:
       objectReference: {fileID: 2823272602263675945}
     - target: {fileID: 1140377478757733173, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Size.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1140377478757733173, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Size.y
-      value: 3.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1140377478757733173, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Size.z
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1140377478757733173, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Center.y
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1430969508781407035, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_AssetId
@@ -267,7 +267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4649854274305143336, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Speed
-      value: 9
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4649854274305143336, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Radius

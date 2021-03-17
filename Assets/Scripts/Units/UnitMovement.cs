@@ -96,7 +96,16 @@ public class UnitMovement : NetworkBehaviour
             agent.SetDestination(position);
         }
     }
-
+    [Command]
+    public void CmdRotate(Quaternion targetRotation)
+    {
+        ServerRotate(targetRotation);
+    }
+    [Server]
+    public void ServerRotate(Quaternion targetRotation)
+    {
+        agent.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, agent.angularSpeed * Time.deltaTime);
+    }
     [Server]
     private void ServerHandleGameOver()
     {

@@ -86,9 +86,9 @@ public class UnitFactory : NetworkBehaviour
         yield return new WaitForSeconds(waitTime);
         while (spawnCount > 0)
         {
-            //Vector3 spawnOffset = Random.insideUnitSphere * spawnMoveRange;
+            Vector3 spawnOffset = Random.insideUnitSphere * spawnMoveRange;
             //spawnOffset.y = spawnPosition.y;
-            GameObject unit = Instantiate(unitPrefab, spawnPosition, rotation) as GameObject;
+            GameObject unit = Instantiate(unitPrefab, spawnPosition + spawnOffset, rotation) as GameObject;
             NetworkServer.Spawn(unit, connectionToClient);
             if (unit.GetComponent<Unit>().unitType != UnitMeta.UnitType.WALL)
             {

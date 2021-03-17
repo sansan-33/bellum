@@ -24,7 +24,8 @@ namespace BehaviorDesigner.Runtime.Tactical
         public bool AttackPosition { get { return attackPosition; } set { attackPosition = value; } }
         public Vector3 AttackOffset { set { attackOffset = value; } }
         public Vector3 TargetOffset { set { targetOffset = value; } }
-        private string debugTarget = "footman";
+        private string debugTarget = "archer";
+        private bool ISDEBUG = true;
         /// <summary>
         /// Caches the component referneces.
         /// </summary>
@@ -89,12 +90,12 @@ namespace BehaviorDesigner.Runtime.Tactical
                  return false;
             }
             RaycastHit hit;
-            //if (transform.name.ToLower().Contains(debugTarget))
+            //if (transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
             //    Debug.Log($"CanSeeTarget ray transform {transform}/{transform.TransformPoint(attackOffset)} , targetTransform {targetTransform}/{targetTransform.TransformPoint(targetOffset) }");
 
             if (Physics.Linecast(transform.TransformPoint(attackOffset), targetTransform.TransformPoint(targetOffset), out hit, ignoreRaycast)) {
-                //if (transform.name.ToLower().Contains(debugTarget))
-                //    Debug.Log($"ray hit {hit}");
+                if (transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
+                    Debug.Log($"Physics Linecast {transform.name} hit {hit.transform.name} target {targetTransform.name}");
 
                 if (ContainsTransform(targetTransform, hit.transform)) {
                     return true; // return the target object meaning it is within sight
@@ -107,8 +108,8 @@ namespace BehaviorDesigner.Runtime.Tactical
                     return true;
                 }
             }
-            //if (transform.name.ToLower().Contains(debugTarget))
-            //    Debug.Log("CanSeeTarget end with all failed");
+            if (transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
+                Debug.Log("CanSeeTarget end with all failed");
             return false;
         }
      

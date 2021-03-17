@@ -65,7 +65,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 if (navMeshAgent.updateRotation) {
                     navMeshAgent.updateRotation = false;
                 }
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, navMeshAgent.angularSpeed * Time.deltaTime);
+                //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, navMeshAgent.angularSpeed * Time.deltaTime);
+                navMeshAgent.GetComponentInParent<Unit>().GetUnitMovement().CmdRotate(targetRotation);
                 if (Quaternion.Angle(transform.rotation, targetRotation) < AttackAgent.AttackAngle()) {
                     return true;
                 }

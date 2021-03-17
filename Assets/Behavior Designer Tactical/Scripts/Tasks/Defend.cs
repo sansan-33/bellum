@@ -70,12 +70,14 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 }
             } else {
                 // Loop through the possible target transforms and determine which transform is the closest to each agent.
-                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": searching target withing defend radius " + defendRadius.Value  + " .. " + HEARTBEAT++);
+                // tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": searching " + targetTransforms.Count + " target withing defend radius " + defendRadius.Value  + " .. " + HEARTBEAT++);
                 for (int i = targetTransforms.Count - 1; i > -1; --i) {
                     // The target has to be alive.
+                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": checking target " + targetTransforms[i].name  + ":" + i + "/" + targetTransforms.Count + " is alive ?"  + targets[i].IsAlive() + " .. " + HEARTBEAT++);
                     if (targets[i].IsAlive()) {
                         // Start attacking if the target gets too close.
                         if ((transform.position - targetTransforms[i].position).magnitude < defendRadius.Value) {
+                            tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": found target " + targetTransforms[i].name  + "  in distance " + (transform.position - targetTransforms[i].position).magnitude  + " .. " + HEARTBEAT++);
                             tacticalAgent.TargetDamagable = targets[i];
                             tacticalAgent.TargetTransform = targetTransforms[i];
                         }

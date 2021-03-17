@@ -27,7 +27,9 @@ public class Unit : NetworkBehaviour
     public static event Action<Unit> ServerOnUnitDespawned;
     public static event Action<Unit> AuthorityOnUnitSpawned;
     public static event Action<Unit> AuthorityOnUnitDespawned;
-   
+    public static event Action<Unit> ClientOnUnitSpawned;
+    public static event Action<Unit> ClientOnUnitDespawned;
+
     [SyncVar]
     [SerializeField] private int spawnPointIndex = 0;
 
@@ -105,9 +107,14 @@ public class Unit : NetworkBehaviour
     {
         AuthorityOnUnitSpawned?.Invoke(this);
     }
-
+    public override void OnStartClient()
+    {
+        ClientOnUnitSpawned?.Invoke(this);
+    }
     public override void OnStopClient()
     {
+        ClientOnUnitDespawned?.Invoke(this);
+
         if (!hasAuthority) { return; }
 
         AuthorityOnUnitDespawned?.Invoke(this);
