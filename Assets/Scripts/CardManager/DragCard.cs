@@ -10,7 +10,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 {
     public static GameObject objBeingDraged;
     [SerializeField] Card CardParent;
-    public Transform startParent;
+    private Transform startParent;
     private Transform itemDraggerParent;
     [SerializeField] private LayerMask floorMask = new LayerMask();
     public static Vector2 startPos;
@@ -35,15 +35,12 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
   
     private void Start()
     {
-        
         whereCanNotPlaceUnitImage = GameObject.FindGameObjectWithTag("WhereCanNotPlaceUnitImage");
         mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
-        //SpawnLine = GameObject.FindGameObjectWithTag("SpawnLine").transform;
         Input.simulateMouseWithTouches = false;
         objBeingDraged = gameObject;
-        itemDraggerParent = GameObject.FindGameObjectWithTag("CardDraggerParent").transform;
-        transform.SetParent(itemDraggerParent);
+       
     }
 
     #region DragFunctions
@@ -52,10 +49,11 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         //Debug.Log("OnBeginDrag");
         if (unitPreviewInstance != null) Destroy(unitPreviewInstance);
-        Debug.Log($"OnBeginDrag start.y {this.transform.position.y} cam.y {Camera.main.WorldToScreenPoint(this.transform.position).y}");
-
         startPos =  this.transform.position;
         lastXPos = Input.mousePosition.x;
+        //itemDraggerParent = GameObject.FindGameObjectWithTag("CardDraggerParent").transform;
+        //transform.SetParent(itemDraggerParent);
+        startParent = transform.parent;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -68,7 +66,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (Mathf.Abs(mouseOrTouchPosX - lastXPos) < deltaPos) { return; } // At least move deltaPos pixels
 
         direction = mouseOrTouchPosX > lastXPos ? "right" : "left";
-
+        //Debug.Log($"Drag Card mouseOrTouchPosY {mouseOrTouchPosY} startPos.y {startPos.y}");
         // Prevent drag card to the bottom.
         mouseOrTouchPosY = mouseOrTouchPosY < startPos.y ? startPos.y : mouseOrTouchPosY;
         mouseOrTouchPosX = mouseOrTouchPosY > startPos.y + deltaPos ? startPos.x : mouseOrTouchPosX;
@@ -207,7 +205,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             }
         } else { 
             CardParent.GetComponentInParent<Player>().dragCardMerge();
-            if (transform.parent == itemDraggerParent)
+            //if (transform.parent == itemDraggerParent)
+            if (transform.parent == startParent)
             {
                 transform.position = startPos;
                 transform.SetParent(startParent);
