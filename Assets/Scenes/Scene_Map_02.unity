@@ -9372,7 +9372,7 @@ GameObject:
   - component: {fileID: 554591396015268}
   - component: {fileID: 554591396015269}
   m_Layer: 0
-  m_Name: DeckCanvas
+  m_Name: CardCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
