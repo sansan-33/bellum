@@ -310,7 +310,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardParent: {fileID: 4590956966355113817}
-  startParent: {fileID: 0}
   floorMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -346,7 +345,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 70, y: 100, z: 2}
+  m_Size: {x: 40, y: 50, z: 40}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4627620217975223968
 Rigidbody:

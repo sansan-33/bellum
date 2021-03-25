@@ -9488,7 +9488,7 @@ MonoBehaviour:
   singleHandStart: {fileID: 904365598}
   screenOffset: 0
   cardOffset: 110
-  cardMoveSpeed: 10
+  cardMoveSpeed: 1000
   MAXCARDSTAR: 3
 --- !u!222 &1229881576577883108
 CanvasRenderer:
@@ -9549,7 +9549,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardParent: {fileID: 9152783520384297062}
-  startParent: {fileID: 0}
   floorMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -9575,7 +9574,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardParent: {fileID: 9152783520986115906}
-  startParent: {fileID: 0}
   floorMask:
     serializedVersion: 2
     m_Bits: 4096
@@ -10951,7 +10949,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardParent: {fileID: 0}
-  startParent: {fileID: 0}
   floorMask:
     serializedVersion: 2
     m_Bits: 4096

@@ -8,10 +8,7 @@ using UnityEngine.UI;
 
 public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    public static GameObject objBeingDraged;
     [SerializeField] Card CardParent;
-    private Transform startParent;
-    private Transform itemDraggerParent;
     [SerializeField] private LayerMask floorMask = new LayerMask();
     public static Vector2 startPos;
     public string direction;
@@ -39,9 +36,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
         Input.simulateMouseWithTouches = false;
-        objBeingDraged = gameObject;
-       
-    }
+     }
 
     #region DragFunctions
 
@@ -49,12 +44,9 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         //Debug.Log("OnBeginDrag");
         if (unitPreviewInstance != null) Destroy(unitPreviewInstance);
-        startPos =  this.transform.position;
+        startPos = this.transform.position;
         lastXPos = Input.mousePosition.x;
-        //itemDraggerParent = GameObject.FindGameObjectWithTag("CardDraggerParent").transform;
-        //transform.SetParent(itemDraggerParent);
-        startParent = transform.parent;
-    }
+    }         
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -98,10 +90,6 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         {
             other = hitColliders[i++];
             
-            //Debug.Log($"unitPreviewInstance{unitPreviewInstance}");
-            EmptyCard.GetComponentInChildren<Image>().color = Color.white;
-            if (whereCanNotPlaceUnitImage == null) { whereCanNotPlaceUnitImage = GameObject.FindGameObjectWithTag("WhereCanNotPlaceUnitImage"); }
-            whereCanNotPlaceUnitImage.GetComponent<RectTransform>().localPosition = new Vector3(0, 2000, 0);
             if (unitPreviewInstance != null) { Destroy(unitPreviewInstance); }
 
             if (other.TryGetComponent<Card>(out Card hittedCard))
@@ -124,8 +112,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 }
                 if (isMove)
                 {
-                    CardParent.GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex, direction);
                     //Debug.Log($"Shift Card  {dragCardPlayerHandIndex } to  {hittedCard.cardPlayerHandIndex } / direction {direction} ");
+                    CardParent.GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex, direction);
                     break;
                 }
             }
@@ -170,9 +158,6 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnEndDrag");
-        objBeingDraged = null;
-
         if (unitPreviewInstance != null)
         {
             Destroy(unitPreviewInstance);
@@ -186,11 +171,10 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
                 if (GetComponent<Card>().eleixers.eleixer < uniteleixer)
                 {
-                    Debug.Log("hit");
+                    //Debug.Log("hit");
                     //Destroy(unitPreviewInstance);
                     EmptyCard.GetComponentInChildren<Image>().color = Color.white;
                     transform.position = startPos;
-                  //  transform.SetParent(startParent);
                     return;
                 }
                 
@@ -205,12 +189,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             }
         } else { 
             CardParent.GetComponentInParent<Player>().dragCardMerge();
-            //if (transform.parent == itemDraggerParent)
-            if (transform.parent == startParent)
-            {
-                transform.position = startPos;
-                transform.SetParent(startParent);
-            }
+            // Set the dragged card position right under the last hitted card slot again, did it in moveOneCard, need to set it again otheriwse it will stop in the middle.
+            transform.position = CardParent.GetComponentInParent<CardSlot>().transform.position;
         }
     }
         //Draw the Box Overlap as a gizmo to show where it currently is testing. Click the Gizmos button to see this

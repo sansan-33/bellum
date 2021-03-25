@@ -22,14 +22,15 @@ public class Player : MonoBehaviour
     public float screenOffset;
     [Header("Settings")]
     [SerializeField] float cardOffset = 150f; // NO Effect to change here, need to set it in inspector
-    [SerializeField] float cardMoveSpeed = 10;
+    [SerializeField] float cardMoveSpeed = 10;// NO Effect to change here, need to set it in inspector
     [SerializeField] int MAXCARDSTAR = 2;
    
     [Header("Debug")]
     [SerializeField] List<List<Card>> playerHand = new List<List<Card>>();
     int totalCardSlot = 0;
-   
-    private  List<CardSlot> cardSlotlist = new List<CardSlot>();
+    Vector3 v360 = new Vector3(0, 0, 180);
+
+    private List<CardSlot> cardSlotlist = new List<CardSlot>();
    
     void Awake()
     {
@@ -68,6 +69,7 @@ public class Player : MonoBehaviour
                 playerHand[0][cardMovingindex ].cardPlayerHandIndex++;
                 playerHand[0][cardMovingindex-1].cardPlayerHandIndex--;
                 moveOneCard(cardMovingindex);
+                moveOneCard(cardMovingindex - 1);
             }
             else
             {
@@ -80,14 +82,15 @@ public class Player : MonoBehaviour
                 playerHand[0][cardMovingindex].cardPlayerHandIndex--;
                 playerHand[0][cardMovingindex + 1].cardPlayerHandIndex++;
                 moveOneCard(cardMovingindex);
-
+                moveOneCard(cardMovingindex+1);
             }
         }
     }
     public void RemoveLastCard(int index)
     {
-        //moveCard(index, true);
-        
+        // Need to shift every card if merged 
+        moveCard(index, true);
+        /*
         if (index == (playerHand[0].Count - 1) && (playerHand[0].Count-1) == 6)
         {
             Debug.Log($"index last {index}, shift card ");
@@ -96,9 +99,9 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log($"index not last {index}, not shift card");
-            moveCard(index,false);
+            moveCard(index, true);
         }
-        
+        */
         
     }
     public int GetHandTotal()
@@ -173,25 +176,16 @@ public class Player : MonoBehaviour
     }
     IEnumerator MoveCardTo(Transform cardTransform, Vector3 targetPosition, Card card = null)
     {
-        /*
-        Vector3 v360 = new Vector3(0, 0, 180);
-        while ((cardTransform.position - targetPosition).sqrMagnitude > 0.00000001f)
+        // break if card is merged
+        while (cardTransform != null && (cardTransform.position - targetPosition).sqrMagnitude > 0.00000001f)
         {
             cardTransform.position = Vector3.MoveTowards(cardTransform.position, targetPosition, Time.deltaTime * cardMoveSpeed);
             cardTransform.localEulerAngles = Vector3.Lerp(cardTransform.localEulerAngles, v360, Time.deltaTime * 5);
             yield return null;
         }
-        cardTransform.position = targetPosition;
-        cardTransform.localEulerAngles = Vector3.zero;
-
-        Flip Card
-        card?.Flip(index);
-        */
-
-        //IF Card is not merged
-        if (card != null)
-        {
+        if (cardTransform != null) { 
             cardTransform.position = targetPosition;
+            cardTransform.localEulerAngles = Vector3.zero;
         }
         yield return new WaitForSeconds(0.5f);
     }
@@ -200,8 +194,8 @@ public class Player : MonoBehaviour
     {
         if (playerHand[0].Count > 0)
         {
-            Debug.Log($"All cards in hand {PrintAllCards(playerHand[0])}");
-            Debug.Log($"Remove At {index}, card {playerHand[0][index].cardFace.numbers} {playerHand[0][index].cardFace.star}  ");
+            //Debug.Log($"All cards in hand {PrintAllCards(playerHand[0])}");
+            //Debug.Log($"Remove At {index}, card {playerHand[0][index].cardFace.numbers} {playerHand[0][index].cardFace.star}  ");
             playerHand[0][index].destroy();
             playerHand[0].RemoveAt(index);
         }
@@ -211,7 +205,7 @@ public class Player : MonoBehaviour
         
         foreach (Card card in playerHand[0])
         {
-            Debug.Log($"Shift Card {card.cardFace.numbers} {card.cardFace.star}==> from {card.cardPlayerHandIndex} to {i}  ");
+            //Debug.Log($"Shift Card {card.cardFace.numbers} {card.cardFace.star}==> from {card.cardPlayerHandIndex} to {i}  ");
             card.cardPlayerHandIndex = i;
             card.transform.SetParent(cardSlotlist[i].transform);
             card.transform.position = cardSlotlist[i].transform.position;
@@ -224,5 +218,5 @@ public class Player : MonoBehaviour
         playerHand[0][index].transform.SetParent(cardSlotlist[index].transform);
         playerHand[0][index].transform.position = cardSlotlist[index].transform.position;
     }
-    
+
 }
