@@ -17,7 +17,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     [SerializeField] private LayerMask layerMask = new LayerMask();
     private GameObject whereCanNotPlaceUnitImage;
     private bool m_Started = true;
-    private int dragRange = 40;
+    private int dragRange = 60;
     private float lastXPos = 0;
     private float deltaPos = 2f; // At least move 1 pixels
     private float spawnLinePos = 120f; // At least move 1 pixels, difference between card position.y and mouse position.y
@@ -113,6 +113,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 }
                 if (isMove)
                 {
+                    hittedDict.Clear();
                     //Debug.Log($"Shift Card  {dragCardPlayerHandIndex } to  {hittedCard.cardPlayerHandIndex } / direction {direction} ");
                     CardParent.GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex, direction);
                     //Prevent moving 2 cards in  one hitted, need to wait 0.5 sec for next move
