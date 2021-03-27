@@ -7,22 +7,28 @@ using UnityEngine.UI;
 
 public class KingSP : MonoBehaviour
 {
-     private TacticalBehavior TB;
     [SerializeField] private LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject attackPoint;
+
+    public int attackRange = 100;
     public int minAttackRange;
+    public int SPAmount = 0;
+    public float SPCost = 10;
+
     private Image SPImage;
     private TMP_Text SPText;
-    public float SPCost =10;
     private Button SPButton;
-    public int SPAmount = 0;
+   
     private bool IsSuperAttack = false;
-    GameObject hitCollider;
-    RTSPlayer player;
-    Transform searchPoint;
-    List<GameObject> targetList = new List<GameObject>();
-    List<float> distanceList = new List<float>();
-    public int attackRange = 100;
+
+    private GameObject hitCollider;
+    private Transform searchPoint;
+    private RTSPlayer player;
+    private TacticalBehavior TB;
+
+    private List<GameObject> targetList = new List<GameObject>();
+    private List<float> distanceList = new List<float>();
+    
     // Start is called before the first frame update
     void Start()
     {
