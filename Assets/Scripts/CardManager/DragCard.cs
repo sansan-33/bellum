@@ -15,7 +15,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public bool directionChosen;
     [SerializeField] private GameObject DragPoint;
     [SerializeField] private LayerMask layerMask = new LayerMask();
-    private GameObject whereCanNotPlaceUnitImage;
+ 
     private bool m_Started = true;
     private int dragRange = 60;
     private float lastXPos = 0;
@@ -32,7 +32,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private bool IS_HITTED_TIMER = false;
     private void Start()
     {
-        whereCanNotPlaceUnitImage = GameObject.FindGameObjectWithTag("WhereCanNotPlaceUnitImage");
+       
         mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
         Input.simulateMouseWithTouches = false;
@@ -128,10 +128,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     private void MoveUnitInstance()
     {
-        if (whereCanNotPlaceUnitImage == null) { whereCanNotPlaceUnitImage = GameObject.FindGameObjectWithTag("WhereCanNotPlaceUnitImage"); }
-        //whereCanNotPlaceUnitImage.SetActive(true);
-        whereCanNotPlaceUnitImage.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, (Screen.height / 8) * 5);
-        whereCanNotPlaceUnitImage.GetComponent<RectTransform>().localPosition = new Vector3(0, (Screen.height / 8)*2, 0);
+        
         if (localFactory == null)
         {
             foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
@@ -167,7 +164,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (unitPreviewInstance != null)
         {
             Destroy(unitPreviewInstance);
-            whereCanNotPlaceUnitImage.GetComponent<RectTransform>().localPosition = new Vector3(0, 2000, 0);
+           
             Ray ray = mainCamera.ScreenPointToRay(eventData.position);
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask))
@@ -215,31 +212,25 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
         private void Update()
         {
-      
             try
             {
                 Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
 
                 Ray ray = mainCamera.ScreenPointToRay(pos);
-
-                if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
-            //Debug.Log(Screen.height / 2);
+            //if the floor layer is not floor it will not work!!!
+            if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
+           
             if (pos.y > Screen.height / 16*7 && i>0)
             {
                 unitPreviewInstance.transform.position = new Vector3(hit.point.x, hit.point.y, -68);
-                //Debug.Log(unitPreviewInstance.transform.position);
                 return;
             }
-            else { unitPreviewInstance.transform.position = hit.point; }
-            //Debug.Log("suck");
-            
-            i++;
-                //Debug.Log(hit.point);
-           
+            else {  unitPreviewInstance.transform.position = hit.point; }
+            i++; 
             }
             catch (Exception) { }
         
-        //whereCanNotPlaceUnitImage.SetActive(false);
+        
     }
     private float MouseSpeed(float mouseXPosition, float lastXPos)
     {
