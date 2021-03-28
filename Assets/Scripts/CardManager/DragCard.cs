@@ -26,14 +26,15 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private UnitFactory localFactory;
     private CardDealer dealManagers;
     Camera mainCamera;
+    private Transform middle;
     [SerializeField] GameObject unitPrefab;
     public GameObject EmptyCard;
     int i = 0;
     private bool IS_HITTED_TIMER = false;
     private void Start()
     {
-       
-        mainCamera = Camera.main;
+        middle = GameObject.FindGameObjectWithTag("Middle").transform;
+         mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
         Input.simulateMouseWithTouches = false;
      }
@@ -219,10 +220,9 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 Ray ray = mainCamera.ScreenPointToRay(pos);
             //if the floor layer is not floor it will not work!!!
             if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
-           
-            if (pos.y > Screen.height / 16*7 && i>0)
+          
+            if (pos.y > middle.position.y)
             {
-                unitPreviewInstance.transform.position = new Vector3(hit.point.x, hit.point.y, -68);
                 return;
             }
             else {  unitPreviewInstance.transform.position = hit.point; }
