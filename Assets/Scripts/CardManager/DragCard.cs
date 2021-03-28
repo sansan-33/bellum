@@ -170,7 +170,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        playerGround.resetLayer();
+       
         forbiddenArea.SetActive(false);
         if (unitPreviewInstance != null)
         {
@@ -196,6 +196,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 GetComponent<Card>().DropUnit(unitPreviewInstance.transform.position);
                 this.GetComponentInParent<Player>().moveCard(GetComponent<Card>().cardPlayerHandIndex);
                 dealManagers.GetComponent<CardDealer>().Hit();
+                playerGround.resetLayer();
             }
             if(EmptyCard != null)
             {
@@ -206,6 +207,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             // Set the dragged card position right under the last hitted card slot again, did it in moveOneCard, need to set it again otheriwse it will stop in the middle.
             transform.position = CardParent.GetComponentInParent<CardSlot>().transform.position;
         }
+
     }
         //Draw the Box Overlap as a gizmo to show where it currently is testing. Click the Gizmos button to see this
         void OnDrawGizmos()
