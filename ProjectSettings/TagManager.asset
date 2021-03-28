@@ -47,6 +47,10 @@ TagManager:
   - Shield
   - SpDefend
   - Middle
+  - PointKing0
+  - PointKing1
+  - TestAgentGroup
+  - ForbiddenArea
   layers:
   - Default
   - TransparentFX

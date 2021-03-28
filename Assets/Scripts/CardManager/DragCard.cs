@@ -15,7 +15,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public bool directionChosen;
     [SerializeField] private GameObject DragPoint;
     [SerializeField] private LayerMask layerMask = new LayerMask();
- 
+    private GameObject forbiddenArea;
     private bool m_Started = true;
     private int dragRange = 60;
     private float lastXPos = 0;
@@ -27,14 +27,18 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private CardDealer dealManagers;
     Camera mainCamera;
     private Transform middle;
+    
     [SerializeField] GameObject unitPrefab;
     public GameObject EmptyCard;
     int i = 0;
     private bool IS_HITTED_TIMER = false;
     private void Start()
     {
+        forbiddenArea = GameObject.FindGameObjectWithTag("ForbiddenArea");
+        
+        
         middle = GameObject.FindGameObjectWithTag("Middle").transform;
-         mainCamera = Camera.main;
+        mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
         Input.simulateMouseWithTouches = false;
      }
@@ -129,7 +133,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     private void MoveUnitInstance()
     {
-        
+        forbiddenArea.transform.localScale = GetComponentInParent<Player>().forbiddenAreaScale;
+        forbiddenArea.SetActive(true);
         if (localFactory == null)
         {
             foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
@@ -162,6 +167,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        forbiddenArea.SetActive(false);
         if (unitPreviewInstance != null)
         {
             Destroy(unitPreviewInstance);
