@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public float shieldHealth = 0;
     [SerializeField] private ParticleSystem ShieldEffect;
+    public float shieldHealth = 0;
     void Start()
     {
         

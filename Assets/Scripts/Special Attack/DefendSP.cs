@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class DefendSP : MonoBehaviour
 {
-    // Start is called before the first frame update
-    // private ArrayList<GameObject> ShieldList = new ArrayList<GameObject>();
-   
     public int shieldHealths = 100;
     private Button SPButton;
     void Start()
@@ -28,7 +25,6 @@ public class DefendSP : MonoBehaviour
                 shield.GetComponent<Shield>().shieldHealth = shieldHealths;
 
             }
-            
         }
     }
     // Update is called once per frame
