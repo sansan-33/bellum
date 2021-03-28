@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerGround : MonoBehaviour
 {
-    [SerializeField] private GameObject playerHalf;
+    
     [SerializeField] private GameObject enemyHalf;
+    [SerializeField] private GameObject playerHalf;
     private Transform[] childTransform;
     private RTSPlayer player;
     // Start is called before the first frame update
@@ -19,9 +20,9 @@ public class PlayerGround : MonoBehaviour
     {
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
         {
-           
-            playerHalf.layer = LayerMask.NameToLayer("Floor");
-            childTransform = playerHalf.GetComponentsInChildren<Transform>();
+
+            enemyHalf.layer = LayerMask.NameToLayer("Floor");
+            childTransform = enemyHalf.GetComponentsInChildren<Transform>();
             foreach (Transform child in childTransform)
             {
                 child.gameObject.layer = LayerMask.NameToLayer("Floor");
@@ -29,9 +30,9 @@ public class PlayerGround : MonoBehaviour
         }
         else // Multi player seneriao
         {
-            if(playerID == 0)
+            if (playerID == 0)
             {
-                Debug.Log($"Id - {playerID}");
+
                 enemyHalf.layer = LayerMask.NameToLayer("Floor");
                 childTransform = enemyHalf.GetComponentsInChildren<Transform>();
                 foreach (Transform child in childTransform)
@@ -41,14 +42,14 @@ public class PlayerGround : MonoBehaviour
             }
             else
             {
-               Debug.Log($"Id - {playerID}");
                 playerHalf.layer = LayerMask.NameToLayer("Floor");
-               childTransform = playerHalf.GetComponentsInChildren<Transform>();
+                childTransform = playerHalf.GetComponentsInChildren<Transform>();
                 foreach (Transform child in childTransform)
                 {
                     child.gameObject.layer = LayerMask.NameToLayer("Floor");
                 }
-                
+
+
             }
            
         }
