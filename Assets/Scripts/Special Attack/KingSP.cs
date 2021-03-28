@@ -9,16 +9,14 @@ public class KingSP : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject attackPoint;
+    [SerializeField] private SpCost spCost;
 
     public int attackRange = 100;
     public int minAttackRange;
-    public int SPAmount = 0;
     public float SPCost = 10;
 
-    private Image SPImage;
-    private TMP_Text SPText;
     private Button SPButton;
-   
+
     private bool IsSuperAttack = false;
 
     private GameObject hitCollider;
@@ -34,8 +32,6 @@ public class KingSP : MonoBehaviour
     {
         searchPoint = attackPoint.transform;
         minAttackRange = (int)(transform.localScale.x * attackRange / 2);
-        SPImage = GameObject.FindGameObjectWithTag("SP Bar").GetComponent<Image>();
-        SPText = GameObject.FindGameObjectWithTag("SP Text").GetComponent<TextMeshProUGUI>();
         SPButton = GameObject.FindGameObjectWithTag("SPButton").GetComponent<Button>();
         SPButton.onClick.RemoveAllListeners();
         SPButton.onClick.AddListener(FindAttackTargetInDistance);
@@ -46,9 +42,10 @@ public class KingSP : MonoBehaviour
     {
         if(attackPoint == null) { return; }
         //if(SPAmount < SPCost) {return;}
-        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        SPAmount -= (int)SPCost;
+        spCost.SPAmount -= (int)SPCost;
 
+        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+       
         GameObject closestTarget = null;
         bool haveTarget = true;
         var distance = float.MaxValue;
@@ -122,13 +119,7 @@ public class KingSP : MonoBehaviour
             Gizmos.DrawWireCube(attackPoint.transform.position, transform.localScale * attackRange);
         }
     }
-    public void UpdateSPAmount()
-    {
-        SPAmount++;
-        SPText.text = (string)SPAmount.ToString();
-        SPImage.fillAmount = (float)SPAmount / SPCost;
-        
-    }
+    
     // Update is called once per frame
     void Update()
     {

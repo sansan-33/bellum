@@ -19,6 +19,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     [SerializeField] public LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject specialEffectPrefab  = null;
     [SerializeField] private bool IsAreaOfEffect = false;
+    private SpCost spCost;
     private float calculatedDamageToDeal ;
     private float originalDamage;
     public float DashDamage = 0;
@@ -43,6 +44,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         if (NetworkClient.connection.identity == null) { return; }
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         calculatedDamageToDeal = damageToDeal;
+        spCost = FindObjectOfType<SpCost>();
         strengthWeakness = GameObject.FindGameObjectWithTag("CombatSystem").GetComponent<StrengthWeakness>();
         damageTextObjectPool = GameObject.FindGameObjectWithTag("DamageTextObjectPool").GetComponent<SimpleObjectPool>();
         //Use this to ensure that the Gizmos are being drawn when in Play Mode.
@@ -158,7 +160,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
             RpcpowerUpAfterKill(this.transform.gameObject);
             if(unit.unitType == UnitMeta.UnitType.KING)
             {
-               GetComponent<KingSP>().UpdateSPAmount();
+               spCost.UpdateSPAmount();
             }
            
         }

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class DefendSP : MonoBehaviour
 {
+    [SerializeField] private SpCost spCost;
+
+    public float SPCost = 10;
     public int shieldHealths = 100;
     private Button SPButton;
     void Start()
@@ -16,6 +19,8 @@ public class DefendSP : MonoBehaviour
 
     public void OnPointerDown()
     {
+        //if(SPAmount < SPCost) {return;}
+        spCost.SPAmount -= (int)SPCost;
         GameObject[] shieldList;
         shieldList = GameObject.FindGameObjectsWithTag("Shield");
         foreach (GameObject shield in shieldList)
