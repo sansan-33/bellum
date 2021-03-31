@@ -12018,8 +12018,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ac0f957e6ab437a9e3c4a826c5a898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHalf: {fileID: 267309702}
+  playerMesh: {fileID: 1102935932}
+  enemyMesh: {fileID: 679051058}
   enemyHalf: {fileID: 206325532}
+  playerHalf: {fileID: 267309702}
 --- !u!1 &235764213
 GameObject:
   m_ObjectHideFlags: 0
@@ -33879,7 +33881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &679051059
 Transform:
   m_ObjectHideFlags: 0
@@ -55558,7 +55560,6 @@ MonoBehaviour:
   cardOffset: 110
   cardMoveSpeed: 5000
   MAXCARDSTAR: 3
-  forbiddenAreaScale: {x: 0, y: 0, z: 0}
 --- !u!1001 &1075346700
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57032,7 +57033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1102935933
 Transform:
   m_ObjectHideFlags: 0

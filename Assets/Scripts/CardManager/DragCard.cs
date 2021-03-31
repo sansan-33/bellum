@@ -16,7 +16,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public bool directionChosen;
     [SerializeField] private GameObject DragPoint;
     [SerializeField] private LayerMask layerMask = new LayerMask();
-    private GameObject forbiddenArea;
+    //private MeshRenderer forbiddenArea;
     private bool m_Started = true;
     private int dragRange = 60;
     private float lastXPos = 0;
@@ -35,7 +35,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private bool IS_HITTED_TIMER = false;
     private void Start()
     {
-        forbiddenArea = GetComponentInParent<Player>().forbiddenArea;
+        
 
         RTSplayer = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerGround = GameObject.FindGameObjectWithTag("FightGround").GetComponent<PlayerGround>();
@@ -135,9 +135,10 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     private void MoveUnitInstance()
     {
+        //forbiddenArea = GetComponentInParent<Player>().forbiddenArea;
         playerGround.sortLayer(RTSplayer.GetPlayerID());
-        forbiddenArea.transform.localScale = GetComponentInParent<Player>().forbiddenAreaScale;
-        forbiddenArea.SetActive(true);
+        //forbiddenArea.transform.localScale = GetComponentInParent<Player>().forbiddenAreaScale;
+        //forbiddenArea.GetComponent<MeshRenderer>().enabled = true;
         if (localFactory == null)
         {
             foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
@@ -170,16 +171,18 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-       
-        forbiddenArea.SetActive(false);
+      
+        //forbiddenArea.GetComponent<MeshRenderer>().enabled = false;
         if (unitPreviewInstance != null)
         {
+           
             Destroy(unitPreviewInstance);
            
             Ray ray = mainCamera.ScreenPointToRay(eventData.position);
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask))
             {
+                playerGround.resetLayer();
                 int type = (int)GetComponent<Card>().cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
                 int uniteleixer = 1; ;
                 if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
@@ -196,7 +199,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 GetComponent<Card>().DropUnit(unitPreviewInstance.transform.position);
                 this.GetComponentInParent<Player>().moveCard(GetComponent<Card>().cardPlayerHandIndex);
                 dealManagers.GetComponent<CardDealer>().Hit();
-                playerGround.resetLayer();
+                
             }
             if(EmptyCard != null)
             {

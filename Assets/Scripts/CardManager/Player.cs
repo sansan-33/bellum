@@ -29,16 +29,18 @@ public class Player : MonoBehaviour
     [SerializeField] List<List<Card>> playerHand = new List<List<Card>>();
     int totalCardSlot = 0;
     Vector3 v360 = new Vector3(0, 0, 180);
-    public Vector3 forbiddenAreaScale;
-    public GameObject forbiddenArea;
+    //public Vector3 forbiddenAreaScale;
+    //public MeshRenderer forbiddenArea;
     private List<CardSlot> cardSlotlist = new List<CardSlot>();
    
     void Awake()
     {
-        forbiddenArea = GameObject.FindGameObjectWithTag("ForbiddenArea");
-        forbiddenAreaScale = forbiddenArea.transform.localScale;
-        forbiddenArea.transform.localScale = new Vector3(0, forbiddenAreaScale.y, forbiddenAreaScale.z);
-        Reset();
+        //forbiddenArea = GameObject.FindGameObjectWithTag("ForbiddenAreas").GetComponent<MeshRenderer>();
+        //forbiddenAreaScale = forbiddenArea.transform.localScale;
+        //forbiddenArea.transform.localScale = new Vector3(0, forbiddenAreaScale.y, forbiddenAreaScale.z);
+       // forbiddenArea.enabled = false;
+        //Debug.Log(forbiddenArea);
+        Reset(); 
     }
 
     public void Reset()
