@@ -88,7 +88,7 @@ public class Card : MonoBehaviour
                 }
             }
         }
-        localFactory.CmdDropUnit(0.1f, playerID, SpwanPoint, (UnitMeta.Race)playerID, (UnitMeta.UnitType)type, ((UnitMeta.UnitType) type).ToString(), unitsize,true, (int)this.cardFace.star + 1, teamColor, Quaternion.identity);
+        localFactory.CmdDropUnit(0.1f, playerID, SpwanPoint, playerRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType) type).ToString(), unitsize,true, (int)this.cardFace.star + 1, teamColor, Quaternion.identity);
     }
     public void destroy()
     {
