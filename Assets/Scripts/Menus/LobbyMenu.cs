@@ -29,13 +29,12 @@ public class LobbyMenu : MonoBehaviour
     private void HandleClientConnected()
     {
         lobbyUI.SetActive(true);
-        NetworkClient.connection.identity.GetComponent<RTSPlayer>().CmdSetUserID(StaticClass.UserID);
     }
 
     private void ClientHandleInfoUpdated()
     {
         List<RTSPlayer> players = ((RTSNetworkManager)NetworkManager.singleton).Players;
-      
+        NetworkClient.connection.identity.GetComponent<RTSPlayer>().CmdSetUserID(StaticClass.UserID);
         for (int i = 0; i < players.Count; i++)
         {
             playerNameTexts[i].text = players[i].GetDisplayName();
