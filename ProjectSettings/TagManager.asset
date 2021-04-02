@@ -40,6 +40,18 @@ TagManager:
   - SP Bar
   - SP Text
   - DamageTextObjectPool
+  - Midfielder
+  - Forward
+  - Defender
+  - Undefined
+  - Shield
+  - SpDefend
+  - Middle
+  - PointKing0
+  - PointKing1
+  - TestAgentGroup
+  - ForbiddenArea
+  - FightGround
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,7 +16,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public bool directionChosen;
     [SerializeField] private GameObject DragPoint;
     [SerializeField] private LayerMask layerMask = new LayerMask();
-    private GameObject whereCanNotPlaceUnitImage;
+    //private MeshRenderer forbiddenArea;
     private bool m_Started = true;
     private int dragRange = 60;
     private float lastXPos = 0;
@@ -25,14 +26,20 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public GameObject unitPreviewInstance;
     private UnitFactory localFactory;
     private CardDealer dealManagers;
+    private RTSPlayer RTSplayer;
     Camera mainCamera;
+   private PlayerGround playerGround;
     [SerializeField] GameObject unitPrefab;
     public GameObject EmptyCard;
     int i = 0;
     private bool IS_HITTED_TIMER = false;
     private void Start()
     {
-        whereCanNotPlaceUnitImage = GameObject.FindGameObjectWithTag("WhereCanNotPlaceUnitImage");
+        
+
+        RTSplayer = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        playerGround = GameObject.FindGameObjectWithTag("FightGround").GetComponent<PlayerGround>();
+       
         mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
         Input.simulateMouseWithTouches = false;
@@ -128,10 +135,10 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     private void MoveUnitInstance()
     {
-        if (whereCanNotPlaceUnitImage == null) { whereCanNotPlaceUnitImage = GameObject.FindGameObjectWithTag("WhereCanNotPlaceUnitImage"); }
-        //whereCanNotPlaceUnitImage.SetActive(true);
-        whereCanNotPlaceUnitImage.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, (Screen.height / 8) * 5);
-        whereCanNotPlaceUnitImage.GetComponent<RectTransform>().localPosition = new Vector3(0, (Screen.height / 8)*2, 0);
+        //forbiddenArea = GetComponentInParent<Player>().forbiddenArea;
+        playerGround.sortLayer(RTSplayer.GetPlayerID());
+        //forbiddenArea.transform.localScale = GetComponentInParent<Player>().forbiddenAreaScale;
+        //forbiddenArea.GetComponent<MeshRenderer>().enabled = true;
         if (localFactory == null)
         {
             foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
@@ -164,14 +171,18 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+      
+        //forbiddenArea.GetComponent<MeshRenderer>().enabled = false;
         if (unitPreviewInstance != null)
         {
+           
             Destroy(unitPreviewInstance);
-            whereCanNotPlaceUnitImage.GetComponent<RectTransform>().localPosition = new Vector3(0, 2000, 0);
+           
             Ray ray = mainCamera.ScreenPointToRay(eventData.position);
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask))
             {
+                playerGround.resetLayer();
                 int type = (int)GetComponent<Card>().cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
                 int uniteleixer = 1; ;
                 if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
@@ -188,6 +199,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 GetComponent<Card>().DropUnit(unitPreviewInstance.transform.position);
                 this.GetComponentInParent<Player>().moveCard(GetComponent<Card>().cardPlayerHandIndex);
                 dealManagers.GetComponent<CardDealer>().Hit();
+                
             }
             if(EmptyCard != null)
             {
@@ -198,6 +210,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             // Set the dragged card position right under the last hitted card slot again, did it in moveOneCard, need to set it again otheriwse it will stop in the middle.
             transform.position = CardParent.GetComponentInParent<CardSlot>().transform.position;
         }
+
     }
         //Draw the Box Overlap as a gizmo to show where it currently is testing. Click the Gizmos button to see this
         void OnDrawGizmos()
@@ -215,31 +228,20 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
         private void Update()
         {
-      
             try
             {
                 Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
 
                 Ray ray = mainCamera.ScreenPointToRay(pos);
-
-                if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
-            //Debug.Log(Screen.height / 2);
-            if (pos.y > Screen.height / 16*7 && i>0)
-            {
-                unitPreviewInstance.transform.position = new Vector3(hit.point.x, hit.point.y, -68);
-                //Debug.Log(unitPreviewInstance.transform.position);
-                return;
-            }
-            else { unitPreviewInstance.transform.position = hit.point; }
-            //Debug.Log("suck");
-            
-            i++;
-                //Debug.Log(hit.point);
-           
+            //if the floor layer is not floor it will not work!!!
+            if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
+   
+              unitPreviewInstance.transform.position = hit.point; 
+        
             }
             catch (Exception) { }
         
-        //whereCanNotPlaceUnitImage.SetActive(false);
+        
     }
     private float MouseSpeed(float mouseXPosition, float lastXPos)
     {
