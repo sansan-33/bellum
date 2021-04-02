@@ -28,21 +28,21 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private CardDealer dealManagers;
     private RTSPlayer RTSplayer;
     Camera mainCamera;
-   private PlayerGround playerGround;
+    private PlayerGround playerGround;
     [SerializeField] GameObject unitPrefab;
     public GameObject EmptyCard;
     int i = 0;
     private bool IS_HITTED_TIMER = false;
+    UnitMeta.Race playerRace;
     private void Start()
     {
-        
-
         RTSplayer = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerGround = GameObject.FindGameObjectWithTag("FightGround").GetComponent<PlayerGround>();
        
         mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
         Input.simulateMouseWithTouches = false;
+        playerRace = (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), RTSplayer.GetRace());
      }
 
     #region DragFunctions
@@ -156,7 +156,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
         //Debug.Log($"MoveUnitInstance {mousePos}");
 
-        GameObject UnitPrefab = localFactory.GetUnitPrefab((UnitMeta.Race)GetComponent<Card>().playerID, (UnitMeta.UnitType)type);
+        GameObject UnitPrefab = localFactory.GetUnitPrefab(playerRace, (UnitMeta.UnitType)type);
         if (unitPreviewInstance == null)
         {
             unitPreviewInstance = Instantiate(unitPrefab);

@@ -36,7 +36,7 @@ public class TeamManager : MonoBehaviour
     {
         yield return GetTeamInfo(userid);
         TeamCardButton teamCardBtn;
-        UnitMeta.UnitKey[] teamMembers = new UnitMeta.UnitKey [NOOFCARDSLOT];
+        //UnitMeta.UnitKey[] teamMembers = new UnitMeta.UnitKey [NOOFCARDSLOT];
         UserCard[] userCardArray = new UserCard[NOOFCARDSLOT];
         for (int i = 0; i < NOOFCARDSLOT; i++)
             TeamCardSlot.transform.GetChild(i).GetComponent<TeamCardButton>().cardSlotEmpty.SetActive(true);
@@ -53,9 +53,9 @@ public class TeamManager : MonoBehaviour
                 teamCardBtn.unitTypeImage.sprite = unitTypeArt.UnitTypeArtDictionary[userCardArray[i].unittype].image;
                 teamCardBtn.cardSlotType.text = userCardArray[i].unittype;
                 teamCardBtn.cardSlotEmpty.SetActive(false);
-                teamMembers[i] = (UnitMeta.UnitKey) Enum.Parse(typeof(UnitMeta.UnitKey), userCardArray[i].cardkey);
+                //teamMembers[i] = (UnitMeta.UnitKey) Enum.Parse(typeof(UnitMeta.UnitKey), userCardArray[i].cardkey);
             }
-            StaticClass.teamMembers = teamMembers;
+            //StaticClass.teamMembers = teamMembers;
         }
         
     }
