@@ -96,6 +96,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
          
             if (other.TryGetComponent<Health>(out Health health))
             {
+                Debug.Log($"RtsPlayer -- > {player}");
                 opponentIdentity = (player.GetPlayerID() == 1) ? GetComponent<NetworkIdentity>() : other.GetComponent<NetworkIdentity>();
                
                 //Debug.Log($"Original damage {damageToDeal}, {this.GetComponent<Unit>().unitType} , {other.GetComponent<Unit>().unitType} ");

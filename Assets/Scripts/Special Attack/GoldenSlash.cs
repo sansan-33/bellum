@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class KingSP : MonoBehaviour
+public class GoldenSlash : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject attackPoint;
@@ -23,32 +23,33 @@ public class KingSP : MonoBehaviour
     private Transform searchPoint;
     private RTSPlayer player;
     private TacticalBehavior TB;
-
     private List<GameObject> targetList = new List<GameObject>();
     private List<float> distanceList = new List<float>();
-    
+    private bool SpawnedButton;
+
     // Start is called before the first frame update
     void Start()
     {
-       
+        SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpType.Slash,transform);
+        if (SpawnedButton) { SPButton = FindObjectOfType<SpButton>().GetButton(GetComponent<Unit>().SpBtnTicket).GetComponent<Button>(); }
+        if (SPButton == null) { return; }
+        SPButton.onClick.RemoveAllListeners();
+        SPButton.onClick.AddListener(FindAttackTargetInDistance);
+        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         spCost = FindObjectOfType<SpCost>();
         searchPoint = attackPoint.transform;
         minAttackRange = (int)(transform.localScale.x * attackRange / 2);
-        SPButton = GameObject.FindGameObjectWithTag("SPButton").GetComponent<Button>();
-        SPButton.tag = "Untagged";
-        SPButton.onClick.RemoveAllListeners();
-        SPButton.onClick.AddListener(FindAttackTargetInDistance);
         TB = GameObject.FindGameObjectWithTag("TacticalSystem").GetComponent<TacticalBehavior>();
     }
    
     public void FindAttackTargetInDistance()
     {
-       
-        if(attackPoint == null) { return; }
+        Debug.Log($"FindAttackTargetInDistance");
+        if (attackPoint == null) { return; }
         //if(SPAmount < SPCost) {return;}
         spCost.SPAmount -= (int)SPCost;
        
-        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+      
        
         GameObject closestTarget = null;
         bool haveTarget = true;
@@ -69,18 +70,27 @@ public class KingSP : MonoBehaviour
                 distance = float.MaxValue;
                 hitCollider = hitColliders[i++].transform.gameObject;
                // check If the target is cloestest to king && it is not in the same team && check if it already finded the target
-                if ((localDistance = (hitCollider.transform.position - transform.position).sqrMagnitude) < distance && hitCollider.tag != "Player0" && hitCollider.tag != this.tag&& !targetList.Contains(hitCollider))
-                { 
-                    if (localDistance > minAttackRange)
-                    {
-                    findedTarget = true;
-                    distance = localDistance;
-                    closestTarget = hitCollider;
-                    //StopTacticalBehavior while using Special Attack
-                    TB.StopTacticalBehavior(player.GetPlayerID(), GetComponent<Unit>().unitType);
-                    // Move the searchPoint to the next target, so it will not search at the same point
-                    searchPoint = closestTarget.transform;    
-                    }
+                if ((localDistance = (hitCollider.transform.position - transform.position).sqrMagnitude) < distance && !targetList.Contains(hitCollider))
+                {
+                    int id = ((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1 ? 1 : player.GetPlayerID() == 0 ? 1 : 0;
+                    Debug.Log($"id == {id}");
+                    Debug.Log($"Tag -->{hitCollider.tag} id --> {"Player" + id}");
+                    if (hitCollider.CompareTag("Player" + id) || hitCollider.CompareTag("King" + id))
+                        {
+                            
+                            if (localDistance > minAttackRange)
+                            {
+                                findedTarget = true;
+                                distance = localDistance;
+                                closestTarget = hitCollider;
+                                //StopTacticalBehavior while using Special Attack
+                                TB.StopTacticalBehavior(player.GetPlayerID(), GetComponent<Unit>().unitType);
+                                // Move the searchPoint to the next target, so it will not search at the same point
+                                searchPoint = closestTarget.transform;
+                            }
+                        }
+                    
+                   
                 } 
             }
             // if there is no more target is finded then break
@@ -110,8 +120,13 @@ public class KingSP : MonoBehaviour
         float Timer = 3f;
         while (Timer > 0) { Timer -= Time.deltaTime; }
         // damage base on distance
+<<<<<<< HEAD:Assets/Scripts/Special Attack/KingSP.cs
         GetComponent<UnitWeapon>().ScaleDamageDeal(0,0,distance / 100);
         transform.position = closestTarget.transform.position;
+=======
+        GetComponent<UnitWeapon>().ScaleDamageDeal(distance / 100);
+        GameObject.FindGameObjectWithTag("King" + player.GetPlayerID()).transform.position = closestTarget.transform.position;
+>>>>>>> f589475b00caaa9fadc8b78afa04fea8fcb2521c:Assets/Scripts/Special Attack/GoldenSlash.cs
         // make the king attack in update
         IsSuperAttack = true;
     }

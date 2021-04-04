@@ -6,17 +6,23 @@ using UnityEngine.UI;
 
 public class DefendSP : MonoBehaviour
 {
+    private Button SPButton;
+    private RTSPlayer player;
     private SpCost spCost;
 
     public float SPCost = 10;
     public int shieldHealths = 100;
-    private Button SPButton;
-    private RTSPlayer player;
+    public int buttonTicket;
+    private bool SpawnedButton;
     void Start()
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         spCost = FindObjectOfType<SpCost>();
-        SPButton = GameObject.FindGameObjectWithTag("SpDefend").GetComponent<Button>();
+        //Instantiate SpButton and is it already spawned
+        SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpType.Shield,transform);
+        //SpButton will give unit a int to get back the button that it spwaned
+        if (SpawnedButton) { SPButton = FindObjectOfType<SpButton>().GetButton(GetComponent<Unit>().SpBtnTicket).GetComponent<Button>(); }
+        if(SPButton == null) { return; }
         SPButton.onClick.RemoveAllListeners();
         SPButton.onClick.AddListener(OnPointerDown);
     }
@@ -27,37 +33,33 @@ public class DefendSP : MonoBehaviour
         //if(SPAmount < SPCost) {return;}
         spCost.SPAmount -= (int)SPCost;
         Unit[] shieldList;
+        //find all unit
         shieldList = FindObjectsOfType<Unit>();
         
-        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
+        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)//1 player mode
         {
-           
             foreach (Unit shield in shieldList)
-            {
-               
+            {  // Only Set on our side
                 if (shield.CompareTag("Player0") || shield.CompareTag("King0"))
                 {
-                    
+                    // Set shield health
                     shield.GetComponent<Shield>().CmdSetShieldHealth(shieldHealths);
-                    }
+
                 }
             }
-            else // Multi player seneriao
-            {
+        }
+        else // Multi player seneriao
+        {
                 //Debug.Log($"OnPointerDown Defend SP Multi shieldList {shieldList.Length}");
-                foreach (Unit shield in shieldList)
+            foreach (Unit shield in shieldList)
+            {  // Only Set on our side
+                if (shield.CompareTag("Player" + player.GetPlayerID()) || shield.CompareTag("King" + player.GetPlayerID()))
                 {
-                    //Debug.Log($"shield tag {shield.tag}");
-
-                    if (shield.CompareTag("Player" + player.GetPlayerID()) || shield.CompareTag("King" + player.GetPlayerID()))
-                    {
-                        //shield.GetComponent<Shield>().shieldHealth = shieldHealths;
-                        //Debug.Log($"player {player.GetPlayerID()} , set shield health  {shield.tag} / {shieldHealths}");
-
-                        shield.GetComponent<Shield>().CmdSetShieldHealth(shieldHealths);
-                        //CommandShield(shield, shieldHealths);
-                    }
-                }
+                    // Set shield health
+                    shield.GetComponent<Shield>().CmdSetShieldHealth(shieldHealths);
+                }     
+            }
+        }
             /*
                 if (player.GetPlayerID() == 0)
                 {
@@ -85,7 +87,7 @@ public class DefendSP : MonoBehaviour
                   }
                 }
             */
-        }
+        
         
     }
     /*
