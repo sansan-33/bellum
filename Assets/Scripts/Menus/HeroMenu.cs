@@ -97,10 +97,10 @@ public class HeroMenu : MonoBehaviour
                      stars.transform.GetChild(j).gameObject.SetActive(false);
                 }
             }
-            healthValue.text = "" + Double.Parse(jsonResult[0]["health"]) * levelupfactor;
-            attackValue.text = "" + jsonResult[0]["attack"] * levelupfactor;
+            healthValue.text = "" + Math.Round(Double.Parse(jsonResult[0]["health"]) * levelupfactor);
+            attackValue.text = "" + Math.Round(jsonResult[0]["attack"] * levelupfactor);
             attackDelayValue.text = jsonResult[0]["repeatattackdelay"];
-            defenseValue.text = "" + jsonResult[0]["defense"] * levelupfactor;
+            defenseValue.text = "" + Math.Round(jsonResult[0]["defense"] * levelupfactor);
             speedValue.text = jsonResult[0]["speed"];
             specialValue.text = jsonResult[0]["special"];
             powerValue.text = jsonResult[0]["power"];
