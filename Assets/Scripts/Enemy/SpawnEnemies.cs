@@ -53,22 +53,22 @@ public class SpawnEnemies : MonoBehaviour
                 
                 if (isUnitAlive(UnitMeta.UnitType.HERO ) < 1)
                 {
-                    card_Stats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][UnitMeta.UnitType.KING].ToString()];
+                    card_Stats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][UnitMeta.UnitType.HERO].ToString()];
                     localFactory.CmdSpawnUnit(UnitMeta.Race.UNDEAD, UnitMeta.UnitType.HERO, 1, enemyID, card_Stats.cardLevel, card_Stats.health, card_Stats.attack, card_Stats.repeatAttackDelay, card_Stats.speed, card_Stats.defense, card_Stats.speed, teamColor);
                 }
                
                 if (isUnitAlive(UnitMeta.UnitType.TANK) < 1) {
-                    card_Stats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][UnitMeta.UnitType.KING].ToString()];
+                    card_Stats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][UnitMeta.UnitType.TANK].ToString()];
                     localFactory.CmdSpawnUnit(UnitMeta.Race.UNDEAD, UnitMeta.UnitType.TANK, 1, enemyID, card_Stats.cardLevel, card_Stats.health, card_Stats.attack, card_Stats.repeatAttackDelay, card_Stats.speed, card_Stats.defense, card_Stats.speed, teamColor);
                 }
                 if (isUnitAlive(UnitMeta.UnitType.ARCHER) < 1)
                 {
-                    card_Stats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][UnitMeta.UnitType.KING].ToString()];
+                    card_Stats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][UnitMeta.UnitType.ARCHER].ToString()];
                     localFactory.CmdSpawnUnit(UnitMeta.Race.UNDEAD, UnitMeta.UnitType.ARCHER, 1, enemyID, card_Stats.cardLevel, card_Stats.health, card_Stats.attack, card_Stats.repeatAttackDelay, card_Stats.speed, card_Stats.defense, card_Stats.speed, teamColor);
                 }
                 if (isUnitAlive(UnitMeta.UnitType.FOOTMAN) < 12)
                 {
-                    card_Stats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][UnitMeta.UnitType.KING].ToString()];
+                    card_Stats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[UnitMeta.Race.UNDEAD][UnitMeta.UnitType.FOOTMAN].ToString()];
                     localFactory.CmdSpawnUnit(UnitMeta.Race.UNDEAD, UnitMeta.UnitType.FOOTMAN, 1, enemyID, card_Stats.cardLevel, card_Stats.health, card_Stats.attack, card_Stats.repeatAttackDelay, card_Stats.speed, card_Stats.defense, card_Stats.speed, teamColor);
                 }
                
@@ -122,6 +122,6 @@ public class SpawnEnemies : MonoBehaviour
             if (jsonResult[i]["cardkey"] != null && jsonResult[i]["cardkey"].ToString().Length > 0)
                 userCardStatsDict.Add(jsonResult[i]["cardkey"], new Card_Stats(jsonResult[i]["level"], jsonResult[i]["health"], jsonResult[i]["attack"], jsonResult[i]["repeatAttackDelay"], jsonResult[i]["speed"], jsonResult[i]["defense"], jsonResult[i]["special"]));
         }
-        Debug.Log($"jsonResult {webReq.url } {jsonResult}");
+        Debug.Log($"Spawn enemies GetUserCard {webReq.url } {jsonResult}");
     }
 }
