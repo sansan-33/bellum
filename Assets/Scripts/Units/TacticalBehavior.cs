@@ -158,8 +158,8 @@ public class TacticalBehavior : MonoBehaviour
             armies.Add(king);
         GameObject defendObject;
 
-        //if (playerid == 0)
-        //    Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Length}");
+        if (playerid == 1)
+            Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Count}");
 
         leaders[playerid].Clear();
         int i = 0;
