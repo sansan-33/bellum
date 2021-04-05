@@ -19,6 +19,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         {
             var baseStatus = base.OnUpdate();
             if (baseStatus != TaskStatus.Running || !started) {
+                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus("Attack : TaskStatus " + baseStatus + " / " + HEARTBEAT++);
                 return baseStatus;
             }
             tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus("Attack : Searching target " + HEARTBEAT++);
