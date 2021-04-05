@@ -157,9 +157,7 @@ public class RTSNetworkManager : NetworkManager
                 StartCoroutine(loadMilitary(0.1f, player, gameBoardHandlerInstance, Quaternion.identity));
             }
         }
-
     }
-
     private void SetupUnitFactory(Vector3 pos, RTSPlayer player)
     {
         GameObject factoryInstance = Instantiate(
@@ -180,11 +178,11 @@ public class RTSNetworkManager : NetworkManager
             teamArray = teams.Split(',');
             player.SetRace(UnitMeta.KeyRace[(UnitMeta.UnitKey)Enum.Parse(typeof(UnitMeta.UnitKey), teamArray[0])].ToString());
         }
-        Debug.Log($"Userid {player.GetUserID()}, Team {teams}");
+        //Debug.Log($"Userid {player.GetUserID()}, Team {teams}");
         for (int i=0; i< teamArray.Length; i++ ){
             spawnCount = 1;
             UnitMeta.UnitKey unitKey = (UnitMeta.UnitKey) Enum.Parse(typeof(UnitMeta.UnitKey), teamArray[i]);
-            Debug.Log($"unitKey {unitKey}");
+            //Debug.Log($"unitKey {unitKey}");
             while (spawnCount > 0)
             {
                 GameObject spawnPointObject = gameBoardHandlerInstance.GetSpawnPointObject(UnitMeta.KeyType[unitKey], player.GetPlayerID());
@@ -192,6 +190,7 @@ public class RTSNetworkManager : NetworkManager
                 //Debug.Log($"loadMilitary {unitType} spawnPosition {spawnPosition}");
                 GameObject unit = Instantiate(unitDict[unitKey], spawnPosition, rotation) as GameObject;
                 unit.GetComponent<Unit>().SetSpawnPointIndex(spawnPointObject.GetComponent<SpawnPoint>().spawnPointIndex);
+                unit.GetComponent<UnitPowerUp>().ServerPowerUp(unit, 9, 9, 9999, 9, 9, 9, 9, 9);
                 unit.name = unitKey.ToString();
                 //unit.tag = "Player" + player.GetPlayerID();
                 //unit.GetComponent<HealthDisplay>().SetHealthBarColor(player.GetTeamColor());

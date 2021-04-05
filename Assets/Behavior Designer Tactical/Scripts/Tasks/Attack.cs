@@ -19,11 +19,12 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         {
             var baseStatus = base.OnUpdate();
             if (baseStatus != TaskStatus.Running || !started) {
+                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus("Attack : TaskStatus " + baseStatus + " / " + HEARTBEAT++);
                 return baseStatus;
             }
             tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus("Attack : Searching target " + HEARTBEAT++);
             if (MoveToAttackPosition()) {
-                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus("Attack : "  + tacticalAgent.TargetTransform.name + " (" + (int) (tacticalAgent.transform.position -  tacticalAgent.TargetTransform.position).sqrMagnitude + ")" );
+                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus("Attack : "  + tacticalAgent.TargetTransform.name + " (" + (int) (tacticalAgent.transform.position -  tacticalAgent.TargetTransform.position).sqrMagnitude + ") " + HEARTBEAT++);
                 tacticalAgent.TryAttack();
             }
 

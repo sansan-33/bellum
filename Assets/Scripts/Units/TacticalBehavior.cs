@@ -158,8 +158,8 @@ public class TacticalBehavior : MonoBehaviour
             armies.Add(king);
         GameObject defendObject;
 
-        //if (playerid == 0)
-        //    Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Length}");
+        if (playerid == 1)
+            Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Count}");
 
         leaders[playerid].Clear();
         int i = 0;
@@ -377,9 +377,9 @@ public class TacticalBehavior : MonoBehaviour
     {
         List<GameObject> troops;
         var sb = new System.Text.StringBuilder();
-        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + PLAYERID);
+        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + ENEMYID);
         troops = armies.ToList();
-        armies = GameObject.FindGameObjectsWithTag("King" + PLAYERID);
+        armies = GameObject.FindGameObjectsWithTag("King" + ENEMYID);
         if(armies.Length > 0)
         troops.AddRange(armies);
         foreach (GameObject army in troops) {
