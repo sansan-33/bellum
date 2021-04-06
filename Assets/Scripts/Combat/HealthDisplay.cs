@@ -10,12 +10,14 @@ public class HealthDisplay : MonoBehaviour
     [SerializeField] private Health health = null;
     [SerializeField] private GameObject healthBarParent = null;
     [SerializeField] private Image healthBarImage = null;
+    [SerializeField] private Image healthBarImageLast = null;
     [SerializeField] private GameObject leaderFrame = null;
     [SerializeField] private TMP_Text currentHealthText = null;
     [SerializeField] private TMP_Text levelText = null;
 
     public int kills;
     private Quaternion startRotation;
+    private float lerpDuration = 5f;
 
     private void Awake()
     {
@@ -37,10 +39,18 @@ public class HealthDisplay : MonoBehaviour
         leaderFrame.SetActive(true);
     }
 
-    private void HandleHealthUpdated(int currentHealth, int maxHealth)
+    private void HandleHealthUpdated(int currentHealth, int maxHealth, int lastDamageDeal)
     {
-        healthBarImage.fillAmount = (float)currentHealth / maxHealth;
-        currentHealthText.text = "" + currentHealth;
+        float timeElapsed = 0f;
+        float valueToLerp = 0f;
+        while (timeElapsed < lerpDuration)
+        {
+            valueToLerp = Mathf.Lerp(currentHealth + lastDamageDeal, currentHealth, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
+            healthBarImage.fillAmount = valueToLerp / maxHealth;
+        }
+        healthBarImageLast.fillAmount = currentHealth / maxHealth;
+        currentHealthText.text = currentHealth.ToString();
         if (currentHealth < maxHealth) {
             healthBarParent.SetActive(true);
         }

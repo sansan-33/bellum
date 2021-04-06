@@ -15,10 +15,10 @@ public class Health : NetworkBehaviour, IDamageable
     private float currentHealth;
     [SyncVar]
     private int currentLevel;
-
+    private int lastDamageDeal;
     public event Action ServerOnDie;
 
-    public event Action<int, int> ClientOnHealthUpdated;
+    public event Action<int, int, int> ClientOnHealthUpdated;
 
     
     #region Server
@@ -75,7 +75,7 @@ public class Health : NetworkBehaviour, IDamageable
             if (damageAmount > 0)
             {
                 currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
-
+                lastDamageDeal = (int) damageAmount;
                 if (currentHealth == 0)
                 {
                     ServerOnDie?.Invoke(); // if ServerOnDie not null then invoke
@@ -91,7 +91,7 @@ public class Health : NetworkBehaviour, IDamageable
 
     private void HandleHealthUpdated(float oldHealth, float newHealth)
     {
-        ClientOnHealthUpdated?.Invoke((int)newHealth, (int)maxHealth);
+        ClientOnHealthUpdated?.Invoke((int)newHealth, (int)maxHealth, lastDamageDeal);
     }
     public float getCurrentHealth()
     {
