@@ -43,17 +43,24 @@ public class HealthDisplay : MonoBehaviour
     {
         float timeElapsed = 0f;
         float valueToLerp = 0f;
+        int startHealth = currentHealth + lastDamageDeal;
+        int endHealth = currentHealth;
+
         while (timeElapsed < lerpDuration)
         {
-            valueToLerp = Mathf.Lerp(currentHealth + lastDamageDeal, currentHealth, timeElapsed / lerpDuration);
+            valueToLerp = Mathf.Lerp(startHealth, endHealth, timeElapsed / lerpDuration);
             timeElapsed += Time.deltaTime;
             healthBarImage.fillAmount = valueToLerp / maxHealth;
         }
-        healthBarImageLast.fillAmount = currentHealth / maxHealth;
+        healthBarImageLast.fillAmount = (float )currentHealth / maxHealth;
         currentHealthText.text = currentHealth.ToString();
         if (currentHealth < maxHealth) {
             healthBarParent.SetActive(true);
         }
+    }
+    IEnumerator LerpHealthBar(string userid)
+    {
+        yield return null;
     }
     public void SetHealthBarColor (Color newColor)
     {
