@@ -1688,6 +1688,7 @@ MonoBehaviour:
   circleMarker: {fileID: 6198479705541569738}
   isCollided: 0
   originalSpeed: 0
+  IS_STUNNED: 0
 --- !u!114 &4916343252236571062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1755,6 +1756,10 @@ MonoBehaviour:
   leaderFrame: {fileID: 1370666336472387402}
   currentHealthText: {fileID: 2375256506939492706}
   levelText: {fileID: 1337363821014112851}
+  kingIcon: {fileID: 4863418726425879581}
+  heroIcon: {fileID: 4605370576786615643}
+  defaultIcon: {fileID: 6966492260731550724}
+  healthBarEnemyImage: {fileID: 4909583105040260171, guid: 22b9f7f7827914c7d838a394d6b493e5, type: 3}
   kills: 0
 --- !u!114 &8657336790187348894
 MonoBehaviour:
@@ -1871,6 +1876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2dc7a7d0a2734ba7a943c2984916dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  star: 0
   cardLevel: 0
   health: 0
   attack: 0
@@ -3205,7 +3211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7732160056399082867
 RectTransform:
   m_ObjectHideFlags: 0

@@ -40,7 +40,7 @@ public class RTSNetworkManager : NetworkManager
     private bool isGameInProgress = false;
     private bool isSinglePlayer = true;
 
-    private List<Color> teamsColor = new List<Color>() { new Color(0f,0.6f,1f), new Color(1f,0f,0f)};
+    private List<Color> teamsColor = new List<Color>() { Color.blue, Color.red};
     public List<RTSPlayer> Players { get; } = new List<RTSPlayer>();
 
     private Dictionary<UnitMeta.UnitKey, GameObject> unitDict = new Dictionary<UnitMeta.UnitKey, GameObject>();

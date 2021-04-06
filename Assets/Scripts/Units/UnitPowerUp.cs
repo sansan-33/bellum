@@ -70,7 +70,7 @@ public class UnitPowerUp : NetworkBehaviour
         //Debug.Log($"{unit.tag} : {unit.name} ==> powerUp , star {star} ,cardLevel {cardLevel}, health {health}, attack {attack}, repeatAttackDelay {repeatAttackDelay}, speed {speed}, defense {defense}, special {special} ");
         SetSpeed(speed,false);
         unit.GetComponent<CardStats>().SetCardStats(star, cardLevel, health, attack, repeatAttackDelay,  speed,defense, special );
-        unit.GetComponent<HealthDisplay>().SetUnitLevel(cardLevel);
+        unit.GetComponent<HealthDisplay>().SetUnitLevel(cardLevel, unit.GetComponent<Unit>().unitType );
         unit.GetComponent<Health>().ScaleMaxHealth(health, star);
         unit.GetComponent<IAttack>().ScaleDamageDeal(attack, repeatAttackDelay, (star == 1) ? star : (star - 1) * 3);
         unit.GetComponentInChildren<UnitBody>().SetRenderMaterial(unit, NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID(),star);

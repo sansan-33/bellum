@@ -14,11 +14,15 @@ public class HealthDisplay : MonoBehaviour
     [SerializeField] private GameObject leaderFrame = null;
     [SerializeField] private TMP_Text currentHealthText = null;
     [SerializeField] private TMP_Text levelText = null;
-
+    [SerializeField] private GameObject kingIcon = null;
+    [SerializeField] private GameObject heroIcon = null;
+    [SerializeField] private GameObject defaultIcon = null;
+    [SerializeField] public Sprite healthBarEnemyImage = null;
+    private float lastDisplayTime;
+    private float displayDelay = 3f;
     public int kills;
     private Quaternion startRotation;
-    private float lerpDuration = 5f;
-
+   
     private void Awake()
     {
         health.ClientOnHealthUpdated += HandleHealthUpdated;
@@ -41,39 +45,59 @@ public class HealthDisplay : MonoBehaviour
 
     private void HandleHealthUpdated(int currentHealth, int maxHealth, int lastDamageDeal)
     {
-        float timeElapsed = 0f;
-        float valueToLerp = 0f;
-        int startHealth = currentHealth + lastDamageDeal;
-        int endHealth = currentHealth;
-
-        while (timeElapsed < lerpDuration)
-        {
-            valueToLerp = Mathf.Lerp(startHealth, endHealth, timeElapsed / lerpDuration);
-            timeElapsed += Time.deltaTime;
-            healthBarImage.fillAmount = valueToLerp / maxHealth;
-        }
-        healthBarImageLast.fillAmount = (float )currentHealth / maxHealth;
+        healthBarImage.fillAmount = (float)currentHealth / maxHealth;
+        if(lastDisplayTime + displayDelay < Time.time)
+            StartCoroutine(LerpHealthBar(healthBarImageLast, currentHealth, lastDamageDeal, maxHealth, 5f));
         currentHealthText.text = currentHealth.ToString();
         if (currentHealth < maxHealth) {
             healthBarParent.SetActive(true);
         }
     }
-    IEnumerator LerpHealthBar(string userid)
+    IEnumerator LerpHealthBar(Image healthBar, int currentHealth, int lastDamageDeal, int maxHealth, float lerpDuration)
     {
+        if (maxHealth == 0) { yield break; }
+        int startHealth = currentHealth + lastDamageDeal;
+        int endHealth = currentHealth;
+        float timeElapsed = 0f;
+        float valueToLerp = 0f;
+        while (timeElapsed < lerpDuration)
+        {
+            valueToLerp = Mathf.Lerp(startHealth, endHealth, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
+            healthBar.fillAmount = valueToLerp / maxHealth;
+        }
+        lastDisplayTime = Time.time;
         yield return null;
     }
     public void SetHealthBarColor (Color newColor)
     {
-        healthBarImage.color = newColor;
+        healthBarImage.sprite = newColor == Color.blue ? healthBarImage.sprite : healthBarEnemyImage;
     }
     public void HandleKillText()
     {
         killText.text = kills.ToString();
         kills++;
     }
-    public void SetUnitLevel(int level)
+    public void SetUnitLevel(int level, UnitMeta.UnitType unitType)
     {
         health.SetUnitLevel(level);
+        SetUnitTypeIcon(unitType);
         levelText.text = health.GetUnitLevel().ToString();
     }
+    public void SetUnitTypeIcon(UnitMeta.UnitType unitType)
+    {
+        switch (unitType)
+        {
+            case UnitMeta.UnitType.KING:
+                kingIcon.SetActive(true);
+                break;
+            case UnitMeta.UnitType.HERO:
+                heroIcon.SetActive(true);
+                break;
+            default:
+                defaultIcon.SetActive(true);
+                break;
+        }
+    }
+
 }
