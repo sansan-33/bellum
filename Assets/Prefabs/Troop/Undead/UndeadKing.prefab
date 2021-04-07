@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f89a45d06df43ef82020232fae9428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LightlingPrefab: {fileID: 1600819035976254, guid: 9bcfdd98d29605342a31a197383939a1, type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
