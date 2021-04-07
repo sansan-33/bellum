@@ -130,8 +130,8 @@ namespace DigitalRuby.ThunderAndLightning
                         if (hitCollider.CompareTag("Player" + id) || hitCollider.CompareTag("King" + id))
                         {
                             //Debug.Log(localDistance);
-                            if (localDistance > minAttackRange && localDistance < maxAttackrange)
-                            {
+                           // if (localDistance > minAttackRange && localDistance < maxAttackrange)
+                          //  {
 
                                 if (localDistance < distance)
                                 {
@@ -144,7 +144,7 @@ namespace DigitalRuby.ThunderAndLightning
                                     searchPoint = closestTarget;
                                 }
 
-                            }
+                            //}
                         }
                     }
                 }
@@ -204,8 +204,8 @@ namespace DigitalRuby.ThunderAndLightning
         {
             if (lightlingTimer > 0)
             {
-               /* lightlingTimer -= Time.deltaTime;
-                foreach (GameObject light in lightlingList)
+                lightlingTimer -= Time.deltaTime;
+                /*foreach (GameObject light in lightlingList)
                 {
                     startPoints.TryGetValue(light, out GameObject startpoint);
                     light.transform.GetChild(0).position = startpoint.transform.position;
