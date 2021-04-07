@@ -102,12 +102,14 @@ public class SummonManager : MonoBehaviour
             userCard.GetComponent<UserCardButton>().userLevelBar.SetActive(false);
             userCard.GetComponent<UserCardButton>().levelBadge.SetActive(false);
             userCard.GetComponent<UserCardButton>().rarity.text = jsonResult[i]["rarity"];
+            Debug.Log($"Summon rarity {(jsonResult[i]["rarity"] + "_background").ToLower()}");
+            userCard.transform.Find( (jsonResult[i]["rarity"] + "_background").ToLower()).gameObject.SetActive(true);
             userCard.GetComponent<UserCardButton>().unitTypeImage.sprite = unitTypeArt.UnitTypeArtDictionary[jsonResult[i]["unittype"]].image;
             if (Int32.TryParse(jsonResult[i]["star"], out int star))
             {
                 for (int j = (userCard.GetComponent<UserCardButton>().star.transform.childCount -1 ) ; j > (star - 1); j--)
                 {
-                    userCard.GetComponent<UserCardButton>().star.transform.GetChild(j).gameObject.SetActive(false);
+                    userCard.GetComponent<UserCardButton>().star.transform.GetChild(j).Find("Active").gameObject.SetActive(false);
                 }
             }
             if (jsonResult[i]["rarity"] == "SSR" || jsonResult[i]["rarity"] == "UR" || jsonResult[i]["rarity"] == "LR")

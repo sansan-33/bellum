@@ -58,6 +58,7 @@ public class UserCardManager : MonoBehaviour
             //Debug.Log($"unitTypeArt {unitTypeArt.UnitTypeArtDictionary[card.unittype].type }");
             userCard.GetComponent<UserCardButton>().unitTypeImage.sprite = unitTypeArt.UnitTypeArtDictionary[card.unittype].image;
             userCard.GetComponent<UserCardButton>().rarity.text = card.rarity;
+            userCard.transform.Find(card.rarity.ToLower() + "_background").gameObject.SetActive(true);
             userCard.GetComponent<UserCardButton>().leveluprequirement.text = card.leveluprequirement;
             if (IS_TEAM_MEMBER_SELECTION)
             {
