@@ -95,13 +95,10 @@ public class GoldenSlash : MonoBehaviour
         searchPoint = attackPoint.transform;
         // if it doesnot find any target return
         if (closestTarget == null) {  return; }
-        foreach (GameObject target in targetList)
+        for (int a = 0; a < targetList.ToArray().Length; a++)
         {
-            foreach(float distances in distanceList)
-            {
-                AttackTarget(distances, target.transform);
-            }
-            
+
+            AttackTarget(distanceList.ToArray()[a], targetList.ToArray()[a].transform);
         }
         GetComponent<UnitWeapon>().ReScaleDamageDeal();
     }

@@ -316,7 +316,7 @@ namespace DigitalRuby.ThunderAndLightning
         /// </summary>
         protected virtual void Start()
         {
-            return;
+           
             //UnityEngine.Debug.Log("Start");
             UpdateCamera();
             UpdateMaterialsForLastTexture();

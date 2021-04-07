@@ -110,62 +110,62 @@ MonoBehaviour:
   UseWorldSpace: 1
   CompensateForParentTransform: 0
   QualitySetting: 0
-  MultiThreaded: 1
+  MultiThreaded: 0
   LevelOfDetailDistance: 0
   UseGameTime: 0
   HideGizmos: 0
-  SortLayerName: 
+  SortLayerName: Default
   SortOrderInLayer: 0
   SoftParticlesFactor: 3
   RenderQueue: -1
   LightningMaterialMesh: {fileID: 2100000, guid: c6b8576004384974191b466f0bdef64b, type: 2}
   LightningMaterialMeshNoGlow: {fileID: 2100000, guid: db76dde8469c5834887c024ae9f43289, type: 2}
-  LightningTexture: {fileID: 2800000, guid: ab1af2b17371b684bb0f864fcb33367f, type: 3}
+  LightningTexture: {fileID: 2800000, guid: 51e598d31382bd740958e33ab6c64a66, type: 3}
   LightningGlowTexture: {fileID: 2800000, guid: cab73e4c670527a4aae0af0c436a4350, type: 3}
   LightningOriginParticleSystem: {fileID: 0}
   LightningDestinationParticleSystem: {fileID: 0}
-  LightningTintColor: {r: 0.5731238, g: 0.49264705, b: 1, a: 1}
-  GlowTintColor: {r: 0.5735294, g: 0.62091506, b: 1, a: 1}
+  LightningTintColor: {r: 1, g: 1, b: 1, a: 1}
+  GlowTintColor: {r: 0.5661765, g: 0.6143791, b: 1, a: 1}
   MainTrunkTintColor: {r: 1, g: 1, b: 1, a: 1}
   SourceBlendMode: 5
   DestinationBlendMode: 1
-  JitterMultiplier: 2
-  Turbulence: 2
+  JitterMultiplier: 0.1
+  Turbulence: 0.05
   TurbulenceVelocity: {x: 0, y: 0, z: 0}
-  IntensityFlicker: {x: -1.5, y: 1.5, z: 4, w: 0.2}
-  IntensityFlickerTexture: {fileID: 2800000, guid: daff08474f158fa4f9518446ce715cae, type: 3}
+  IntensityFlicker: {x: 1, y: 1, z: 1, w: 0}
+  IntensityFlickerTexture: {fileID: 0}
   IntervalRange:
     Minimum: 0.05
-    Maximum: 0.6
+    Maximum: 0.05
   CountRange:
-    Minimum: 2
-    Maximum: 15
-  CountProbabilityModifier: 0.25
+    Minimum: 1
+    Maximum: 3
+  CountProbabilityModifier: 1
   DelayRange:
     Minimum: 0
     Maximum: 0
   DurationRange:
-    Minimum: 0.05
-    Maximum: 0.2
+    Minimum: 0.1
+    Maximum: 0.15
   TrunkWidthRange:
-    Minimum: 0.3
-    Maximum: 0.5
+    Minimum: 0.05
+    Maximum: 0.1
   LifeTime: 0
-  Generations: 6
-  ChaosFactor: 0.2
-  ChaosFactorForks: 0.1
-  Intensity: 2
-  GlowIntensity: 2
-  GlowWidthMultiplier: 8
-  FadePercent: 0.15
+  Generations: 1
+  ChaosFactor: 0
+  ChaosFactorForks: 1
+  Intensity: 10
+  GlowIntensity: 0.03
+  GlowWidthMultiplier: 10
+  FadePercent: 0.3
   FadeInMultiplier: 1
   FadeFullyLitMultiplier: 1
   FadeOutMultiplier: 1
-  GrowthMultiplier: 0.2
-  EndWidthMultiplier: 0.5
-  Forkedness: 0.3
+  GrowthMultiplier: 0
+  EndWidthMultiplier: 0.8
+  Forkedness: 0.672
   ForkLengthMultiplier: 0.6
-  ForkLengthVariance: 0.52
+  ForkLengthVariance: 0.2
   ForkEndWidthMultiplier: 1
   LightParameters:
     RenderMode: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   CustomTransformHandler:
     m_PersistentCalls:
       m_Calls: []
-  Source: {fileID: 1455327184583208}
-  Destination: {fileID: 1476646920768152}
-  StartVariance: {x: 1, y: 1, z: 1}
-  EndVariance: {x: 10, y: 10, z: 10}
+  Source: {fileID: 0}
+  Destination: {fileID: 0}
+  StartVariance: {x: 0, y: 0, z: 0}
+  EndVariance: {x: 0, y: 0, z: 0}
