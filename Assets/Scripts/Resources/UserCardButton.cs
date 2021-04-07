@@ -19,6 +19,7 @@ public class UserCardButton : MonoBehaviour
     public string cardkey;
     public string cardtype;
     public Slider levelSlider;
+    public TMP_Text cardname;
     public TMP_Text level;
     public TMP_Text exp;
     public TMP_Text rarity;
