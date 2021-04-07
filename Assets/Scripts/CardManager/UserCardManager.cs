@@ -51,7 +51,7 @@ public class UserCardManager : MonoBehaviour
                 userCard.GetComponent<UserCardButton>().userLevelBar.SetActive(false);
                 card = allCard.Value;
             }
-          
+            userCard.GetComponent<UserCardButton>().cardname.text = card.cardkey;
             userCard.GetComponent<UserCardButton>().level.text = card.level;
             userCard.GetComponent<UserCardButton>().exp.text = card.exp;
             userCard.GetComponent<UserCardButton>().cardtype = card.unittype;
@@ -69,7 +69,7 @@ public class UserCardManager : MonoBehaviour
             {
                 for (int j = (userCard.GetComponent<UserCardButton>().star.transform.childCount - 1); j > (star-1); j--)
                 {
-                    userCard.GetComponent<UserCardButton>().star.transform.GetChild(j).gameObject.SetActive(false);
+                    userCard.GetComponent<UserCardButton>().star.transform.GetChild(j).Find("Active").gameObject.SetActive(false);
                 }
             }
             if (float.TryParse(card.exp, out float cardexp) && float.TryParse(card.leveluprequirement, out float cardleveluprequirement))

@@ -100,7 +100,8 @@ public class UnitPowerUp : NetworkBehaviour
     }
     public void SetSpeed(int speed, bool accumulate)
     {
-        if (agent.speed < GetComponent<UnitMovement>().maxSpeed && agent.speed >= 0)
+        if (speed == 0) { return; }
+        if (agent.speed < GetComponent<UnitMovement>().maxSpeed)
         {
             //SpeedUp(agent, speed);
             RpcSpeedUp(agent.transform.gameObject, speed, accumulate);
