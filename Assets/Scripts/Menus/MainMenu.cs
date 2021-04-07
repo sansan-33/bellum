@@ -14,10 +14,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject landingPagePanel = null;
     [SerializeField] public TMP_Text userid = null;
     [SerializeField] public Image[] teamCardImages = new Image[3];
-    private Dictionary<string, string[]> userTeamDict = new Dictionary<string, string[]>();
+    private static Dictionary<string, string[]> userTeamDict = new Dictionary<string, string[]>();
     [SerializeField] public CharacterFullArt characterFullArt;
     [SerializeField] private LoginManager loginManager;
-
+    
     private void Awake()
     {
         loginManager.loginChanged += HandleLoadTeam;
@@ -33,6 +33,7 @@ public class MainMenu : MonoBehaviour
             StaticClass.UserID = "1";
 
         userid.text = StaticClass.UserID;
+        
         HandleLoadTeam();
     }
     public void HostLobby()
@@ -41,17 +42,19 @@ public class MainMenu : MonoBehaviour
 
         NetworkManager.singleton.StartHost();
     }
-    public void HandleLoadTeam()
+    public void HandleLoadTeam(bool start = false)
     {
-        StartCoroutine(LoadTeamLobby());
+        StartCoroutine(LoadTeamLobby(start));
     }
-    IEnumerator LoadTeamLobby(){
+    IEnumerator LoadTeamLobby(bool start){
+        if(!start && userTeamDict.Count < 1)
         yield return GetTeamInfo(StaticClass.UserID);
         string[] cardkeys = userTeamDict[userTeamDict.Keys.First()];
         if (characterFullArt.CharacterFullArtDictionary.Count < 1){
             characterFullArt.initDictionary();
         }
         for (int i = 0; i < teamCardImages.Length; i++) {
+            teamCardImages[i].gameObject.SetActive(true);
             teamCardImages[i].sprite = characterFullArt.CharacterFullArtDictionary[cardkeys[i]].image;
         }
     }

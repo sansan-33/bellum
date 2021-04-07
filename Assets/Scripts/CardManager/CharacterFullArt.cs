@@ -23,7 +23,7 @@ public class CharacterFullArt : MonoBehaviour
         foreach (CharacterFullImage image in CharacterFullArtImages)
         {
             CharacterFullArtDictionary.Add(image.name.ToString(), image);
-            Debug.Log($"CharacterArtDictionary name added {image.name.ToString()} ");
+            //Debug.Log($"CharacterArtDictionary name added {image.name.ToString()} ");
         }
     }
 }
