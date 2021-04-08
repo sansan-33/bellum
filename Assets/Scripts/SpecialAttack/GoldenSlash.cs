@@ -30,12 +30,13 @@ public class GoldenSlash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        if (CompareTag("King" + player.GetEnemyID()) || CompareTag("Player" + player.GetEnemyID())) { return; }
         SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Slash, GetComponent<Unit>());
         if (SpawnedButton) { SPButton = FindObjectOfType<SpButton>().GetButton(GetComponent<Unit>().SpBtnTicket).GetComponent<Button>(); }
         if (SPButton == null) { return; }
         SPButton.onClick.RemoveAllListeners();
         SPButton.onClick.AddListener(FindAttackTargetInDistance);
-        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         spCost = FindObjectOfType<SpCost>();
         searchPoint = attackPoint.transform;
         minAttackRange = (int)(transform.localScale.x * attackRange / 2);

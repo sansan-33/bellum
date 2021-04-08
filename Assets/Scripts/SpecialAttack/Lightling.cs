@@ -38,7 +38,8 @@ namespace DigitalRuby.ThunderAndLightning
         // Start is called before the first frame update
         public void Start()
         {
-
+            player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+            if (CompareTag("King" + player.GetEnemyID()) || CompareTag("Player" + player.GetEnemyID())) { return; }
             //startPoint = GameObject.FindGameObjectWithTag("LightlingStartPoint");
             //endPoint = GameObject.FindGameObjectWithTag("LightlingEndPoint");
             SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Lightling, GetComponent<Unit>());
@@ -46,7 +47,7 @@ namespace DigitalRuby.ThunderAndLightning
             if (SPButton == null) { return; }
             SPButton.onClick.RemoveAllListeners();
             SPButton.onClick.AddListener(OnPointerDowns);
-            player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+            
             spCost = FindObjectOfType<SpCost>();
             //searchPoint = attackPoint.transform;
             minAttackRange = (int)(transform.localScale.x * attackRange / 2);

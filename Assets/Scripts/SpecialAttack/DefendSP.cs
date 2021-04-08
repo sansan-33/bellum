@@ -19,6 +19,7 @@ public class DefendSP : MonoBehaviour
     void Start()
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        if (CompareTag("King" + player.GetEnemyID())|| CompareTag("Player" + player.GetEnemyID())) { return; }
         spCost = FindObjectOfType<SpCost>();
         //Instantiate SpButton and is it already spawned
         SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Shield, GetComponent<Unit>());

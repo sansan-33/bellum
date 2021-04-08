@@ -50,7 +50,7 @@ public class UnitPowerUp : NetworkBehaviour
     [Command(ignoreAuthority = true)]
     public void CmdPowerUp(GameObject unit, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special)
     {
-        //Debug.Log("CmdPowerUp");
+        //Debug.Log($"CmdPowerUp Speed ==  > {speed}");
         ServerPowerUp(unit.gameObject, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special);
     }
     [Command]
@@ -100,7 +100,7 @@ public class UnitPowerUp : NetworkBehaviour
     }
     public void SetSpeed(int speed, bool accumulate)
     {
-        if (speed == 0) { return; }
+        if (speed >= 0) { return; }
         if (agent.speed < GetComponent<UnitMovement>().maxSpeed)
         {
             //SpeedUp(agent, speed);

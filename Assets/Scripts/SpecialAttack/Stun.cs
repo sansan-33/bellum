@@ -25,6 +25,7 @@ public class Stun : MonoBehaviour
     void Start()
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        if (CompareTag("King" + player.GetEnemyID()) || CompareTag("Player" + player.GetEnemyID())) { return; }
         spCost = FindObjectOfType<SpCost>();
         //Instantiate SpButton and is it already spawned
         SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Stun, GetComponent<Unit>());
@@ -53,7 +54,7 @@ public class Stun : MonoBehaviour
            //Debug.Log("One Player Mide");
             foreach (GameObject unit in enemyList)
             {  // Only Set on our side
-                //Debug.Log($"Tag -- > {unit.tag}");
+              
                 
                     //stop enenmy
                     //Debug.Log("stop");
@@ -65,8 +66,9 @@ public class Stun : MonoBehaviour
                 CardStats cardStats = unit.GetComponent<CardStats>();
                 UnitRepeatAttackDelaykeys.Add(unit, cardStats.repeatAttackDelay);
                 UnitSpeedkeys.Add(unit, cardStats.speed);
-                unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, Mathf.Infinity, 0, cardStats.defense, cardStats.special);
-                if(unit.TryGetComponent<UnitWeapon>(out UnitWeapon unitWeapon))
+                unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, Mathf.Infinity, -1, cardStats.defense, cardStats.special);
+               // Debug.Log($"Tag -- > {unit.tag},{GetComponent<UnitMovement>().GetNavMeshAgent().speed}");
+                if (unit.TryGetComponent<UnitWeapon>(out UnitWeapon unitWeapon))
                 {
                     unitWeapon.CMVirtual();
                 }
@@ -90,7 +92,7 @@ public class Stun : MonoBehaviour
                 CardStats cardStats = unit.GetComponent<CardStats>();
                 UnitRepeatAttackDelaykeys.Add(unit, cardStats.repeatAttackDelay);
                 UnitSpeedkeys.Add(unit, cardStats.speed);
-                unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, Mathf.Infinity, 0, cardStats.defense, cardStats.special);
+                unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, Mathf.Infinity, -1, cardStats.defense, cardStats.special);
                 if (unit.TryGetComponent<UnitWeapon>(out UnitWeapon unitWeapon))
                 {
                     unitWeapon.CMVirtual();
@@ -131,7 +133,7 @@ public class Stun : MonoBehaviour
                 UnitRepeatAttackDelaykeys.TryGetValue(unit, out float repeatAttackDelay);
                 UnitSpeedkeys.TryGetValue(unit, out int speed);
                 unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, repeatAttackDelay, speed, cardStats.defense, cardStats.special);
-               
+                Debug.Log("attack");
                 //Debug.Log($"Awake {repeatAttackDelay}, {speed}");
             }
             // IsFrezzing = false;
