@@ -49,6 +49,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 return baseStatus;
             }
             // Attack the target if the agent has a target.
+            tacticalAgent.AttackPosition = false;
+
             if (tacticalAgent.TargetTransform != null) {
                 // Stop attacking if the target gets too far away from the defend object.
                 if ((transform.position - defendObject.Value.transform.position).magnitude > maxDistance.Value || !tacticalAgent.TargetDamagable.IsAlive()) {
@@ -100,7 +102,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     var direction = targetPosition - defendObject.Value.transform.position;
                     direction.y = 0;
                     tacticalAgent.RotateTowards(Quaternion.LookRotation(direction));
-                    //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus( TASKNAME + ": Arrived and Defend " + HEARTBEAT++);
+                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus( TASKNAME + ": Arrived and Defend " + HEARTBEAT++);
                     tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("defend");
                 }
             }
