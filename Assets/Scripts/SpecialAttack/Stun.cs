@@ -17,7 +17,6 @@ public class Stun : MonoBehaviour
     public float SPCost = 10;
     public int buttonTicket;
     private bool SpawnedButton;
-    private bool IsFrezzing;
     private bool CanUnFrezze = false;
     public int EnemyFrezzeTime = 5;
     
@@ -38,11 +37,10 @@ public class Stun : MonoBehaviour
     }
     public void OnPointerDown()
     {
-        //Debug.Log("OnPointerDown");
         spCost.SPAmount -= (int)SPCost;
         UnitRepeatAttackDelaykeys.Clear();
         UnitSpeedkeys.Clear();
-        //find all unit
+        //find all enemy unit
         enemyList = GameObject.FindGameObjectsWithTag("Player" + player.GetEnemyID()).ToList();
 
         var a = GameObject.FindGameObjectsWithTag("King" + player.GetEnemyID());
@@ -51,44 +49,28 @@ public class Stun : MonoBehaviour
        
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)//1 player mode
         {
-           //Debug.Log("One Player Mide");
+            //stop enenmy
             foreach (GameObject unit in enemyList)
-            {  // Only Set on our side
-              
-                
-                    //stop enenmy
-                    //Debug.Log("stop");
-                //unit.GetComponent<UnitMovement>().CmdStop();
+            {  
                 enemyReFightTimer = EnemyFrezzeTime;
-                //IsFrezzing = true;
                 CanUnFrezze = true;
-                //unit.GetComponent<UnitMovement>().CmdStun();
                 CardStats cardStats = unit.GetComponent<CardStats>();
                 UnitRepeatAttackDelaykeys.Add(unit, cardStats.repeatAttackDelay);
                 UnitSpeedkeys.Add(unit, cardStats.speed);
                 unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, Mathf.Infinity, -1, cardStats.defense, cardStats.special);
-               // Debug.Log($"Tag -- > {unit.tag},{GetComponent<UnitMovement>().GetNavMeshAgent().speed}");
                 if (unit.TryGetComponent<UnitWeapon>(out UnitWeapon unitWeapon))
                 {
                     unitWeapon.CMVirtual();
                 }
-                
-                //TB.StopAllTacticalBehavior(player.GetEnemyID());
             }
         }
         else // Multi player seneriao
         {
-            //Debug.Log($"OnPointerDown Defend SP Multi shieldList {shieldList.Length}");
-            // Only Set on our side
-
             //stop enenmy
             foreach (GameObject unit in enemyList)
             {
-                //unit.GetComponent<UnitMovement>().CmdStop();
                 enemyReFightTimer = EnemyFrezzeTime;
-                //IsFrezzing = true;
                 CanUnFrezze = true;
-                //unit.GetComponent<UnitMovement>().CmdStun();
                 CardStats cardStats = unit.GetComponent<CardStats>();
                 UnitRepeatAttackDelaykeys.Add(unit, cardStats.repeatAttackDelay);
                 UnitSpeedkeys.Add(unit, cardStats.speed);
@@ -97,31 +79,14 @@ public class Stun : MonoBehaviour
                 {
                     unitWeapon.CMVirtual();
                 }
-                //TB.StopAllTacticalBehavior(player.GetEnemyID());
             }
         }
     }
-    /*public bool Between(int num, int lower, int upper)
-    {
-        if(num > lower&& num < upper)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    private void AwakeEnemy()
-    {
-        TB.TryReinforce(null);
-    }*/
         // Update is called once per frame
     void Update()
     {
         if(enemyReFightTimer > 0)
         {
-            //Debug.Log($"Stop {enemyReFightTimer},tag is {tag}");
             enemyReFightTimer -= Time.deltaTime;
         }
         else if(CanUnFrezze == true)
@@ -133,12 +98,8 @@ public class Stun : MonoBehaviour
                 UnitRepeatAttackDelaykeys.TryGetValue(unit, out float repeatAttackDelay);
                 UnitSpeedkeys.TryGetValue(unit, out int speed);
                 unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, repeatAttackDelay, speed, cardStats.defense, cardStats.special);
-                Debug.Log("attack");
-                //Debug.Log($"Awake {repeatAttackDelay}, {speed}");
             }
-            // IsFrezzing = false;
             CanUnFrezze = false;
-            //StartCoroutine(TB.TacticalFormation(player.GetPlayerID(), player.GetEnemyID()));
         }    
     }
     public static Dictionary<GameObject, float> UnitRepeatAttackDelaykeys = new Dictionary<GameObject, float>()
