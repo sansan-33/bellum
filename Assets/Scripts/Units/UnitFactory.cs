@@ -137,6 +137,8 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(UnitMeta.UnitKey.GODMAGE, godmagePrefab);
         unitDict.Add(UnitMeta.UnitKey.GODCAVALRY, godcavalryPrefab);
         unitDict.Add(UnitMeta.UnitKey.ODIN, odinPrefab);
+        unitDict.Add(UnitMeta.UnitKey.GODWALL, godwallPrefab);
+
     }
     [ClientRpc]
     void RpcTag(GameObject unit, int playerID, string unitName, int star, Color teamColor, int spawnPointIndex)
