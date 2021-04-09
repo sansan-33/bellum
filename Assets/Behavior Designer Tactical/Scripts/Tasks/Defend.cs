@@ -59,7 +59,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 }
                 else {
                     // The target is within distance. Keep moving towards it.
-                    //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": The target " + tacticalAgent.TargetTransform.name + "/" + tacticalAgent.TargetTransform.tag + " is within distance. Keep moving towards it " + HEARTBEAT++);
+                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": The target " + tacticalAgent.TargetTransform.name + "/" + tacticalAgent.TargetTransform.tag + " is within distance. Keep moving towards it " + HEARTBEAT++);
                     tacticalAgent.AttackPosition = true;
                     if (MoveToAttackPosition()) {
                         //if(tacticalAgent.transform.name.ToLower().Contains("king") )
@@ -73,7 +73,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 // tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": searching " + targetTransforms.Count + " target withing defend radius " + defendRadius.Value  + " .. " + HEARTBEAT++);
                 for (int i = targetTransforms.Count - 1; i > -1; --i) {
                     // The target has to be alive.
-                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": checking target " + targetTransforms[i].name  + ":" + i + "/" + targetTransforms.Count + " is alive ?"  + targets[i].IsAlive() + " .. " + HEARTBEAT++);
+                    //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": checking target " + targetTransforms[i].name  + ":" + i + "/" + targetTransforms.Count + " is alive ?"  + targets[i].IsAlive() + " .. " + HEARTBEAT++);
                     if (targets[i].IsAlive()) {
                         // Start attacking if the target gets too close.
                         if ((transform.position - targetTransforms[i].position).magnitude < defendRadius.Value) {
@@ -87,6 +87,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                         targetTransforms.RemoveAt(i);
                     }
                 }
+                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": No Target ==> Defend " + HEARTBEAT++);
+                tacticalAgent.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("defend");
             }
 
             // The agent isn't attacking. Move near the defend object.
