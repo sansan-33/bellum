@@ -25,7 +25,7 @@ public class Shield : NetworkBehaviour
     {
         if(shieldHealth > 0 && CanSpawned == true)
         {
-            Instantiate(ShieldEffect, this.transform).transform.localScale = new Vector3(2, 2, 2);
+            Instantiate(ShieldEffect, this.transform);//.transform.localScale = new Vector3(5, 5, 5);
             CanSpawned = false;
         }
     }

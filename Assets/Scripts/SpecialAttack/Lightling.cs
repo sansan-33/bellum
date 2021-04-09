@@ -10,6 +10,8 @@ namespace DigitalRuby.ThunderAndLightning
         [SerializeField] private GameObject LightlingPrefab;
         [SerializeField] private LayerMask layerMask = new LayerMask();
         [SerializeField] private GameObject attackPoint;
+        [SerializeField] private int electicDamage;
+        [SerializeField] private int electicShockDamage;
 
         private int enemyCount = 0;
         public int attackRange = 100;
@@ -61,9 +63,7 @@ namespace DigitalRuby.ThunderAndLightning
             bool haveTarget = true;
             var distance = float.MaxValue;
             var localDistance = 0f;
-            startPointList.Clear();
-            targetList.Clear();
-
+           
             while (haveTarget == true)
             {
                 startPointList.Add(searchPoint);
@@ -98,7 +98,7 @@ namespace DigitalRuby.ThunderAndLightning
                         }
                     }
                 }
-                Debug.Log($"{searchPoint.name} -- > {localDistance}, --> {hitCollider.name}");
+                //Debug.Log($"{searchPoint.name} -- > {localDistance}, --> {hitCollider.name}");
                 searchPoint = closestTarget;
                 // if there is no more target is finded then break
                 if (findedTarget == false)
@@ -125,16 +125,16 @@ namespace DigitalRuby.ThunderAndLightning
             {
                 lightling = Instantiate(LightlingPrefab);
                 lightlingChild = lightling.transform.GetChild(0).gameObject;
-                lightlingChild.transform.position = startPoint.transform.position;
+                lightlingChild.transform.position = new Vector3(startPoint.transform.position.x, startPoint.transform.position.y + 5,startPoint.transform.position.z);
                 lightling.GetComponent<LightningBoltPathScriptBase>().LightningPath.Add(lightlingChild);
             }
             lightlingChilds = Instantiate(lightlingChild, lightling.transform);
-            lightlingChilds.transform.position = endPoint.transform.position;
+            lightlingChilds.transform.position = new Vector3(endPoint.transform.position.x, endPoint.transform.position.y + 5, endPoint.transform.position.z);
             lightling.GetComponent<LightningBoltPathScriptBase>().LightningPath.Add(lightlingChilds);
             enemyCount++;
             lightlingList.Add(lightlingChilds);
-            endPoint.GetComponent<Health>().DealDamage(50);
-
+            endPoint.GetComponent<Health>().OnElectricShock(electicDamage,electicShockDamage);
+            endPoint.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
         }
         public void Update()
         {
@@ -148,6 +148,14 @@ namespace DigitalRuby.ThunderAndLightning
                 {
                     Destroy(light);
                 }
+                foreach (GameObject target in targetList)
+                {
+                    if(target.TryGetComponent<Health>(out Health health))
+                    {
+                        health.IsElectricShock = false;
+                    }
+                }
+                
             }
         }
     }

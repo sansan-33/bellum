@@ -75,11 +75,7 @@ public class UnitMovement : NetworkBehaviour
     {
         CmdTrigger("die");
     }
-    [Command]
-    public void CmdTest()
-    {
-        Debug.Log("test");
-    }
+    /*
     [Command]
     public void CmdStun()
     {
@@ -91,7 +87,7 @@ public class UnitMovement : NetworkBehaviour
     {
         IS_STUNNED = true;
         Debug.Log($"Uniut movement is stuned = {IS_STUNNED}");
-    }
+    }*/
     [Command]
     public void CmdTrigger(string animationType)
     {

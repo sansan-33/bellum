@@ -192,7 +192,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     {
         
         if(GameObject.Find("camVirtual") == null) {
-            Debug.Log("CmVirtual");
             //Debug.Log($" Spawn  camVirtual {GameObject.Find("camVirtual")}");
             //GameObject cam = Instantiate(camPrefab, new Vector2(0,300), Quaternion.Euler(new Vector3(90, 0, 0)));
             GameObject cam = Instantiate(camPrefab, new Vector3(0,0,0), Quaternion.Euler(new Vector3(0, 0, 0)));

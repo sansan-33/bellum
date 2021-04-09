@@ -46,6 +46,7 @@ MonoBehaviour:
   IsAreaOfEffect: 1
   DashDamage: 100
   IsKingSP: 0
+  CMVirtualIsOn: 0
   repeatAttackDelay: 1
   attackAngle: 1
   strengthWeakness: {fileID: 0}
@@ -65,6 +66,21 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: 7707570322649849319}
+--- !u!114 &4176136497738020578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860431621525514400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c475b1dc9b0b43768963794057fa783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SPCost: 10
+  shieldHealths: 10000
+  buttonTicket: 0
 --- !u!1001 &3014692229348437158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -279,6 +295,10 @@ PrefabInstance:
     - target: {fileID: 6372428433142078116, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: race
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6372428433142078116, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: unitKey
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6372428433142078116, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: unitType

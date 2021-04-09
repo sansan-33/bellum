@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using static CharacterArt;
 public class SpButton : MonoBehaviour
 {
-   
+    [SerializeField] public CharacterArt Arts;
     [SerializeField] GameObject buttonPrefab;
     public int buttonOffSet;
     public RectTransform FirstCardPos;
@@ -25,13 +25,14 @@ public class SpButton : MonoBehaviour
         {
             spawnedButtonSpType.Add(spType);
             buttonCount++;
-           
-            // spawn the button 
+
+            // spawn the button
+            CharacterImage characterImage = Arts.CharacterArtDictionary[unit.unitKey.ToString()];
             button = Instantiate(buttonPrefab, transform);
             //Set button pos
             button.GetComponent<RectTransform>().anchoredPosition = new Vector3(FirstCardPos.anchoredPosition.x + buttonOffSet * buttonCount, FirstCardPos.anchoredPosition.y, 0);
             SpecialAttackDict.SpSprite.TryGetValue(spType, out sprite);
-            button.GetComponent<Image>().sprite = sprite;
+            button.GetComponent<Image>().sprite = characterImage.image;
             SpecialAttackDict.ChildSpSprite.TryGetValue(spType, out sprite);
            // button.GetComponentInChildren<Image>().sprite = sprite;
             button.transform.GetChild(0).GetComponent<Image>().sprite = sprite;

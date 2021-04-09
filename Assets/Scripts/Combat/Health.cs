@@ -16,6 +16,9 @@ public class Health : NetworkBehaviour, IDamageable
     [SyncVar]
     private int currentLevel;
     private int lastDamageDeal;
+    private int ElectricDamage;
+    private float electricTimer = 1;
+    public bool IsElectricShock = false;
     public event Action ServerOnDie;
     public event Action ClientOnDie;
 
@@ -88,10 +91,27 @@ public class Health : NetworkBehaviour, IDamageable
         }
         return false;
     }
+    public void OnElectricShock(float damageAmount,int electricShockDamage)
+    {
+        DealDamage(damageAmount);
+        IsElectricShock = true;
+        ElectricDamage = electricShockDamage;
+    }
     #endregion
 
     #region Client
-
+    private void Update()
+    {
+        if (IsElectricShock&& electricTimer > 0)
+        {
+            electricTimer -= Time.deltaTime;
+        }
+        else if(IsElectricShock)
+        {
+            electricTimer = 1;
+            DealDamage(ElectricDamage);
+        }
+    }
     private void HandleHealthUpdated(float oldHealth, float newHealth)
     {
         ClientOnHealthUpdated?.Invoke((int)newHealth, (int)maxHealth, lastDamageDeal);

@@ -21,6 +21,7 @@ public class Unit : NetworkBehaviour
    
     public UnitMeta.UnitType unitType;
     public UnitMeta.Race race;
+    public UnitMeta.UnitKey unitKey;
     public bool isLeader = false;
     public bool isScaled = false;
     public int SpBtnTicket;
@@ -84,7 +85,7 @@ public class Unit : NetworkBehaviour
 
         health.ServerOnDie += ServerHandleDie;
         if(UnitMeta.UnitSelfDestory.TryGetValue(unitType, out int value ) )
-            Invoke(nameof(ServerHandleDie), value);
+            Invoke(nameof(ServerHandleDie), value);      
     }
 
     public override void OnStopServer()
