@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Shield : NetworkBehaviour
 {
-    [SerializeField] private ParticleSystem ShieldEffect;
+    [SerializeField] public GameObject ShieldEffect;
     [SyncVar]
     public float shieldHealth = 0;
+    private bool CanSpawned = true;
     void Start()
     {
         
@@ -15,16 +16,17 @@ public class Shield : NetworkBehaviour
     [Command]
     public void CmdSetShieldHealth(int shieldHealth)
     {
-       // Debug.Log($"gameobject {this.gameObject.name} {this.shieldHealth} / {shieldHealth}");
+        // Debug.Log($"gameobject {this.gameObject.name} {this.shieldHealth} / {shieldHealth}");
+        CanSpawned = true;
         this.shieldHealth = shieldHealth;
     }
     // Update is called once per frame
     void Update()
     {
-        if(shieldHealth > 0)
+        if(shieldHealth > 0 && CanSpawned == true)
         {
-            Instantiate(ShieldEffect, this.transform).transform.localScale = new Vector3(5, 5, 5);
-
+            Instantiate(ShieldEffect, this.transform).transform.localScale = new Vector3(2, 2, 2);
+            CanSpawned = false;
         }
     }
 }
