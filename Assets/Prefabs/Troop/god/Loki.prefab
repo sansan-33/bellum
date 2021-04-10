@@ -66,7 +66,7 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: 7707570322649849319}
---- !u!114 &4176136497738020578
+--- !u!114 &7849828108668927436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,10 +75,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 860431621525514400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c475b1dc9b0b43768963794057fa783, type: 3}
+  m_Script: {fileID: 11500000, guid: ba40dd56b881c4c1aa09ccb82382fca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   SPCost: 10
+  IceDamage: 50
+  attackRange: 100
   shieldHealths: 10000
   buttonTicket: 0
 --- !u!1001 &3014692229348437158

@@ -21,7 +21,8 @@ namespace DigitalRuby.ThunderAndLightning
         private float lightlingTimer;
 
         private bool SpawnedButton;
-        private bool IsSuperAttack = false;
+  
+       private bool IsSuperAttack = false;
 
         private Button SPButton;
         private SpCost spCost;
@@ -131,8 +132,8 @@ namespace DigitalRuby.ThunderAndLightning
             lightlingChilds = Instantiate(lightlingChild, lightling.transform);
             lightlingChilds.transform.position = new Vector3(endPoint.transform.position.x, endPoint.transform.position.y + 5, endPoint.transform.position.z);
             lightling.GetComponent<LightningBoltPathScriptBase>().LightningPath.Add(lightlingChilds);
-            enemyCount++;
             lightlingList.Add(lightlingChilds);
+            enemyCount++;
             endPoint.GetComponent<Health>().OnElectricShock(electicDamage,electicShockDamage);
             endPoint.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
         }
@@ -150,15 +151,16 @@ namespace DigitalRuby.ThunderAndLightning
                 }
                 foreach (GameObject target in targetList)
                 {
-                    if(target.TryGetComponent<Health>(out Health health))
+                    if(target != null)
                     {
-                        health.IsElectricShock = false;
+                        if (target.TryGetComponent<Health>(out Health health))
+                        {
+                            health.IsElectricShock = false;
+                        }
                     }
                 }
-                
             }
         }
     }
-   
 }
         
