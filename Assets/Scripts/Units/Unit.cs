@@ -99,8 +99,10 @@ public class Unit : NetworkBehaviour
     [Server]
     private void ServerHandleDie()
     {
+        unitMovement.HandleDieAnnimation();
         NetworkServer.Destroy(gameObject);
     }
+   
     #endregion
 
     #region Client

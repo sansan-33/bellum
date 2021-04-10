@@ -18,13 +18,14 @@ public class Health : NetworkBehaviour, IDamageable
     private int lastDamageDeal;
     private int ElectricDamage;
     private float electricTimer = 1;
+    public bool IsFrezze = false;
     public bool IsElectricShock = false;
     public event Action ServerOnDie;
     public event Action ClientOnDie;
 
     public event Action<int, int, int> ClientOnHealthUpdated;
+    public static event Action<GameObject> IceHitUpdated;
 
-    
     #region Server
 
     public override void OnStartServer()
@@ -74,6 +75,11 @@ public class Health : NetworkBehaviour, IDamageable
             return false;
         }
         else { Destroy(shield.ShieldEffect); }
+        if(IsFrezze == true)
+        {
+            IsFrezze = false;
+            IceHitUpdated?.Invoke(gameObject);
+        }
         if (currentHealth != 0)
         {
             damageAmount -= defense;
@@ -83,13 +89,21 @@ public class Health : NetworkBehaviour, IDamageable
                 lastDamageDeal = (int) damageAmount;
                 if (currentHealth == 0)
                 {
-                    ServerOnDie?.Invoke(); // if ServerOnDie not null then invoke
-                    ClientOnDie?.Invoke();
+                    StartCoroutine(Die());
                     return true;
                 }
             }
         }
         return false;
+    }
+    private IEnumerator Die()
+    {
+        CardStats cardStats = GetComponent<CardStats>();
+        GetComponent<UnitPowerUp>().CmdPowerUp(gameObject, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, Mathf.Infinity, 0, cardStats.defense, cardStats.special);
+
+        yield return new WaitForSeconds(5);
+        ServerOnDie?.Invoke(); // if ServerOnDie not null then invoke
+        ClientOnDie?.Invoke();
     }
     public void OnElectricShock(float damageAmount,int electricShockDamage)
     {
