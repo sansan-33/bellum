@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
         if (StaticClass.UserID == null || StaticClass.UserID.Length == 0)
             StaticClass.UserID = "xzixng8YmdXR4eZxxKcJ3dnGi5q2";
 
-        userid.text = StaticClass.Username ?? "bigboss";
+        //userid.text = StaticClass.Username ?? "bigboss";
         
         HandleLoadTeam();
     }
