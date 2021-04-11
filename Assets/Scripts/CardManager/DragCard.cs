@@ -42,7 +42,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         mainCamera = Camera.main;
         dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
         Input.simulateMouseWithTouches = false;
-        playerRace = (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), RTSplayer.GetRace());
+        StaticClass.playerRace = RTSplayer.GetRace();
      }
 
     #region DragFunctions
@@ -155,7 +155,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         int type = (int)GetComponent<Card>().cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
         if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
         //Debug.Log($"MoveUnitInstance {mousePos}");
-
+        playerRace = (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), StaticClass.playerRace) ;
         Debug.Log($"MoveUnitInstance race {playerRace} type {type}");
         GameObject UnitPrefab = localFactory.GetUnitPrefab(playerRace, (UnitMeta.UnitType)type);
         if (unitPreviewInstance == null)

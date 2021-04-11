@@ -7,4 +7,5 @@
     public static UnitMeta.UnitKey[] teamMembers { get; set; }
     public static string gold { get; set; }
     public static string diamond { get; set; }
+    public static string playerRace { get; set; }
 }
