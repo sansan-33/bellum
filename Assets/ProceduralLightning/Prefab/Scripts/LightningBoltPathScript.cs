@@ -268,7 +268,7 @@ namespace DigitalRuby.ThunderAndLightning
                     parameters.Start = lastPoint.Value;
                     parameters.End = currentPoint.Value;
                     base.CreateLightningBolt(parameters);
-
+                    
                     if ((nextInterval -= Speed) <= 0.0f)
                     {
                         float speedValue = UnityEngine.Random.Range(SpeedIntervalRange.Minimum, SpeedIntervalRange.Maximum);

@@ -106,6 +106,7 @@ public class Health : NetworkBehaviour, IDamageable
     }
     private IEnumerator Die()
     {
+        GetComponent<UnitMovement>().HandleDieAnnimation();
         CardStats cardStats = GetComponent<CardStats>();
         GetComponent<UnitPowerUp>().CmdPowerUp(gameObject, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, Mathf.Infinity, 0, cardStats.defense, cardStats.special);
 
