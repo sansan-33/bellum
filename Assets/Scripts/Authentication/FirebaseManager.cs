@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using Firebase;
 using Firebase.Auth;
 using TMPro;
@@ -24,7 +26,6 @@ public class FirebaseManager : MonoBehaviour
     public TMP_Text warningLoginText;
     [SerializeField] private GameObject loginPopUp = null;
 
-
     //User Profile variables
     [Header("Profile")]
     [SerializeField] private TMP_Text usernameProfileText = null;
@@ -36,9 +37,11 @@ public class FirebaseManager : MonoBehaviour
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;
     public FirebaseUser user;
-    public event Action<bool> authStateChanged;
+    public event Action authStateChanged;
 
-    [SerializeField] public TMP_Text userid = null;
+    //Auto Login
+    [Header("Auto Login")]
+    public static Dictionary<string, string[]> IPEmail = new Dictionary<string, string[]>() { { "192.168.2.181", new string []{"jack.33.wong@gmail.com","123456" } }, { "192.168.2.16", new string[] { "leonard.11.wong@gmail.com", "sw63qd" } }, { "192.168.2.124", new string[] { "louis.10.wong@gmail.com", "no name" } } };
 
     public void HandleSignUp()
     {
@@ -72,7 +75,9 @@ public class FirebaseManager : MonoBehaviour
             HandleLoadUserProfile();
         }
         else
+        {
             loginPopUp.SetActive(true);
+        }
     }
     void Awake()
     {
@@ -104,7 +109,18 @@ public class FirebaseManager : MonoBehaviour
         auth.StateChanged += AuthStateChanged;
         AuthStateChanged(this, null);
     }
-
+    private void Start()
+    {
+        StartCoroutine(AutoLogin());
+    }
+    IEnumerator AutoLogin()
+    {
+        yield return new WaitForSeconds(1f);
+        string ip = GetLocalIPv4();
+        Debug.Log($"Auto Login {ip} {IPEmail[ip][0]} {IPEmail[ip][1]} StaticClass.UserID {StaticClass.UserID}");
+        //if (StaticClass.UserID == null || StaticClass.UserID.Length == 0 )
+            yield return Login(IPEmail[ip][0], IPEmail[ip][1]);
+    }
     void AuthStateChanged(object sender, System.EventArgs eventArgs)
     {
         if (auth.CurrentUser != user)
@@ -115,16 +131,15 @@ public class FirebaseManager : MonoBehaviour
                 Debug.Log("Signed out " + user.UserId);
                 StaticClass.UserID = "";
                 StaticClass.Username = "";
-                userid.text = "userid";
+                authStateChanged?.Invoke();
             }
             user = auth.CurrentUser;
             if (signedIn)
             {
-                Debug.Log("AuthStateChanged Signed in " + user.UserId + " username: " + user.DisplayName);
-                userid.text = user.DisplayName ?? "";
                 StaticClass.Username = user.DisplayName ?? "";
                 StaticClass.UserID = user.UserId;
-                authStateChanged?.Invoke(false);
+                authStateChanged?.Invoke();
+                Debug.Log("AuthStateChanged Signed in " + user.UserId + " username: " + user.DisplayName + " StaticClass.Username " + StaticClass.Username);
             }
         }
     }
@@ -173,7 +188,7 @@ public class FirebaseManager : MonoBehaviour
             warningLoginText.text = "";
 
             loginPopUp.SetActive(false);
-            authStateChanged?.Invoke(false);
+            authStateChanged?.Invoke();
             ClearLoginFeilds();
             ClearRegisterFeilds();
 
@@ -269,6 +284,13 @@ public class FirebaseManager : MonoBehaviour
                 }
             }
         }
+    }
+    public string GetLocalIPv4()
+    {
+        return Dns.GetHostEntry(Dns.GetHostName())
+            .AddressList.First(
+                f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            .ToString();
     }
 
 }

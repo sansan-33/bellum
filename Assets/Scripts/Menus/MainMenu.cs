@@ -12,43 +12,35 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject landingPagePanel = null;
-    [SerializeField] public TMP_Text userid = null;
     [SerializeField] public Image[] teamCardImages = new Image[3];
     private static Dictionary<string, string[]> userTeamDict = new Dictionary<string, string[]>();
     [SerializeField] public CharacterFullArt characterFullArt;
     [SerializeField] private FirebaseManager firebaseManager;
-    
+    [SerializeField] private TopBarMenu topBarMenu = null;
+
     private void Awake()
     {
-        firebaseManager.authStateChanged += HandleLoadTeam;
+        firebaseManager.authStateChanged += HandleLobbyData;
     }
     private void OnDestroy()
     {
-        firebaseManager.authStateChanged -= HandleLoadTeam;
+        firebaseManager.authStateChanged -= HandleLobbyData;
     }
 
-    public void Start()
-    {
-        if (StaticClass.UserID == null || StaticClass.UserID.Length == 0)
-            StaticClass.UserID = "xzixng8YmdXR4eZxxKcJ3dnGi5q2";
-
-        //userid.text = StaticClass.Username ?? "bigboss";
-        
-        HandleLoadTeam();
-    }
     public void HostLobby()
     {
         landingPagePanel.SetActive(false);
 
         NetworkManager.singleton.StartHost();
     }
-    public void HandleLoadTeam(bool start = false)
+    public void HandleLobbyData()
     {
-        StartCoroutine(LoadTeamLobby(start));
+       StartCoroutine(LoadLobbyInfo());
     }
-    IEnumerator LoadTeamLobby(bool start){
-        if(!start && userTeamDict.Count < 1)
-        yield return GetTeamInfo(StaticClass.UserID);
+    IEnumerator LoadLobbyInfo()
+    {
+         yield return GetTeamInfo(StaticClass.UserID);
+       
         if (userTeamDict.Count < 1) { yield break; }
         string[] cardkeys = userTeamDict[userTeamDict.Keys.First()];
         if (characterFullArt.CharacterFullArtDictionary.Count < 1){
@@ -58,18 +50,19 @@ public class MainMenu : MonoBehaviour
             teamCardImages[i].gameObject.SetActive(true);
             teamCardImages[i].sprite = characterFullArt.CharacterFullArtDictionary[cardkeys[i]].image;
         }
+        Debug.Log($"Load Team Lobby Done. StaticClass.Username: {StaticClass.Username}" );
     }
     // sends an API request - returns a JSON file
     IEnumerator GetTeamInfo(string userid)
     {
+        if (userid == null || userid.Length == 0) { yield break; }
         userTeamDict.Clear();
+        Debug.Log($"Get Team info after clear userTeamDict size: {userTeamDict.Count }");
         // resulting JSON from an API request
         JSONNode jsonResult;
         UnityWebRequest webReq = new UnityWebRequest();
         webReq.downloadHandler = new DownloadHandlerBuffer();
-
         // build the url and query
-
         webReq.url = string.Format("{0}/{1}/{2}", APIConfig.urladdress, APIConfig.teamService, userid);
 
         // send the web request and wait for a returning result
@@ -82,9 +75,10 @@ public class MainMenu : MonoBehaviour
         jsonResult = JSON.Parse(rawJson);
         for (int i = 0; i < jsonResult.Count; i++)
         {
-            userTeamDict.Add(jsonResult[i]["teamnumber"], new string[] { jsonResult[i]["cardkey1"] , jsonResult[i]["cardkey2"], jsonResult[i]["cardkey3"] });
+            if(!userTeamDict.ContainsKey(jsonResult[i]["teamnumber"]))
+                userTeamDict.Add(jsonResult[i]["teamnumber"], new string[] { jsonResult[i]["cardkey1"] , jsonResult[i]["cardkey2"], jsonResult[i]["cardkey3"] });
         }
-        Debug.Log($"jsonResult {webReq.url } {jsonResult}");
+        Debug.Log($"Team info {webReq.url } {jsonResult}");
 
     }
 }

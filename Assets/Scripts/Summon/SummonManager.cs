@@ -28,7 +28,10 @@ public class SummonManager : MonoBehaviour
     Array UnitKeyValues = Enum.GetValues(typeof(UnitMeta.UnitKey));
     [SerializeField] public CharacterArt Arts;
     [SerializeField] public UnitTypeArt unitTypeArt;
+    [SerializeField] private UserProfileManager userProfileManager;
+
     private int SUMMON_COUNT=11;
+    private int DIAMOND_COUNT = -30;
 
     public void Start()
     {
@@ -40,10 +43,12 @@ public class SummonManager : MonoBehaviour
     public void HandleSummon()
     {
         int summonCount = SUMMON_COUNT;
+        int diamond = DIAMOND_COUNT;
         summonResultDisplay.SetActive(true);
         summonStartDisplay.SetActive(false);
         summonPullButton.SetActive(false);
         StartCoroutine(ServerSummon(StaticClass.UserID, summonCount));
+        StartCoroutine(userProfileManager.UpdateDiamond(StaticClass.UserID, diamond));
     }
     public void PullAgain()
     {

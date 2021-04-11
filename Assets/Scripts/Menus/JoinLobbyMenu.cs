@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using Mirror;
 using TMPro;
 using UnityEngine;
@@ -23,7 +25,10 @@ public class JoinLobbyMenu : MonoBehaviour
         RTSNetworkManager.ClientOnConnected -= HandleClientConnected;
         RTSNetworkManager.ClientOnDisconnected -= HandleClientDisconnected;
     }
-
+    public void start()
+    {
+        addressInput.text = GetLocalIPv4() + ":7777";
+    }
     public void Join()
     {
         string address = addressInput.text;
@@ -58,5 +63,13 @@ public class JoinLobbyMenu : MonoBehaviour
     private void HandleClientDisconnected()
     {
         joinButton.interactable = true;
+    }
+
+    public string GetLocalIPv4()
+    {
+        return Dns.GetHostEntry(Dns.GetHostName())
+            .AddressList.First(
+                f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            .ToString();
     }
 }
