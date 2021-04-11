@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpecialAttackDict : MonoBehaviour
 {
-    [SerializeField] public Sprite[] sprite ;
+    //[SerializeField] public Sprite[] sprite ;
     [SerializeField] public Sprite[] childSprite;
     public enum SpecialAttackType { Slash, Shield, Stun, Lightling, Ice };
     [SerializeField] public static Dictionary<SpecialAttackType, Sprite> SpSprite = new Dictionary<SpecialAttackType, Sprite>()
@@ -29,7 +29,7 @@ public class SpecialAttackDict : MonoBehaviour
         ChildSpSprite.Add(SpecialAttackType.Shield, childSprite[1]);
         ChildSpSprite.Add(SpecialAttackType.Stun, childSprite[2]);
         ChildSpSprite.Add(SpecialAttackType.Lightling, childSprite[3]);
-        ChildSpSprite.Add(SpecialAttackType.Ice, sprite[4]);
+        ChildSpSprite.Add(SpecialAttackType.Ice, childSprite[4]);
 
     }
 }
