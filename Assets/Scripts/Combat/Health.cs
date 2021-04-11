@@ -89,7 +89,9 @@ public class Health : NetworkBehaviour, IDamageable
                 lastDamageDeal = (int) damageAmount;
                 if (currentHealth == 0)
                 {
-                    StartCoroutine(Die());
+                    ServerOnDie?.Invoke(); // if ServerOnDie not null then invoke
+                    ClientOnDie?.Invoke();
+                    //StartCoroutine(Die());
                     return true;
                 }
             }
