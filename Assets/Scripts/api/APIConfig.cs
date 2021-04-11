@@ -11,4 +11,7 @@ public class APIConfig
     public static string summonService = "summon";
     public static string teamService = "team";
     public static string teamCardService = "team/card";
+    public static string userGoldService = "userprofile/gold";
+    public static string userDiamondService = "userprofile/diamond";
+    public static string userProfileService = "userprofile";
 }
