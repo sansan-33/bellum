@@ -52789,7 +52789,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 418230132}
         m_TargetAssemblyTypeName: UserProfileManager, Assembly-CSharp
         m_MethodName: RewardSignUp
         m_Mode: 1
