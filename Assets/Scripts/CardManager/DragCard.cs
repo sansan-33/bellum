@@ -156,6 +156,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
         //Debug.Log($"MoveUnitInstance {mousePos}");
 
+        Debug.Log($"MoveUnitInstance race {playerRace} type {type}");
         GameObject UnitPrefab = localFactory.GetUnitPrefab(playerRace, (UnitMeta.UnitType)type);
         if (unitPreviewInstance == null)
         {
@@ -226,22 +227,22 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
         #endregion
 
-        private void Update()
+    private void Update()
+    {
+        try
         {
-            try
-            {
-                Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
-
-                Ray ray = mainCamera.ScreenPointToRay(pos);
+            if (unitPreviewInstance == null) { return; }
+            Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
+            Ray ray = mainCamera.ScreenPointToRay(pos);
             //if the floor layer is not floor it will not work!!!
             if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask)) { return; }
-   
-              unitPreviewInstance.transform.position = hit.point; 
-        
-            }
-            catch (Exception) { }
-        
-        
+            unitPreviewInstance.transform.position = hit.point; 
+        }
+        catch (Exception) { }
+    }
+    public void SetPlayerRace(UnitMeta.Race race)
+    {
+        playerRace = race;
     }
     private float MouseSpeed(float mouseXPosition, float lastXPos)
     {
