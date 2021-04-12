@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Scene_Summon.unity
     guid: af501ee1fd4d14eeab3edc924c500e0e
   - enabled: 0
+    path: Assets/Scenes/Scene_Map_10.unity
+    guid: 407f2c101d7a74e44ab92e0dcb45d9ef
+  - enabled: 0
     path: Assets/Scenes/backup/Scene_Map_03.unity
     guid: dfde1e15dfcac406dbc766ae7f8a7168
   - enabled: 0
