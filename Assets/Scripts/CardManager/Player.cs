@@ -117,7 +117,6 @@ public class Player : MonoBehaviour
     public IEnumerator AddCard(Card card, bool left = true)
     {
         //Debug.Log($"AddCard ==> {card.cardFace.suit.ToString() }");
-        card.SetOwner(this);
         card.cardPlayerHandIndex = playerHand[0].Count;
         playerHand[0].Add(card);
       

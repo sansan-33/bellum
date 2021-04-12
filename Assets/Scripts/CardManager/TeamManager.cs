@@ -36,6 +36,7 @@ public class TeamManager : MonoBehaviour
     {
         yield return GetTeamInfo(userid);
         TeamCardButton teamCardBtn;
+        UnitMeta.UnitKey unitkey;
         //UnitMeta.UnitKey[] teamMembers = new UnitMeta.UnitKey [NOOFCARDSLOT];
         UserCard[] userCardArray = new UserCard[NOOFCARDSLOT];
         for (int i = 0; i < NOOFCARDSLOT; i++)
@@ -54,10 +55,16 @@ public class TeamManager : MonoBehaviour
                 teamCardBtn.cardSlotType.text = userCardArray[i].unittype;
                 teamCardBtn.cardSlotEmpty.SetActive(false);
                 //teamMembers[i] = (UnitMeta.UnitKey) Enum.Parse(typeof(UnitMeta.UnitKey), userCardArray[i].cardkey);
+                unitkey = (UnitMeta.UnitKey)Enum.Parse(typeof(UnitMeta.UnitKey), userCardArray[i].cardkey);
+                if (UnitMeta.KeyType[unitkey] == UnitMeta.UnitType.KING )
+                {
+                    StaticClass.playerRace = UnitMeta.KeyRace[unitkey];
+                }
             }
             //StaticClass.teamMembers = teamMembers;
+            
         }
-        
+
     }
     // sends an API request - returns a JSON file
     IEnumerator GetTeamInfo(string userid)

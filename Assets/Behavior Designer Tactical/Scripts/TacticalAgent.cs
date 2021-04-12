@@ -87,14 +87,11 @@ namespace BehaviorDesigner.Runtime.Tactical
         {
             var distance = (transform.position - targetTransform.position).magnitude;
             if (distance >= attackAgent.AttackDistance()) {
-                if (transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
-                    Debug.Log($"CanSeeTarget distance {distance}, attackAgent.AttackDistance() {attackAgent.AttackDistance()}");
-
                 return false;
             }
             RaycastHit hit;
-            if (transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
-                Debug.Log($"CanSeeTarget ray transform {transform}/{transform.TransformPoint(attackOffset)} , targetTransform {targetTransform}/{targetTransform.TransformPoint(targetOffset) }");
+            //if (transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
+            //    Debug.Log($"CanSeeTarget ray transform {transform}/{transform.TransformPoint(attackOffset)} , targetTransform {targetTransform}/{targetTransform.TransformPoint(targetOffset) }");
 
             if (Physics.Linecast(transform.TransformPoint(attackOffset), targetTransform.TransformPoint(targetOffset), out hit, ignoreRaycast)) {
                 if ( transform.TryGetComponent<Unit>( out Unit unit  ) )

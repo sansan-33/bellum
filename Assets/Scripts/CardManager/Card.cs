@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using TMPro;
@@ -7,18 +8,14 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
-    Player owner;
-
     public CardFace cardFace;
     public int cardPlayerHandIndex = 0;
     [SerializeField] public TMP_Text eleixerText;
     public float cardTimer = 0;
     [SerializeField] public List<Sprite> sprite = new List<Sprite>();
-    private Camera mainCamera;
     private UnitFactory localFactory;
     private GameObject dealManagers;
     public int playerID = 0;
-    UnitMeta.Race playerRace;
     Color teamColor;
     public eleixier eleixers;
     [SerializeField] public TMP_Text cardStar;
@@ -29,15 +26,16 @@ public class Card : MonoBehaviour
     {
         eleixers = FindObjectOfType<eleixier>();
         if (NetworkClient.connection.identity == null) { return; }
-        mainCamera = Camera.main;
         RTSPlayer player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerID = player.GetPlayerID();
-        playerRace =  (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), player.GetRace());
+        //playerRace =  (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), player.GetRace());
         teamColor = player.GetTeamColor();
         dealManagers = GameObject.FindGameObjectWithTag("DealManager");
+        StartCoroutine(SetLocalFactory());
     }
-    public void Update()
+    IEnumerator SetLocalFactory()
     {
+        yield return new WaitForSeconds(1f);
         if (localFactory == null)
         {
             foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
@@ -65,7 +63,7 @@ public class Card : MonoBehaviour
         Destroy(gameObject);
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
         dealManagers.GetComponent<CardDealer>().Hit();
-        localFactory.CmdSpawnUnit( playerRace, (UnitMeta.UnitType)type, (int)this.cardFace.star + 1, playerID, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, teamColor);
+        localFactory.CmdSpawnUnit( StaticClass.playerRace, (UnitMeta.UnitType)type, (int)this.cardFace.star + 1, playerID, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, teamColor);
     }
     public void DropUnit(Vector3 SpwanPoint)
     {
@@ -82,16 +80,11 @@ public class Card : MonoBehaviour
             }
         }
         //Debug.Log($"Card ==> DropUnit {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / Race {playerRace} / Card Stats {cardFace.stats}");
-        localFactory.CmdDropUnit(playerID, SpwanPoint, playerRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType) type).ToString(), unitsize, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, (int)this.cardFace.star + 1, teamColor, Quaternion.identity);
+        localFactory.CmdDropUnit(playerID, SpwanPoint, StaticClass.playerRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType) type).ToString(), unitsize, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, (int)this.cardFace.star + 1, teamColor, Quaternion.identity);
     }
     public void destroy()
     {
         if (gameObject != null){Destroy(gameObject);}
-    }
-    
-    public void SetOwner(Player player)
-    {
-        owner = player;
     }
    
 }
