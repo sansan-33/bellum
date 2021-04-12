@@ -38,12 +38,12 @@ MonoBehaviour:
   camPrefab: {fileID: 1434666941670536975, guid: d482d6539d9c6472e83a38c9c0fa768e, type: 3}
   camFreeLookPrefab: {fileID: 795373343299834476, guid: 7dba4376eea514bdd8c393791a18d23a, type: 3}
   attackPoint: {fileID: 2121499459242972620}
-  attackRange: 5
+  attackRange: 7
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  specialEffectPrefab: {fileID: 1750940742320366, guid: ec1383a81f8b26e41bd5795fba065567, type: 3}
-  IsAreaOfEffect: 0
+  specialEffectPrefab: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
+  IsAreaOfEffect: 1
   DashDamage: 0
   IsKingSP: 0
   CMVirtualIsOn: 0

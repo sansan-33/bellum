@@ -37,45 +37,14 @@ MonoBehaviour:
   damageToDeal: 1
   camPrefab: {fileID: 1434666941670536975, guid: d482d6539d9c6472e83a38c9c0fa768e, type: 3}
   camFreeLookPrefab: {fileID: 795373343299834476, guid: 7dba4376eea514bdd8c393791a18d23a, type: 3}
-  attackPoint: {fileID: 0}
-  attackRange: 5
+  attackPoint: {fileID: 3716851428881455766}
+  attackRange: 6
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
   specialEffectPrefab: {fileID: 1750940742320366, guid: ec1383a81f8b26e41bd5795fba065567, type: 3}
   IsAreaOfEffect: 0
-  DashDamage: 0
-  IsKingSP: 0
-  CMVirtualIsOn: 0
-  repeatAttackDelay: 1
-  attackAngle: 1
-  strengthWeakness: {fileID: 0}
---- !u!114 &5401359922427509361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762484389490778618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34dcfa190e50d4d4cb14ae09c506761c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  targeter: {fileID: 5501187663014784022}
-  damageToDeal: 1
-  camPrefab: {fileID: 1434666941670536975, guid: d482d6539d9c6472e83a38c9c0fa768e, type: 3}
-  camFreeLookPrefab: {fileID: 795373343299834476, guid: 7dba4376eea514bdd8c393791a18d23a, type: 3}
-  attackPoint: {fileID: 3716851428881455766}
-  attackRange: 5
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  specialEffectPrefab: {fileID: 0}
-  IsAreaOfEffect: 0
-  DashDamage: 0
+  DashDamage: 10
   IsKingSP: 0
   CMVirtualIsOn: 0
   repeatAttackDelay: 1

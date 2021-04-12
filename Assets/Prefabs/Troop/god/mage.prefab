@@ -42,7 +42,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  specialEffectPrefab: {fileID: 1750940742320366, guid: ec1383a81f8b26e41bd5795fba065567, type: 3}
+  specialEffectPrefab: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
   IsAreaOfEffect: 1
   DashDamage: 100
   IsKingSP: 0

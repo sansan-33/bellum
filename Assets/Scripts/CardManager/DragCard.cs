@@ -156,7 +156,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         //Debug.Log($"MoveUnitInstance {mousePos}");
         //playerRace = (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), StaticClass.playerRace) ;
         playerRace = StaticClass.playerRace;
-        Debug.Log($"MoveUnitInstance race {playerRace} type {type}");
+        //Debug.Log($"MoveUnitInstance race {playerRace} type {type}");
         GameObject UnitPrefab = localFactory.GetUnitPrefab(playerRace, (UnitMeta.UnitType)type);
         if (unitPreviewInstance == null)
         {
