@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene_Summon.unity
     guid: af501ee1fd4d14eeab3edc924c500e0e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Scene_Map_10.unity
     guid: 407f2c101d7a74e44ab92e0dcb45d9ef
   - enabled: 0
@@ -50,7 +50,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/backup/summon.unity
     guid: e5ca59357814f442a9dfd356d6a10047
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Scene_Map_02.unity
     guid: bf1bc5a35642e4249a4ac620393431ae
   m_configObjects:

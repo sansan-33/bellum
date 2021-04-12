@@ -116,7 +116,7 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(UnitMeta.UnitKey.THOR, thorPrefab);
         unitDict.Add(UnitMeta.UnitKey.LOKI, lokiPrefab);
 
-        ServerChangeScene("Scene_Map_10");
+        ServerChangeScene("Scene_Map_2");
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn)
