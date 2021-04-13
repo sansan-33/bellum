@@ -52,7 +52,7 @@ public class UserProfileManager : MonoBehaviour
             StaticClass.gold = "0";
         }
         requestTextUpdate?.Invoke();
-        Debug.Log($"Get User Profile {webReq.url } {jsonResult}");
+        //Debug.Log($"Get User Profile {webReq.url } {jsonResult}");
     }
     public void RewardSignUp()
     {

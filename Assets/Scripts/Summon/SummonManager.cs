@@ -104,6 +104,7 @@ public class SummonManager : MonoBehaviour
             userCard.transform.parent = summonResultPlacement;
             userCard.GetComponent<UserCardButton>().characterImage.sprite = characterImage.image;
             userCard.GetComponent<UserCardButton>().cardkey = characterImage.name.ToString();
+            userCard.GetComponent<UserCardButton>().cardname.text = characterImage.name.ToString();
             userCard.GetComponent<UserCardButton>().lockImage.SetActive(false);
             userCard.GetComponent<UserCardButton>().userLevelBar.SetActive(false);
             userCard.GetComponent<UserCardButton>().levelBadge.SetActive(false);
