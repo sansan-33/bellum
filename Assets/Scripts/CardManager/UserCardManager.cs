@@ -112,7 +112,7 @@ public class UserCardManager : MonoBehaviour
                 userCardDict.Add(jsonResult[i]["cardkey"] , new UserCard(jsonResult[i]["cardkey"], jsonResult[i]["level"], jsonResult[i]["exp"], jsonResult[i]["specail"], jsonResult[i]["rarity"], jsonResult[i]["leveluprequirement"], jsonResult[i]["star"], jsonResult[i]["unittype"]) );
         }
         UserCardLoaded?. Invoke(userid);
-        Debug.Log($"jsonResult {webReq.url } {jsonResult}");
+        //Debug.Log($"jsonResult {webReq.url } {jsonResult}");
         
     }
     // sends an API request - returns a JSON file
@@ -141,7 +141,7 @@ public class UserCardManager : MonoBehaviour
             if (jsonResult[i]["cardkey"] != null && jsonResult[i]["cardkey"].ToString().Length > 0)
                 allCardDict.Add(jsonResult[i]["cardkey"], new UserCard(jsonResult[i]["cardkey"], "?", "?", "?", jsonResult[i]["rarity"], "?", jsonResult[i]["star"], jsonResult[i]["unittype"]));
         }
-        Debug.Log($"jsonResult {webReq.url } {jsonResult}");
+        //Debug.Log($"jsonResult {webReq.url } {jsonResult}");
     }
 
 }

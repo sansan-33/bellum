@@ -41,10 +41,10 @@ public class TeamManager : MonoBehaviour
         UserCard[] userCardArray = new UserCard[NOOFCARDSLOT];
         for (int i = 0; i < NOOFCARDSLOT; i++)
             TeamCardSlot.transform.GetChild(i).GetComponent<TeamCardButton>().cardSlotEmpty.SetActive(true);
-        Debug.Log($"Handle Load Team -- teamnumber {teamnumber}");
+        //Debug.Log($"Handle Load Team -- teamnumber {teamnumber}");
         if (userTeamDict.TryGetValue( teamnumber , out userCardArray))
         {
-            Debug.Log($"userTeamDict -- teamnumber {teamnumber} {userCardArray} ");
+            //Debug.Log($"userTeamDict -- teamnumber {teamnumber} {userCardArray} ");
             for (int i = 0; i < NOOFCARDSLOT; i++)
             {
                 teamCardBtn = TeamCardSlot.transform.GetChild(i).GetComponent<TeamCardButton>();
@@ -112,7 +112,7 @@ public class TeamManager : MonoBehaviour
     }
     public void TeamChanged(string local_teamnumber)
     {
-        Debug.Log($"Tab Menu Clicked {local_teamnumber}");
+        //Debug.Log($"Tab Menu Clicked {local_teamnumber}");
         teamnumber = local_teamnumber;
         StartCoroutine(HandleLoadTeam(StaticClass.UserID));
     }

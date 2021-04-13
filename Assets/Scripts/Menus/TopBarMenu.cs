@@ -38,7 +38,7 @@ public class TopBarMenu : MonoBehaviour
    
     public void UserProfileTextUpdate()
     {
-        Debug.Log($"Top Bar User Profile Text Update");
+        //Debug.Log($"Top Bar User Profile Text Update");
         username.text = StaticClass.Username;
         gold.text = StaticClass.gold;
         diamond.text = StaticClass.diamond;

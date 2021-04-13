@@ -59,7 +59,7 @@ public class MainMenu : MonoBehaviour
         UnitMeta.UnitKey unitkey;
         if (userid == null || userid.Length == 0) { yield break; }
         userTeamDict.Clear();
-        Debug.Log($"Get Team info after clear userTeamDict size: {userTeamDict.Count }");
+        //Debug.Log($"Get Team info after clear userTeamDict size: {userTeamDict.Count }");
         // resulting JSON from an API request
         JSONNode jsonResult;
         UnityWebRequest webReq = new UnityWebRequest();
