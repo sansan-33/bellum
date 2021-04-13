@@ -62,6 +62,7 @@ public class DefendSP : MonoBehaviour
                 if (shield.CompareTag("Player" + player.GetPlayerID()) || shield.CompareTag("King" + player.GetPlayerID()))
                 {
                     // Set shield health
+                    Debug.Log($"shielding {shield.name}");
                     shield.GetComponent<Shield>().CmdSetShieldHealth(shieldHealths);
                 }
             }
