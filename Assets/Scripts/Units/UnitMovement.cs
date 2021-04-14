@@ -201,7 +201,7 @@ public class UnitMovement : NetworkBehaviour
                     if (networkIdentity.hasAuthority) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
-            //Debug.Log($"Attacker {targeter} --> Enemy {other} tag {other.tag}");
+            //Debug.Log($"Attacker {targeter} collided --> Enemy {other} tag {other.tag}");
             isCollided = true;
             return true;
         }

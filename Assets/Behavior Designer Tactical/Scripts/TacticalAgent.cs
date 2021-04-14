@@ -24,7 +24,7 @@ namespace BehaviorDesigner.Runtime.Tactical
         public bool AttackPosition { get { return attackPosition; } set { attackPosition = value; } }
         public Vector3 AttackOffset { set { attackOffset = value; } }
         public Vector3 TargetOffset { set { targetOffset = value; } }
-        private string debugTarget = "tank";
+        private string debugTarget = "footman";
         private bool ISDEBUG = false;
         /// <summary>
         /// Caches the component referneces.
@@ -89,12 +89,16 @@ namespace BehaviorDesigner.Runtime.Tactical
             if (distance >= attackAgent.AttackDistance()) {
                 return false;
             }
-           
+            else {
+                return true;
+            }
+            
+            /*
             RaycastHit hit;
             if (transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
             {
-                //Physics.Linecast(transform.TransformPoint(attackOffset), targetTransform.TransformPoint(targetOffset), out hit );
-                //Debug.Log($"CanSeeTarget transform {transform}/ attackOffset {attackOffset} , targetTransform {targetTransform}/targetOffset {targetOffset}");
+                Physics.Linecast(transform.TransformPoint(attackOffset), targetTransform.TransformPoint(targetOffset), out hit );
+                Debug.Log($"CanSeeTarget hit {hit.collider.name} transform {transform}/ attackOffset {attackOffset} , targetTransform {targetTransform}/targetOffset {targetOffset}");
                 Debug.DrawLine(transform.TransformPoint(attackOffset) , targetTransform.TransformPoint(targetOffset), Color.blue);
             }
             if (transform.name.ToLower().Contains("loki") && ISDEBUG)
@@ -127,6 +131,7 @@ namespace BehaviorDesigner.Runtime.Tactical
             if (transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
                 Debug.Log("CanSeeTarget end with all failed");
             return false;
+            */
         }
      
         /// <summary>
