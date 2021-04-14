@@ -18,7 +18,8 @@ public class DefendSP : MonoBehaviour
     private bool SpawnedButton;
     void Start()
     {
-        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        shieldHealths = 50;
+           player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         if (CompareTag("King" + player.GetEnemyID())|| CompareTag("Player" + player.GetEnemyID())) { return; }
         spCost = FindObjectOfType<SpCost>();
         //Instantiate SpButton and is it already spawned
@@ -32,8 +33,10 @@ public class DefendSP : MonoBehaviour
 
     public void OnPointerDown()
     {
-
-        if (spCost.SPAmount < SPCost) { return; }
+        if (spCost.useSpCost == true)
+        {
+            if (spCost.SPAmount < SPCost) { return; }
+        }
         spCost.UpdateSPAmount(-SPCost);
         Unit[] shieldList;
         //find all unit
@@ -62,7 +65,7 @@ public class DefendSP : MonoBehaviour
                 if (shield.CompareTag("Player" + player.GetPlayerID()) || shield.CompareTag("King" + player.GetPlayerID()))
                 {
                     // Set shield health
-                    Debug.Log($"shielding {shield.name}");
+                    //Debug.Log($"shielding {shield.name}");
                     shield.GetComponent<Shield>().CmdSetShieldHealth(shieldHealths);
                 }
             }

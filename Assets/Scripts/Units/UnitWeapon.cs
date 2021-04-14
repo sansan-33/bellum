@@ -24,7 +24,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     private float originalDamage;
     public float DashDamage = 0;
     public bool IsKingSP = false;
-    public bool CMVirtualIsOn = false;
     NetworkIdentity opponentIdentity;
     bool m_Started;
     // The amount of time it takes for the agent to be able to attack again
@@ -285,11 +284,5 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         return floatingText;
     }
     
-    private void Update()
-    {
-        if (CMVirtualIsOn)
-        {
-            CMVirtual();
-        }
-    }
+  
 }

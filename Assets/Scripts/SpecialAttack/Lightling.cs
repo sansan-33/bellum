@@ -57,7 +57,10 @@ namespace DigitalRuby.ThunderAndLightning
             targetList.Clear();
             startPointList.Clear();
             lightlingList.Clear();
-            if (spCost.SPAmount < SPCost) { return; }
+            if (spCost.useSpCost == true)
+            {
+                if (spCost.SPAmount < SPCost) { return; }
+            }
             spCost.UpdateSPAmount(-SPCost);
             searchPoint = gameObject;
             GameObject closestTarget = null;

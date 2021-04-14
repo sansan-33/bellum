@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class SpCost : MonoBehaviour
 {
-    public int SPAmount = 0;
+    public bool useSpCost = true;
+    [HideInInspector]public int SPAmount = 0;
     private int MaxSpCost;
 
     private Image SPImage;

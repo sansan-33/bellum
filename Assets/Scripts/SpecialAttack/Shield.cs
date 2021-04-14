@@ -9,11 +9,11 @@ public class Shield : NetworkBehaviour
     [SerializeField] public GameObject ShieldEffect;
     [SerializeField] private Image ShieldHealthBar;
     [SyncVar(hook = nameof(UpdateShieldHealth))]
-    public float shieldHealth = 0;
-    private float maxShieldHealth;
-    private GameObject shield;
+    [HideInInspector] public float shieldHealth = 0;
     [SyncVar]
     private bool CanSpawned = true;
+    private float maxShieldHealth;
+    private GameObject shield;
     void Start()
     {
         
@@ -47,9 +47,9 @@ public class Shield : NetworkBehaviour
         ShieldHealthBar.fillAmount = shieldHealth / maxShieldHealth;
         if(shieldHealth <= 0)
         {
-            Debug.Log($"destroy {ShieldEffect}");
-            Destroy(shield);
-
+          //  Debug.Log($"destroy {ShieldEffect}");
+          //  Destroy(shield);
+            DestroyImmediate(shield, true);
 
         }
     }

@@ -47,7 +47,10 @@ public class GoldenSlash : MonoBehaviour
     {
         Debug.Log($"FindAttackTargetInDistance");
         if (attackPoint == null) { return; }
-        if(spCost.SPAmount < SPCost) {return;}
+        if (spCost.useSpCost == true)
+        {
+            if (spCost.SPAmount < SPCost) { return; }
+        }
         spCost.UpdateSPAmount(-SPCost);
 
         GameObject closestTarget = null;

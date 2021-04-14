@@ -21,7 +21,9 @@ public class CinemachineShake : NetworkBehaviour {
     //public static CinemachineShake Instance { get; private set; }
 
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+    [HideInInspector] public float shakeTime;
     private float shakeTimer=.05f;
+    private float secondShakeTimer=.05f;
     private float shakeTimerTotal=1f;
     private float startingIntensity=.01f;
 
@@ -37,20 +39,38 @@ public class CinemachineShake : NetworkBehaviour {
 
     }
 
-    private void Update() {
-        if (shakeTimer > 0) {
-            shakeTimer -= Time.deltaTime;
-            CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
-                cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-            
-            cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 
-                Mathf.Lerp(startingIntensity, 0f, 1 - shakeTimer / shakeTimerTotal);
-
-        }
-        else
+    private void Update()
+    {   if(shakeTime > 0)
         {
-            Destroy(gameObject);
+            //Debug.Log($"shake time {shakeTime},{shakeTimer}");
+            shakeTime -= Time.deltaTime;
+            if (shakeTimer > 0)
+            {
+            //Debug.Log("shake");
+                shakeTimer -= Time.deltaTime;
+                GetComponent<CinemachineVirtualCamera>().enabled = true;
+                CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
+                    cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain =
+                    Mathf.Lerp(startingIntensity, 0f, 1 - shakeTimer / shakeTimerTotal);
+                secondShakeTimer = .05f;
+            }
+            else
+             {
+           // Debug.Log("return shake !!!!!!!!!!!");
+            GetComponent<CinemachineVirtualCamera>().enabled = false;
+                if (secondShakeTimer > 0)
+                {
+                   // Debug.Log($"count shake {secondShakeTimer}");
+                    secondShakeTimer -= Time.deltaTime;
+                }
+                else { shakeTimer = .05f; 
+           // Debug.Log("re shake"); }
+            }
         }
+        else { Destroy(gameObject); }
+        
     }
 
 }
