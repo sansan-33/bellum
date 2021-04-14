@@ -45,7 +45,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         protected Behavior leaderTree;
         protected List<IDamageable> targets = new List<IDamageable>();
         protected List<Transform> targetTransforms = new List<Transform>();
-        private string debugTarget = "tank";
+        private string debugTarget = "footman";
         private bool ISDEBUG = false;
 
         /// <summary>
