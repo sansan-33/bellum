@@ -62,10 +62,10 @@ public class CinemachineShake : NetworkBehaviour {
             GetComponent<CinemachineVirtualCamera>().enabled = false;
                 if (secondShakeTimer > 0)
                 {
-                   // Debug.Log($"count shake {secondShakeTimer}");
+                    // Debug.Log($"count shake {secondShakeTimer}");
                     secondShakeTimer -= Time.deltaTime;
                 }
-                else { shakeTimer = .05f; 
+                else { shakeTimer = .05f; }
            // Debug.Log("re shake"); }
             }
         }
