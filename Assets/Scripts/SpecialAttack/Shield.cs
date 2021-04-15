@@ -8,7 +8,7 @@ public class Shield : NetworkBehaviour
 {
 
     [SerializeField] private GameObject shieldBarParent = null;
-[SerializeField] public GameObject ShieldEffect;
+    [SerializeField] public GameObject ShieldEffect;
     [SerializeField] private Image ShieldHealthBar;
     [SyncVar(hook = nameof(UpdateShieldHealth))]
     [HideInInspector] public float shieldHealth = 0;
@@ -47,6 +47,7 @@ public class Shield : NetworkBehaviour
     }
     private void UpdateShieldHealth(float oldHealth, float newHealth)
     {
+        shieldBarParent.SetActive(true);
         //Debug.Log($"fillamout {ShieldHealthBar.fillAmount},health {shieldHealth}, max {maxShieldHealth}");
         ShieldHealthBar.fillAmount = shieldHealth / maxShieldHealth;
         if(shieldHealth <= 0)
