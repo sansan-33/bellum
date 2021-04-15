@@ -10,6 +10,7 @@ public class CardStats : MonoBehaviour
     public int speed;
     public int defense;
     public int special;
+    public SpecialAttackDict.SpecialAttackType[] specialAttackTypes;
     public CardStats() { }
     public CardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special=0)
     {
