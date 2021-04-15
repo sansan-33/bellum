@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CardStats : MonoBehaviour
 {
@@ -10,13 +11,16 @@ public class CardStats : MonoBehaviour
     public int speed;
     public int defense;
     public int special;
-    public SpecialAttackDict.SpecialAttackType[] specialAttackTypes;
+    public string specialkey;
+    public string passivekey;
+    [HideInInspector]public SpecialAttackDict.SpecialAttackType specialAttackTypes =  SpecialAttackDict.SpecialAttackType.Shield;
+
     public CardStats() { }
-    public CardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special=0)
+    public CardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special = 0, string specialkey ="", string passivekey = "")
     {
-        SetCardStats(star, cardLevel, health,attack,repeatAttackDelay,speed,defense,special);
+        SetCardStats(star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special,  specialkey, passivekey);
     }
-    public void SetCardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special=0)
+    public void SetCardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special = 0, string specialkey = "", string passivekey = "")
     {
         this.star = star;
         this.cardLevel = cardLevel;
@@ -25,10 +29,12 @@ public class CardStats : MonoBehaviour
         this.repeatAttackDelay = repeatAttackDelay;
         this.speed = speed;
         this.defense = defense;
+        this.specialkey = specialkey;
+        this.passivekey = passivekey;
         this.special = special;
     }
     public override string ToString()
     {
-        return "health:" + health + "\t attack:" + attack + "\t repeatAttackDelay:" + repeatAttackDelay + "\t speed:" + speed + "\t defense:" + defense + "\t special:" + special;
+        return "health:" + health + "\t attack:" + attack + "\t repeatAttackDelay:" + repeatAttackDelay + "\t speed:" + speed + "\t defense:" + defense + "\t special:" + special + "\t specialkey:" + specialkey + "\t passivekey:" + passivekey;
     }
 }
