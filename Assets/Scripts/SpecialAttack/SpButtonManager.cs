@@ -4,7 +4,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 using static CharacterArt;
-public class SpButton : MonoBehaviour
+public class SpButtonManager : MonoBehaviour
 {
     [SerializeField] public CharacterArt Arts;
     [SerializeField] GameObject buttonPrefab;
@@ -18,6 +18,13 @@ public class SpButton : MonoBehaviour
     private RTSPlayer player;
     private GameObject buttonChild;
     private ISpecialAttack SpecialAttack;
+    Dictionary<UnitMeta.UnitKey, SpecialAttackDict.SpecialAttackType> unitSp = new Dictionary<UnitMeta.UnitKey, SpecialAttackDict.SpecialAttackType>()
+    {
+        {UnitMeta.UnitKey.ODIN, SpecialAttackDict.SpecialAttackType.Stun},
+        {UnitMeta.UnitKey.THOR, SpecialAttackDict.SpecialAttackType.Lightling},
+        {UnitMeta.UnitKey.LOKI, SpecialAttackDict.SpecialAttackType.Shield},
+        {UnitMeta.UnitKey.GODMAGE, SpecialAttackDict.SpecialAttackType.Ice}
+    };
     void Awake()
     {
         Arts.initDictionary();
@@ -35,16 +42,18 @@ public class SpButton : MonoBehaviour
     //find all unit
     units = FindObjectsOfType<CardStats>();
     //senemyList = GameObject.FindGameObjectsWithTag("Player" + player.GetEnemyID()).ToList();
-    Debug.Log($"{units.Length}");
+   // Debug.Log($"{units.Length}");
     if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)//1 player mode
     {
 
         foreach (CardStats unit in units)
         {  // Only Set on our side
-            Debug.Log($"one player mode {unit.tag}");
+            //Debug.Log($"one player mode {unit.tag}");
             if (unit.CompareTag("Player0") || unit.CompareTag("King0"))
             {
-                Debug.Log("one player mode");
+                    unitSp.TryGetValue(unit.GetComponent<Unit>().unitKey, out SpecialAttackDict.SpecialAttackType type);
+                    unit.specialAttackTypes = type;
+                //Debug.Log("one player mode");
                 SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
                 InstantiateSpButton(unit.specialAttackTypes, unit.GetComponent<Unit>(), SpecialAttack);
             }
