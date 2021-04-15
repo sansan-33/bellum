@@ -43,7 +43,7 @@ public class GoldenSlash : MonoBehaviour
         TB = GameObject.FindGameObjectWithTag("TacticalSystem").GetComponent<TacticalBehavior>();
     }
    
-    public void FindAttackTargetInDistance()
+    public void OnPointerDown()
     {
         Debug.Log($"FindAttackTargetInDistance");
         if (attackPoint == null) { return; }

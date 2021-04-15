@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace DigitalRuby.ThunderAndLightning
 {
-    public class Lightling :  MonoBehaviour 
+    public class Lightling :  MonoBehaviour, ISpecialAttack
     {
         [SerializeField] private GameObject LightlingPrefab;
         [SerializeField] private LayerMask layerMask = new LayerMask();
@@ -52,7 +52,7 @@ namespace DigitalRuby.ThunderAndLightning
             TB = GameObject.FindGameObjectWithTag("TacticalSystem").GetComponent<TacticalBehavior>();
         }
  
-        public void OnPointerDowns()
+        public void OnPointerDown()
         {
             targetList.Clear();
             startPointList.Clear();

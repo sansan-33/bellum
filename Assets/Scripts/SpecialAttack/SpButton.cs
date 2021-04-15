@@ -17,11 +17,13 @@ public class SpButton : MonoBehaviour
     private Sprite sprite;
     private RTSPlayer player;
     private GameObject buttonChild;
+    private ISpecialAttack SpecialAttack;
     void Awake()
     {
         Arts.initDictionary();
     }
-    void Strat()
+    
+    private void Start()
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         CardStats[] units;
@@ -35,10 +37,10 @@ public class SpButton : MonoBehaviour
             {  // Only Set on our side
                 if (unit.CompareTag("Player0") || unit.CompareTag("King0"))
                 {
-                    foreach(SpecialAttackDict.SpecialAttackType type in unit.specialAttackTypes)
-                    {
-                        InstantiateSpButton(type, unit.GetComponent<Unit>());
-                    }
+                   
+                        SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
+                        InstantiateSpButton(unit.specialAttackTypes, unit.GetComponent<Unit>(), SpecialAttack);
+                    
                    
                 }
             }
@@ -51,16 +53,15 @@ public class SpButton : MonoBehaviour
             {  // Only Set on our side
                 if (unit.CompareTag("Player" + player.GetPlayerID()) || unit.CompareTag("King" + player.GetPlayerID()))
                 {
-                    foreach (SpecialAttackDict.SpecialAttackType type in unit.specialAttackTypes)
-                    {
-                        InstantiateSpButton(type, unit.GetComponent<Unit>());
-                    }
+                    
+                        SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
+                        InstantiateSpButton(unit.specialAttackTypes, unit.GetComponent<Unit>(), SpecialAttack);
+                    
                 }
             }
-
         }
     }
-    public void InstantiateSpButton(SpecialAttackDict.SpecialAttackType spType,Unit unit)
+    public void InstantiateSpButton(SpecialAttackDict.SpecialAttackType spType,Unit unit, ISpecialAttack specialAttack)
     {
         //only spawn one button for each type of Sp
         
@@ -77,9 +78,10 @@ public class SpButton : MonoBehaviour
             SpecialAttackDict.ChildSpSprite.TryGetValue(spType, out sprite);
             buttonChild.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
             spawnedSpButton.Add(button);
+            button.GetComponent<Button>().onClick.AddListener(specialAttack.OnPointerDown);
             // tell unit where is the button in the list
-     
-        
+
+
     }
    
     public GameObject GetButton(int Ticket)

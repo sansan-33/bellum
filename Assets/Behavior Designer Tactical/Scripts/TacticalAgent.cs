@@ -34,7 +34,7 @@ namespace BehaviorDesigner.Runtime.Tactical
         {
             transform = agent;
             attackAgent = agent.GetComponent(typeof(IAttackAgent)) as IAttackAgent;
-        }
+        } 
 
         /// <summary>
         /// Sets the destination.

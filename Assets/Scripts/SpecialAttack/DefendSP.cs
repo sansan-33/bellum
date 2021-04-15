@@ -5,7 +5,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DefendSP : MonoBehaviour
+public class DefendSP : MonoBehaviour, ISpecialAttack
 {
     private List<GameObject> enemyList;
     private Button SPButton;

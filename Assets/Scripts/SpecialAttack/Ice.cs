@@ -5,7 +5,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Ice : MonoBehaviour
+public class Ice : MonoBehaviour, ISpecialAttack
 {
     [SerializeField] public ParticleSystem iceEffect;
     [SerializeField] private LayerMask layerMask = new LayerMask();

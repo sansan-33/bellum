@@ -5,7 +5,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Stun : NetworkBehaviour
+public class Stun : NetworkBehaviour, ISpecialAttack
 {
     [SerializeField] private GameObject camPrefab = null;
     private UnitWeapon UnitWeapon;
