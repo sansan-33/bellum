@@ -22146,6 +22146,7 @@ MonoBehaviour:
   buttonPrefab: {fileID: 3403223279471846883, guid: 37b8f815026a2497d8ead814aadeb8a1, type: 3}
   buttonOffSet: 200
   FirstCardPos: {fileID: 687756587}
+  spawnedSpButtonUnit: 
 --- !u!114 &443694901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22179,7 +22180,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   effectList:
-  - {fileID: 100000, guid: 18204b98237ccb540808f2cd2d78c2c8, type: 3}
+  - {fileID: 173866, guid: 6692e3c69d930964f89b810020ae7d5c, type: 3}
   - {fileID: 0}
 --- !u!114 &443694903
 MonoBehaviour:
@@ -37126,7 +37127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64fa7d086fec4ee799738d53916ab12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useSpCost: 0
+  useSpCost: 1
   SPAmount: 0
 --- !u!1001 &743560047
 PrefabInstance:
