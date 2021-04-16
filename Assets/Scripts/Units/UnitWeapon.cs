@@ -154,7 +154,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
             powerUpAfterKill(this.transform.gameObject);
             RpcpowerUpAfterKill(this.transform.gameObject);
 
-               spCost.UpdateSPAmount(1);
+               spCost.UpdateSPAmount(1,GetComponent<Unit>());
             
            
         }
@@ -245,14 +245,14 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     }
     public void powerUpAfterKill(GameObject unit)
     {
-        unit.GetComponent<HealthDisplay>().HandleKillText();
+        unit.GetComponent<HealthDisplay>().HandleKillText(1);
         damageToDeal *= upGradeAmount;
         
     }
     [ClientRpc]
     public void RpcpowerUpAfterKill(GameObject unit)
     {
-        unit.GetComponent<HealthDisplay>().HandleKillText();
+        unit.GetComponent<HealthDisplay>().HandleKillText(1);
         damageToDeal *= upGradeAmount;
     }
     [TargetRpc]

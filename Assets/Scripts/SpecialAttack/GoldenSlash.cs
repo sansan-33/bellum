@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GoldenSlash : MonoBehaviour
+public class GoldenSlash : MonoBehaviour, ISpecialAttack
 {
     [SerializeField] private LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject attackPoint;
@@ -47,11 +47,15 @@ public class GoldenSlash : MonoBehaviour
     {
         Debug.Log($"FindAttackTargetInDistance");
         if (attackPoint == null) { return; }
+        SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
         if (spCost.useSpCost == true)
         {
-            if (spCost.SPAmount < SPCost) { return; }
+            //if (spCost.SPAmount < SPCost) { return; }
+            if ((btn.GetComponent<SpCostDisplay>().spCost / 3) < SPCost) { return; }
+
         }
-        spCost.UpdateSPAmount(-SPCost);
+        StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(10));
+        spCost.UpdateSPAmount(-SPCost, null);
 
         GameObject closestTarget = null;
         bool haveTarget = true;

@@ -33,11 +33,15 @@ public class DefendSP : MonoBehaviour, ISpecialAttack
 
     public void OnPointerDown()
     {
+        SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
         if (spCost.useSpCost == true)
         {
-            if (spCost.SPAmount < SPCost) { return; }
+            //if (spCost.SPAmount < SPCost) { return; }
+            if ((btn.GetComponent<SpCostDisplay>().spCost / 3) < SPCost) { return; }
+
         }
-        spCost.UpdateSPAmount(-SPCost);
+        StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(10));
+        spCost.UpdateSPAmount(-SPCost, null);
         Unit[] shieldList;
         //find all unit
         shieldList = FindObjectsOfType<Unit>();

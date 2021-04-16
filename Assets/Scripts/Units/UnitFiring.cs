@@ -104,13 +104,13 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     }
     public void OnHandleKilled()
     {
-        GetComponent<HealthDisplay>().HandleKillText();
+        GetComponent<HealthDisplay>().HandleKillText(1);
         ScaleDamageDeal(0,0,damageToDealFactor + powerUpFactor);
     }
     [ClientRpc]
     public void RpcOnHandleKilled()
     {
-        GetComponent<HealthDisplay>().HandleKillText();
+        GetComponent<HealthDisplay>().HandleKillText(1);
     }
 
 }

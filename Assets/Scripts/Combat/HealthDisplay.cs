@@ -73,10 +73,10 @@ public class HealthDisplay : MonoBehaviour
     {
         healthBarImage.sprite = newColor == Color.blue ? healthBarImage.sprite : healthBarEnemyImage;
     }
-    public void HandleKillText()
+    public void HandleKillText(int kill)
     {
+        kills += kill;
         killText.text = kills.ToString();
-        kills++;
     }
     public void SetUnitLevel(int level, UnitMeta.UnitType unitType)
     {

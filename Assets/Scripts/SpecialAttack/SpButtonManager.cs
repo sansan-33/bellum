@@ -13,18 +13,12 @@ public class SpButtonManager : MonoBehaviour
     private GameObject button;
     private int buttonCount;
     private List<SpecialAttackDict.SpecialAttackType> spawnedButtonSpType = new List<SpecialAttackDict.SpecialAttackType>();
-    private List<GameObject> spawnedSpButton = new List<GameObject>();
+    public List<UnitMeta.UnitKey> spawnedSpButtonUnit = new List<UnitMeta.UnitKey>();
     private Sprite sprite;
     private RTSPlayer player;
     private GameObject buttonChild;
     private ISpecialAttack SpecialAttack;
-    Dictionary<UnitMeta.UnitKey, SpecialAttackDict.SpecialAttackType> unitSp = new Dictionary<UnitMeta.UnitKey, SpecialAttackDict.SpecialAttackType>()
-    {
-        {UnitMeta.UnitKey.ODIN, SpecialAttackDict.SpecialAttackType.Stun},
-        {UnitMeta.UnitKey.THOR, SpecialAttackDict.SpecialAttackType.Lightling},
-        {UnitMeta.UnitKey.LOKI, SpecialAttackDict.SpecialAttackType.Shield},
-        {UnitMeta.UnitKey.GODMAGE, SpecialAttackDict.SpecialAttackType.Ice}
-    };
+   
     void Awake()
     {
         Arts.initDictionary();
@@ -51,15 +45,15 @@ public class SpButtonManager : MonoBehaviour
             //Debug.Log($"one player mode {unit.tag}");
             if (unit.CompareTag("Player0") || unit.CompareTag("King0"))
             {
-                    var gotValue = unitSp.TryGetValue(unit.GetComponent<Unit>().unitKey, out SpecialAttackDict.SpecialAttackType type);
-                    if (gotValue == true)
-                    {
-                        unit.specialAttackTypes = type;
+                    //var gotValue = unitSp.TryGetValue(unit.GetComponent<Unit>().unitKey, out SpecialAttackDict.SpecialAttackType type);
+                    //if (gotValue == true)
+                    //{
+                     //   unit.specialAttackTypes = type;
                         //Debug.Log("one player mode");
                         SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
-
-                        InstantiateSpButton(unit.specialAttackTypes, unit.GetComponent<Unit>(), SpecialAttack);
-                    }
+                    unit.specialAttackTypes = SpecialAttackDict.SpecialAttackType.Ice;
+                       InstantiateSpButton(unit.specialAttackTypes, unit.GetComponent<Unit>(), SpecialAttack);
+                    //}
                    
             }
         }
@@ -84,31 +78,32 @@ public class SpButtonManager : MonoBehaviour
     {
         //only spawn one button for each type of Sp
         Debug.Log($"spawn {spType}");
-            
-            buttonCount++;
-          // if(spType == SpecialAttackDict.SpecialAttackType.Shield) { Debug.Log(buttonCount); }
-            // spawn the button
-            CharacterImage characterImage = Arts.CharacterArtDictionary[unit.unitKey.ToString()];
-            button = Instantiate(buttonPrefab, transform);
-            //Set button pos
-            button.GetComponent<RectTransform>().anchoredPosition = new Vector3(FirstCardPos.anchoredPosition.x + buttonOffSet * buttonCount, FirstCardPos.anchoredPosition.y, 0);
-            buttonChild = button.transform.Find("mask").gameObject;
-            buttonChild.transform.GetChild(0).GetComponent<Image>().sprite = characterImage.image;
-            SpecialAttackDict.ChildSpSprite.TryGetValue(spType, out sprite);
-            buttonChild.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
-            spawnedSpButton.Add(button);
-            button.GetComponent<Button>().onClick.AddListener(specialAttack.OnPointerDown);
-            // tell unit where is the button in the list
+        buttonCount++;
+        // if(spType == SpecialAttackDict.SpecialAttackType.Shield) { Debug.Log(buttonCount); }
+        // spawn the button
+        CharacterImage characterImage = Arts.CharacterArtDictionary[unit.unitKey.ToString()];
+        button = Instantiate(buttonPrefab, transform);
+        //Set button pos
+        button.GetComponent<RectTransform>().anchoredPosition = new Vector3(FirstCardPos.anchoredPosition.x + buttonOffSet * buttonCount, FirstCardPos.anchoredPosition.y, 0);
+        buttonChild = button.transform.Find("mask").gameObject;
+        buttonChild.transform.GetChild(0).GetComponent<Image>().sprite = characterImage.image;
+        SpecialAttackDict.ChildSpSprite.TryGetValue(spType, out sprite);
+        buttonChild.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
+        spawnedSpButtonUnit.Add(unit.unitKey);
+        button.GetComponent<Button>().onClick.AddListener(specialAttack.OnPointerDown);
+        // tell unit where is the button in the list
+        unitBtn.Add(unit.unitKey, button.GetComponent<Button>());
     }
-   
-    public GameObject GetButton(int Ticket)
+
+    public static Dictionary<UnitMeta.UnitKey, Button> unitBtn = new Dictionary<UnitMeta.UnitKey, Button>()
     {
-        return spawnedSpButton[Ticket];
-    }
+
+    };
     // Update is called once per frame
     void Update()
     {
         
     }
-   
+  
 }
+

@@ -57,11 +57,15 @@ namespace DigitalRuby.ThunderAndLightning
             targetList.Clear();
             startPointList.Clear();
             lightlingList.Clear();
+            SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
             if (spCost.useSpCost == true)
             {
-                if (spCost.SPAmount < SPCost) { return; }
+                //if (spCost.SPAmount < SPCost) { return; }
+                if ((btn.GetComponent<SpCostDisplay>().spCost / 3) < SPCost) { return; }
+
             }
-            spCost.UpdateSPAmount(-SPCost);
+            StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(10));
+            spCost.UpdateSPAmount(-SPCost, null);
             searchPoint = gameObject;
             GameObject closestTarget = null;
             bool haveTarget = true;

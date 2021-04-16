@@ -28,6 +28,8 @@ public class SpawnSpEffect : NetworkBehaviour
     public void SetShield(int effectNum, Transform transform)
     {
         //Debug.Log($"{effectNum},{transform} at final");
+        Debug.Log($"transform { transform}");
+        if(transform == null) { return; }
         Instantiate(effectList[effectNum], transform);
     }
     // Update is called once per frame

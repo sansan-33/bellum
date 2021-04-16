@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Ice : MonoBehaviour, ISpecialAttack
 {
-    [SerializeField] public ParticleSystem iceEffect;
+    [SerializeField] public GameObject iceEffect;
     [SerializeField] private LayerMask layerMask = new LayerMask();
     public List<GameObject> enemyList = new List<GameObject>();
     private Button SPButton;
@@ -21,6 +21,7 @@ public class Ice : MonoBehaviour, ISpecialAttack
     public int attackRange = 100;
     public float UnFrezzeTimer = 3;
     private float UnFrezzeTime;
+    private SpButtonManager SpButtonManager;
     public int buttonTicket;
     private bool SpawnedButton;
     private bool IsFrezze = false;
@@ -50,15 +51,19 @@ public class Ice : MonoBehaviour, ISpecialAttack
     }
     public void OnPointerDown()
     {
-       
+        
         enemyList.Clear();
         UnitRepeatAttackDelaykeys.Clear();
         UnitSpeedkeys.Clear();
+        SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
         if (spCost.useSpCost == true)
         {
-            if (spCost.SPAmount < SPCost) { return; }
+            //if (spCost.SPAmount < SPCost) { return; }
+            if ((btn.GetComponent<SpCostDisplay>().spCost / 3) < SPCost) { return; }
+               
         }
-        spCost.UpdateSPAmount(-SPCost);
+        StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(10));
+        spCost.UpdateSPAmount(-SPCost,null);
 
         GameObject closestTarget = null;
         bool haveTarget = true;
@@ -95,10 +100,10 @@ public class Ice : MonoBehaviour, ISpecialAttack
                     UnitRepeatAttackDelaykeys.Add(hitCollider, cardStats.repeatAttackDelay);
                     UnitSpeedkeys.Add(hitCollider, cardStats.speed);
                     hitCollider.GetComponent<UnitPowerUp>().CmdPowerUp(hitCollider, cardStats.star, cardStats.cardLevel, (int)hitCollider.GetComponent<Health>().getCurrentHealth(), cardStats.attack, Mathf.Infinity, 0, cardStats.defense, cardStats.special);
-                  
-                        // Move the searchPoint to the next target, so it will not search at the same point
-                        //searchPoint = closestTarget.transform;
-                        // }
+                    FindObjectOfType<SpawnSpEffect>().CmdSpawnEffect(0, hitCollider.transform);
+                    // Move the searchPoint to the next target, so it will not search at the same point
+                    //searchPoint = closestTarget.transform;
+                    // }
                 }
                 }
             }
@@ -137,8 +142,8 @@ public class Ice : MonoBehaviour, ISpecialAttack
             foreach (GameObject unit in enemyList)
             {
                 //Instantiate(iceEffect, unit.transform);
+                if(unit == null) { return; }
                 
-                FindObjectOfType<SpawnSpEffect>().CmdSpawnEffect(0, unit.transform);
             }
         }
     }

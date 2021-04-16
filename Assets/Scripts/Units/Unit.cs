@@ -5,6 +5,7 @@ using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Unit : NetworkBehaviour 
 {
@@ -18,7 +19,7 @@ public class Unit : NetworkBehaviour
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private UnityEvent onSelected = null;
     [SerializeField] private UnityEvent onDeselected = null;
-   
+
     public UnitMeta.UnitType unitType;
     public UnitMeta.Race race;
     public UnitMeta.UnitKey unitKey;

@@ -49,6 +49,28 @@ MonoBehaviour:
   repeatAttackDelay: 1
   attackAngle: 1
   textPrefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}
+--- !u!114 &4676987878523185726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860431621525514400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba40dd56b881c4c1aa09ccb82382fca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceEffect: {fileID: 1979527227019656, guid: b780c48924835834894c395fe01f19c1, type: 3}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  enemyList: []
+  SPCost: 10
+  IceDamage: 10
+  attackRange: 100
+  UnFrezzeTimer: 8
+  buttonTicket: 0
 --- !u!114 &5766994632317373496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,21 +87,6 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: 7707570322649849319}
---- !u!114 &6101827152553113717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860431621525514400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c475b1dc9b0b43768963794057fa783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SPCost: 10
-  shieldHealths: 10
-  buttonTicket: 0
 --- !u!1001 &3014692229348437158
 PrefabInstance:
   m_ObjectHideFlags: 0
