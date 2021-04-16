@@ -13,7 +13,8 @@ public class TeamManager : MonoBehaviour
     public UserCardManager userCardManager;
     private Dictionary<string, UserCard[]> userTeamDict = new Dictionary<string, UserCard[]>();
     public GameObject TeamCardSlot;
-    
+    public PopupMessageDisplay popupMessageDisplay;
+
     private static int NOOFCARDSLOT = 3;
     private string teamnumber= "0";
     private UserCard[] userCardArray = new UserCard[NOOFCARDSLOT];
@@ -127,6 +128,8 @@ public class TeamManager : MonoBehaviour
         Debug.Log($"levelup card {webReq.url }");
         // send the web request and wait for a returning result
         yield return webReq.SendWebRequest();
+        string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
+        popupMessageDisplay.displayText(2f,"Team Saved " + JSON.Parse(rawJson)["status"]);
     }
 }
 
