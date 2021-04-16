@@ -27,7 +27,7 @@ public class SpCostDisplay : MonoBehaviour
     public IEnumerator AddSpCost()
     {
         yield return new WaitForSeconds(0);
-        if(spCost < childSprite.Count*2-1)
+        if(spCost < childSprite.Count*2)
         {
             if (secoundLayer == true)
             {
@@ -35,6 +35,7 @@ public class SpCostDisplay : MonoBehaviour
             }
             else
             {
+                Debug.Log($"spCost{spCost}");
                 childSprite[spCost].SetActive(true);
             }
 
@@ -88,9 +89,10 @@ public class SpCostDisplay : MonoBehaviour
             else
             {
                 childSprite[spCost].SetActive(false);
+                if (spCost == 0) { break; }
                 spCost--;
             }
-            if(spCost < 0) { break; } 
+            
         }
     }
     private void Update()

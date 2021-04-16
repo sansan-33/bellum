@@ -26,6 +26,7 @@ public class SpButtonManager : MonoBehaviour
     
     private void Start()
     {
+        unitBtn.Clear();
         StartCoroutine(start());
     }
     private IEnumerator start()
@@ -93,6 +94,7 @@ public class SpButtonManager : MonoBehaviour
         button.GetComponent<Button>().onClick.AddListener(specialAttack.OnPointerDown);
         // tell unit where is the button in the list
         unitBtn.Add(unit.unitKey, button.GetComponent<Button>());
+        
     }
 
     public static Dictionary<UnitMeta.UnitKey, Button> unitBtn = new Dictionary<UnitMeta.UnitKey, Button>()
