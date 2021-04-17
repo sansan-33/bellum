@@ -121,7 +121,7 @@ namespace DigitalRuby.ThunderAndLightning
             if (closestTarget == null) { return; }
             for (int a = 0; a < targetList.ToArray().Length; a++)
             {
-                
+
                 Lightlings(startPointList.ToArray()[a], targetList.ToArray()[a]);
             }
             lightlingTimer = 5;
@@ -145,6 +145,10 @@ namespace DigitalRuby.ThunderAndLightning
                 endPoint.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
            
            
+        }
+        public void Lightlinggs(GameObject startPoint, GameObject endPoint)
+        {
+            Instantiate(LightlingPrefab, transform);
         }
         public void Update()
         {
