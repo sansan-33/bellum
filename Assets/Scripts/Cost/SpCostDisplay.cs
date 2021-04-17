@@ -21,7 +21,7 @@ public class SpCostDisplay : MonoBehaviour
     }
     
     /// <summary>
-    /// Add one Sp
+    /// Add one Sp Cost
     /// </summary>
     /// <returns></returns>
     public IEnumerator AddSpCost()
@@ -35,7 +35,6 @@ public class SpCostDisplay : MonoBehaviour
             }
             else
             {
-                Debug.Log($"spCost{spCost}");
                 childSprite[spCost].SetActive(true);
             }
 
@@ -105,16 +104,8 @@ public class SpCostDisplay : MonoBehaviour
             }
             else
             {
-                if(spCost >= 35)
-                {
-                    Timer = waitTime;
-                    StartCoroutine(MinusSpCost(10));
-                }
-                else
-                {
                     Timer = waitTime;
                     StartCoroutine(AddSpCost());
-                }
             }
         }
     }
