@@ -48,6 +48,7 @@ public class Unit : NetworkBehaviour
     public IUnitMovement GetUnitMovement()
     {
         return unitMovement;
+        //return astarAI;
     }
     public UnitPowerUp GetUnitPowerUp()
     {

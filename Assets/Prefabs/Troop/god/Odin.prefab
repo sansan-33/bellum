@@ -387,6 +387,10 @@ PrefabInstance:
       propertyPath: unitType
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 7423325971735272445, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: unitNetworkAnimator
+      value: 
+      objectReference: {fileID: 5766994632317373496}
     - target: {fileID: 7886504477174588649, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Size.x
       value: 3

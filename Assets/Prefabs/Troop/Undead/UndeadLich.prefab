@@ -62,10 +62,8 @@ MonoBehaviour:
   IsAreaOfEffect: 1
   DashDamage: 0
   IsKingSP: 0
-  CMVirtualIsOn: 0
   repeatAttackDelay: 1
   attackAngle: 1
-  strengthWeakness: {fileID: 0}
   textPrefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}
 --- !u!1001 &1492642562928962214
 PrefabInstance:
@@ -390,6 +388,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 7423325971735272445, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: unitNetworkAnimator
+      value: 
+      objectReference: {fileID: 4849249970780787187}
     - target: {fileID: 7886504477174588649, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_Size.x
       value: 3

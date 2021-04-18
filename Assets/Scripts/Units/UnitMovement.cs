@@ -8,7 +8,6 @@ public class UnitMovement : NetworkBehaviour , IUnitMovement
 {
     [SerializeField] public int maxSpeed = 100;
     [SerializeField] private NavMeshAgent agent = null;
-    [SerializeField] private Targeter targeter = null;
     [SerializeField] public NetworkAnimator unitNetworkAnimator = null;
     [SerializeField] public GameObject circleMarker = null;
     private Collider other;
@@ -200,7 +199,6 @@ public class UnitMovement : NetworkBehaviour , IUnitMovement
                     if (networkIdentity.hasAuthority) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
-            //Debug.Log($"Attacker {targeter} collided --> Enemy {other} tag {other.tag}");
             isCollided = true;
             return true;
         }

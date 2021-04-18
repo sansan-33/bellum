@@ -4,13 +4,10 @@
 using Pathfinding;
 using Mirror;
 
-public class AstarAI : NetworkBehaviour
+public class AstarAI : NetworkBehaviour, IUnitMovement
 {
-    public Transform targetPosition;
-
     private Seeker seeker;
-    //private CharacterController controller;
-
+    private IAstarAI ai;
     public Path path;
 
     public float speed = 2;
@@ -24,16 +21,13 @@ public class AstarAI : NetworkBehaviour
     [SerializeField] public NetworkAnimator unitNetworkAnimator = null;
     bool IS_STUNNED = false;
 
+    public float repathRate = 0.5f;
+    private float lastRepath = float.NegativeInfinity;
+
     public void Start()
     {
         seeker = GetComponent<Seeker>();
-        // If you are writing a 2D game you should remove this line
-        // and use the alternative way to move sugggested further below.
-        //controller = GetComponent<CharacterController>();
-
-        // Start a new path to the targetPosition, call the the OnPathComplete function
-        // when the path has been calculated (which may take a few frames depending on the complexity)
-        //seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);
+        ai = GetComponent<IAstarAI>();
     }
     [Command]
     public void CmdMove(Vector3 position)
@@ -43,18 +37,36 @@ public class AstarAI : NetworkBehaviour
     [Server]
     public void ServerMove(Vector3 position)
     {
-        position.y = transform.position.y;
-        seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);
+        Debug.Log($"ai.remainingDistance {ai.remainingDistance}");
+        if (Time.time > lastRepath + repathRate && seeker.IsDone())
+        {
+            lastRepath = Time.time;
+
+            // Start a new path to the targetPosition, call the the OnPathComplete function
+            // when the path has been calculated (which may take a few frames depending on the complexity)
+            seeker.StartPath(transform.position, position, OnPathComplete);
+        }
     }
     public void OnPathComplete(Path p)
     {
-        Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
+        // Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
 
+        // Path pooling. To avoid unnecessary allocations paths are reference counted.
+        // Calling Claim will increase the reference count by 1 and Release will reduce
+        // it by one, when it reaches zero the path will be pooled and then it may be used
+        // by other scripts. The ABPath.Construct and Seeker.StartPath methods will
+        // take a path from the pool if possible. See also the documentation page about path pooling.
+        p.Claim(this);
         if (!p.error)
         {
+            if (path != null) path.Release(this);
             path = p;
             // Reset the waypoint counter so that we start to move towards the first point in the path
             currentWaypoint = 0;
+        }
+        else
+        {
+            p.Release(this);
         }
     }
     [ServerCallback]
@@ -112,14 +124,10 @@ public class AstarAI : NetworkBehaviour
         // Note that SimpleMove takes a velocity in meters/second, so we should not multiply by Time.deltaTime
         //controller.SimpleMove(velocity);
 
-        // If you are writing a 2D game you should remove the CharacterController code above and instead move the transform directly by uncommenting the next line
+        // If you are writing a 2D game you may want to remove the CharacterController and instead modify the position directly
         transform.position += velocity * Time.deltaTime;
+    
         if (IS_STUNNED) { CmdStop(); }
-    }
-
-    public void HandleDieAnnimation()
-    {
-        CmdTrigger("die");
     }
     
     [Command]
@@ -154,40 +162,71 @@ public class AstarAI : NetworkBehaviour
     [Server]
     public void ServerStop()
     {
-        
+        ai.isStopped = true;
     }
     [Server]
     private void ServerHandleGameOver()
     {
         
     }
-    private void GameStartCountDown()
-    {
-        
-    }
-    public bool HasArrived()
-    {
-        return false;
-    }
     public bool isCollide()
     {
         return false;
     }
-    /*
-    public NavMeshAgent GetNavMeshAgent()
+
+    public void trigger(string trigger)
     {
-        return agent;
+        CmdTrigger(trigger);
     }
-    public IDamageable collideTarget()
+
+    public void move(Vector3 position)
     {
-        return other.transform.GetComponent<IDamageable>();
+        CmdMove(position);
     }
+
+    public void stop()
+    {
+        CmdStop();
+    }
+
+    public void rotate(Quaternion targetRotation)
+    {
+        CmdRotate(targetRotation);
+    }
+
+    public void updateRotation(bool update)
+    {
+        
+    }
+
+    public bool hasArrived()
+    {
+        return ai.reachedDestination;
+    }
+
     public Transform collideTargetTransform()
     {
-        return other.transform;
+        throw new System.NotImplementedException();
     }
-    */
 
+    public float GetSpeed(UnitMeta.SpeedType speedType)
+    {
+        return ai.maxSpeed;
+    }
+
+    public void SetSpeed(UnitMeta.SpeedType speedType, float speed)
+    {
+        ai.maxSpeed = speed;
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return ai.velocity;
+    }
+
+    public void SetVelocity(Vector3 velocity)
+    {
+    }
 
 
 }
