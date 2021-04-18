@@ -14,5 +14,6 @@ public interface IUnitMovement
     float GetSpeed(SpeedType speedType);
     void SetSpeed(SpeedType speedType, float speed);
     Vector3 GetVelocity();
-    void SetVelocity(Vector3 velocity); 
+    void SetVelocity(Vector3 velocity);
+    float GetRadius();
 }

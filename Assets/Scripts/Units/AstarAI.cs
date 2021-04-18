@@ -7,7 +7,7 @@ using Mirror;
 public class AstarAI : NetworkBehaviour, IUnitMovement
 {
     private Seeker seeker;
-    private IAstarAI ai;
+    private AIPath ai;
     public Path path;
 
     public float speed = 2;
@@ -20,6 +20,8 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
 
     [SerializeField] public NetworkAnimator unitNetworkAnimator = null;
     bool IS_STUNNED = false;
+    private RTSPlayer player;
+    private Collider other;
 
     public float repathRate = 0.5f;
     private float lastRepath = float.NegativeInfinity;
@@ -27,7 +29,11 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     public void Start()
     {
         seeker = GetComponent<Seeker>();
-        ai = GetComponent<IAstarAI>();
+        ai = GetComponent<AIPath>();
+    }
+    public override void OnStartClient()
+    {
+        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
     }
     [Command]
     public void CmdMove(Vector3 position)
@@ -37,7 +43,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     [Server]
     public void ServerMove(Vector3 position)
     {
-        Debug.Log($"ai.remainingDistance {ai.remainingDistance}");
+        //Debug.Log($"ai.remainingDistance {ai.remainingDistance}");
         if (Time.time > lastRepath + repathRate && seeker.IsDone())
         {
             lastRepath = Time.time;
@@ -141,7 +147,6 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     {
         unitNetworkAnimator.SetTrigger(animationType);
     }
-
     [Command]
     public void CmdRotate(Quaternion targetRotation)
     {
@@ -150,8 +155,8 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     [Server]
     public void ServerRotate(Quaternion targetRotation)
     {
-        //agent.updateRotation = false;
-        //agent.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, agent.angularSpeed * Time.deltaTime);
+        ai.updateRotation = false;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, ai.rotationSpeed * Time.deltaTime);
     }
     [Command]
     public void CmdStop()
@@ -171,6 +176,32 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     }
     public bool isCollide()
     {
+        Collider[] hitColliders = Physics.OverlapBox(this.transform.GetComponent<Targetable>().GetAimAtPoint().transform.position, transform.localScale * 3, Quaternion.identity, LayerMask.GetMask("Unit"));
+        int i = 0;
+
+        //Check when there is a new collider coming into contact with the box
+        while (i < hitColliders.Length)
+        {
+            other = hitColliders[i++];
+
+            if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
+            {
+                //Debug.Log($"Attack {targeter} , Hit Collider {hitColliders.Length} , Player Tag {targeter.tag} vs Other Tag {other.tag}");
+                //Check for either player0 or king0 collide their team member
+                if (other.tag.Contains("" + player.GetPlayerID()) && this.transform.tag.Contains("" + player.GetPlayerID())) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+                if (other.tag.Contains("" + player.GetEnemyID()) && this.transform.tag.Contains("" + player.GetEnemyID())) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+
+            }
+            else // Multi player seneriao
+            {
+                //Debug.Log($"Multi player seneriao ");
+                if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
+                {
+                    if (networkIdentity.hasAuthority) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+                }
+            }
+            return true;
+        }
         return false;
     }
 
@@ -196,7 +227,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
 
     public void updateRotation(bool update)
     {
-        
+        ai.updateRotation = update;
     }
 
     public bool hasArrived()
@@ -206,7 +237,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
 
     public Transform collideTargetTransform()
     {
-        throw new System.NotImplementedException();
+        return other.transform;
     }
 
     public float GetSpeed(UnitMeta.SpeedType speedType)
@@ -227,6 +258,9 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     public void SetVelocity(Vector3 velocity)
     {
     }
-
+    public float GetRadius()
+    {
+        return 0f;
+    }
 
 }

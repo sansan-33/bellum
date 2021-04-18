@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 public class UnitPowerUp : NetworkBehaviour
 {
-    [SerializeField] private NavMeshAgent agent = null;
     [SerializeField] private GameObject specialEffectPrefab = null;
     [SerializeField] private BattleFieldRules battleFieldRules = null;
     public bool canSpawnEffect = true;
@@ -103,10 +102,10 @@ public class UnitPowerUp : NetworkBehaviour
     public void SetSpeed(int speed, bool accumulate)
     {
         if (speed < 0) { return; }
-        if (agent.speed < GetComponent<UnitMovement>().maxSpeed)
+        if (GetComponent<UnitMovement>().GetSpeed(UnitMeta.SpeedType.CURRENT)   < GetComponent<UnitMovement>().maxSpeed)
         {
             //SpeedUp(agent, speed);
-            RpcSpeedUp(agent.transform.gameObject, speed, accumulate);
+            RpcSpeedUp(speed, accumulate);
         }
         /*
         if (canSpawnEffect)
@@ -117,15 +116,16 @@ public class UnitPowerUp : NetworkBehaviour
         }
         */
     }
-    private void SpeedUp(NavMeshAgent agent, int speed, bool accumulate)
+    private void SpeedUp(int speed, bool accumulate)
     {
-        if (accumulate && agent.speed < 3  ) { return; }
-        agent.speed = accumulate ? agent.speed + speed : speed;
+        float currentSpeed = GetComponent<UnitMovement>().GetSpeed(UnitMeta.SpeedType.CURRENT);
+        if (accumulate && currentSpeed < 3  ) { return; }
+        GetComponent<UnitMovement>().SetSpeed(UnitMeta.SpeedType.CURRENT, accumulate ? currentSpeed + speed : speed);
     }
     [ClientRpc]
-    private void RpcSpeedUp(GameObject agent, int speed, bool accumulate)
+    private void RpcSpeedUp( int speed, bool accumulate)
     {
-        SpeedUp(agent.GetComponent<UnitMovement>().GetNavMeshAgent() , speed, accumulate);
+        SpeedUp( speed, accumulate);
     }
 
 }
