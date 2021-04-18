@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
-
-    public class Lightling :  MonoBehaviour, ISpecialAttack
+namespace DigitalRuby.ThunderAndLightning
+{
+    public class Lightling : MonoBehaviour, ISpecialAttack
     {
         [SerializeField] private GameObject LightlingPrefab;
         [SerializeField] private LayerMask layerMask = new LayerMask();
@@ -20,8 +21,8 @@ using UnityEngine.UI;
         private float lightlingTimer;
 
         private bool SpawnedButton;
-  
-       private bool IsSuperAttack = false;
+
+        private bool IsSuperAttack = false;
 
         private Button SPButton;
         private SpCost spCost;
@@ -34,23 +35,23 @@ using UnityEngine.UI;
         private List<GameObject> targetList = new List<GameObject>();
         private List<GameObject> startPointList = new List<GameObject>();
         private List<GameObject> lightlingList = new List<GameObject>();
-       
-       
+
+
 
         // Start is called before the first frame update
         public void Start()
         {
             player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
             if (CompareTag("King" + player.GetEnemyID()) || CompareTag("Player" + player.GetEnemyID())) { return; }
-           /* SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Lightling, GetComponent<Unit>());
-            if (SpawnedButton) { SPButton = FindObjectOfType<SpButton>().GetButton(GetComponent<Unit>().SpBtnTicket).GetComponent<Button>(); }
-            if (SPButton == null) { return; }
-            SPButton.onClick.RemoveAllListeners();
-            SPButton.onClick.AddListener(OnPointerDowns);*/
+            /* SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Lightling, GetComponent<Unit>());
+             if (SpawnedButton) { SPButton = FindObjectOfType<SpButton>().GetButton(GetComponent<Unit>().SpBtnTicket).GetComponent<Button>(); }
+             if (SPButton == null) { return; }
+             SPButton.onClick.RemoveAllListeners();
+             SPButton.onClick.AddListener(OnPointerDowns);*/
             spCost = FindObjectOfType<SpCost>();
             TB = GameObject.FindGameObjectWithTag("TacticalSystem").GetComponent<TacticalBehavior>();
         }
- 
+
         public void OnPointerDown()
         {
             targetList.Clear();
@@ -70,7 +71,7 @@ using UnityEngine.UI;
             bool haveTarget = true;
             var distance = float.MaxValue;
             var localDistance = 0f;
-           
+
             while (haveTarget == true)
             {
                 startPointList.Add(searchPoint);
@@ -87,18 +88,18 @@ using UnityEngine.UI;
                     {
                         int id = ((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1 ? 1 : player.GetPlayerID() == 0 ? 1 : 0;
                         if (hitCollider.CompareTag("Player" + id) || hitCollider.CompareTag("King" + id))
-                        { 
-                            if ( localDistance < maxAttackrange)
+                        {
+                            if (localDistance < maxAttackrange)
                             {
                                 if (localDistance < distance)
                                 {
-                                   
+
                                     findedTarget = true;
                                     distance = localDistance;
                                     closestTarget = hitCollider;
                                     // Move the searchPoint to the next target, so it will not search at the same point
-                                 
-                                    
+
+
                                 }
 
                             }
@@ -133,17 +134,17 @@ using UnityEngine.UI;
                 lightling = Instantiate(LightlingPrefab);
                 lightlingChild = lightling.transform.GetChild(0).gameObject;
                 lightlingChild.transform.position = new Vector3(startPoint.transform.position.x, startPoint.transform.position.y + 5, startPoint.transform.position.z);
-                //ightling.GetComponent<LightningBoltPathScriptBase>().LightningPath.Add(lightlingChild);
+                lightling.GetComponent<LightningBoltPathScriptBase>().LightningPath.Add(lightlingChild);
             }
-                lightlingChilds = Instantiate(lightlingChild, lightling.transform);
-                lightlingChilds.transform.position = new Vector3(endPoint.transform.position.x, endPoint.transform.position.y + 5, endPoint.transform.position.z);
-                //lightling.GetComponent<LightningBoltPathScriptBase>().LightningPath.Add(lightlingChilds);
-                lightlingList.Add(lightlingChilds);
-                enemyCount++;
-                endPoint.GetComponent<Health>().OnElectricShock(electicDamage, electicShockDamage);
-                endPoint.transform.GetComponent<Unit>().GetUnitMovement().trigger("gethit");
-           
-           
+            lightlingChilds = Instantiate(lightlingChild, lightling.transform);
+            lightlingChilds.transform.position = new Vector3(endPoint.transform.position.x, endPoint.transform.position.y + 5, endPoint.transform.position.z);
+            lightling.GetComponent<LightningBoltPathScriptBase>().LightningPath.Add(lightlingChilds);
+            lightlingList.Add(lightlingChilds);
+            enemyCount++;
+            endPoint.GetComponent<Health>().OnElectricShock(electicDamage, electicShockDamage);
+            endPoint.transform.GetComponent<Unit>().GetUnitMovement().trigger("gethit");
+
+
         }
         public void Lightlinggs(GameObject startPoint, GameObject endPoint)
         {
@@ -163,7 +164,7 @@ using UnityEngine.UI;
                 }
                 foreach (GameObject target in targetList)
                 {
-                    if(target != null)
+                    if (target != null)
                     {
                         if (target.TryGetComponent<Health>(out Health health))
                         {
@@ -174,5 +175,5 @@ using UnityEngine.UI;
             }
         }
     }
-
+}
         

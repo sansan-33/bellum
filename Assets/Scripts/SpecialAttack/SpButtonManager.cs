@@ -97,7 +97,8 @@ public class SpButtonManager : MonoBehaviour
                 case SpecialAttackDict.SpecialAttackType.Ice:
                     Ice ice = unit.gameObject.AddComponent<Ice>();
                     ice.layerMask = layerMask;
-                    break;
+                break;
+                   /* break;
                 case SpecialAttackDict.SpecialAttackType.Slash:
                     unit.gameObject.AddComponent<GoldenSlash>();
                     break;
@@ -109,7 +110,7 @@ public class SpButtonManager : MonoBehaviour
                     break;
                 case SpecialAttackDict.SpecialAttackType.Lightling:
                     unit.gameObject.AddComponent<Lightling>();
-                    break;
+                    break;*/
             }
 
             button.GetComponent<Button>().onClick.AddListener(specialAttack.OnPointerDown);
