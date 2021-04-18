@@ -45,8 +45,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         protected Behavior leaderTree;
         protected List<IDamageable> targets = new List<IDamageable>();
         protected List<Transform> targetTransforms = new List<Transform>();
-        private string debugTarget = "footman";
-        private bool ISDEBUG = false;
+        private string debugTarget = "tank";
+        private bool ISDEBUG = true;
 
         /// <summary>
         /// Listen for any agents that want to join the group.

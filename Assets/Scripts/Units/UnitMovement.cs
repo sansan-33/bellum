@@ -208,5 +208,8 @@ public class UnitMovement : NetworkBehaviour , IUnitMovement
     {
         return other.transform;
     }
-
+    public float GetRadius()
+    {
+        return agent.radius;
+    }
 }

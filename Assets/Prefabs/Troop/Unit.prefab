@@ -1145,7 +1145,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2460804451879552006}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 3
   m_Speed: 10
@@ -1953,8 +1953,8 @@ MonoBehaviour:
   defense: 0
   special: 0
   specialkey: 
-  specialAttackTypes: 1
   passivekey: 
+  specialAttackType: 4
 --- !u!114 &5826456961938972373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2001,6 +2001,7 @@ MonoBehaviour:
   nextWaypointDistance: 3
   reachedEndOfPath: 0
   unitNetworkAnimator: {fileID: 0}
+  repathRate: 0.5
 --- !u!114 &1905706178606479308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2022,7 +2023,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  endReachedDistance: 20
+  endReachedDistance: 2
   whenCloseToDestination: 0
   rvoDensityBehavior:
     enabled: 1
@@ -2043,8 +2044,8 @@ MonoBehaviour:
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
-  rotationSpeed: 360
-  slowdownDistance: 0.6
+  rotationSpeed: 450
+  slowdownDistance: 10
   pickNextWaypointDist: 2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1

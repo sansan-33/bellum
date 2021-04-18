@@ -39,9 +39,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 if (unit == null) { Debug.Log("NavMeshTacticalAgent ==> Unit is null"); }
                 unit.GetUnitPowerUp().CmdUnitPowerUp();
                 unit.GetUnitMovement().trigger("run");
-                if (! unit.GetUnitMovement().isCollide()) {
-                    unit.GetUnitMovement().move(destination);
-                }
+                unit.GetUnitMovement().move(destination);
             }
             /// <summary>
             /// Has the agent arrived at its destination?
@@ -69,7 +67,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             /// </summary>
             public override float Radius()
             {
-                return navMeshAgent.radius;
+                return unit.GetUnitMovement().GetRadius();
             }
 
             /// <summary>
