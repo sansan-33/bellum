@@ -22181,7 +22181,7 @@ MonoBehaviour:
   syncInterval: 0
   effectList:
   - {fileID: 173866, guid: 6692e3c69d930964f89b810020ae7d5c, type: 3}
-  - {fileID: 0}
+  - {fileID: 7094091961817543885, guid: 5fb77ccc6da5b2044b43a5d2361919b7, type: 3}
 --- !u!114 &443694903
 MonoBehaviour:
   m_ObjectHideFlags: 0

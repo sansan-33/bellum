@@ -153,8 +153,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         {
             powerUpAfterKill(this.transform.gameObject);
             RpcpowerUpAfterKill(this.transform.gameObject);
-
-               spCost.UpdateSPAmount(1,GetComponent<Unit>());
+            spCost = FindObjectOfType<SpCost>();
+            spCost.UpdateSPAmount(1,GetComponent<Unit>());
             
            
         }

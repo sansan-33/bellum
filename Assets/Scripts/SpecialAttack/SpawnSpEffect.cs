@@ -6,6 +6,9 @@ using UnityEngine;
 public class SpawnSpEffect : NetworkBehaviour
 {
     [SerializeField] private GameObject[] effectList = new GameObject[0];
+    private List<GameObject> effectLists1 = new List<GameObject>();
+    private List<GameObject> effectLists2 = new List<GameObject>();
+    private List<GameObject> effectLists3 = new List<GameObject>();
     // Start is called before the first frame update
     [Command(ignoreAuthority = true)]
     public void CmdSpawnEffect(int effectNum, Transform transform)
@@ -27,11 +30,45 @@ public class SpawnSpEffect : NetworkBehaviour
     }
     public void SetShield(int effectNum, Transform transform)
     {
+        GameObject effect;
         //Debug.Log($"{effectNum},{transform} at final");
-        Debug.Log($"transform { transform}");
-        if(transform == null) { return; }
-        Instantiate(effectList[effectNum], transform);
+        //Debug.Log($"transform { transform}");
+        if (transform == null)
+        {
+            effect = Instantiate(effectList[effectNum]);
+        }
+         effect = Instantiate(effectList[effectNum], transform);
+
+        switch (effectNum)
+        {
+            case 0:
+                effectLists1.Add(effect);
+                break;
+            case 1:
+                effectLists2.Add(effect);
+                break;
+            case 2:
+                effectLists3.Add(effect);
+                break;
+        }
     }
+
+    public List<GameObject> GetEffect(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                return effectLists1;
+                break;
+            case 1:
+                return effectLists2;
+                break;
+            default:
+                return effectLists3;
+                break;
+        }
+    }
+
     // Update is called once per frame
     
 }

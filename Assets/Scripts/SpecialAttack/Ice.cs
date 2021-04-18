@@ -10,9 +10,11 @@ public class Ice : MonoBehaviour, ISpecialAttack
     [SerializeField] public GameObject iceEffect;
     [SerializeField] private LayerMask layerMask = new LayerMask();
     public List<GameObject> enemyList = new List<GameObject>();
+    private List<GameObject> effectLists = new List<GameObject>();
     private Button SPButton;
     private RTSPlayer player;
     private GameObject hitCollider;
+    private GameObject effect;
     private Transform searchPoint;
     private SpCost spCost;
 
@@ -21,6 +23,7 @@ public class Ice : MonoBehaviour, ISpecialAttack
     public int attackRange = 100;
     public float UnFrezzeTimer = 3;
     private float UnFrezzeTime;
+    private float Timer = 5;
     private SpButtonManager SpButtonManager;
     public int buttonTicket;
     private bool SpawnedButton;
@@ -132,29 +135,55 @@ public class Ice : MonoBehaviour, ISpecialAttack
         {
             UnFrezzeTimer = UnFrezzeTime;
             IsFrezze = false;
+            int i = -1;
             foreach (GameObject unit in enemyList)
             {
-                IceBreak(unit);
-            }
-        }
-        if(IsFrezze == true)
-        {
-            foreach (GameObject unit in enemyList)
-            {
-                //Instantiate(iceEffect, unit.transform);
-                if(unit == null) { return; }
+                if(unit != null)
+                {
+                    i++;
+                    Debug.Log($"i{i}");
+                    effect = GetEffect(i);
+                    IceBreak(unit);
+                } 
                 
             }
         }
+        if(Timer > 0 && IsFrezze == true)
+        {
+            Timer -= Time.deltaTime;
+        }
+        else if(IsFrezze == true)
+        {
+            Timer = 5;
+            foreach (GameObject unit in enemyList)
+            {
+                //Instantiate(iceEffect, unit.transform);
+                if (unit == null) { return; }
+                Debug.Log($"spawn to {unit.transform}");
+                FindObjectOfType<SpawnSpEffect>().CmdSpawnEffect(0, unit.transform);
+            }
+        }
+        
+    }
+    public GameObject GetEffect(int num)
+    {
+        effectLists = FindObjectOfType<SpawnSpEffect>().GetEffect(0);
+        Debug.Log($"GetEffect {effectLists.Count}");
+        return effectLists[num];
     }
     private void IceBreak(GameObject unit)
     {
         if(unit == null) { return; }
+        Debug.Log($"ice break {effect} {effect.transform.parent.name}");
+        effect.GetComponentInChildren<RFX4_StartDelay>().Delay = 0;
+        //effect.GetComponentInChildren<RFX4_StartDelay>().Debusg(0);
+        Debug.Log($"ice break{effect.GetComponentInChildren<RFX4_StartDelay>().Delay} {unit}");
         unit.GetComponent<Health>().IsFrezze = false;
+      //  Destroy(effect);
         UnitRepeatAttackDelaykeys.TryGetValue(unit, out float repeatAttackDelay);
         UnitSpeedkeys.TryGetValue(unit, out int speed);
         CardStats cardStats = unit.GetComponent<CardStats>();
-        unit.GetComponent<UnitPowerUp>().CmdPowerUp(hitCollider, cardStats.star, cardStats.cardLevel, (int)hitCollider.GetComponent<Health>().getCurrentHealth(), cardStats.attack, repeatAttackDelay, speed, cardStats.defense, cardStats.special);
+        unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, (int)unit.GetComponent<Health>().getCurrentHealth(), cardStats.attack, repeatAttackDelay, speed, cardStats.defense, cardStats.special);
     }
     public float GetUnitRepeatAttackDelaykeys(GameObject unit)
     {

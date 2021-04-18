@@ -52,8 +52,7 @@ public class SpButtonManager : MonoBehaviour
                      //   unit.specialAttackTypes = type;
                         //Debug.Log("one player mode");
                         SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
-                    unit.specialAttackTypes = SpecialAttackDict.SpecialAttackType.Ice;
-                       InstantiateSpButton(unit.specialAttackTypes, unit.GetComponent<Unit>(), SpecialAttack);
+                       InstantiateSpButton(unit.specialAttackType, unit.GetComponent<Unit>(), SpecialAttack);
                     //}
                    
             }
@@ -69,7 +68,7 @@ public class SpButtonManager : MonoBehaviour
             {
 
                 SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
-                InstantiateSpButton(unit.specialAttackTypes, unit.GetComponent<Unit>(), SpecialAttack);
+                InstantiateSpButton(unit.specialAttackType, unit.GetComponent<Unit>(), SpecialAttack);
 
             }
         }

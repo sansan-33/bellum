@@ -830,7 +830,7 @@ MonoBehaviour:
   - {fileID: 2579300391910144545}
   spCost: 0
   useTimer: 1
-  waitTime: 3
+  waitTime: 1
 --- !u!1 &3993206032768179328
 GameObject:
   m_ObjectHideFlags: 0

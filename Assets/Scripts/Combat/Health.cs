@@ -102,9 +102,12 @@ public class Health : NetworkBehaviour, IDamageable
     {
         Debug.Log("Unfrezze");
         Ice ice = FindObjectOfType<Ice>();
+        var num = ice.enemyList.IndexOf(gameObject);
         ice.enemyList.Remove(gameObject);
+        var effect = ice.GetEffect(num);
+        effect.GetComponent<RFX4_StartDelay>().Delay = 0;
         CardStats cardStats = GetComponent<CardStats>();
-        GetComponent<UnitPowerUp>().CmdPowerUp(gameObject, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, ice.GetUnitRepeatAttackDelaykeys(gameObject), ice.GetUnitSpeedkeys(gameObject), cardStats.defense, cardStats.special);
+        GetComponent<UnitPowerUp>().CmdPowerUp(gameObject, cardStats.star, cardStats.cardLevel, (int)getCurrentHealth(), cardStats.attack, ice.GetUnitRepeatAttackDelaykeys(gameObject), ice.GetUnitSpeedkeys(gameObject), cardStats.defense, cardStats.special);
 
     }
     private IEnumerator Die()

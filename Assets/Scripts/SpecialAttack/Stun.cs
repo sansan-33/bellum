@@ -69,6 +69,7 @@ public class Stun : NetworkBehaviour, ISpecialAttack
                 unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, (int)unit.GetComponent<Health>().getCurrentHealth(), cardStats.attack, Mathf.Infinity, 0, cardStats.defense, cardStats.special);
                
             }
+            FindObjectOfType<SpawnSpEffect>().CmdSpawnEffect(1, null);
             CmdCMVirtual();
         }
         else // Multi player seneriao

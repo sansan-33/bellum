@@ -42,11 +42,12 @@ public class CinemachineShake : NetworkBehaviour {
     private void Update()
     {   if(shakeTime > 0)
         {
-            //Debug.Log($"shake time {shakeTime},{shakeTimer}");
+            Debug.Log($"shake time {shakeTime},{shakeTimer}");
             shakeTime -= Time.deltaTime;
             if (shakeTimer > 0)
             {
-            //Debug.Log("shake");
+            Debug.Log("shake");
+                secondShakeTimer = .05f;
                 shakeTimer -= Time.deltaTime;
                 GetComponent<CinemachineVirtualCamera>().enabled = true;
                 CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
@@ -54,19 +55,19 @@ public class CinemachineShake : NetworkBehaviour {
 
                 cinemachineBasicMultiChannelPerlin.m_AmplitudeGain =
                     Mathf.Lerp(startingIntensity, 0f, 1 - shakeTimer / shakeTimerTotal);
-                secondShakeTimer = .05f;
+                
             }
             else
              {
-           // Debug.Log("return shake !!!!!!!!!!!");
+            Debug.Log("return shake !!!!!!!!!!!");
             GetComponent<CinemachineVirtualCamera>().enabled = false;
                 if (secondShakeTimer > 0)
                 {
                     // Debug.Log($"count shake {secondShakeTimer}");
                     secondShakeTimer -= Time.deltaTime;
                 }
-                else { shakeTimer = .05f; }
-           // Debug.Log("re shake"); }
+                else { shakeTimer = .05f; 
+            Debug.Log("re shake"); }
             }
         }
         else { Destroy(gameObject); }
