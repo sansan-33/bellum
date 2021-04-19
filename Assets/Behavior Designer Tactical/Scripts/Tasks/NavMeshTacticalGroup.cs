@@ -39,7 +39,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 //if (unit.GetUnitMovement().collided()) { return; }
                 //if (unit == null) { Debug.Log("NavMeshTacticalAgent ==> Unit is null"); return; }
                 unit.GetUnitMovement().trigger("run");
-                Debug.Log($"NavMeshTacticalAgent {unit.name} ==> SetDestination {lastDestination} {destination} ");
+                //Debug.Log($"NavMeshTacticalAgent {unit.name} ==> SetDestination {lastDestination} {destination} ");
                 if (lastDestination != destination) {
                     lastDestination = destination;
                     unit.GetUnitPowerUp().CmdUnitPowerUp();
