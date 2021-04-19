@@ -22,6 +22,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     bool IS_STUNNED = false;
     private RTSPlayer player;
     private Collider other;
+    public bool isCollided = false;
 
     public float repathRate = 0.5f;
     private float lastRepath = float.NegativeInfinity;
@@ -30,6 +31,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     {
         seeker = GetComponent<Seeker>();
         ai = GetComponent<AIPath>();
+        unitNetworkAnimator = GetComponent<NetworkAnimator>();
     }
     public override void OnStartClient()
     {
@@ -38,6 +40,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     [Command]
     public void CmdMove(Vector3 position)
     {
+        isCollided = false;
         ServerMove(position);
     }
     [Server]
@@ -161,13 +164,13 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     [Command]
     public void CmdStop()
     {
-        //Debug.Log($"Command stop");
         ServerStop();
     }
     [Server]
     public void ServerStop()
     {
         ai.isStopped = true;
+        path = null;
     }
     [Server]
     private void ServerHandleGameOver()
@@ -176,6 +179,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     }
     public bool isCollide()
     {
+        //Debug.Log($"AstarAI is collide ?  {isCollided}");
         Collider[] hitColliders = Physics.OverlapBox(this.transform.GetComponent<Targetable>().GetAimAtPoint().transform.position, transform.localScale * 3, Quaternion.identity, LayerMask.GetMask("Unit"));
         int i = 0;
 
@@ -200,6 +204,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
                     if (networkIdentity.hasAuthority) { continue; }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
+            isCollided = true;
             return true;
         }
         return false;
@@ -262,5 +267,8 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     {
         return 0f;
     }
-
+    public bool collided()
+    {
+        return isCollided;
+    }
 }

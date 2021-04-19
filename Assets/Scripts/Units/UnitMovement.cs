@@ -212,4 +212,8 @@ public class UnitMovement : NetworkBehaviour , IUnitMovement
     {
         return agent.radius;
     }
+    public bool collided()
+    {
+        return isCollided;
+    }
 }

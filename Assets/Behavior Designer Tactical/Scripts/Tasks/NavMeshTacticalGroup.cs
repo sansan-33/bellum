@@ -36,7 +36,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             /// </summary>
             public override void SetDestination(Vector3 destination)
             {
-                if (unit == null) { Debug.Log("NavMeshTacticalAgent ==> Unit is null"); }
+                //if (unit.GetUnitMovement().collided()) { return; }
+                //if (unit == null) { Debug.Log("NavMeshTacticalAgent ==> Unit is null"); return; }
                 unit.GetUnitPowerUp().CmdUnitPowerUp();
                 unit.GetUnitMovement().trigger("run");
                 unit.GetUnitMovement().move(destination);

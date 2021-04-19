@@ -30,5 +30,6 @@ namespace BehaviorDesigner.Runtime.Tactical
         /// </summary>
         /// <param name="targetPosition">The position to attack.</param>
         void Attack(Vector3 targetPosition);
+        
     }
 }

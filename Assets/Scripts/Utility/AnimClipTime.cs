@@ -24,6 +24,7 @@ public class AnimClipTime : MonoBehaviour
         else
         {
             //Debug.Log("Got anim");
+            // set anim speed = length / repeat attack dealy 
         }
 
         UpdateAnimClipTimes();

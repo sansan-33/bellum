@@ -24,6 +24,8 @@ namespace BehaviorDesigner.Runtime.Tactical
         public bool AttackPosition { get { return attackPosition; } set { attackPosition = value; } }
         public Vector3 AttackOffset { set { attackOffset = value; } }
         public Vector3 TargetOffset { set { targetOffset = value; } }
+        public bool IsEngaged = false;
+
         private string debugTarget = "footman";
         private bool ISDEBUG = false;
         /// <summary>
@@ -144,13 +146,12 @@ namespace BehaviorDesigner.Runtime.Tactical
                 //    Debug.Log($"{transform.name} Tactical Agent TryAttack CanAttack");
                 //}
                 attackAgent.Attack(targetTransform.GetComponent<Targetable>().GetAimAtPoint().position);
-                //attackAgent.Attack(targetTransform.position);
-                //Debug.Log($"TryAttack");
+                IsEngaged = true;
                 return true;
             }
             return false;
         }
-
+         
         /// <summary>
         /// Returns true if the target transform is a child of the parent transform
         /// </summary>

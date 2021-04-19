@@ -46,7 +46,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         protected List<IDamageable> targets = new List<IDamageable>();
         protected List<Transform> targetTransforms = new List<Transform>();
         private string debugTarget = "tank";
-        private bool ISDEBUG = true;
+        private bool ISDEBUG = false;
 
         /// <summary>
         /// Listen for any agents that want to join the group.
@@ -449,13 +449,16 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         /// </summary>
         protected void FindAttackTarget()
         {
+           
+            if (tacticalAgent.IsEngaged && tacticalAgent.TargetTransform != null && tacticalAgent.TargetDamagable.IsAlive()) { return; }
+            tacticalAgent.IsEngaged = false;
             Transform target = null;
             IDamageable damageable = null;
             Unit unit = tacticalAgent.transform.GetComponent<Unit>();
             if (tacticalAgent.transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
                 Debug.Log($"{tacticalAgent.transform.name}  -- Start Finding AttackTarget ");
 
-            if (unit.GetUnitMovement().isCollide() && !UnitMeta.CanCollide.ContainsKey(UnitMeta.UnitRaceTypeKey[unit.race ][unit.unitType]))
+            if (!UnitMeta.CanCollide.ContainsKey(UnitMeta.UnitRaceTypeKey[unit.race ][unit.unitType]) && unit.GetUnitMovement().isCollide())
             {
                 if (tacticalAgent.transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
                     Debug.Log($"{tacticalAgent.transform.name}  -- collide {unit.GetUnitMovement().collideTargetTransform().name} ");
@@ -524,7 +527,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position) > tacticalAgent.AttackAgent.AttackDistance())
             {
                 tacticalAgent.SetDestination(tacticalAgent.TargetTransform.position);
-                tacticalAgent.UpdateRotation(true);
+                //tacticalAgent.UpdateRotation(true);
                 tacticalAgent.AttackPosition = true;
                 if(tacticalAgent.transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
                     Debug.Log($"{tacticalAgent.transform.name} Can See Target {tacticalAgent.CanSeeTarget() } {tacticalAgent.TargetTransform.transform.name  } distance {Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position)} , AttackDistance() {tacticalAgent.AttackAgent.AttackDistance() }? ");

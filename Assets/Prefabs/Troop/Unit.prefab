@@ -1054,9 +1054,9 @@ GameObject:
   - component: {fileID: 3698077258398265470}
   - component: {fileID: 3007018670020009129}
   - component: {fileID: 720455803087774091}
-  - component: {fileID: 5826456961938972373}
-  - component: {fileID: 7423325971735272445}
-  - component: {fileID: 1905706178606479308}
+  - component: {fileID: 4733497917111374923}
+  - component: {fileID: 1014293119696515951}
+  - component: {fileID: 4949710644524271067}
   m_Layer: 10
   m_Name: Unit
   m_TagString: Unit
@@ -1676,8 +1676,8 @@ MonoBehaviour:
   buildingPreview: {fileID: 0}
   resourceCost: 10
   health: {fileID: 3342502367080700966}
-  unitMovement: {fileID: 8005040192889574617}
-  astarAI: {fileID: 7423325971735272445}
+  unitMovement: {fileID: 0}
+  astarAI: {fileID: 4949710644524271067}
   unitPowerUp: {fileID: 2171270098197511395}
   id: -1
   taskStatus: {fileID: 2002576385947619639}
@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2460804451879552006}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eff1a628422e06343bfcc39ec2df72c0, type: 3}
   m_Name: 
@@ -1871,7 +1871,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  agent: {fileID: 2460804451879552500}
   specialEffectPrefab: {fileID: 100000, guid: 3d4907e6bd39f474b8fd8220920e65c4, type: 3}
   battleFieldRules: {fileID: 1632355196208456466}
   canSpawnEffect: 1
@@ -1955,7 +1954,7 @@ MonoBehaviour:
   specialkey: 
   passivekey: 
   specialAttackType: 4
---- !u!114 &5826456961938972373
+--- !u!114 &4733497917111374923
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1983,26 +1982,7 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!114 &7423325971735272445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2460804451879552006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 684589c9acba8490e8ab6a49c8e8c0e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  speed: 2
-  nextWaypointDistance: 3
-  reachedEndOfPath: 0
-  unitNetworkAnimator: {fileID: 0}
-  repathRate: 0.5
---- !u!114 &1905706178606479308
+--- !u!114 &1014293119696515951
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2023,7 +2003,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  endReachedDistance: 2
+  endReachedDistance: 0.2
   whenCloseToDestination: 0
   rvoDensityBehavior:
     enabled: 1
@@ -2044,13 +2024,33 @@ MonoBehaviour:
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
-  rotationSpeed: 450
-  slowdownDistance: 10
+  rotationSpeed: 360
+  slowdownDistance: 0.6
   pickNextWaypointDist: 2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   preventMovingBackwards: 0
   constrainInsideGraph: 0
+--- !u!114 &4949710644524271067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2460804451879552006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 684589c9acba8490e8ab6a49c8e8c0e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  speed: 2
+  nextWaypointDistance: 3
+  reachedEndOfPath: 0
+  unitNetworkAnimator: {fileID: 0}
+  isCollided: 0
+  repathRate: 5
 --- !u!1 &2598530083062933460
 GameObject:
   m_ObjectHideFlags: 0
