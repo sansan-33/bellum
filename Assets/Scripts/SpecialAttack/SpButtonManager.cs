@@ -129,8 +129,8 @@ public class SpButtonManager : MonoBehaviour
             buttonChild.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
             spawnedSpButtonUnit.Add(unit.unitKey);
             switch (spType)
-            {
-                case SpecialAttackDict.SpecialAttackType.ICE:
+          {
+                 case SpecialAttackType.ICE:
                     Ice ice = unit.gameObject.AddComponent<Ice>();
                     ice.layerMask = layerMask;
                 break;
@@ -140,18 +140,18 @@ public class SpButtonManager : MonoBehaviour
                     break;
                 case SpecialAttackDict.SpecialAttackType.Shield:
                     unit.gameObject.AddComponent<DefendSP>();
-                    break;
-                case SpecialAttackDict.SpecialAttackType.Stun:
+                    break;*/
+                case SpecialAttackType.STUN:
                     unit.gameObject.AddComponent<Stun>();
                     break;
-                case SpecialAttackDict.SpecialAttackType.Lightling:
+                /*case SpecialAttackDict.SpecialAttackType.Lightling:
                     unit.gameObject.AddComponent<Lightling>();
                     break;*/
             }
 
         Debug.Log($"SpButtonManager InstantiateSpButton() button:{button}, specialAttack:{specialAttack}");
-
-        button.GetComponent<Button>().onClick.AddListener(specialAttack.OnPointerDown);
+       ISpecialAttack iSpecialAttack = unit.gameObject.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
+        button.GetComponent<Button>().onClick.AddListener(iSpecialAttack.OnPointerDown);
             // tell unit where is the button in the list
             unitBtn.Add(unit.unitKey, button.GetComponent<Button>());
 

@@ -38,6 +38,7 @@ public class Stun : NetworkBehaviour, ISpecialAttack
     }
     public void OnPointerDown()
     {
+        Debug.Log($"Unit:{GetComponent<Unit>()}");
         SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
         if (spCost.useSpCost == true)
         {
