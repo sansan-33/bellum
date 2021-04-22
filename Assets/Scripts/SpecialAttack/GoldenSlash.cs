@@ -19,6 +19,7 @@ public class GoldenSlash : MonoBehaviour, ISpecialAttack
     private bool IsSuperAttack = false;
 
     private SpCost spCost;
+    private Unit unit;
     private GameObject hitCollider;
     private Transform searchPoint;
     private RTSPlayer player;
@@ -42,12 +43,19 @@ public class GoldenSlash : MonoBehaviour, ISpecialAttack
         minAttackRange = (int)(transform.localScale.x * attackRange / 2);
         TB = GameObject.FindGameObjectWithTag("TacticalSystem").GetComponent<TacticalBehavior>();
     }
-   
+
+    public void setUnit(Unit unit)
+    {
+        this.unit = unit;
+
+    }
+
+
     public void OnPointerDown()
     {
         Debug.Log($"FindAttackTargetInDistance");
         if (attackPoint == null) { return; }
-        SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
+        SpButtonManager.unitBtn.TryGetValue(unit.unitKey, out Button btn);
         if (spCost.useSpCost == true)
         {
             //if (spCost.SPAmount < SPCost) { return; }

@@ -12,4 +12,6 @@
     /// <returns>The distance that the agent can attack from.</returns>
     void OnPointerDown();
 
+    void setUnit(Unit unit);
+
 }

@@ -11,6 +11,7 @@ public class DefendSP : MonoBehaviour, ISpecialAttack
     private Button SPButton;
     private RTSPlayer player;
     private SpCost spCost;
+    private Unit unit;
 
     public int SPCost = 10;
     public int shieldHealths = 10000;
@@ -31,9 +32,16 @@ public class DefendSP : MonoBehaviour, ISpecialAttack
         SPButton.onClick.AddListener(OnPointerDown);*/
     }
 
+    public void setUnit(Unit unit)
+    {
+        this.unit = unit;
+
+    }
+
+
     public void OnPointerDown()
     {
-        SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
+        SpButtonManager.unitBtn.TryGetValue(unit.unitKey, out Button btn);
         if (spCost.useSpCost == true)
         {
             //if (spCost.SPAmount < SPCost) { return; }

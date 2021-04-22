@@ -30,7 +30,7 @@ public class SpButtonManager : MonoBehaviour
     private Sprite sprite;
     private RTSPlayer player;
     private GameObject buttonChild;
-    private ISpecialAttack SpecialAttack;
+    //private GameObject specialAttack;
 
     void Awake()
     {
@@ -41,11 +41,6 @@ public class SpButtonManager : MonoBehaviour
         SpecialAttackPrefab.Add(SpecialAttackType.STUN, stunPrefab);
         SpecialAttackPrefab.Add(SpecialAttackType.ICE, icePrefab);
         SpecialAttackPrefab.Add(SpecialAttackType.SHIELD, shieldPrefab);
-
-        //this.Start();
-
-
-
     }
 
     private void Start()
@@ -82,14 +77,14 @@ public class SpButtonManager : MonoBehaviour
                         
                         SpecialAttackType specialAttackType = (SpecialAttackType)Enum.Parse(typeof(SpecialAttackType), unit.specialkey.ToUpper());
                         Debug.Log($"1 player mode specialAttackType: {specialAttackType}, SpecialAttackPrefab[specialAttackType]: {SpecialAttackPrefab[specialAttackType]}");
-                        SpecialAttack = SpecialAttackPrefab[specialAttackType].GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
+                        GameObject specialAttack = SpecialAttackPrefab[specialAttackType];
 
-                        Debug.Log($"1 player mode SpecialAttack: {SpecialAttack}");
+                        Debug.Log($"1 player mode specialAttack: {specialAttack}");
                         //SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
-                        InstantiateSpButton(unit.specialAttackType, unit.GetComponent<Unit>(), SpecialAttack);
+                        InstantiateSpButton(unit.specialAttackType, unit.GetComponent<Unit>(), specialAttack);
                     //}
 
-                }
+                    }
                 }
 
             }
@@ -102,15 +97,16 @@ public class SpButtonManager : MonoBehaviour
                     {
                         //Debug.Log($"multi player mode unit.specialkey: {unit.specialkey}");
 
-                        SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
-                        InstantiateSpButton(unit.specialAttackType, unit.GetComponent<Unit>(), SpecialAttack);
+                    // Anthea 2021-04-22 need to change
+                        //SpecialAttack = unit.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
+                        //InstantiateSpButton(unit.specialAttackType, unit.GetComponent<Unit>(), SpecialAttack);
 
                     }
                 }
             }
     }
 
-    public void InstantiateSpButton(SpecialAttackDict.SpecialAttackType spType, Unit unit, ISpecialAttack specialAttack)
+    public void InstantiateSpButton(SpecialAttackDict.SpecialAttackType spType, Unit unit, GameObject specialAttack)
     {
         Debug.Log("SpButtonManager InstantiateSpButton()");
 
@@ -128,45 +124,32 @@ public class SpButtonManager : MonoBehaviour
             SpecialAttackDict.ChildSpSprite.TryGetValue(spType, out sprite);
             buttonChild.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
             spawnedSpButtonUnit.Add(unit.unitKey);
-            switch (spType)
-          {
-                 case SpecialAttackType.ICE:
-                    Ice ice = unit.gameObject.AddComponent<Ice>();
-                    ice.layerMask = layerMask;
-                break;
-                   /* break;
-                case SpecialAttackDict.SpecialAttackType.Slash:
-                    unit.gameObject.AddComponent<GoldenSlash>();
-                    break;
-                case SpecialAttackDict.SpecialAttackType.Shield:
-                    unit.gameObject.AddComponent<DefendSP>();
-                    break;*/
-                case SpecialAttackType.STUN:
-                    unit.gameObject.AddComponent<Stun>();
-                    break;
-                /*case SpecialAttackDict.SpecialAttackType.Lightling:
-                    unit.gameObject.AddComponent<Lightling>();
-                    break;*/
-            }
 
-        Debug.Log($"SpButtonManager InstantiateSpButton() button:{button}, specialAttack:{specialAttack}");
-       ISpecialAttack iSpecialAttack = unit.gameObject.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
+
+        // Instantiate specialAttack
+        GameObject specialAttackButton = Instantiate(specialAttack, spPrefabParent);
+        ISpecialAttack iSpecialAttack = specialAttackButton.GetComponent(typeof(ISpecialAttack)) as ISpecialAttack;
+        iSpecialAttack.setUnit(unit);
+        Debug.Log($"SpButtonManager InstantiateSpButton() specialAttackButton:{specialAttackButton}, iSpecialAttack:{iSpecialAttack}");
+
+
         button.GetComponent<Button>().onClick.AddListener(iSpecialAttack.OnPointerDown);
-            // tell unit where is the button in the list
-            unitBtn.Add(unit.unitKey, button.GetComponent<Button>());
+
+        // tell unit where is the button in the list
+        unitBtn.Add(unit.unitKey, button.GetComponent<Button>());
 
     }
 
-        public static Dictionary<UnitMeta.UnitKey, Button> unitBtn = new Dictionary<UnitMeta.UnitKey, Button>()
-        {
+    public static Dictionary<UnitMeta.UnitKey, Button> unitBtn = new Dictionary<UnitMeta.UnitKey, Button>()
+    {
 
-        };
+    };
 
-        // Update is called once per frame
-        void Update()
-        {
+    // Update is called once per frame
+    void Update()
+    {
 
-        }
+    }
 
 }
 

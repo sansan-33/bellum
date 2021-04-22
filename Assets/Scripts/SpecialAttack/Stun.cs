@@ -13,6 +13,7 @@ public class Stun : NetworkBehaviour, ISpecialAttack
     private Button SPButton;
     private RTSPlayer player;
     private SpCost spCost;
+    private Unit unit;
 
     private float enemyReFightTimer = -10000;
     public int SPCost = 10;
@@ -21,32 +22,52 @@ public class Stun : NetworkBehaviour, ISpecialAttack
     private bool CanUnFrezze = false;
     private bool CMVirtualIsOn = false;
     public int enemyFrezzeTime = 5;//second
-    
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Stun.cs Start()");
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         if (CompareTag("King" + player.GetEnemyID()) || CompareTag("Player" + player.GetEnemyID())) { return; }
+
+        Debug.Log("try to find spCost");
         spCost = FindObjectOfType<SpCost>();
+        Debug.Log($"spCost:{spCost}");
+
         //Instantiate SpButton and is it already spawned
-       /* SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Stun, GetComponent<Unit>());
-        //SpButton will give unit a int to get back the button that it spwaned
-        if (SpawnedButton) { SPButton = FindObjectOfType<SpButton>().GetButton(GetComponent<Unit>().SpBtnTicket).GetComponent<Button>(); }
-        if (SPButton == null) { return; }
-        SPButton.onClick.RemoveAllListeners();
-        SPButton.onClick.AddListener(OnPointerDown);*/
+        /* SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Stun, GetComponent<Unit>());
+         //SpButton will give unit a int to get back the button that it spwaned
+         if (SpawnedButton) { SPButton = FindObjectOfType<SpButton>().GetButton(GetComponent<Unit>().SpBtnTicket).GetComponent<Button>(); }
+         if (SPButton == null) { return; }
+         SPButton.onClick.RemoveAllListeners();
+         SPButton.onClick.AddListener(OnPointerDown);*/
     }
+
+    public void setUnit(Unit unit)
+    {
+        this.unit = unit;
+
+    }
+
+
     public void OnPointerDown()
     {
-        Debug.Log($"Unit:{GetComponent<Unit>()}");
-        SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
+        // start() spCost not pass to here, try to find here again
+        Debug.Log("OnPointerDown() try to find spCost");
+        spCost = FindObjectOfType<SpCost>();
+        Debug.Log($"OnPointerDown() spCost:{spCost}");
+
+        Debug.Log($"Unit:{unit}, spCost:{spCost}");
+        SpButtonManager.unitBtn.TryGetValue(unit.unitKey, out Button btn);
         if (spCost.useSpCost == true)
         {
             //if (spCost.SPAmount < SPCost) { return; }
             if ((btn.GetComponent<SpCostDisplay>().spCost / 3) < SPCost) { return; }
 
         }
+        Debug.Log($"b4 OnPointerDown ==> StartCoroutine {btn.tag} {btn.name} ");
         StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(10));
+        Debug.Log($"after OnPointerDown ==> StartCoroutine {btn.tag} {btn.name} ");
         spCost.UpdateSPAmount(-SPCost, null);
         UnitRepeatAttackDelaykeys.Clear();
         UnitSpeedkeys.Clear();
@@ -60,14 +81,14 @@ public class Stun : NetworkBehaviour, ISpecialAttack
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)//1 player mode
         {
             //stop enenmy
-            foreach (GameObject unit in enemyList)
+            foreach (GameObject aunit in enemyList)
             {  
                 enemyReFightTimer = enemyFrezzeTime;
                 CanUnFrezze = true;
                 CardStats cardStats = unit.GetComponent<CardStats>();
-                UnitRepeatAttackDelaykeys.Add(unit, cardStats.repeatAttackDelay);
-                UnitSpeedkeys.Add(unit, cardStats.speed);
-                unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit, cardStats.star, cardStats.cardLevel, (int)unit.GetComponent<Health>().getCurrentHealth(), cardStats.attack, Mathf.Infinity, 0, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey);
+                UnitRepeatAttackDelaykeys.Add(aunit, cardStats.repeatAttackDelay);
+                UnitSpeedkeys.Add(aunit, cardStats.speed);
+                aunit.GetComponent<UnitPowerUp>().CmdPowerUp(aunit, cardStats.star, cardStats.cardLevel, (int)aunit.GetComponent<Health>().getCurrentHealth(), cardStats.attack, Mathf.Infinity, 0, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey);
                
             }
             FindObjectOfType<SpawnSpEffect>().CmdSpawnEffect(1, null);

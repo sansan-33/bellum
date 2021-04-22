@@ -16,6 +16,7 @@ public class Ice : MonoBehaviour, ISpecialAttack
     private GameObject effect;
     private Transform searchPoint;
     private SpCost spCost;
+    private Unit unit;
 
     public int SPCost = 10;
     public int IceDamage = 10;
@@ -52,13 +53,20 @@ public class Ice : MonoBehaviour, ISpecialAttack
         }
         Health.IceHitUpdated -= IceBreak;
     }
+
+    public void setUnit(Unit unit)
+    {
+        this.unit = unit;
+
+    }
+
     public void OnPointerDown()
     {
         
         enemyList.Clear();
         UnitRepeatAttackDelaykeys.Clear();
         UnitSpeedkeys.Clear();
-        SpButtonManager.unitBtn.TryGetValue(GetComponent<Unit>().unitKey, out Button btn);
+        SpButtonManager.unitBtn.TryGetValue(unit.unitKey, out Button btn);
         if (spCost.useSpCost == true)
         {
             //if (spCost.SPAmount < SPCost) { return; }
