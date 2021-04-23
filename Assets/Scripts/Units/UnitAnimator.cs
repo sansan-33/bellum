@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class UnitAnimator : NetworkBehaviour
 {
-    public NetworkAnimator networkAnim;
+    [SerializeField] public NetworkAnimator networkAnim;
+    [SerializeField] public Animator anim;
 
-    void Awake()
+    public override void OnStartAuthority()
     {
         networkAnim = GetComponent<NetworkAnimator>();
+        anim = GetComponent<Animator>();
         //networkAnim.animator.SetFloat("MoveSpeed", speed); //will act as multiplier to the speed of the run animation clip
         //networkAnim.animator.SetBool("IsMoving", true);
     }
@@ -45,7 +47,7 @@ public class UnitAnimator : NetworkBehaviour
     [Server]
     public void ServerSetBool(string animationType, bool state)
     {
-        networkAnim.animator.SetBool(animationType, state);
+        anim.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 SetBool(animationType, state);
     }
 
 }
