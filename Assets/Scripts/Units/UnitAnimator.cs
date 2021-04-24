@@ -5,6 +5,7 @@ public class UnitAnimator : NetworkBehaviour
 {
     [SerializeField] public NetworkAnimator networkAnim;
     [SerializeField] public Animator anim;
+    AnimatorClipInfo[] m_CurrentClipInfo;
 
     /*
     public override void OnStartServer()
@@ -17,10 +18,10 @@ public class UnitAnimator : NetworkBehaviour
     */
     public void trigger(string type)
     {
-        float animSpeed = 1f; // Original Speed
-        networkAnim.animator.speed = animSpeed;
-        networkAnim.SetTrigger(type);
-        //CmdTrigger(type, animSpeed);
+        float animSpeed = -1f; // Original Speed
+        //networkAnim.animator.speed = animSpeed;
+        //networkAnim.SetTrigger(type);
+        CmdTrigger(type, animSpeed);
     }
     public void trigger(string type, float animSpeed)
     {
@@ -35,7 +36,20 @@ public class UnitAnimator : NetworkBehaviour
     [Server]
     public void ServerTrigger(string animationType, float animSpeed)
     {
-        networkAnim.animator.speed = animSpeed;
+        if (animSpeed > 0f)
+        {
+            float clipLength = 0f;
+            m_CurrentClipInfo = networkAnim.animator.GetCurrentAnimatorClipInfo(0);
+            foreach(AnimatorClipInfo animatorClipInfos in m_CurrentClipInfo){
+                if (animatorClipInfos.clip.name.ToLower().Contains("attack"))
+                {
+                    clipLength = animatorClipInfos.clip.length;
+                }
+            }
+            if(clipLength > 0f)
+                networkAnim.animator.speed = animSpeed / clipLength;
+            Debug.Log($" animationType {animationType} {animSpeed} clip name {m_CurrentClipInfo[0].clip.name} " );
+        }
         networkAnim.SetTrigger(animationType);
     }
     public void SetBool(string type, bool state)
