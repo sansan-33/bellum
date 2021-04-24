@@ -98,14 +98,15 @@ public class UnitPowerUp : NetworkBehaviour
     public void ServerSetSpeed(int speed, bool accumulate)
     {
         SetSpeed(speed, accumulate);
+        RpcSpeedUp(speed, accumulate);
     }
     public void SetSpeed(int speed, bool accumulate)
     {
         if (speed < 0) { return; }
         if (GetComponent<Unit>().GetUnitMovement().GetSpeed(UnitMeta.SpeedType.CURRENT)   < GetComponent<Unit>().GetUnitMovement().GetSpeed(UnitMeta.SpeedType.MAX)  )
         {
-            //SpeedUp(agent, speed);
-            RpcSpeedUp(speed, accumulate);
+            SpeedUp(speed, accumulate);
+            //RpcSpeedUp(speed, accumulate);
         }
         /*
         if (canSpawnEffect)

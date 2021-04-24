@@ -111,10 +111,10 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                     ReScaleDamageDeal();
                 }
                 
-                    // DashDamage = 0;
-                    //if (targeter.tag.ToLower().Contains("king"))
-                    //    Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
-                    if (unit.unitType == UnitMeta.UnitType.TANK)
+                // DashDamage = 0;
+                //if (targeter.tag.ToLower().Contains("king"))
+                //    Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
+                if (unit.unitType == UnitMeta.UnitType.TANK)
                 {
                     unit.GetUnitMovement().SetSpeed(UnitMeta.SpeedType.ORIGINAL , unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.ORIGINAL));
                     unit.GetUnitPowerUp().canSpawnEffect = true;

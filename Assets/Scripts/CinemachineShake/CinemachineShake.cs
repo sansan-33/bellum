@@ -43,11 +43,11 @@ public class CinemachineShake : NetworkBehaviour {
     private void Update()
     {   if(shakeTime > 0)
         {
-            Debug.Log($"shake time {shakeTime},{shakeTimer}");
+            //Debug.Log($"shake time {shakeTime},{shakeTimer}");
             shakeTime -= Time.deltaTime;
             if (shakeTimer > 0)
             {
-            Debug.Log("shake");
+            //Debug.Log("shake");
                 secondShakeTimer = .05f;
                 shakeTimer -= Time.deltaTime;
                 GetComponent<CinemachineVirtualCamera>().enabled = true;
@@ -60,7 +60,7 @@ public class CinemachineShake : NetworkBehaviour {
             }
             else
              {
-            Debug.Log("return shake !!!!!!!!!!!");
+            //Debug.Log("return shake !!!!!!!!!!!");
             GetComponent<CinemachineVirtualCamera>().enabled = false;
                 if (secondShakeTimer > 0)
                 {
@@ -68,7 +68,8 @@ public class CinemachineShake : NetworkBehaviour {
                     secondShakeTimer -= Time.deltaTime;
                 }
                 else { shakeTimer = .05f; 
-            Debug.Log("re shake"); }
+            //Debug.Log("re shake");
+            }
             }
         }
         else { Destroy(gameObject); }
