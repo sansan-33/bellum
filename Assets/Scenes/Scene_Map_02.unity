@@ -80188,7 +80188,7 @@ MonoBehaviour:
   hardCollisions: 1
   symmetryBreakingBias: 0.1
   movementPlane: 0
-  drawObstacles: 1
+  drawObstacles: 0
 --- !u!1 &1598121422
 GameObject:
   m_ObjectHideFlags: 0
