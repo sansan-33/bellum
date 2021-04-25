@@ -98,7 +98,6 @@ public class CardDealer : MonoBehaviour
         yield return player.AddCard(lastCard, left);
        
     }
-
     IEnumerator DealCards(int numberOfCards, float delay, float waitTime, Player player, bool left = true, bool reveal = false)
     {
         float currentWait = waitTime;
@@ -163,6 +162,7 @@ public class CardDealer : MonoBehaviour
 
         //Debug.Log($"GetUserCard ==> User Card Count {jsonResult.Count} ");
         Unit unit;
+        CardStats cardStats;
         for (int i = 0; i < jsonResult.Count; i++)
         {
             if (jsonResult[i]["cardkey"] != null && jsonResult[i]["cardkey"].ToString().Length > 0)
@@ -170,32 +170,19 @@ public class CardDealer : MonoBehaviour
                 userCardStatsDict.Add(jsonResult[i]["cardkey"], new CardStats(jsonResult[i]["star"], jsonResult[i]["level"], jsonResult[i]["health"], jsonResult[i]["attack"], jsonResult[i]["repeatattackdelay"], jsonResult[i]["speed"], jsonResult[i]["defense"], jsonResult[i]["special"], jsonResult[i]["specialkey"], jsonResult[i]["passivekey"]));
                 if(playerUnitDict.TryGetValue( (UnitMeta.UnitKey)Enum.Parse(typeof(UnitMeta.UnitKey), jsonResult[i]["cardkey"])  , out unit)){
                     //Debug.Log($"GetUserCard ==> Unit {unit.unitKey} ");
-                    if(unit.unitType == UnitMeta.UnitType.HERO || unit.unitType == UnitMeta.UnitType.KING )
-                       unit.GetComponent<CardStats>().SetCardStats(userCardStatsDict[jsonResult[i]["cardkey"]]);
+                    if (unit.unitType == UnitMeta.UnitType.HERO || unit.unitType == UnitMeta.UnitType.KING)
+                    {
+                        cardStats = userCardStatsDict[jsonResult[i]["cardkey"]];
+                        unit.GetComponent<CardStats>().SetCardStats(cardStats);
+                        unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit.gameObject, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey);
+                    }
                 }
             }
         }
         UserCardLoaded?.Invoke();
         //Debug.Log($"GetUserCard ==> {webReq.url } {jsonResult}");
     }
-    IEnumerable GetPlayerUnit(int playerid)
-    {
-        yield return new WaitForSeconds(0.1f);
-        Debug.Log($"======================== GetPlayerUnit ==> playerid {playerid} ");
-
-        GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + playerid);
-        GameObject king = GameObject.FindGameObjectWithTag("King" + playerid);
-        List<GameObject> armies = new List<GameObject>();
-        armies = units.ToList();
-        if (king != null)
-            armies.Add(king);
-        foreach (GameObject child in armies)
-        {
-            playerUnitDict.Add(child.GetComponent<Unit>().unitKey, child.GetComponent<Unit>());
-        }
-        Debug.Log($"GetPlayerUnit ==> Unit {playerUnitDict.Count} ");
-             
-    }
+   
 
 }
 
