@@ -64,7 +64,6 @@ public class TotalHealthDisplay : NetworkBehaviour
 
                 MaxmilitarySize = militarySize;
             }
-
             newProgress = (float)militarySize / (float)MaxmilitarySize;
             TotalPlayerHealthBar.fillAmount = newProgress;
             TotalPlayerHealths.text = militarySize.ToString();
