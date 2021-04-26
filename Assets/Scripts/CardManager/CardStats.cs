@@ -1,18 +1,16 @@
-﻿using System.Collections.Generic;
-using Mirror;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CardStats : NetworkBehaviour
+public class CardStats : MonoBehaviour
 {
-    [SyncVar] public int star;
+    public int star;
     public int cardLevel;
-    [SyncVar] public int health;
+    public int health;
     public int attack;
     public float repeatAttackDelay;
     public int speed;
     public int defense;
     public int special;
-    [SyncVar] public string specialkey;
+    public string specialkey;
     public string passivekey;
     [HideInInspector] public SpecialAttackDict.SpecialAttackType specialAttackType = SpecialAttackDict.SpecialAttackType.ICE;
 

@@ -183,6 +183,7 @@ public class RTSNetworkManager : NetworkManager
                 //Debug.Log($"loadMilitary {unitType} spawnPosition {spawnPosition}");
                 GameObject unit = Instantiate(unitDict[unitKey], spawnPosition, rotation) as GameObject;
                 unit.GetComponent<Unit>().SetSpawnPointIndex(spawnPointObject.GetComponent<SpawnPoint>().spawnPointIndex);
+                //unit.GetComponent<UnitPowerUp>().ServerTag(unit, player.GetPlayerID(), unitKey.ToString(), 1, userTeamCard["level"], userTeamCard["health"], userTeamCard["attack"], userTeamCard["repeatattackdelay"], userTeamCard["speed"], userTeamCard["defense"], userTeamCard["special"], userTeamCard["specialkey"], userTeamCard["passivekey"]);
                 //unit.GetComponent<UnitPowerUp>().ServerPowerUp(unit, 1, userTeamCard["level"], userTeamCard["health"], userTeamCard["attack"], userTeamCard["repeatattackdelay"], userTeamCard["speed"], userTeamCard["defense"], userTeamCard["special"], userTeamCard["specialkey"], userTeamCard["passivekey"]);
                 unit.name = unitKey.ToString();
                 NetworkServer.Spawn(unit, player.connectionToClient);

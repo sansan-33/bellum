@@ -31,11 +31,11 @@ public class LeaderScrollList : MonoBehaviour
     void Start()
     {
         RefreshDisplay();
-        TacticalBehavior.LeaderUpdated += TacticalStatusToItem;
+        //TacticalBehavior.LeaderUpdated += TacticalStatusToItem;
     }
     private void OnDestroy()
     {
-        TacticalBehavior.LeaderUpdated -= TacticalStatusToItem;
+        //TacticalBehavior.LeaderUpdated -= TacticalStatusToItem;
     }
     void RefreshDisplay()
     {

@@ -46,7 +46,15 @@ public class CardDealer : MonoBehaviour
         //ShuffleDeck();
         //DealBegin();
     }
-    private void Start()
+    void Start()
+    {
+        TacticalBehavior.UnitTagUpdated += StartShuffleDeck;
+    }
+    void OnDestroy()
+    {
+        TacticalBehavior.UnitTagUpdated -= StartShuffleDeck;
+    }
+    private void StartShuffleDeck()
     {
         StartCoroutine(ShuffleDeck());
     }
@@ -136,11 +144,13 @@ public class CardDealer : MonoBehaviour
     // sends an API request - returns a JSON file
     IEnumerator GetUserCard(string userid, string race, int playerid)
     {
-        //Debug.Log($"Card Dealer => Get User Card {userid}  / {playerid}");
-        yield return new WaitForSeconds(1f);
+        Debug.Log($"Card Dealer => Get User Card {userid}  / {playerid}");
+        yield return new WaitForSeconds(0.1f);
         GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + playerid);
         GameObject king = GameObject.FindGameObjectWithTag("King" + playerid);
         List<GameObject> armies = new List<GameObject>();
+        Debug.Log($"Card Dealer => Get User Card armies size {armies.Count} ");
+
         armies = units.ToList();
         if (king != null)
             armies.Add(king);
@@ -148,7 +158,7 @@ public class CardDealer : MonoBehaviour
         {
             playerUnitDict.Add(child.GetComponent<Unit>().unitKey, child.GetComponent<Unit>());
         }
-        //Debug.Log($"Card Dealer => playerUnitDict {playerUnitDict.Count}");
+        Debug.Log($"Card Dealer => playerUnitDict {playerUnitDict.Count}");
 
         userCardStatsDict.Clear();
         JSONNode jsonResult;
@@ -160,7 +170,7 @@ public class CardDealer : MonoBehaviour
         string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
         jsonResult = JSON.Parse(rawJson);
 
-        //Debug.Log($"GetUserCard ==> User Card Count {jsonResult.Count} ");
+        Debug.Log($"GetUserCard ==> User Card Count {jsonResult.Count} ");
         Unit unit;
         CardStats cardStats;
         for (int i = 0; i < jsonResult.Count; i++)
@@ -169,12 +179,13 @@ public class CardDealer : MonoBehaviour
             {
                 userCardStatsDict.Add(jsonResult[i]["cardkey"], new CardStats(jsonResult[i]["star"], jsonResult[i]["level"], jsonResult[i]["health"], jsonResult[i]["attack"], jsonResult[i]["repeatattackdelay"], jsonResult[i]["speed"], jsonResult[i]["defense"], jsonResult[i]["special"], jsonResult[i]["specialkey"], jsonResult[i]["passivekey"]));
                 if(playerUnitDict.TryGetValue( (UnitMeta.UnitKey)Enum.Parse(typeof(UnitMeta.UnitKey), jsonResult[i]["cardkey"])  , out unit)){
-                    //Debug.Log($"GetUserCard ==> Unit {unit.unitKey} ");
+                    Debug.Log($"GetUserCard ==> Unit {unit.unitKey} ");
                     if (unit.unitType == UnitMeta.UnitType.HERO || unit.unitType == UnitMeta.UnitType.KING)
                     {
                         cardStats = userCardStatsDict[jsonResult[i]["cardkey"]];
-                        unit.GetComponent<CardStats>().SetCardStats(cardStats);
-                        unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit.gameObject, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey);
+                        //unit.GetComponent<CardStats>().SetCardStats(cardStats);
+                        //unit.GetComponent<UnitPowerUp>().CmdPowerUp(unit.gameObject, cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey);
+                        unit.GetComponent<UnitPowerUp>().UnitTag(unit.gameObject, playerid, jsonResult[i]["cardkey"], cardStats.star, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey);
                     }
                 }
             }

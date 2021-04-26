@@ -129,27 +129,46 @@ public class UnitPowerUp : NetworkBehaviour
     {
         SpeedUp( speed, accumulate);
     }
-    [Command]
-    public void CmdTag(GameObject unit, int playerID, string unitName, Color teamColor, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey)
+    public void UnitTag(GameObject unit, int playerID, string unitName, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey)
     {
-        ServerTag(unit, playerID, unitName, teamColor, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
+        if (isServer)
+        {
+            Debug.Log("UnitTag Server Call");
+            RpcTag(unit, playerID, unitName, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
+        }
+        else
+        {
+            Debug.Log("UnitTag Not Server Call");
+            CmdTag(unit, playerID, unitName, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
+        }
+    }
+    [Command]
+    public void CmdTag(GameObject unit, int playerID, string unitName, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey)
+    {
+        Debug.Log("UnitTag Call CmdTag ==> Server Tag");
+        ServerTag(unit, playerID, unitName, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
     }
     [Server]
-    public void ServerTag(GameObject unit, int playerID, string unitName, Color teamColor, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey)
+    public void ServerTag(GameObject unit, int playerID, string unitName, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey)
     {
-        RpcTag(unit, playerID, unitName, teamColor, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
+        Debug.Log("UnitTag Server Tag Call Rpc And  Handle Tag");
+
+        RpcTag(unit, playerID, unitName, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
+        HandleTag(unit, playerID, unitName, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
     }
     [ClientRpc]
-    void RpcTag(GameObject unit, int playerID, string unitName, Color teamColor, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey)
+    void RpcTag(GameObject unit,int playerID, string unitName, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey)
     {
-        Debug.Log($"Rpc Tag {playerID} {unit.name}");
+        HandleTag(unit, playerID, unitName, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
+    }
+    void HandleTag(GameObject unit,int playerID, string unitName, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey)
+    {
+        Debug.Log($"Tag playerID {playerID} {unit.name} health = {health} * {star} ");
         unit.name = unitName;
         unit.tag = ((unit.GetComponent<Unit>().unitType == UnitMeta.UnitType.KING) ? "King" : "Player") + playerID;
-        unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
-        unit.GetComponentInChildren<UnitBody>().ServerChangeUnitRenderer(unit, playerID, star);
-        unit.GetComponent<Unit>().SetSpawnPointIndex(spawnPointIndex);
         unit.GetComponent<CardStats>().SetCardStats(star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
-        //unit.GetComponent<HealthDisplay>().SetUnitLevel(cardLevel, unit.GetComponent<Unit>().unitType);
-        //unit.GetComponent<Health>().ScaleMaxHealth(health, star);
+        unit.GetComponent<Health>().ScaleMaxHealth(health, star);
+        unit.GetComponent<HealthDisplay>().SetUnitLevel(cardLevel, unit.GetComponent<Unit>().unitType );
+
     }
 }

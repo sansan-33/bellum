@@ -14,7 +14,7 @@ using Debug = UnityEngine.Debug;
 public class TacticalBehavior : MonoBehaviour
 {
     [SerializeField] List<GameObject> PlayerEnemyGroup = new List<GameObject>();
-    public static event Action<Dictionary<int, GameObject>> LeaderUpdated;
+    public static event Action UnitTagUpdated ;
     private eleixier Eleixier;
     private RTSPlayer player;
     private int PLAYERID = 0;
@@ -134,6 +134,7 @@ public class TacticalBehavior : MonoBehaviour
             if ( GameObject.FindGameObjectsWithTag("Player0").Length > 0 && GameObject.FindGameObjectsWithTag("King0").Length > 0  && GameObject.FindGameObjectsWithTag("Player1").Length > 0 && GameObject.FindGameObjectsWithTag("King1").Length > 0)
             {
                 ISTAGGED = true;
+                UnitTagUpdated?.Invoke();
                 yield return new WaitForSeconds(1f);
                 yield return TacticalFormation(PLAYERID, ENEMYID);
             }
