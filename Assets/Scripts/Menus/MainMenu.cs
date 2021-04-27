@@ -15,9 +15,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject landingPagePanel = null;
     [SerializeField] public Image[] teamCardImages = new Image[3];
     private static Dictionary<string, string[]> userTeamDict = new Dictionary<string, string[]>();
-    [SerializeField] public CharacterFullArt characterFullArt;
+    //[SerializeField] public CharacterFullArt characterFullArt;
     [SerializeField] private FirebaseManager firebaseManager;
     [SerializeField] private TopBarMenu topBarMenu = null;
+    [SerializeField] public UnitFactory localFactory;
 
     private void Awake()
     {
@@ -40,16 +41,26 @@ public class MainMenu : MonoBehaviour
     }
     IEnumerator LoadLobbyInfo()
     {
-         yield return GetTeamInfo(StaticClass.UserID);
+        yield return GetTeamInfo(StaticClass.UserID);
        
         if (userTeamDict.Count < 1) { yield break; }
+        localFactory.initUnitDict();
+        Vector3 unitPos;
         string[] cardkeys = userTeamDict[userTeamDict.Keys.First()];
-        if (characterFullArt.CharacterFullArtDictionary.Count < 1){
-            characterFullArt.initDictionary();
-        }
-        for (int i = 0; i < teamCardImages.Length; i++) {
+        //if (characterFullArt.CharacterFullArtDictionary.Count < 1){
+        //    characterFullArt.initDictionary();
+        //}
+        for (int i = 0; i < teamCardImages.Length; i++)
+        {
             teamCardImages[i].gameObject.SetActive(true);
-            teamCardImages[i].sprite = characterFullArt.CharacterFullArtDictionary[cardkeys[i]].image;
+            unitPos = teamCardImages[i].gameObject.transform.position;
+            //teamCardImages[i].sprite = characterFullArt.CharacterFullArtDictionary[cardkeys[i]].image;
+            UnitMeta.UnitKey unitKey = (UnitMeta.UnitKey)Enum.Parse(typeof(UnitMeta.UnitKey), cardkeys[i]);
+            GameObject unitPrefab = localFactory.GetUnitPrefab(unitKey);
+            Transform unitBody = Instantiate(unitPrefab.transform.Find("Body"));
+            unitBody.position = new Vector3(unitPos.x , unitPos.y - 2, unitPos.z);
+            unitBody.transform.Rotate(0,180,0);
+            unitBody.transform.SetParent(teamCardImages[i].transform);
         }
         //Debug.Log($"Load Team Lobby Done. StaticClass.Username: {StaticClass.Username}" );
     }

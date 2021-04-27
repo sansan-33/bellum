@@ -125,7 +125,7 @@ public class UnitFactory : NetworkBehaviour
         GameObject spawnPointObject = gameBoardHandlerPrefab.GetSpawnPointObject(unitType, playerID);
         StartCoroutine(ServerSpwanUnit(playerID, spawnPosition, unitDict[UnitMeta.UnitRaceTypeKey[race][unitType]], unitName, spawnCount, cardLevel, health, attack, repeatAttackDelay, speed, defense, special , specialkey, passivekey , star, teamColor, rotation, spawnPointObject.GetComponent<SpawnPoint>().spawnPointIndex));
     }
-    private void initUnitDict()
+    public void initUnitDict()
     {
         unitDict.Clear();
         unitDict.Add(UnitMeta.UnitKey.ARCHER, archerPrefab);
@@ -169,5 +169,9 @@ public class UnitFactory : NetworkBehaviour
     public GameObject GetUnitPrefab(UnitMeta.Race race, UnitMeta.UnitType unitType)
     {
         return unitDict[UnitMeta.UnitRaceTypeKey[race][unitType]];
+    }
+    public GameObject GetUnitPrefab(UnitMeta.UnitKey unitKey)
+    {
+        return unitDict[unitKey];
     }
 }

@@ -25,15 +25,21 @@ public class HeroMenu : MonoBehaviour
 
     [SerializeField] public Image characterImage;
     [SerializeField] public Image unitTypeImage;
+    [SerializeField] public Image skillImage;
+    [SerializeField] public Image passiveImage;
     [SerializeField] public Button levelUpButton;
     [SerializeField] public Slider levelSlider;
     [SerializeField] public GameObject stars;
     [SerializeField] public UnitTypeArt unitTypeArt;
     [SerializeField] public CharacterFullArt characterFullArt;
+    [SerializeField] public SkillArt skillArt;
+    [SerializeField] public UnitFactory localFactory;
+    [SerializeField] public Transform unitBodyParent;
 
     private bool CANLEVELUP = false;
     private static float LEVELUP_POWER = 1.1f;
-
+    private Transform unitBody;
+   
     private void Start()
     {
         Debug.Log($"Hero Menu Scense Loaded, cardkey is {StaticClass.CrossSceneInformation} ");
@@ -71,7 +77,7 @@ public class HeroMenu : MonoBehaviour
 
         // convert the byte array to a string
         string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
-
+        
         // parse the raw string into a json result we can easily read
         jsonResult = JSON.Parse(rawJson);
         if(jsonResult.Count> 0)
@@ -89,6 +95,27 @@ public class HeroMenu : MonoBehaviour
             }
             characterImage.sprite = characterFullArt.CharacterFullArtDictionary[jsonResult[0]["cardkey"]].image;
             unitTypeImage.sprite = unitTypeArt.UnitTypeArtDictionary[jsonResult[0]["unittype"]].image;
+
+            Vector3 unitPos = unitBodyParent.gameObject.transform.position;
+            UnitMeta.UnitKey unitKey = (UnitMeta.UnitKey)Enum.Parse(typeof(UnitMeta.UnitKey), jsonResult[0]["cardkey"]);
+            GameObject unitPrefab = localFactory.GetUnitPrefab(unitKey);
+            if (unitBody == null) {
+                unitBody = Instantiate(unitPrefab.transform.Find("Body"));
+                unitBody.position = new Vector3(unitPos.x, unitPos.y - 2, unitPos.z);
+                unitBody.transform.Rotate(0, 180, 0);
+                unitBody.localScale = new Vector3(7, 7, 7);
+                unitBody.transform.SetParent(unitBodyParent.transform);
+            }
+            if (jsonResult[0]["specialkey"].ToString().Trim().Length > 2)
+            {
+                Enum.TryParse(jsonResult[0]["specialkey"], out SpecialAttackDict.SpecialAttackType skill);
+                skillImage.sprite = skillArt.skillImages[(int) skill].image;
+                skillImage.GetComponentInChildren<TMP_Text>().text = jsonResult[0]["specialkey"];
+            }
+            else
+                skillImage.gameObject.SetActive(false);
+            //passiveImage.sprite = skillArt.skillImages[jsonResult[0]["passivekey"].ToString().Length == 0 ? "99" : jsonResult[0]["passivekey"]].image;
+
             if (Int32.TryParse(jsonResult[0]["star"], out int star))
             {
                 for (int j = (stars.transform.childCount - 1); j > (star - 1); j--)
@@ -103,7 +130,6 @@ public class HeroMenu : MonoBehaviour
             speedValue.text = jsonResult[0]["speed"];
             specialValue.text = jsonResult[0]["special"];
             powerValue.text = jsonResult[0]["power"];
-
         }
     }
 }
