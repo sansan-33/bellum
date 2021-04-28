@@ -29,11 +29,13 @@ public class Targeter : NetworkBehaviour
     [Command]
     public void CmdSetTarget(GameObject targetGameObject)
     {
-        
+        SetTarget(targetGameObject); 
+    }
+    public void SetTarget(GameObject targetGameObject)
+    {
         if (!targetGameObject.TryGetComponent<Targetable>(out Targetable newTarget)) { return; }
-       
         target = newTarget;
-        //Debug.Log($"{this.transform.GetComponent<Unit>().unitType}Target-->{target}");
+        aimAtPoint = target.GetAimAtPoint();
     }
     [Server]
     public void ClearTarget()

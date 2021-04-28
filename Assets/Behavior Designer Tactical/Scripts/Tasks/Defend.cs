@@ -30,6 +30,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
             // 2 * PI = 360 degrees
             theta = 2 * Mathf.PI / agents.Count;
+
         }
 
         protected override int RemoveAgentFromGroup(Behavior agent)
@@ -99,10 +100,11 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 tacticalAgent.SetDestination(targetPosition);
                 if (tacticalAgent.HasArrived()) {
                     // Face away from the defending object.
-                    var direction = targetPosition - defendObject.Value.transform.position;
+                    //var direction = targetPosition - defendObject.Value.transform.position;
+                    var direction = tacticalAgent.transform.GetComponent<Unit>().GetTargeter().GetTarget().GetAimAtPoint().position - defendObject.Value.transform.position;
                     direction.y = 0;
                     tacticalAgent.RotateTowards(Quaternion.LookRotation(direction));
-                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus( TASKNAME + ": Arrived and Defend " + HEARTBEAT++);
+                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus( TASKNAME + ": Arrived and Defend Enemy" + tacticalAgent.transform.GetComponent<Unit>().GetTargeter().GetTarget() + ". " + HEARTBEAT++);
                     tacticalAgent.transform.GetComponent<UnitAnimator>().trigger("defend");
                 }
             }
