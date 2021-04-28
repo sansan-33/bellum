@@ -20,7 +20,7 @@ public class UnitBody : NetworkBehaviour, IBody
     public void SetRenderMaterial(int playerid, int star)
     {
        int index = playerid == 0 ? star - 1 : 3 + star - 1;
-        Debug.Log($"SetRenderMaterial index-->{index}playerid-->{playerid}star-->{star}unit-->{gameObject.name}");
+       //Debug.Log($"SetRenderMaterial index-->{index}playerid-->{playerid}star-->{star}unit-->{gameObject.name}");
        GetComponent<UnitBody>().GetUnitRenderer().sharedMaterial = material[index];
        // Debug.Log(unit.GetComponent<UnitBody>().GetUnitRenderer());
     }
