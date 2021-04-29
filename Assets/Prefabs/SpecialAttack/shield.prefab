@@ -61,5 +61,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SPCost: 10
-  shieldHealths: 10000
+  shieldHealths: 50
   buttonTicket: 0

@@ -48,8 +48,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   attackPoint: {fileID: 0}
-  electicDamage: 0
-  electicShockDamage: 0
+  electicDamage: 50
+  electicShockDamage: 10
   attackRange: 100
   minAttackRange: 1000
   maxAttackrange: 400
