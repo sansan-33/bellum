@@ -24,9 +24,9 @@ public class SpCost : MonoBehaviour
     {
        
         //Debug.Log("UpdateSPAmount");
-        SPAmount += cost;
-        SPText.text = (string)SPAmount.ToString();
-        SPImage.fillAmount = (float)SPAmount / MaxSpCost;
+        //SPAmount += cost;
+        //SPText.text = (string)SPAmount.ToString();
+        //SPImage.fillAmount = (float)SPAmount / MaxSpCost;
         if (unit != null)
         {
            bool GettedValue = SpButtonManager.unitBtn.TryGetValue(unit.unitKey, out Button btn);
