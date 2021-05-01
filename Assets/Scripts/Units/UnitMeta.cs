@@ -157,7 +157,9 @@ public class UnitMeta
         { UnitKey.GODWALL , Race.GOD }
     };
     public static Dictionary<UnitKey, bool> CanCollide = new Dictionary<UnitKey, bool>(){
-        { UnitKey.RIDER,true }
+        { UnitKey.CAVALRY,true },
+        { UnitKey.RIDER,true },
+        { UnitKey.GODCAVALRY,true }
     };
     public static Dictionary<UnitKey, bool> ShakeCamera = new Dictionary<UnitKey, bool>(){
         { UnitKey.CAVALRY,true },

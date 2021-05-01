@@ -180,7 +180,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     public bool isCollide()
     {
         //Debug.Log($"AstarAI is collide ?  {isCollided}");
-        Collider[] hitColliders = Physics.OverlapBox(this.transform.GetComponent<Targetable>().GetAimAtPoint().transform.position, transform.localScale * 3, Quaternion.identity, LayerMask.GetMask("Unit"));
+        Collider[] hitColliders = Physics.OverlapBox(GetComponent<Targeter>().GetAimAtPoint().transform.position, transform.localScale * GetComponent<IAttack>().AttackDistance(), Quaternion.identity, LayerMask.GetMask("Unit"));
         int i = 0;
 
         //Check when there is a new collider coming into contact with the box
@@ -207,6 +207,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
             isCollided = true;
             return true;
         }
+        isCollided = false;
         return false;
     }
 

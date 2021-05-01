@@ -110,7 +110,7 @@ public class UnitFactory : NetworkBehaviour
             NetworkServer.Spawn(unit, connectionToClient);
             if (unit.GetComponent<Unit>().unitType != UnitMeta.UnitType.WALL)
             {
-                unit.GetComponent<UnitPowerUp>().PowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey);
+                unit.GetComponent<UnitPowerUp>().PowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
             }
             //Debug.Log($"unit.GetComponent<UnitPowerUp>().RpcPowerUp(unit, star){unit.GetComponent<UnitPowerUp>()}");
             spawnCount--;

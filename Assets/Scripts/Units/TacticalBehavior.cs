@@ -85,24 +85,14 @@ public class TacticalBehavior : MonoBehaviour
         bool ISTAGGED = false;
         while (!ISTAGGED)
         {
-            yield return new WaitForSeconds(1f);
-
-            //KINGBOSS[player.GetEnemyID()] = GameObject.FindGameObjectWithTag("King" + player.GetEnemyID());
-            //KINGBOSS[player.GetPlayerID()] = GameObject.FindGameObjectWithTag("King" + player.GetPlayerID());
-            
+            yield return new WaitForSeconds(0.1f);
+    
             GameObject[] armies = GameObject.FindGameObjectsWithTag("Unit");
-            //Debug.Log($"army{armies.Length}");
             foreach (GameObject army in armies)
             {
-                // Debug.Log($"army-->{army}");
-                // Debug.Log($"Assign Tag for Client name {army.name} ");
-                if (army.TryGetComponent<Unit>(out Unit unit))
-                {
+                if (army.TryGetComponent<Unit>(out Unit unit)){
                     if (unit.hasAuthority)
                     {
-                        //Debug.Log("unit.hasAuthority");
-                        unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
-                        unit.GetComponent<UnitBody>().SetRenderMaterial(player.GetPlayerID(), 1);
                         army.tag = "Player" + player.GetPlayerID();
                         if (unit.unitType == UnitMeta.UnitType.KING)
                         {
@@ -113,7 +103,6 @@ public class TacticalBehavior : MonoBehaviour
                     else
                     {
                         //Only Assing Enemy Base Tag if mulitplayer
-                        unit.GetComponent<HealthDisplay>().SetHealthBarColor(teamEnemyColor);
                         army.tag = "Player" + player.GetEnemyID();
                         if (unit.unitType == UnitMeta.UnitType.KING)
                         {
@@ -132,7 +121,7 @@ public class TacticalBehavior : MonoBehaviour
                     gameBoardHandlerPrefab.initPlayerGameBoard();
                 }
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             //Debug.Log($"player0: {GameObject.FindGameObjectsWithTag("Player0").Length} / Player2 : {GameObject.FindGameObjectsWithTag("Player1").Length}");
             if ( GameObject.FindGameObjectsWithTag("Player0").Length > 0 && GameObject.FindGameObjectsWithTag("King0").Length > 0  && GameObject.FindGameObjectsWithTag("Player1").Length > 0 && GameObject.FindGameObjectsWithTag("King1").Length > 0)
             {

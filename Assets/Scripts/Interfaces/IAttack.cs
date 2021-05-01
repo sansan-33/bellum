@@ -19,4 +19,7 @@
         void ScaleDamageDeal(int attack, float repeatAttackDelay, float factor);
 
         void ScaleAttackRange(float factor);
+
+        float AttackDistance();
+
     }
