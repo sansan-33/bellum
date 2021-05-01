@@ -28,6 +28,7 @@ public class SpButtonManager : MonoBehaviour
     private int buttonCount;
     private List<SpecialAttackDict.SpecialAttackType> spawnedButtonSpType = new List<SpecialAttackDict.SpecialAttackType>();
     public List<UnitMeta.UnitKey> spawnedSpButtonUnit = new List<UnitMeta.UnitKey>();
+    public static List<Button> buttons = new List<Button>();
     private Sprite sprite;
     private RTSPlayer player;
     private GameObject buttonChild;
@@ -112,19 +113,19 @@ public class SpButtonManager : MonoBehaviour
 
         //only spawn one button for each type of Sp
         //Debug.Log($"spawn {spType}");
-            buttonCount++;
-            // if(spType == SpecialAttackDict.SpecialAttackType.Shield) { Debug.Log(buttonCount); }
-            // spawn the button
-            CharacterImage characterImage = Arts.CharacterArtDictionary[unit.unitKey.ToString()];
-            button = Instantiate(buttonPrefab, spPrefabParent);
-            //Set button pos
-            button.GetComponent<RectTransform>().anchoredPosition = new Vector3(FirstCardPos.anchoredPosition.x + buttonOffSet * buttonCount, FirstCardPos.anchoredPosition.y, 0);
-            buttonChild = button.transform.Find("mask").gameObject;
-            buttonChild.transform.GetChild(0).GetComponent<Image>().sprite = characterImage.image;
-            SpecialAttackDict.ChildSpSprite.TryGetValue(spType, out sprite);
-            buttonChild.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
-            spawnedSpButtonUnit.Add(unit.unitKey);
-
+        buttonCount++;
+        // if(spType == SpecialAttackDict.SpecialAttackType.Shield) { Debug.Log(buttonCount); }
+        // spawn the button
+        CharacterImage characterImage = Arts.CharacterArtDictionary[unit.unitKey.ToString()];
+        button = Instantiate(buttonPrefab, spPrefabParent);
+        //Set button pos
+        button.GetComponent<RectTransform>().anchoredPosition = new Vector3(FirstCardPos.anchoredPosition.x + buttonOffSet * buttonCount, FirstCardPos.anchoredPosition.y, 0);
+        buttonChild = button.transform.Find("mask").gameObject;
+        buttonChild.transform.GetChild(0).GetComponent<Image>().sprite = characterImage.image;
+        SpecialAttackDict.ChildSpSprite.TryGetValue(spType, out sprite);
+        buttonChild.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
+        spawnedSpButtonUnit.Add(unit.unitKey);
+        buttons.Add(button.GetComponent<Button>());
 
         // Instantiate specialAttack
 
