@@ -18,30 +18,33 @@ public class UnitAnimator : NetworkBehaviour
     }
     public void trigger(string type)
     {
-        float animSpeed = -1f; // Original Speed
-        //networkAnim.animator.speed = animSpeed;
-        //networkAnim.SetTrigger(type);
-        CmdTrigger(type, animSpeed);
+        CmdTrigger(type);
     }
     public void trigger(string type, float animSpeed)
     {
-        CmdTrigger(type, animSpeed);
+        CmdTrigger(type);
+        //SetFloat("animSpeed", animSpeed);
     }
     [Command]
-    public void CmdTrigger(string animationType, float animSpeed)
+    public void CmdTrigger(string animationType)
     {
-        ServerTrigger(animationType, animSpeed);
+        ServerTrigger(animationType);
     }
 
     [Server]
-    public void ServerTrigger(string animationType, float animSpeed)
+    public void ServerTrigger(string animationType)
+    {
+        networkAnim.SetTrigger(animationType);
+    }
+    public void SetFloat(string type, float animSpeed)
     {
         if (animSpeed > 0f)
         {
             float clipLength = 0f;
             string clipName = "";
             m_CurrentClipInfo = networkAnim.animator.GetCurrentAnimatorClipInfo(0);
-            foreach(AnimatorClipInfo animatorClipInfos in m_CurrentClipInfo){
+            foreach (AnimatorClipInfo animatorClipInfos in m_CurrentClipInfo)
+            {
                 if (animatorClipInfos.clip.name.ToLower().Contains("attack"))
                 {
                     clipLength = animatorClipInfos.clip.length;
@@ -51,11 +54,11 @@ public class UnitAnimator : NetworkBehaviour
             }
             if (clipLength > 0f)
             {
-                networkAnim.animator.speed = animSpeed / clipLength;
-                Debug.Log($" animationType {animationType} speed {networkAnim.animator.speed} , repeat attack delay: {animSpeed} , clip name {clipName} ,clip length {clipLength}");
+                networkAnim.animator.SetFloat(type, animSpeed > 1 ? 2 : clipLength / animSpeed);
+                //networkAnim.animator.speed = animSpeed / clipLength;
+                Debug.Log($" Set Float {type} speed {networkAnim.animator.speed} , repeat attack delay: {animSpeed} , clip name {clipName} ,clip length {clipLength}");
             }
         }
-        networkAnim.SetTrigger(animationType);
     }
     public void SetBool(string type, bool state)
     {
