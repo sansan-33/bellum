@@ -65,7 +65,7 @@ namespace DigitalRuby.ThunderAndLightning
                 if ((btn.GetComponent<SpCostDisplay>().spCost / 3) < SPCost) { return; }
 
             }
-            StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(10));
+            StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(SPCost));
             spCost.UpdateSPAmount(-SPCost, null);
             searchPoint = gameObject.transform.parent.gameObject;
             GameObject closestTarget = null;

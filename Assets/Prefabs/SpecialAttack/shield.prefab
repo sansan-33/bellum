@@ -60,6 +60,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c475b1dc9b0b43768963794057fa783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SPCost: 10
+  SPCost: 5
   shieldHealths: 50
   buttonTicket: 0

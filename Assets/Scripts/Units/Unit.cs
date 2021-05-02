@@ -32,7 +32,7 @@ public class Unit : NetworkBehaviour
     public static event Action<Unit> AuthorityOnUnitDespawned;
     public static event Action<Unit> ClientOnUnitSpawned;
     public static event Action<Unit> ClientOnUnitDespawned;
-
+    public event Action OnUnitDespawned;
     [SyncVar]
     [SerializeField] private int spawnPointIndex = 0;
 
@@ -93,7 +93,7 @@ public class Unit : NetworkBehaviour
     public override void OnStopServer()
     {
         health.ServerOnDie -= ServerHandleDie;
-
+        OnUnitDespawned?.Invoke();
         ServerOnUnitDespawned?.Invoke(this);
     }
     #region Server
