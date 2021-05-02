@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpCost : MonoBehaviour
+public class SpCost : NetworkBehaviour
 {
     public bool useSpCost = true;
     [HideInInspector]public int SPAmount = 0;
@@ -22,10 +22,15 @@ public class SpCost : MonoBehaviour
         SPText = GameObject.FindGameObjectWithTag("SP Text").GetComponent<TextMeshProUGUI>();
         
     }
+    [ClientRpc]
+    public void RpcUpdateSPAmount(int cost, GameObject unit)
+    {
+        UpdateSPAmount(cost, unit.GetComponent<Unit>());
+    }
     public void UpdateSPAmount(int cost,Unit unit)
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        Debug.Log(player);
+        Debug.Log($"unit:{unit}");
         //Debug.Log("UpdateSPAmount");
         //SPAmount += cost;
         //SPText.text = (string)SPAmount.ToString();
@@ -59,7 +64,7 @@ public class SpCost : MonoBehaviour
             }
             else
             {
-                Debug.Log($"unit:{unit}player:{player}");
+                Debug.Log($"unit:{unit}player:{player.GetPlayerID()}");
 
                 if (unit.CompareTag("Player" + player.GetPlayerID()) || unit.CompareTag("King" + player.GetPlayerID()))
                 {
@@ -73,7 +78,7 @@ public class SpCost : MonoBehaviour
                     }
                     else
                     {
-
+                    Debug.Log($"button{SpButtonManager.buttons.Count}");
                         foreach (Button button in SpButtonManager.buttons)
                         {
                             if (button.GetComponent<SpCostDisplay>().useTimer == false)

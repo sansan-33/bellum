@@ -151,13 +151,16 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         
         if (iskill == true)
         {
-            powerUpAfterKill(this.transform.gameObject);
-            RpcpowerUpAfterKill(this.transform.gameObject);
-            spCost = FindObjectOfType<SpCost>();
-            spCost.UpdateSPAmount(1,GetComponent<Unit>());
-            
-           
+            KilledEnemy();
         }
+    }
+    private void KilledEnemy()
+    {
+        powerUpAfterKill(gameObject);
+        RpcpowerUpAfterKill(gameObject);
+        spCost = FindObjectOfType<SpCost>();
+        spCost.RpcUpdateSPAmount(1, gameObject);
+        Debug.Log("killed");
     }
     [Command]
     private void cmdDamageText(Vector3 targetPos, float damageNew, float damgeOld, NetworkIdentity opponentIdentity, bool flipText)
