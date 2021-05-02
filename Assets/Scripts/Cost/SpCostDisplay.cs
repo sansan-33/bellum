@@ -13,13 +13,26 @@ public class SpCostDisplay : MonoBehaviour
     public int waitTime = 5;
     private bool secoundLayer = false;
     private Color color;
+    private Unit unit;
     // Start is called before the first frame update
     void Start()
     {
         // remeber the start color
         color = childSprite[0].GetComponent<Image>().color;
+        StartCoroutine(OnStart());
     }
-    
+    private IEnumerator OnStart()
+    {
+        yield return new WaitForSeconds(2);
+        Debug.Log($"OnStart{unit}");
+        unit.OnUnitDespawned += Ondestroy;
+    }
+    public void Ondestroy()
+    {
+        Debug.Log("Destroy");
+        unit.OnUnitDespawned -= Ondestroy;
+        Destroy(gameObject);
+    }
     /// <summary>
     /// Add one Sp Cost
     /// </summary>
@@ -108,5 +121,9 @@ public class SpCostDisplay : MonoBehaviour
                     StartCoroutine(AddSpCost());
             }
         }
+    }
+    public void SetUnit(Unit unit)
+    {
+        this.unit = unit;
     }
 }
