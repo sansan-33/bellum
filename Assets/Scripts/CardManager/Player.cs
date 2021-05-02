@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,14 +30,10 @@ public class Player : MonoBehaviour
     int totalCardSlot = 0;
     Vector3 v360 = new Vector3(0, 0, 180);
     private List<CardSlot> cardSlotlist = new List<CardSlot>();
-   
+    public static event Action<Card> CardRemoved;
+
     void Awake()
     {
-        //forbiddenArea = GameObject.FindGameObjectWithTag("ForbiddenAreas").GetComponent<MeshRenderer>();
-        //forbiddenAreaScale = forbiddenArea.transform.localScale;
-        //forbiddenArea.transform.localScale = new Vector3(0, forbiddenAreaScale.y, forbiddenAreaScale.z);
-       // forbiddenArea.enabled = false;
-        //Debug.Log(forbiddenArea);
         Reset(); 
     }
 
@@ -91,21 +88,7 @@ public class Player : MonoBehaviour
     }
     public void RemoveLastCard(int index)
     {
-        // Need to shift every card if merged 
         moveCard(index, true);
-        /*
-        if (index == (playerHand[0].Count - 1) && (playerHand[0].Count-1) == 6)
-        {
-            Debug.Log($"index last {index}, shift card ");
-            moveCard(index,true);
-        }
-        else
-        {
-            Debug.Log($"index not last {index}, not shift card");
-            moveCard(index, true);
-        }
-        */
-        
     }
     public int GetHandTotal()
     {
@@ -194,6 +177,7 @@ public class Player : MonoBehaviour
         if (playerHand[0].Count > 0)
         {
             playerHand[0][index].destroy();
+            //CardRemoved?.Invoke(playerHand[0][index]);
             playerHand[0].RemoveAt(index);
         }
 

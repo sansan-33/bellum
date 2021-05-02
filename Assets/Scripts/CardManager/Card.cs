@@ -64,11 +64,13 @@ public class Card : MonoBehaviour
         if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
         if (eleixers.eleixer < uniteleixer) { return; }
         eleixers.eleixer -= uniteleixer;
-        if(type != (int) UnitMeta.UnitType.WALL)
-        Destroy(gameObject);
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
         dealManagers.GetComponent<CardDealer>().Hit();
         localFactory.CmdSpawnUnit( StaticClass.playerRace, (UnitMeta.UnitType)type, (int)this.cardFace.star + 1, playerID, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, teamColor);
+        if (type != (int)UnitMeta.UnitType.WALL){
+            Destroy(gameObject);
+            //dealManagers.GetComponent<CardDealer>().RemoveCard(this);
+        }
     }
     public void DropUnit(Vector3 SpwanPoint)
     {

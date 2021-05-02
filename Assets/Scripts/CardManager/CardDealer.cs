@@ -29,7 +29,6 @@ public struct CardFace
 public class CardDealer : MonoBehaviour
 {
     public int MAXTOTALHAND = 6;
-    [SerializeField] GameObject cardPrefab;
     [SerializeField] List<Player> players = new List<Player>();
     [SerializeField] List<CardFace> cardDeck = new List<CardFace>();
     [SerializeField] List<CardFace> cardDeckUsed = new List<CardFace>();
@@ -38,21 +37,17 @@ public class CardDealer : MonoBehaviour
     [SerializeField] Card buttonWall;
 
     public static event Action UserCardLoaded;
-    Card lastCard;
-    UnitMeta.Race UnitRace; 
-    void Awake()
-    {
-        //  dealer.SetAsDealer();
-        //ShuffleDeck();
-        //DealBegin();
-    }
+    public SimpleObjectPool cardObjectPool;
+
     void Start()
     {
         TacticalBehavior.UnitTagUpdated += StartShuffleDeck;
+        Player.CardRemoved += RemoveCard;
     }
     void OnDestroy()
     {
         TacticalBehavior.UnitTagUpdated -= StartShuffleDeck;
+        Player.CardRemoved -= RemoveCard;
     }
     private void StartShuffleDeck()
     {
@@ -61,7 +56,6 @@ public class CardDealer : MonoBehaviour
     IEnumerator ShuffleDeck()
     {
         RTSPlayer player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        UnitRace = StaticClass.playerRace;
         yield return GetUserCard(player.GetUserID(), player.GetRace(), player.GetPlayerID(), player.GetTeamColor());
         cardDeckUsed.Clear();
         string cardkey;
@@ -69,11 +63,11 @@ public class CardDealer : MonoBehaviour
         {
             foreach (Card_Deck number in Enum.GetValues(typeof(Card_Deck)))
             {
-                cardkey = UnitMeta.UnitRaceTypeKey[UnitRace][(UnitMeta.UnitType)Enum.Parse(typeof(UnitMeta.UnitType), number.ToString())].ToString();
+                cardkey = UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][(UnitMeta.UnitType)Enum.Parse(typeof(UnitMeta.UnitType), number.ToString())].ToString();
                 cardDeck.Add(new CardFace(suit, (Card_Numbers)number, Card_Stars.Bronze, userCardStatsDict[ cardkey ]));
             }
         }
-        buttonWall.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, userCardStatsDict[ UnitMeta.UnitRaceTypeKey[UnitRace][UnitMeta.UnitType.WALL].ToString() ]));
+        buttonWall.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, userCardStatsDict[ UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString() ]));
         
         yield return DealCards(3, 0f, 0.1f, players[0]); 
     }
@@ -86,7 +80,8 @@ public class CardDealer : MonoBehaviour
 
     IEnumerator DealingCard(Player player, bool left = true)
     {
-        lastCard = Instantiate(cardPrefab).GetComponent<Card>();
+
+        Card lastCard = cardObjectPool.GetObject().GetComponent<Card>();
 
         CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
         //CardFace randomCard = cardDeck[3];
@@ -140,7 +135,10 @@ public class CardDealer : MonoBehaviour
         while (Timer > 0) { Timer -= Time.deltaTime; }
         StartCoroutine(DealCards(1, 0f, 0.5f,  players[0]));
     }
-
+    public void RemoveCard(Card _card)
+    {
+        cardObjectPool.ReturnObject(_card.gameObject);
+    }
     // sends an API request - returns a JSON file
     IEnumerator GetUserCard(string userid, string race, int playerid, Color teamColor)
     {

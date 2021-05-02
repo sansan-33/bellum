@@ -31,7 +31,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     private PlayerGround playerGround;
     [SerializeField] GameObject unitPrefab;
     public GameObject EmptyCard;
-    int i = 0;
+ 
     private bool IS_HITTED_TIMER = false;
     UnitMeta.Race playerRace;
     private void Start()

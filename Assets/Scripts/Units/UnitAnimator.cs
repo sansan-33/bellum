@@ -56,7 +56,7 @@ public class UnitAnimator : NetworkBehaviour
             {
                 networkAnim.animator.SetFloat(type, animSpeed > 1 ? 2 : clipLength / animSpeed);
                 //networkAnim.animator.speed = animSpeed / clipLength;
-                Debug.Log($" Set Float {type} speed {networkAnim.animator.speed} , repeat attack delay: {animSpeed} , clip name {clipName} ,clip length {clipLength}");
+                //Debug.Log($" Set Float {type} speed {networkAnim.animator.speed} , repeat attack delay: {animSpeed} , clip name {clipName} ,clip length {clipLength}");
             }
         }
     }
@@ -69,14 +69,14 @@ public class UnitAnimator : NetworkBehaviour
     [Command]
     public void CmdSetBool(string animationType, bool state)
     {
-        Debug.Log($"Unit Animator {tag} {name} CMD set bool {animationType} {state}");
+        //Debug.Log($"Unit Animator {tag} {name} CMD set bool {animationType} {state}");
         ServerSetBool(animationType,state);
     }
 
     [Server]
     public void ServerSetBool(string animationType, bool state)
     {
-        Debug.Log($"Unit Animator {tag} {name}  Server set bool {animationType} {state}");
+        //Debug.Log($"Unit Animator {tag} {name}  Server set bool {animationType} {state}");
         networkAnim.animator.SetBool(animationType, state);
         //anim.SetBool(animationType, state);
     }
