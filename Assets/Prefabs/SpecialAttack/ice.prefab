@@ -47,7 +47,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   enemyList: []
-  SPCost: 10
+  SPCost: 5
   IceDamage: 10
   attackRange: 100
   UnFrezzeTimer: 8

@@ -53,4 +53,4 @@ MonoBehaviour:
   attackRange: 100
   minAttackRange: 1000
   maxAttackrange: 400
-  SPCost: 10
+  SPCost: 5

@@ -26,13 +26,13 @@ public class Stun : NetworkBehaviour, ISpecialAttack
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Stun.cs Start()");
+        //Debug.Log("Stun.cs Start()");
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         if (CompareTag("King" + player.GetEnemyID()) || CompareTag("Player" + player.GetEnemyID())) { return; }
 
-        Debug.Log("try to find spCost");
+        //Debug.Log("try to find spCost");
         spCost = FindObjectOfType<SpCost>();
-        Debug.Log($"spCost:{spCost}");
+        //Debug.Log($"spCost:{spCost}");
 
         //Instantiate SpButton and is it already spawned
         /* SpawnedButton = FindObjectOfType<SpButton>().InstantiateSpButton(SpecialAttackDict.SpecialAttackType.Stun, GetComponent<Unit>());
@@ -60,9 +60,9 @@ public class Stun : NetworkBehaviour, ISpecialAttack
             if ((btn.GetComponent<SpCostDisplay>().spCost / 3) < SPCost) { return; }
 
         }
-        Debug.Log($"b4 OnPointerDown ==> StartCoroutine {btn.tag} {btn.name} ");
-        StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(10));
-        Debug.Log($"after OnPointerDown ==> StartCoroutine {btn.tag} {btn.name} ");
+        //Debug.Log($"b4 OnPointerDown ==> StartCoroutine {btn.tag} {btn.name} ");
+        StartCoroutine(btn.GetComponent<SpCostDisplay>().MinusSpCost(SPCost));
+        //Debug.Log($"after OnPointerDown ==> StartCoroutine {btn.tag} {btn.name} ");
         spCost.UpdateSPAmount(-SPCost, null);
         UnitRepeatAttackDelaykeys.Clear();
         UnitSpeedkeys.Clear();

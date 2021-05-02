@@ -65,7 +65,7 @@ public class SpCost : NetworkBehaviour
             }
             else
             {
-                //Debug.Log($"unit:{unit}player:{player.GetPlayerID()}");
+                Debug.Log($"unit:{unit.tag}player:{player.GetPlayerID()}");
 
                 if (unit.CompareTag("Player" + player.GetPlayerID()) || unit.CompareTag("King" + player.GetPlayerID()))
                 {
@@ -79,7 +79,7 @@ public class SpCost : NetworkBehaviour
                     }
                     else
                     {
-                    //Debug.Log($"button{SpButtonManager.buttons.Count}");
+                    Debug.Log($"button{SpButtonManager.buttons.Count}");
                         foreach (Button button in SpButtonManager.buttons)
                         {
                             if (button.GetComponent<SpCostDisplay>().useTimer == false)

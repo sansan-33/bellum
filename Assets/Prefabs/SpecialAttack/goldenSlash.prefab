@@ -46,7 +46,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
-  attackPoint: {fileID: 0}
   attackRange: 100
   minAttackRange: 0
-  SPCost: 10
+  SPCost: 5
