@@ -38,8 +38,8 @@ public class Card : MonoBehaviour
         dealManagers = GameObject.FindGameObjectWithTag("DealManager");
         appearEffectPool = GameObject.FindGameObjectWithTag("EffectPool").GetComponent<ParticlePool>();
         StartCoroutine(SetLocalFactory());
-        int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
-        if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
+        
+        //if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
     }
     IEnumerator SetLocalFactory()
     {
@@ -60,13 +60,17 @@ public class Card : MonoBehaviour
         cardFace = new CardFace(_cardFace.suit, _cardFace.numbers, _cardFace.star, _cardFace.stats);
         //cardFace = _cardFace;
     }
+    public void SetUnitElexier(int elexier)
+    {
+        this.uniteleixer = elexier;
+    }
     public void OnPointerDown()
     {
         Debug.Log("OnpointerDown");
         if (GetComponent<DragCard>().unitPreviewInstance != null) { return; }
         if (localFactory == null) { StartCoroutine(SetLocalFactory()); }
 
-        
+        int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
         if (eleixers.eleixer < uniteleixer) { return; }
 
         eleixers.eleixer -= uniteleixer;

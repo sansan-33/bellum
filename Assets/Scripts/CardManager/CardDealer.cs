@@ -97,6 +97,7 @@ public class CardDealer : MonoBehaviour
         
         lastCard.cardSpawnButton.GetComponentInChildren<Image>().sprite  = lastCard.GetComponent<Card>().sprite[cardnumber];
         lastCard.eleixerText.text = uniteleixer.ToString();
+        lastCard.SetUnitElexier(uniteleixer);
         //Player takes card
         yield return player.AddCard(lastCard, left);
        
