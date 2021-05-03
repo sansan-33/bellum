@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpCost : NetworkBehaviour
+public class SpCost : MonoBehaviour
 {
     public bool useSpCost = true;
     [HideInInspector]public int SPAmount = 0;
@@ -30,7 +30,7 @@ public class SpCost : NetworkBehaviour
     }
     private void Handlekill(Unit unit)
     {
-        Debug.Log("Handlekill");
+        //Debug.Log("Handlekill");
         UpdateSPAmount(1, unit);
     }
     //[ClientRpc]
@@ -41,7 +41,7 @@ public class SpCost : NetworkBehaviour
     public void UpdateSPAmount(int cost,Unit unit)
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-        Debug.Log($"unit:{unit}");
+        //Debug.Log($"unit:{unit}");
         //Debug.Log("UpdateSPAmount");
         //SPAmount += cost;
         //SPText.text = (string)SPAmount.ToString();
