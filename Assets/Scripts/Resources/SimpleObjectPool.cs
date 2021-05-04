@@ -25,12 +25,10 @@ public class SimpleObjectPool : MonoBehaviour
         else
         {
             spawnedGameObject = (GameObject)GameObject.Instantiate(prefab);
-
             // add the PooledObject component to the prefab so we know it came from this pool
             PooledObject pooledObject = spawnedGameObject.AddComponent<PooledObject>();
             pooledObject.pool = this;
             inactiveInstancesCount = inactiveInstances.Count;
-
         }
 
         // put the instance in the root of the scene and enable it

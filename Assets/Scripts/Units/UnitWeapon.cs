@@ -19,7 +19,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     [SerializeField] public LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject specialEffectPrefab  = null;
     [SerializeField] private bool IsAreaOfEffect = false;
-    private SpCost spCost;
     private float calculatedDamageToDeal ;
     private float originalDamage;
     public float DashDamage = 0;
@@ -36,14 +35,15 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     RTSPlayer player;
     float upGradeAmount =  1.01f;
     [SerializeField] private GameObject textPrefab = null;
-     
+    [SerializeField] private CombatEffectController combatEffectController;
+
     private Unit unit;
     public override void OnStartAuthority()
     {
         if (NetworkClient.connection.identity == null) { return; }
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        combatEffectController = GameObject.FindObjectOfType<CombatEffectController>();
         calculatedDamageToDeal = damageToDeal;
-        spCost = FindObjectOfType<SpCost>();
         //Use this to ensure that the Gizmos are being drawn when in Play Mode.
         m_Started = true;
         originalDamage = damageToDeal;
@@ -92,13 +92,11 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
          
             if (other.TryGetComponent<Health>(out Health health))
             {
-                //Debug.Log($"RtsPlayer -- > {player}");
                 opponentIdentity = (player.GetPlayerID() == 1) ? GetComponent<NetworkIdentity>() : other.GetComponent<NetworkIdentity>();
-               
                 //Debug.Log($"Original damage {damageToDeal}, {this.GetComponent<Unit>().unitType} , {other.GetComponent<Unit>().unitType} ");
                 
                 calculatedDamageToDeal = StrengthWeakness.calculateDamage(unit.unitType, other.GetComponent<Unit>().unitType, damageToDeal);
-                cmdDamageText(other.transform.position, calculatedDamageToDeal, originalDamage, opponentIdentity, isFlipped);
+                combatEffectController.damageText(other.transform.position, calculatedDamageToDeal, originalDamage, opponentIdentity, isFlipped);
 
                 if (unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.CURRENT) == unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.MAX ) ) { calculatedDamageToDeal += 20; }
                 //calculatedDamageToDeal += DashDamage;
@@ -107,13 +105,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 if (IsKingSP == true)
                 {
                     cmdCMVirtual();
-                    //GetComponent<NavMeshAgent>().speed = GetComponent<UnitMovement>().originalSpeed;
                     ReScaleDamageDeal();
                 }
-                
-                // DashDamage = 0;
-                //if (targeter.tag.ToLower().Contains("king"))
-                //    Debug.Log($"Strength Weakness damage {calculatedDamageToDeal}");
                 if (unit.unitType == UnitMeta.UnitType.TANK)
                 {
                     unit.GetUnitMovement().SetSpeed(UnitMeta.SpeedType.ORIGINAL , unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.ORIGINAL));
@@ -158,8 +151,6 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     {
         powerUpAfterKill(gameObject);
         RpcpowerUpAfterKill(gameObject);
-        spCost = FindObjectOfType<SpCost>();
-        //spCost.RpcUpdateSPAmount(1, gameObject);
         Debug.Log("killed");
     }
     [Command]
@@ -271,7 +262,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     }
     private GameObject SetupDamageText(Vector3 targetPos, float damageToDeals, float damageToDealOriginal)
     {
-        //floatingText = damageTextObjectPool.GetObject();
+        //GameObject floatingText = damageTextObjectPool.GetObject();
         GameObject floatingText = Instantiate(textPrefab, targetPos, Quaternion.identity);
         floatingText.transform.position = targetPos;
         floatingText.transform.rotation = Quaternion.identity;

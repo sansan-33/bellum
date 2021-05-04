@@ -6,7 +6,6 @@ using System;
 [RequireComponent(typeof(TMP_Text))]
 public class DamagePopup : MonoBehaviour
 {
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,10 +15,12 @@ public class DamagePopup : MonoBehaviour
         tmp_text.DOFade( 0f, 5f );
         tmp_text.transform.rotation = transform.root.gameObject.GetComponent<DamageTextHolder>().displayRotation;
         transform.DOMove( transform.position + 2 *(Vector3.up) , 1.75f ).OnComplete( () => {
-            Destroy(transform.root.gameObject);
-            //Debug.Log("destroy text");
+            //damageTextDestory?.Invoke(transform.root.gameObject);
+            transform.root.gameObject.GetComponent<PooledObject>().pool.ReturnObject(transform.root.gameObject);
+            //Destroy(transform.root.gameObject);
+            Debug.Log($"DamagePopup ==>  destroy text {tmp_text.text} , pool total count {transform.root.gameObject.GetComponent<PooledObject>().pool.inactiveInstancesCount}");
             //DestroyImmediate(transform.root.gameObject, true);
-        } );
+        });
         
     }
 }

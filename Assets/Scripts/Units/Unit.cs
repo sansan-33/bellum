@@ -87,9 +87,7 @@ public class Unit : NetworkBehaviour
         health.ServerOnDie += ServerHandleDie;
         if(UnitMeta.UnitSelfDestory.TryGetValue(unitType, out int value ) )
             Invoke(nameof(ServerHandleDie), value);
-
     }
-
     public override void OnStopServer()
     {
         health.ServerOnDie -= ServerHandleDie;
