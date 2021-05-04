@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 620938155397449478}
-  - component: {fileID: 620938155397449479}
+  - component: {fileID: 3902627791816649239}
   m_Layer: 0
   m_Name: DamageTextObjectPool
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &620938155397449479
+--- !u!114 &3902627791816649239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,7 +40,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 620938155397449476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab65c5bbc612444b499a51a3a4904f8a, type: 3}
+  m_Script: {fileID: 11500000, guid: bc5e321311ff84ad38d8dff7572ea8ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}
+  inactiveInstancesCount: 0

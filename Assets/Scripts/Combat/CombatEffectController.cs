@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CombatEffectController : NetworkBehaviour
 {
-    public SimpleObjectPool damageTextObjectPool;
+    public DamageTextObjectPool damageTextObjectPool;
 
     public void damageText(Vector3 targetPos, float damageNew, float damgeOld, NetworkIdentity opponentIdentity, bool flipText)
     {

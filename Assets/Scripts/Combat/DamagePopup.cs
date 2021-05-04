@@ -9,16 +9,18 @@ public class DamagePopup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DamageTextObjectPool pool = transform.root.gameObject.GetComponent<DamageTextPooledObject>().pool;
         TMP_Text tmp_text = GetComponent<TMP_Text>();
         tmp_text.text = transform.root.gameObject.GetComponent<DamageTextHolder>().displayText;
         tmp_text.color = transform.root.gameObject.GetComponent<DamageTextHolder>().displayColor;
         tmp_text.DOFade( 0f, 5f );
         tmp_text.transform.rotation = transform.root.gameObject.GetComponent<DamageTextHolder>().displayRotation;
         transform.DOMove( transform.position + 2 *(Vector3.up) , 1.75f ).OnComplete( () => {
+            //Debug.Log($"DamagePopup ==>  destroy text {tmp_text.text} , pool total count {transform.root.gameObject.GetComponent<PooledObject>().pool.inactiveInstancesCount}");
             //damageTextDestory?.Invoke(transform.root.gameObject);
-            transform.root.gameObject.GetComponent<PooledObject>().pool.ReturnObject(transform.root.gameObject);
+            pool.ReturnObject(transform.root.gameObject);
+            Debug.Log($"DamagePopup ==>  ReturnObject to {pool.name} ");
             //Destroy(transform.root.gameObject);
-            Debug.Log($"DamagePopup ==>  destroy text {tmp_text.text} , pool total count {transform.root.gameObject.GetComponent<PooledObject>().pool.inactiveInstancesCount}");
             //DestroyImmediate(transform.root.gameObject, true);
         });
         
