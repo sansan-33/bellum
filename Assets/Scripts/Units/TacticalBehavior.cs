@@ -15,7 +15,6 @@ public class TacticalBehavior : MonoBehaviour
 {
     [SerializeField] List<GameObject> PlayerEnemyGroup = new List<GameObject>();
     public static event Action UnitTagUpdated ;
-    private eleixier Eleixier;
     private RTSPlayer player;
     private int PLAYERID = 0;
     private int ENEMYID = 0;
@@ -44,9 +43,6 @@ public class TacticalBehavior : MonoBehaviour
 
     public void Start()
     {
-        Eleixier = FindObjectOfType<eleixier>();
-        //if (NetworkClient.connection.identity == null) { return; }
-
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         PLAYERID = player.GetPlayerID();
         ENEMYID = player.GetEnemyID();

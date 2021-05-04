@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform cardSlotParent;
     [SerializeField] CardSlot cardSlotPrefab;
     [SerializeField] CardDealer cardDealer;
-    
+   
     [Header("Layout References")]
     [SerializeField] Transform singleHandStart;
     public float screenOffset;

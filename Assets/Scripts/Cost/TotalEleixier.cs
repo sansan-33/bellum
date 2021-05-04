@@ -6,14 +6,16 @@ using TMPro;
 using static TacticalBehavior;
 using System;
 
-public class eleixier : MonoBehaviour
+public class TotalEleixier : MonoBehaviour
 {
-    [SerializeField] TMP_Text eleixerTimerImage;
+    [SerializeField] TMP_Text eleixerSpeed;
+    [SerializeField] public Image eleixerBarImage = null;
+
     public int maxEleixer = 10;
     public float maxEleixerTimer;
     private float eleixerTimer = 4f;
-    //public static Action<int> UpdateEleixer;
     public int eleixer = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,9 +32,9 @@ public class eleixier : MonoBehaviour
             if (eleixer < maxEleixer)
             {
                 eleixer += 1;
-                
             }
         }
+        eleixerBarImage.fillAmount = (float)eleixer / (float)maxEleixer;
     }
     public void speedUpEleixier(BehaviorSelectionType selectionType)
     {
@@ -40,12 +42,12 @@ public class eleixier : MonoBehaviour
         if (selectionType== BehaviorSelectionType.Attack|| selectionType == BehaviorSelectionType.Flank)
         {
             maxEleixerTimer = 2f;
-            eleixerTimerImage.text = "X 2 eleixer";
+            eleixerSpeed.text = "X 2 eleixer";
         }
         else
         {
             maxEleixerTimer = 4f;
-            eleixerTimerImage.text = "X 1 eleixer";
+            eleixerSpeed.text = "X 1 eleixer";
         }
        
 

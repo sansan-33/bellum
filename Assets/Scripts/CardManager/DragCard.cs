@@ -183,7 +183,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 int type = (int)GetComponent<Card>().cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
                 int uniteleixer = 1; ;
                 if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
-                if (GetComponent<Card>().eleixers.eleixer < uniteleixer)
+                if (dealManagers.totalEleixers.eleixer < uniteleixer)
                 {
                     //Debug.Log("hit");
                     //Destroy(unitPreviewInstance);
@@ -191,11 +191,11 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                     transform.position = startPos;
                     return;
                 }
-                
-                GetComponent<Card>().eleixers.eleixer -= uniteleixer;
+
+                dealManagers.totalEleixers.eleixer -= uniteleixer;
                 GetComponent<Card>().DropUnit(unitPreviewInstance.transform.position);
                 // Special Checking for Wall Button Card not under Card Slot (player)
-                Player playerDeck = this.GetComponentInParent<Player>();
+                Player playerDeck = GetComponentInParent<Player>();
                 if (playerDeck !=null)
                     playerDeck.moveCard(GetComponent<Card>().cardPlayerHandIndex);
                 dealManagers.GetComponent<CardDealer>().Hit();

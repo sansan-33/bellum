@@ -35,6 +35,7 @@ public class CardDealer : MonoBehaviour
     [SerializeField] public Dictionary<string, CardStats> userCardStatsDict = new Dictionary<string, CardStats>();
     [SerializeField] public Dictionary<UnitMeta.UnitKey, Unit> playerUnitDict = new Dictionary<UnitMeta.UnitKey, Unit>();
     [SerializeField] Card buttonWall;
+    [SerializeField] public TotalEleixier totalEleixers;
 
     public static event Action UserCardLoaded;
     public SimpleObjectPool cardObjectPool;

@@ -14,28 +14,26 @@ public class Card : MonoBehaviour
     public float cardTimer = 0;
     [SerializeField] public List<Sprite> sprite = new List<Sprite>();
     private UnitFactory localFactory;
-    private GameObject dealManagers;
+    private CardDealer dealManagers;
     private ParticlePool appearEffectPool;
     public int playerID = 0;
     private int uniteleixer = 1;
     private int type;
     private float progressImageVelocity;
     Color teamColor;
-    public eleixier eleixers;
     [SerializeField] public TMP_Text cardStar;
     [SerializeField] public Button cardSpawnButton;
     [SerializeField] public Image charIcon;
-    [SerializeField] private Image _cardTimer;
+    [SerializeField] private Image cardTimerImage;
 
     public void Start()
     {
-        eleixers = FindObjectOfType<eleixier>();
         if (NetworkClient.connection.identity == null) { return; }
         RTSPlayer player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerID = player.GetPlayerID();
         //playerRace =  (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), player.GetRace());
         teamColor = player.GetTeamColor();
-        dealManagers = GameObject.FindGameObjectWithTag("DealManager");
+        dealManagers = GameObject.FindGameObjectWithTag("DealManager").GetComponent<CardDealer>();
         appearEffectPool = GameObject.FindGameObjectWithTag("EffectPool").GetComponent<ParticlePool>();
         StartCoroutine(SetLocalFactory());
         
@@ -58,7 +56,6 @@ public class Card : MonoBehaviour
     public void SetCard(CardFace _cardFace)
     {
         cardFace = new CardFace(_cardFace.suit, _cardFace.numbers, _cardFace.star, _cardFace.stats);
-        //cardFace = _cardFace;
     }
     public void SetUnitElexier(int elexier)
     {
@@ -75,11 +72,11 @@ public class Card : MonoBehaviour
         if (localFactory == null) { StartCoroutine(SetLocalFactory()); }
 
         int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
-        if (eleixers.eleixer < uniteleixer) { return; }
+        if (dealManagers.totalEleixers.eleixer < uniteleixer) { return; }
 
-        eleixers.eleixer -= uniteleixer;
+        dealManagers.totalEleixers.eleixer -= uniteleixer;
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
-        dealManagers.GetComponent<CardDealer>().Hit();
+        dealManagers.Hit();
         localFactory.CmdSpawnUnit( StaticClass.playerRace, (UnitMeta.UnitType)type, (int)cardFace.star + 1, playerID, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, teamColor);
     }
     public void DropUnit(Vector3 SpwanPoint)
@@ -97,28 +94,15 @@ public class Card : MonoBehaviour
     }
     private void Update()
     {
-        if (_cardTimer != null)
+        if (cardTimerImage != null)
         {
-            if (uniteleixer >= eleixers.eleixer)
+            if (uniteleixer >= dealManagers.totalEleixers.eleixer)
             {
-                _cardTimer.gameObject.SetActive(true);
-                float fillAmount = (float)eleixers.eleixer / uniteleixer;
+                cardTimerImage.gameObject.SetActive(true);
+                float fillAmount = (float)dealManagers.totalEleixers.eleixer / uniteleixer;
                 //Debug.Log($"eleixers:{eleixer}uniteleixer:{uniteleixer}, eleixers/uniteleixer:{fillAmount}");
-                _cardTimer.fillAmount = Mathf.SmoothDamp(
-                    _cardTimer.fillAmount,
-                    1 - fillAmount,
-                    ref progressImageVelocity,
-                    0.5f);
-                ///Debug.Log($"fillAmout:{_cardTimer.fillAmount}");
+                cardTimerImage.fillAmount = Mathf.SmoothDamp(cardTimerImage.fillAmount, 1 - fillAmount, ref progressImageVelocity, 0.5f);
             }
-            /*if (_cardTimer.fillAmount == 0 || _cardTimer.fillAmount > 1)
-            {
-                _cardTimer.gameObject.SetActive(false);
-            }
-            else
-            {
-               // Debug.Log($"fillAmout:{_cardTimer.fillAmount}");
-            }*/
         }
         
     }
