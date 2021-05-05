@@ -30,7 +30,6 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
             // 2 * PI = 360 degrees
             theta = 2 * Mathf.PI / agents.Count;
-            Debug.Log("$ AddAgentToGroup targetTag {targetTag.Value}");
             targetTagPosition = GameObject.FindGameObjectWithTag(targetTag.Value).transform.position;
         }
 

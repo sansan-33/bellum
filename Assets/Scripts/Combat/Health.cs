@@ -21,11 +21,12 @@ public class Health : NetworkBehaviour, IDamageable
     public bool IsFrezze = false;
     public bool IsElectricShock = false;
     public event Action ServerOnDie;
-    public event Action ClientOnDie;
-
+  
     public event Action<int, int, int> ClientOnHealthUpdated;
     public static event Action<GameObject> IceHitUpdated;
-    float blinkTimer;
+    public GameObject specialEffectPrefab;
+
+    [SyncVar] float blinkTimer;
     SkinnedMeshRenderer skinnedMeshRenderer;
 
     public float blinkDuration;
@@ -96,8 +97,7 @@ public class Health : NetworkBehaviour, IDamageable
                 if (currentHealth == 0)
                 {
                     ServerOnDie?.Invoke(); // if ServerOnDie not null then invoke
-                    ClientOnDie?.Invoke();
-                    //StartCoroutine(Die());
+                    StartCoroutine(Die());
                     return true;
                 }
             }
@@ -117,12 +117,9 @@ public class Health : NetworkBehaviour, IDamageable
     }
     private IEnumerator Die()
     {
-        GetComponent<UnitAnimator>().trigger("die");
-        GetComponent<UnitPowerUp>().SpecialEffect(Mathf.Infinity, 0);
-
-        yield return new WaitForSeconds(5);
-        ServerOnDie?.Invoke(); // if ServerOnDie not null then invoke
-        ClientOnDie?.Invoke();
+        GameObject effect = Instantiate(specialEffectPrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+        NetworkServer.Spawn(effect, connectionToClient);
+        yield return null;
     }
     public void OnElectricShock(float damageAmount,int electricShockDamage)
     {

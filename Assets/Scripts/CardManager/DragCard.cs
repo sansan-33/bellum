@@ -173,11 +173,13 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         //forbiddenArea.GetComponent<MeshRenderer>().enabled = false;
         if (unitPreviewInstance != null){
 
+            if (EmptyCard != null) { EmptyCard.GetComponentInChildren<Image>().color = Color.white; }
+
             Vector3 spawnPos = unitPreviewInstance.transform.position;
             Ray ray = mainCamera.ScreenPointToRay(eventData.position);
-            Destroy(unitPreviewInstance);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask))
             {
+                Destroy(unitPreviewInstance);
                 playerGround.resetLayer();
                 int type = (int)GetComponent<Card>().cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
                 int uniteleixer = 1; ;
@@ -186,7 +188,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 {
                     //Debug.Log("hit");
                     //Destroy(unitPreviewInstance);
-                    EmptyCard.GetComponentInChildren<Image>().color = Color.white;
+                    //EmptyCard.GetComponentInChildren<Image>().color = Color.white;
                     transform.position = startPos;
                     return;
                 }
@@ -198,14 +200,11 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 if (playerDeck !=null)
                     playerDeck.moveCard(GetComponent<Card>().cardPlayerHandIndex);
                 dealManagers.GetComponent<CardDealer>().Hit();
-            }
-            if(EmptyCard != null)
-            {
-                EmptyCard.GetComponentInChildren<Image>().color = Color.white;
+            } else {
+                Debug.Log($"End Drag Failed {name} {tag}");
             }
             
-        }
-        else {
+        } else {
             Vector3 pos = CardParent.GetComponentInParent<CardSlot>().transform.position;
             CardParent.GetComponentInParent<Player>().dragCardMerge();
             // Set the dragged card position right under the last hitted card slot again, did it in moveOneCard, need to set it again otheriwse it will stop in the middle.
