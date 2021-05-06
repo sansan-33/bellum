@@ -51,6 +51,7 @@ public class TotalHealthDisplay : MonoBehaviour
     {
         militarySize = 0;
         if (armies is null || armies.Length == 0) { armies = GameObject.FindGameObjectsWithTag("King" + player.GetPlayerID()); }
+        if (armies.Length == 0) return;
         PlayerName.text = "Player" + player.GetPlayerID();
         EnemyName.text = "Player" + player.GetEnemyID();
         foreach (GameObject army in armies)
@@ -69,6 +70,7 @@ public class TotalHealthDisplay : MonoBehaviour
     private void TotalEnemyHealth()
     {
         if(enemies is null || enemies.Length == 0) enemies = GameObject.FindGameObjectsWithTag("King" + player.GetEnemyID());
+        if (enemies.Length == 0) return;
         EnermymilitarySize = 0;
         foreach (GameObject EnermyArmy in enemies)
         {
