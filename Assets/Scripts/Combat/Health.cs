@@ -154,6 +154,7 @@ public class Health : NetworkBehaviour, IDamageable
     {
         if(!PRINTED)
         Debug.Log($"Health ==> Other {name } being attack  at time: {Time.time} ");
+        PRINTED = true;
         blinkTimer -= Time.deltaTime;
         float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
         float intensity = (lerp * blinkIntensity) + 1f;
