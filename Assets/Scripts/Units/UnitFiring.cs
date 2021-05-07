@@ -83,9 +83,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     public void Attack(Vector3 targetPosition)
     {
         lastAttackTime = Time.time;
-        targeter.transform.GetComponent<UnitAnimator>().SetBool("run",false);
-        //targeter.transform.GetComponent<UnitAnimator>().SetBool("defend", false);
-        targeter.transform.GetComponent<UnitAnimator>().trigger("attack", repeatAttackDelay);
+        targeter.transform.GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.ATTACK);
         CmdFireProjectile(targetPosition);
     }
     public void ScaleAttackDelay(int factor)

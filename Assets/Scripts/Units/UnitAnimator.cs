@@ -5,27 +5,26 @@ public class UnitAnimator : NetworkBehaviour
 {
     [SerializeField] public NetworkAnimator networkAnim;
     AnimatorClipInfo[] m_CurrentClipInfo;
-    [SyncVar(hook = nameof(HookStateControl))] private AnimState currentState;
-    public enum AnimState { IDLE, ATTACK, DEFEND, RUN  };
+    [SyncVar] private AnimState currentState;
+    public enum AnimState { IDLE, ATTACK, DEFEND, RUN , GETHIT };
     bool isAttacking = false;
    
     public override void OnStartServer()
     {
-        if (networkAnim == null)
-        {
-            networkAnim = GetComponent<NetworkAnimator>();
-        }
+        networkAnim = GetComponent<NetworkAnimator>();
+    }
+    public override void OnStartClient()
+    {
+        networkAnim = GetComponent<NetworkAnimator>();
     }
     void ChangeAnimationState(AnimState newState)
     {
         //if (newState == UnitAnimator.AnimState.DEFEND) return;
-        Debug.Log($"ChangeAnimationState current {currentState} new {newState.ToString()}");
         if (currentState == newState) return;
-        networkAnim.animator.StopPlayback();
-        networkAnim.animator.Play(newState.ToString());
+        networkAnim.animator.Play(newState.ToString(), -1, 0f);
         currentState = newState;
     }
-    public void StateControl(AnimState newState)
+    public void HandleStateControl(AnimState newState)
     {
         if (newState == AnimState.ATTACK) {
             if (!isAttacking) {
@@ -41,79 +40,37 @@ public class UnitAnimator : NetworkBehaviour
         ChangeAnimationState(newState);
 
     }
-    public void HookStateControl(AnimState oldSate, AnimState newState)
-    {
-        StateControl(newState);
-    }
+    
     private void AttackCompleted()
     {
         isAttacking = false;
         currentState = AnimState.IDLE;
     }
-    public void trigger(string type)
-    {
-        CmdTrigger(type);
-    }
-    public void trigger(string type, float animSpeed)
-    {
-        CmdTrigger(type);
-        //SetFloat("animSpeed", animSpeed);
-    }
-    [Command]
-    public void CmdTrigger(string animationType)
-    {
-        ServerTrigger(animationType);
-    }
 
-    [Server]
-    public void ServerTrigger(string animationType)
+    public void StateControl(AnimState newState)
     {
-        networkAnim.SetTrigger(animationType);
+        if(isServer)
+            RpcStateControl(newState);
+        else
+            CmdStateControl(newState);
     }
-    public void SetFloat(string type, float animSpeed)
-    {
-        if (animSpeed > 0f)
-        {
-            float clipLength = 0f;
-            string clipName = "";
-            m_CurrentClipInfo = networkAnim.animator.GetCurrentAnimatorClipInfo(0);
-            foreach (AnimatorClipInfo animatorClipInfos in m_CurrentClipInfo)
-            {
-                if (animatorClipInfos.clip.name.ToLower().Contains("attack"))
-                {
-                    clipLength = animatorClipInfos.clip.length;
-                    clipName = animatorClipInfos.clip.name;
-                    break;
-                }
-            }
-            if (clipLength > 0f)
-            {
-                networkAnim.animator.SetFloat(type, animSpeed > 1 ? 2 : clipLength / animSpeed);
-                //networkAnim.animator.speed = animSpeed / clipLength;
-                //Debug.Log($" Set Float {type} speed {networkAnim.animator.speed} , repeat attack delay: {animSpeed} , clip name {clipName} ,clip length {clipLength}");
-            }
-        }
-    }
-    public void SetBool(string type, bool state)
-    {
-        //networkAnim.animator.SetBool(type, state);
-        networkAnim.animator.SetBool(type, state);
-        //CmdSetBool(type, state);
-    }
+   
     [Command]
-    public void CmdSetBool(string animationType, bool state)
+    public void CmdStateControl(AnimState newState)
     {
-        //Debug.Log($"Unit Animator {tag} {name} CMD set bool {animationType} {state}");
-        ServerSetBool(animationType,state);
+        ServerStateControl(newState);
     }
-
+    [ClientRpc]
+    public void RpcStateControl(AnimState newState)
+    {
+        HandleStateControl(newState);
+    }
     [Server]
-    public void ServerSetBool(string animationType, bool state)
+    public void ServerStateControl(AnimState newState)
     {
-        //Debug.Log($"Unit Animator {tag} {name}  Server set bool {animationType} {state}");
-        networkAnim.animator.SetBool(animationType, state);
-        //anim.SetBool(animationType, state);
+        HandleStateControl(newState);
     }
+    
 
 }
 
