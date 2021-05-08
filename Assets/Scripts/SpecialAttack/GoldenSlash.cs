@@ -45,7 +45,7 @@ public class GoldenSlash : MonoBehaviour, ISpecialAttack
 
     public void OnPointerDown()
     {
-        return;
+        
         //Debug.Log($"GoldenSlash FindAttackTargetInDistance");
         // if (attackPoint == null) { return; }
         if (SpButtonManager.enemyUnitBtn.TryGetValue(GetComponentInParent<Unit>().unitKey, out GameObject obj))
@@ -138,11 +138,17 @@ public class GoldenSlash : MonoBehaviour, ISpecialAttack
         if (closestTarget == null) {  return; }
         for (int a = 0; a < targetList.ToArray().Length; a++)
         {
-
             AttackTarget(distanceList.ToArray()[a], targetList.ToArray()[a].transform);
         }
         GetComponentInParent<UnitWeapon>().ReScaleDamageDeal();
+
     }
+    private IEnumerator wait(int waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        IsSuperAttack = false;
+    }
+
     public void AttackTarget(float distance, Transform closestTarget)
     {
         // wait three secs the attack
