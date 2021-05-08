@@ -18,7 +18,7 @@ public class EnemySpManager : MonoBehaviour
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)//1 player mode
         {
-            //StartCoroutine(GetUnit());
+            StartCoroutine(GetUnit());
         }
     }
     private IEnumerator GetUnit()
@@ -40,7 +40,9 @@ public class EnemySpManager : MonoBehaviour
     }
     public void ChangeSPCost(int amount)
     {
+       
         spCost += amount;
+        //Debug.Log($"ChangeSPCost {spCost}");
     }
     // Update is called once per frame
     void Update()
