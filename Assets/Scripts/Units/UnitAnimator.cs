@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Mirror;
 using UnityEngine;
 
@@ -7,52 +8,72 @@ public class UnitAnimator : NetworkBehaviour
     [SerializeField] public NetworkAnimator networkAnim;
     AnimatorClipInfo[] m_CurrentClipInfo;
     [SyncVar] private AnimState currentState;
-    public enum AnimState { IDLE, ATTACK, DEFEND, RUN , GETHIT, WALK };
+    public enum AnimState { ATTACK, DEFEND, GETHIT, LOCOMOTION };
     bool isAttacking = false;
-   
+    private float clipLength = 0f;
+    private string attackState = "";
+    private string locomotionState = "";
+
     public override void OnStartServer()
     {
         networkAnim = GetComponent<NetworkAnimator>();
+        SetAnimationState();
     }
     public override void OnStartClient()
     {
         networkAnim = GetComponent<NetworkAnimator>();
+        SetAnimationState();
     }
-    void ChangeAnimationState(AnimState newState, string type)
+
+    private void SetAnimationState()
+    {
+        string weapontype = "_" + UnitMeta.KeyWeaponType[GetComponent<Unit>().unitKey].ToString().ToUpper();
+        AnimationClip[] clips = networkAnim.animator.runtimeAnimatorController.animationClips;
+        foreach (AnimationClip clip in clips)
+        {
+            //Debug.Log($"Attack anim {clip.name} {clip.length}");
+            if (clip.name  == "ATTACK" + weapontype)
+            {
+                clipLength = clip.length;
+                attackState = clip.name;
+                break;
+            }
+        }
+        locomotionState = "LOCOMOTION";
+        if (UnitMeta.UnitKeyRider.TryGetValue(GetComponent<Unit>().unitKey, out bool isRider))
+            locomotionState = "WALK_RIDER";  
+    }
+
+    void ChangeAnimationState(AnimState newState)
     {
         if (currentState == newState) return;
-        networkAnim.animator.Play(newState.ToString() + type.ToUpper(), -1, 0f);
+        string animState = newState.ToString();
+        if(newState == AnimState.ATTACK) animState = attackState;
+        if (newState == AnimState.LOCOMOTION) animState = locomotionState;
+        networkAnim.animator.Play(animState, -1, 0f);
         currentState = newState;
     }
     public void HandleStateControl(AnimState newState)
     {
-        string weapontype = "";
         if (newState == AnimState.ATTACK) {
             if (!isAttacking) {
                 isAttacking = true;
-                weapontype = "_" + UnitMeta.KeyWeaponType[GetComponent<Unit>().unitKey].ToString().ToLower();
-                AnimationClip[] clips = networkAnim.animator.runtimeAnimatorController.animationClips;
-                float clipLength = 0f;
-                foreach (AnimationClip clip in clips)
-                {
-                    Debug.Log($"Attack anim {clip.name.ToLower()} {clip.length}");
-                    if (clip.name.ToLower() == "attack" + weapontype)
-                    {
-                        clipLength = clip.length;
-                        break;
-                    }
-                }
                 networkAnim.animator.SetFloat("animSpeed", clipLength / GetComponent<IAttack>().RepeatAttackDelay() );
                 Invoke("AttackCompleted", clipLength);
             }
         }
-        ChangeAnimationState(newState, weapontype);
+        if (newState == AnimState.LOCOMOTION)
+        {
+            //networkAnim.animator.SetFloat("moveSpeed",  GetComponent<Unit>().GetUnitMovement().GetVelocity() );
+            //networkAnim.animator.SetFloat("direction", clipLength / GetComponent<IAttack>().RepeatAttackDelay());
+        }
+        ChangeAnimationState(newState);
     }
     
     private void AttackCompleted()
     {
         isAttacking = false;
-        currentState = AnimState.IDLE;
+        currentState = AnimState.DEFEND;
     }
 
     public void StateControl(AnimState newState)
@@ -78,7 +99,6 @@ public class UnitAnimator : NetworkBehaviour
     {
         HandleStateControl(newState);
     }
-    
 
 }
 

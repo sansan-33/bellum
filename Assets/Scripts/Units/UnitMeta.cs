@@ -21,10 +21,10 @@ public class UnitMeta
     public enum UnitPosition { FORWARD, MIDFIELDER, DEFENDER, GOALIE, WALL};
     public enum Race { HUMAN, UNDEAD, ELF, GOD, ALL };
     public enum SpeedType { ORIGINAL, CURRENT, MAX };
-    public enum WeaponType { THSWORD, SHSWORD, BOW, HAMMER, SPEAR, DAGGER , SPELL,AXE, NOTHING};
-    public enum RiderType { HORSE, NOTHING };
-
+    public enum WeaponType { THSWORD, SHSWORD, BOW, HAMMER, SPEAR, DAGGER , SPELL,AXE, LANCE, NOTHING};
+     
     public static Dictionary<UnitType, int> UnitSize = new Dictionary<UnitType, int>() { { UnitType.FOOTMAN, 3 }, { UnitType.ARCHER, 2 } };
+    public static Dictionary<UnitKey, bool> UnitKeyRider = new Dictionary<UnitKey, bool>() { { UnitKey.CAVALRY, true }, { UnitKey.GODCAVALRY, true }, { UnitKey.RIDER, true } };
     public static Dictionary<UnitType, float> DefendRadius = new Dictionary<UnitType, float>() { { UnitType.HERO, 8f }, { UnitType.KING, 8f } };
     public static Dictionary<UnitType, int> UnitSelfDestory = new Dictionary<UnitType, int>() { { UnitType.WALL, 10 }  };
     public static Dictionary<UnitType, int> UnitEleixer = new Dictionary<UnitType, int>()
@@ -173,7 +173,7 @@ public class UnitMeta
 
         { UnitKey.ARCHER , WeaponType.BOW } ,
         { UnitKey.KNIGHT , WeaponType.THSWORD } ,
-        { UnitKey.CAVALRY , WeaponType.SPEAR} ,
+        { UnitKey.CAVALRY , WeaponType.LANCE} ,
         { UnitKey.MAGE , WeaponType.SPELL},
         { UnitKey.SPEARMAN , WeaponType.SPEAR},
         { UnitKey.HERO , WeaponType.SHSWORD},
@@ -182,7 +182,7 @@ public class UnitMeta
 
         { UnitKey.UNDEADARCHER , WeaponType.BOW  } ,
         { UnitKey.GIANT , WeaponType.AXE  } ,
-        { UnitKey.RIDER , WeaponType.SPEAR  } ,
+        { UnitKey.RIDER , WeaponType.LANCE  } ,
         { UnitKey.LICH , WeaponType.SPELL },
         { UnitKey.MINISKELETON , WeaponType.AXE  },
         { UnitKey.UNDEADHERO , WeaponType.SHSWORD  },
@@ -194,7 +194,7 @@ public class UnitMeta
         { UnitKey.ODIN , WeaponType.SPEAR },
         { UnitKey.GODARCHER , WeaponType.BOW } ,
         { UnitKey.GODKNIGHT , WeaponType.SPEAR } ,
-        { UnitKey.GODCAVALRY , WeaponType.SPEAR} ,
+        { UnitKey.GODCAVALRY , WeaponType.LANCE} ,
         { UnitKey.GODMAGE , WeaponType.SPELL},
         { UnitKey.GODSPEARMAN , WeaponType.SHSWORD},
         { UnitKey.GODWALL , WeaponType.NOTHING }

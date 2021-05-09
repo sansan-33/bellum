@@ -51,8 +51,8 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
             return;
         }
         //GetComponent<UnitAnimator>().SetBool("defend", false);
-        //GetComponent<UnitAnimator>().SetBool("run", true);
-        GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.WALK);
+        //GetComponent<UnitAnimator>().SetFloat("run", true);
+        GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.LOCOMOTION);
         ai.canMove = true;
         //if (Time.time > lastRepath + repathRate && seeker.IsDone())
         //{
