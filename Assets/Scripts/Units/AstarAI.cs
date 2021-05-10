@@ -3,6 +3,7 @@
 // This line should always be present at the top of scripts which use pathfinding
 using Pathfinding;
 using Mirror;
+using System;
 
 public class AstarAI : NetworkBehaviour, IUnitMovement
 {
@@ -44,6 +45,9 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     [Server]
     public void ServerMove(Vector3 position)
     {
+        GetComponent<UnitAnimator>().SetFloat("moveSpeed", Math.Abs(GetVelocity().z));
+        GetComponent<UnitAnimator>().SetFloat("direction", GetVelocity().x);
+      
         position.y = 0;
         if (ai.canMove && ai.destination == position) {
             //if (gameObject.name.ToLower().Contains("tank"))
@@ -146,7 +150,6 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
 
         // If you are writing a 2D game you may want to remove the CharacterController and instead modify the position directly
         transform.position += velocity * Time.deltaTime;
-        
         if (IS_STUNNED) { CmdStop(); }
     }
 

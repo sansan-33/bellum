@@ -62,11 +62,6 @@ public class UnitAnimator : NetworkBehaviour
                 Invoke("AttackCompleted", clipLength);
             }
         }
-        if (newState == AnimState.LOCOMOTION)
-        {
-            //networkAnim.animator.SetFloat("moveSpeed",  GetComponent<Unit>().GetUnitMovement().GetVelocity() );
-            //networkAnim.animator.SetFloat("direction", clipLength / GetComponent<IAttack>().RepeatAttackDelay());
-        }
         ChangeAnimationState(newState);
     }
     
@@ -99,7 +94,10 @@ public class UnitAnimator : NetworkBehaviour
     {
         HandleStateControl(newState);
     }
-
+    public void SetFloat(string type , float value)
+    {
+        networkAnim.animator.SetFloat(type, value);
+    }
 }
 
 
