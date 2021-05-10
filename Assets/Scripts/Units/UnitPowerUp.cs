@@ -178,7 +178,7 @@ public class UnitPowerUp : NetworkBehaviour
         gameObject.GetComponent<HealthDisplay>().SetUnitLevel(cardLevel, GetComponent<Unit>().unitType );
         gameObject.GetComponent<Health>().ScaleMaxHealth(health, star);
         gameObject.GetComponent<IAttack>().ScaleDamageDeal(attack, repeatAttackDelay, (star == 1) ? star : (star - 1) * 3);
-        gameObject.GetComponentInChildren<UnitBody>().SetRenderMaterial(playerID , star);
+        //gameObject.GetComponentInChildren<UnitBody>().SetRenderMaterial(playerID , star);
         gameObject.GetComponent<Unit>().SetSpawnPointIndex(spawnPointIndex);
         gameObject.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
 

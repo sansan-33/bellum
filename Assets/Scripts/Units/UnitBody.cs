@@ -6,10 +6,18 @@ public class UnitBody : NetworkBehaviour, IBody
 {
 
     [SerializeField] private List< Material> material;
-    [SerializeField] private  Renderer unitRenderer;
+    [SerializeField] private  SkinnedMeshRenderer unitRenderer;
     [SerializeField] private Transform unitTransform;
     [SerializeField] private GameObject changeBody;
 
+    public override void OnStartServer()
+    {
+        unitRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+    }
+    public override void OnStartClient()
+    {
+        unitRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+    }
     public void SetRenderMaterial(int star)
     {
         int playerid = NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID();

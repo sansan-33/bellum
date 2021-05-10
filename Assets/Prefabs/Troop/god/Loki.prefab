@@ -485,6 +485,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2898956138471870661}
     m_Modifications:
+    - target: {fileID: 1529480593941556, guid: 354ae50dd70192c469ac508d2117ba2b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1886129599791962, guid: 354ae50dd70192c469ac508d2117ba2b, type: 3}
       propertyPath: m_Name
       value: Loki
