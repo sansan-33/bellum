@@ -66,6 +66,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         while (i < hitColliders.Length)
         {
             other = hitColliders[i++];
+            if (other == null || !other.GetComponent<Health>().IsAlive()) { continue; }
             //((RTSNetworkManager)NetworkManager.singleton).Players
             isFlipped = false;
             if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
@@ -99,6 +100,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 if (unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.CURRENT) == unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.MAX ) ) { calculatedDamageToDeal += 20; }
                 //calculatedDamageToDeal += DashDamage;
                 yield return new WaitForSeconds(GetComponent<IAttack>().RepeatAttackDelay() - .6f);
+                if (other == null || ! health.IsAlive()) { continue; }
                 CmdDealDamage(other.gameObject, calculatedDamageToDeal);
                 if (IsKingSP == true)
                 {

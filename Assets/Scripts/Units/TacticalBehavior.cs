@@ -30,15 +30,12 @@ public class TacticalBehavior : MonoBehaviour
 
     private Dictionary<int, Dictionary<int, GameObject>> leaders = new Dictionary<int, Dictionary<int, GameObject>>();
     private Dictionary<int, Dictionary<int,  List<BehaviorSelectionType>>> leaderTacticalType = new Dictionary<int, Dictionary<int, List<BehaviorSelectionType>>>();
-    private Color teamColor;
-    private Color teamEnemyColor;
     private int selectedLeaderId = 0;
     private int selectedEnemyLeaderId = 0;
     private GameBoardHandler gameBoardHandlerPrefab = null;
     private Dictionary<int, GameObject> KINGBOSS = new Dictionary<int, GameObject>();
     private float radius = 0.1f;
     private float newDefendRadius = 7f;
-    private static bool IS_STUNNED = false;
     #region Client
 
     public void Start()
@@ -55,10 +52,7 @@ public class TacticalBehavior : MonoBehaviour
         leaderTacticalType.Add(ENEMYID, new Dictionary<int, List<BehaviorSelectionType>>() );
         leaders.Add(PLAYERID, new Dictionary<int, GameObject>());
         leaders.Add(ENEMYID, new Dictionary<int, GameObject>());
-
-        teamColor = player.GetTeamColor();
-        teamEnemyColor = player.GetTeamEnemyColor();
-       
+  
         //Make sure if enemy spawned, need to update TB formation for new target
         Unit.ClientOnUnitSpawned += TryReinforce;
         Unit.ClientOnUnitDespawned += TryReinforce;
@@ -124,7 +118,7 @@ public class TacticalBehavior : MonoBehaviour
                 ISTAGGED = true;
                 UnitTagUpdated?.Invoke();
                 yield return new WaitForSeconds(1f);
-                yield return TacticalFormation(PLAYERID, ENEMYID);
+                yield return TacticalFormation(PLAYERID, ENEMYID,null);
             }
 
         }
@@ -132,7 +126,7 @@ public class TacticalBehavior : MonoBehaviour
 
     }
    
-    public IEnumerator TacticalFormation(int playerid, int enemyid)
+    public IEnumerator TacticalFormation(int playerid, int enemyid, GameObject unit)
     {
         yield return new WaitForSeconds(0.1f);
         if (gameBoardHandlerPrefab == null) { yield break; }
@@ -143,22 +137,27 @@ public class TacticalBehavior : MonoBehaviour
         GameObject defendObject;
         GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + playerid);
         GameObject king = GameObject.FindGameObjectWithTag("King" + playerid);
-        List<GameObject> armies = new List<GameObject>();
-        armies = units.ToList();
-        
-        if (king!=null)
-            armies.Add(king);
-        
-        //if (playerid == 1)
-           // Debug.Log($"TacticalFormation ============================ Start playerid {playerid} armis size {armies.Count}");
-
-        leaders[playerid].Clear();
-        int i = 0;
-        radius = 0.1f;
-        newDefendRadius = 7f;
         int enemyCount = GameObject.FindGameObjectsWithTag("Player" + enemyid).Length;
-        behaviorTreeGroups[playerid].Clear();
         int leaderUnitTypeID = 0;
+        List<GameObject> armies = new List<GameObject>();
+       
+        if (unit == null) {
+            leaders[playerid].Clear();
+            behaviorTreeGroups[playerid].Clear();
+            armies = units.ToList();
+        }
+        else {
+            leaders[playerid].Remove((int)unit.GetComponent<Unit>().unitType);
+            behaviorTreeGroups[playerid].Remove((int)unit.GetComponent<Unit>().unitType);
+            foreach (GameObject child in units) {
+                if (child.GetComponent<Unit>().unitType == unit.GetComponent<Unit>().unitType)
+                    armies.Add(child);
+            }
+        }
+        if (king != null)
+            armies.Add(king);
+
+
         foreach (GameObject child in armies)
         {
             if (child == null) { continue; }
@@ -177,22 +176,13 @@ public class TacticalBehavior : MonoBehaviour
                     child.name = "*" + child.name;
             }
             child.transform.parent = PlayerEnemyGroup[playerid].transform;
-            i++;
         }
         for (int j = 0; j < PlayerEnemyGroup[playerid].transform.childCount; ++j)
         {
             var child = PlayerEnemyGroup[playerid].transform.GetChild(j);
             leaderUnitTypeID = (int)child.GetComponent<Unit>().unitType;
       
-            //if (child.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO) {
-            //    defendObject = KINGBOSS[playerid];
-            //    defendRadius = 10;
-            //}
-            //else {
-                //Debug.Log($"Player {playerid} Unit {(UnitMeta.UnitType)leaderUnitTypeID } Spawn Point Index {child.GetComponent<Unit>().GetSpawnPointIndex()} gameBoardHandlerPrefab: {gameBoardHandlerPrefab == null} ");
-                defendObject = gameBoardHandlerPrefab.GetSpawnPointObjectByIndex( (UnitMeta.UnitType) leaderUnitTypeID , playerid, child.GetComponent<Unit>().GetSpawnPointIndex());
-                radius = 0.1f;
-            //}
+            defendObject = gameBoardHandlerPrefab.GetSpawnPointObjectByIndex( (UnitMeta.UnitType) leaderUnitTypeID , playerid, child.GetComponent<Unit>().GetSpawnPointIndex());
             var agentTrees = child.GetComponents<BehaviorTree>();
             for (int k = 0; k < agentTrees.Length; ++k)
             {
@@ -260,10 +250,6 @@ public class TacticalBehavior : MonoBehaviour
     {
         selectedLeaderId = leaderId;
     }
-    public void HandleStun(bool stun)
-    {
-        TacticalBehavior.IS_STUNNED = stun;
-    }
     public void TryTB(int type )
     {
         TryTB(type, PLAYERID);
@@ -284,18 +270,16 @@ public class TacticalBehavior : MonoBehaviour
     public void TryTB(int type, int playerid)
     {
         TryTB(type, playerid, GetLeaderID(playerid));
-       
     }
     public void TryTB(int type, int playerid, int leaderid)
     {
-         LeaderTacticalType(playerid, leaderid, (BehaviorSelectionType)type);
-        //Eleixier.speedUpEleixier(GetBehaviorSelectionType(playerid));
+        LeaderTacticalType(playerid, leaderid, (BehaviorSelectionType)type);
         SelectionChanged(playerid, leaderid);
     }
     public void TryReinforce(Unit unit)
     {
         //Make sure if enemy spawned, need to update TB formation for new target
-        StartCoroutine(TacticalFormation(PLAYERID, ENEMYID));
+        StartCoroutine(TacticalFormation(PLAYERID, ENEMYID, unit.gameObject));
     }
 
     private void SelectionChanged(int playerID, int leaderid)
@@ -364,9 +348,9 @@ public class TacticalBehavior : MonoBehaviour
     {
         List<GameObject> troops;
         var sb = new System.Text.StringBuilder();
-        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + ENEMYID);
+        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + PLAYERID);
         troops = armies.ToList();
-        armies = GameObject.FindGameObjectsWithTag("King" + ENEMYID);
+        armies = GameObject.FindGameObjectsWithTag("King" + PLAYERID);
         if(armies.Length > 0)
         troops.AddRange(armies);
         foreach (GameObject army in troops) {

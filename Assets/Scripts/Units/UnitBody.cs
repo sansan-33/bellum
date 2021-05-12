@@ -6,10 +6,8 @@ public class UnitBody : NetworkBehaviour, IBody
 {
 
     [SerializeField] private List< Material> material;
-    [SerializeField] private  SkinnedMeshRenderer unitRenderer;
-    [SerializeField] private Transform unitTransform;
-    [SerializeField] private GameObject changeBody;
-
+    private  SkinnedMeshRenderer unitRenderer;
+    
     public override void OnStartServer()
     {
         unitRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -46,7 +44,7 @@ public class UnitBody : NetworkBehaviour, IBody
     }
     public void SetUnitSize(int star)
     {
-        unitTransform.localScale += new Vector3(star, star, star);
+        transform.localScale += new Vector3(star, star, star);
     }
     [Server]
     public void ServeChangeType(Unit unit)
@@ -60,7 +58,6 @@ public class UnitBody : NetworkBehaviour, IBody
         //transform.Find("Horseman__Polyart_Standard").gameObject.SetActive(false);
         gameObject.transform.GetChild(8).gameObject.transform.GetChild(0).gameObject.SetActive(false);
         //Debug.Log(gameObject.transform.GetChild(8).gameObject.transform.GetChild(0));
-        changeBody.SetActive(true);
         unit.unitType = UnitMeta.UnitType.TANK;
         unit.GetUnitMovement().SetSpeed( UnitMeta.SpeedType.CURRENT, 6);
     }

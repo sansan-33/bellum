@@ -1042,7 +1042,6 @@ GameObject:
   - component: {fileID: 7886504477174588649}
   - component: {fileID: 2171270098197511395}
   - component: {fileID: 1632355196208456466}
-  - component: {fileID: 3698077258398265470}
   - component: {fileID: 3007018670020009129}
   - component: {fileID: 720455803087774091}
   - component: {fileID: 4733497917111374923}
@@ -1588,30 +1587,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MiddleLine: {fileID: 0}
   unitTransform: {fileID: 2460804451879552489}
---- !u!114 &3698077258398265470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2460804451879552006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d788be1e909f043e695f7b9e01c83628, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  material:
-  - {fileID: 2100000, guid: 35a59708ca01f0446aa76b0e2e8b737a, type: 2}
-  - {fileID: 2100000, guid: 4355e759baff8ac4193092db7b46f08d, type: 2}
-  - {fileID: 2100000, guid: 881dfeb24e3202a41884fac4a0e2a13d, type: 2}
-  - {fileID: 2100000, guid: d2b545ee9a5b910418ad48b9164f6712, type: 2}
-  - {fileID: 2100000, guid: 9b8f7c3c798462b47b332f865564dbc2, type: 2}
-  - {fileID: 2100000, guid: 881dfeb24e3202a41884fac4a0e2a13d, type: 2}
-  unitRenderer: {fileID: 0}
-  unitTransform: {fileID: 2460804451879552489}
-  changeBody: {fileID: 0}
 --- !u!114 &3007018670020009129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1784,7 +1759,7 @@ MonoBehaviour:
   centerBackingField: 1
   locked: 0
   lockWhenNotMoving: 0
-  agentTimeHorizon: 1
+  agentTimeHorizon: 0.5
   obstacleTimeHorizon: 1
   maxNeighbours: 10
   layer: 1

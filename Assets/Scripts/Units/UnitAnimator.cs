@@ -8,7 +8,7 @@ public class UnitAnimator : NetworkBehaviour
     [SerializeField] public NetworkAnimator networkAnim;
     AnimatorClipInfo[] m_CurrentClipInfo;
     [SyncVar] private AnimState currentState;
-    public enum AnimState { ATTACK, DEFEND, GETHIT, LOCOMOTION };
+    public enum AnimState { ATTACK, DEFEND, GETHIT, LOCOMOTION, NOTHING };
     bool isAttacking = false;
     private float clipLength = 0f;
     private string attackState = "";
@@ -27,6 +27,8 @@ public class UnitAnimator : NetworkBehaviour
 
     private void SetAnimationState()
     {
+        //Initial state set to prevent attack state delay when checking current state and new state
+        currentState = AnimState.NOTHING;
         string weapontype = "_" + UnitMeta.KeyWeaponType[GetComponent<Unit>().unitKey].ToString().ToUpper();
         AnimationClip[] clips = networkAnim.animator.runtimeAnimatorController.animationClips;
         foreach (AnimationClip clip in clips)
@@ -48,7 +50,7 @@ public class UnitAnimator : NetworkBehaviour
     {
         if (currentState == newState) return;
         string animState = newState.ToString();
-        if(newState == AnimState.ATTACK) animState = attackState;
+        if (newState == AnimState.ATTACK) { animState = attackState; }
         if (newState == AnimState.LOCOMOTION) animState = locomotionState;
         networkAnim.animator.Play(animState, -1, 0f);
         currentState = newState;
@@ -68,7 +70,7 @@ public class UnitAnimator : NetworkBehaviour
     private void AttackCompleted()
     {
         isAttacking = false;
-        currentState = AnimState.DEFEND;
+        currentState = AnimState.NOTHING;
     }
 
     public void StateControl(AnimState newState)

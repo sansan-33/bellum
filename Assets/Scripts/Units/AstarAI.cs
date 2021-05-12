@@ -4,6 +4,7 @@
 using Pathfinding;
 using Mirror;
 using System;
+using Pathfinding.RVO;
 
 public class AstarAI : NetworkBehaviour, IUnitMovement
 {
@@ -26,6 +27,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
 
     public float repathRate = 0.5f;
     private float lastRepath = float.NegativeInfinity;
+    private bool IS_MULTIPLAYER_MODE = false;
 
     public void Start()
     {
@@ -35,6 +37,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     public override void OnStartClient()
     {
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        IS_MULTIPLAYER_MODE = ((RTSNetworkManager)NetworkManager.singleton).Players.Count > 1 ? true : false;
     }
     [Command]
     public void CmdMove(Vector3 position)
@@ -180,37 +183,39 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     }
     public bool isCollide()
     {
+        //if (1 > 0) return false;
         //Debug.Log($"AstarAI is collide ?  {isCollided}");
         Collider[] hitColliders = Physics.OverlapBox(GetComponent<Targeter>().GetAimAtPoint().transform.position, transform.localScale * GetComponent<IAttack>().AttackDistance(), Quaternion.identity, LayerMask.GetMask("Unit"));
         int i = 0;
-
+        isCollided = false;
         //Check when there is a new collider coming into contact with the box
         while (i < hitColliders.Length)
         {
             other = hitColliders[i++];
-
-            if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1)
-            {
-                //Check for either player0 or king0 collide their team member
-                if (other.tag == "Unit") { continue; }  // instial object tag name
-                if (other.tag.Contains("" + player.GetPlayerID()) && this.transform.tag.Contains("" + player.GetPlayerID())) { continue; }  //check to see if it belongs to the player, if it does, do nothing
-                if (other.tag.Contains("" + player.GetEnemyID()) && this.transform.tag.Contains("" + player.GetEnemyID())) { continue; }  //check to see if it belongs to the player, if it does, do nothing
-
-            }
-            else // Multi player seneriao
+            if (other.tag == "Unit") { continue; }  // initial object tag name , wait for tag update later
+            if (IS_MULTIPLAYER_MODE)
             {
                 //Debug.Log($"Multi player seneriao ");
                 if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
                 {
-                    if (other.tag == "Unit") { continue; }  // instial object tag name
-                    if (networkIdentity.hasAuthority) { continue; }  //check to see if it belongs to the player, if it does, do nothing
+                    if (networkIdentity.hasAuthority)
+                    {
+                        isCollided = true;
+                        break; 
+                    }  //check to see if it belongs to the player, if it does, do nothing
                 }
             }
-            isCollided = true;
-            return true;
+            else // Multi player seneriao
+            {
+                //Check for either player0 or king0 collide their team member
+                if (other.tag != transform.tag && !other.tag.Contains("King") ) {
+                    isCollided = true;
+                    break;
+                }
+            }
         }
-        isCollided = false;
-        return false;
+        
+        return isCollided;
     }
 
     public void move(Vector3 position)
