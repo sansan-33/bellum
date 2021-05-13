@@ -279,6 +279,7 @@ public class TacticalBehavior : MonoBehaviour
     public void TryReinforce(Unit unit)
     {
         //Make sure if enemy spawned, need to update TB formation for new target
+        //Debug.Log($"Unit spawned {unit.name} {unit.tag}");
         StartCoroutine(TacticalFormation(PLAYERID, ENEMYID, unit.gameObject));
     }
 

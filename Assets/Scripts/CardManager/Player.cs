@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
         // Debug.Log($"Calling Mereg {PrintAllCards(playerHand[0])}");
         //Debug.Log($"Start merge cards in hand  {playerHand[0].Count}");
         //At least 2 cards in Hand, otherwise  ignore merge
-        if (!(playerHand[0].Count >= 2)) { yield return null; }
+        if (!(playerHand[0].Count >= 2)) { yield break; }
         int lastCardBefore = playerHand[0].Count - 2;
         int maxmerge = playerHand[0].Count - 1;
         Card beforeNewCard;
@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
         int star = 0;
         while (maxmerge > 0)
         {
-            if (lastCardBefore < 0) { yield return null; }
+            if (lastCardBefore < 0) { yield break; }
             beforeNewCard = playerHand[0][lastCardBefore];
             card = playerHand[0][lastCardBefore + 1];
             // Check if last card before is same card number and same card star  
@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
         {
             cardTransform.position = Vector3.MoveTowards(cardTransform.position, targetPosition, Time.deltaTime * cardMoveSpeed);
             cardTransform.localEulerAngles = Vector3.Lerp(cardTransform.localEulerAngles, v360, Time.deltaTime * 5);
-            yield return null;
+            //yield return null;
         }
         if (cardTransform != null) { 
             cardTransform.position = targetPosition;
