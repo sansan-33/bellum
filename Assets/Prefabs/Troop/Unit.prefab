@@ -1679,7 +1679,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   endReachedDistance: 0.2
-  whenCloseToDestination: 0
+  whenCloseToDestination: 1
   rvoDensityBehavior:
     enabled: 1
     densityThreshold: 0.5
