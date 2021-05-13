@@ -7,7 +7,7 @@ public class Targeter : NetworkBehaviour
 {
     private Targetable target;
     [SerializeField] private Transform aimAtPoint = null;
-
+    
     public Targetable GetTarget()
     {
         return target;
@@ -48,5 +48,6 @@ public class Targeter : NetworkBehaviour
     {
         ClearTarget();
     }
-    
+
+   
 }

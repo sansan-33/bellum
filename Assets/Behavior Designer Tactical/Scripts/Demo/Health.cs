@@ -47,5 +47,10 @@ namespace BehaviorDesigner.Runtime.Tactical
             currentHealth = startHealth;
             gameObject.SetActive(true);
         }
+
+        int IDamageable.Engaged(TacticalAgent tacticalAgent)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

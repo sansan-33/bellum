@@ -25,7 +25,7 @@ namespace BehaviorDesigner.Runtime.Tactical
         public Vector3 AttackOffset { set { attackOffset = value; } }
         public Vector3 TargetOffset { set { targetOffset = value; } }
         public bool IsEngaged = false;
-     
+      
         private string debugTarget = "footman";
         private bool ISDEBUG = false;
         /// <summary>
@@ -165,6 +165,6 @@ namespace BehaviorDesigner.Runtime.Tactical
             }
             return ContainsTransform(target.parent, parent);
         }
-        
+       
     }
 }

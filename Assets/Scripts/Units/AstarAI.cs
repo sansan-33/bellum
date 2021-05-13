@@ -288,7 +288,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     }
     public float GetRadius()
     {
-        return 0f;
+        return ai.radius;
     }
     public bool collided()
     {

@@ -16,5 +16,7 @@
         /// </summary>
         /// <returns>True if the object is alive.</returns>
         bool IsAlive();
+
+        int Engaged(TacticalAgent tacticalAgent);
     }
 }
