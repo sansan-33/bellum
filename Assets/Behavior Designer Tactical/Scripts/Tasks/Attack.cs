@@ -13,7 +13,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
     public class Attack : NavMeshTacticalGroup
     {
         private int HEARTBEAT = 0;
-
+        
         public override TaskStatus OnUpdate()
         {
             var baseStatus = base.OnUpdate();

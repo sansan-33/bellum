@@ -386,6 +386,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             for (int i = 0; i < targetTransforms.Count; ++i)
             {
                 position += targetTransforms[i].position;
+                Debug.Log("CenterAttackPosition: " + i + " " + targetTransforms[i].position);
             }
             return position / targetTransforms.Count;
         }
@@ -525,9 +526,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             if (!tacticalAgent.CanSeeTarget() ||
                     Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position) > tacticalAgent.AttackAgent.AttackDistance())
             {
-                tacticalAgent.SetDestination(tacticalAgent.TargetTransform.position);
-                //tacticalAgent.UpdateRotation(true);
-                //tacticalAgent.RotateTowardsPosition(tacticalAgent.TargetTransform.position);
+                //tacticalAgent.SetDestination(tacticalAgent.TargetTransform.position);
+                tacticalAgent.SetDestination(SurroundTraget(tacticalAgent.TargetTransform.position));
                 tacticalAgent.AttackPosition = true;
                 if(tacticalAgent.transform.name.ToLower().Contains(debugTarget) && ISDEBUG)
                     Debug.Log($"{tacticalAgent.transform.name} Can See Target {tacticalAgent.CanSeeTarget() } {tacticalAgent.TargetTransform.transform.name  } distance {Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position)} , AttackDistance() {tacticalAgent.AttackAgent.AttackDistance() }? ");
@@ -543,7 +543,24 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             }
             return false;
         }
-
+        private Vector3 SurroundTraget(Vector3 targetPosition)
+        {
+            // Don't go through the center when travelling to the other side of the circle
+            Vector3 destination = Vector3.zero;
+            var offset = Vector3.zero;
+            float radius = 6;
+            int targetByOther = tacticalAgent.TargetDamagable.Engaged(tacticalAgent);
+            float theta = 2 * Mathf.PI / targetByOther;
+            var attackRotation = CenterAttackRotation(targetPosition);
+            offset.Set(radius * Mathf.Sin(theta * targetByOther), 0, radius * Mathf.Cos(theta * targetByOther));
+            //if (offset.z < 0 && InverseTransformPoint(tacticalAgent.TargetTransform.position, transform.position, attackRotation).z < -tacticalAgent.Radius())
+            //{
+            offset.Set((radius + tacticalAgent.Radius()) * Mathf.Sign(Mathf.Sin(theta * targetByOther)), 0, 0);
+            destination = TransformPoint(targetPosition, offset, attackRotation);
+            //}
+            //Debug.Log($"Move to target new {destination} , orginal {tacticalAgent.TargetTransform.position} , tacticalAgent radius {tacticalAgent.Radius()} , offset {offset} "); 
+            return destination;
+        }
         /// <summary>
         /// The task has ended. Stop any active agents.
         /// </summary>

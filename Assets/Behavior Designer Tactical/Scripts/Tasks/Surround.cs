@@ -16,6 +16,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
         private float theta;
         private bool inPosition;
+        private string TASKNAME = "Surround";
+        private int HEARTBEAT = 0;
 
         public override void OnStart()
         {
@@ -68,6 +70,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     detour = true;
                 }
                 tacticalAgent.SetDestination(destination);
+                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + " : Target Attack center is " + attackCenter + " , Unit Moving to Destination " + destination + ". " + HEARTBEAT++);
 
                 // The agents can't be in position if they are taking a detour.
                 if (!detour && tacticalAgent.HasArrived()) {

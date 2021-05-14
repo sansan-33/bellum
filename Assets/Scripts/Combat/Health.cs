@@ -30,7 +30,7 @@ public class Health : NetworkBehaviour, IDamageable
 
     public float blinkDuration;
     public float blinkIntensity;
-   
+    HashSet<TacticalAgent> engagedAgentSet = new HashSet<TacticalAgent>();
     #region Server
 
     public override void OnStartServer()
@@ -174,9 +174,19 @@ public class Health : NetworkBehaviour, IDamageable
     {
         return currentHealth > 0;
     }
+
+    public int Engaged(TacticalAgent tacticalAgent)
+    {
+        if(!engagedAgentSet.Contains(tacticalAgent))
+            engagedAgentSet.Add(tacticalAgent);
+        //Debug.Log($"Engaged {tacticalAgent},  count {engagedAgentSet.Count}");
+        return engagedAgentSet.Count;
+    }
     public void Transformhealth()
     {
         currentHealth = maxHealth;
     }
+
+   
     #endregion
 }
