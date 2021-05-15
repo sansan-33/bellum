@@ -31,6 +31,7 @@ public class Health : NetworkBehaviour, IDamageable
     public float blinkDuration;
     public float blinkIntensity;
     HashSet<TacticalAgent> engagedAgentSet = new HashSet<TacticalAgent>();
+    Color blinkColor = new Color32 (225,120,120,255);
     #region Server
 
     public override void OnStartServer()
@@ -153,8 +154,9 @@ public class Health : NetworkBehaviour, IDamageable
         blinkTimer -= Time.deltaTime;
         float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
         float intensity = (lerp * blinkIntensity) + 1f;
+        intensity = Mathf.Pow(2.0F, intensity);
         if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        skinnedMeshRenderer.material.color = Color.white * intensity;
+        skinnedMeshRenderer.material.SetColor("Color_C33180AA", Color.white * intensity);
     }
     private void HandleHealthUpdated(float oldHealth, float newHealth)
     {
