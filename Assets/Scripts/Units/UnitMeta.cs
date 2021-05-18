@@ -25,7 +25,7 @@ public class UnitMeta
     public enum UnitPosition { FORWARD, MIDFIELDER, DEFENDER, GOALIE, WALL};
     public enum Race { HUMAN, UNDEAD, ELF, GOD, ALL };
     public enum SpeedType { ORIGINAL, CURRENT, MAX };
-    public enum WeaponType { THSWORD, SHSWORD, BOW, HAMMER, SPEAR, DAGGER , SPELL,AXE, LANCE, NOTHING};
+    public enum WeaponType { THSWORD, SHSWORD, BOW, HAMMER, SPEAR, DAGGER , SPELL,AXE, LANCE, PUNCH, NOTHING};
      
     public static Dictionary<UnitType, int> UnitSize = new Dictionary<UnitType, int>() { { UnitType.FOOTMAN, 3 }, { UnitType.ARCHER, 2 } };
     public static Dictionary<UnitKey, bool> UnitKeyRider = new Dictionary<UnitKey, bool>() { { UnitKey.CAVALRY, true }, { UnitKey.GODCAVALRY, true }, { UnitKey.RIDER, true } };
@@ -202,7 +202,8 @@ public class UnitMeta
         { UnitKey.CAVALRY,true },
         { UnitKey.RIDER,true },
         { UnitKey.GODCAVALRY , true },
-        { UnitKey.ELFCAVALRY , true }
+        { UnitKey.ELFCAVALRY , true },
+        { UnitKey.ELFGOLEM , true }
     };
 
     public static Dictionary<UnitKey, WeaponType> KeyWeaponType = new Dictionary<UnitKey, WeaponType>() {
@@ -236,7 +237,7 @@ public class UnitMeta
         { UnitKey.GODWALL , WeaponType.NOTHING },
 
         { UnitKey.ELFRANGER , WeaponType.BOW  } ,
-        { UnitKey.ELFGOLEM , WeaponType.HAMMER } ,
+        { UnitKey.ELFGOLEM , WeaponType.PUNCH } ,
         { UnitKey.ELFCAVALRY , WeaponType.LANCE} ,
         { UnitKey.ELFMAGE , WeaponType.SPELL},
         { UnitKey.ELFFOOTMAN , WeaponType.AXE },
