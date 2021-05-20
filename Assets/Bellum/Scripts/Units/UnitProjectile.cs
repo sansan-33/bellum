@@ -147,7 +147,7 @@ public class UnitProjectile : NetworkBehaviour
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         if(other != null)
-        transform.parent = other.transform;
+        transform.parent = other.transform.Find("Body");
         //Physics.IgnoreCollision(col.collider, transform.collider);
     }
 

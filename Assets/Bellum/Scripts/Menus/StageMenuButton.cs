@@ -12,7 +12,7 @@ public class StageMenuButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log($"StageMenuButton OnPointerClick chapter {chapter}");
+        //Debug.Log($"StageMenuButton OnPointerClick chapter {chapter}");
         StaticClass.Chapter = chapter;
         int chapterIndex = int.Parse(chapter) - 1;
         var buttons = FindObjectsOfType<StageMenuButton>();

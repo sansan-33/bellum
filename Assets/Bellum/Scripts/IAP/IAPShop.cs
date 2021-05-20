@@ -6,7 +6,6 @@ using UnityEngine.Purchasing;
 public class IAPShop : MonoBehaviour
 {
     private string buy = "com.sansan-33.bellum.buy";
-
     public void OnPurchaseComplete(Product product)
     {
         if (product.definition.id == "buy")
