@@ -20,7 +20,7 @@ public class UnitProjectile : NetworkBehaviour
     public static event Action onKilled;
     int playerid = 0;
     int enemyid = 0;
-    int depth = 3;
+    float depth = 1.5f;
     [SerializeField] private GameObject textPrefab = null;
 
     public override void OnStartClient()
@@ -50,7 +50,7 @@ public class UnitProjectile : NetworkBehaviour
         if (other.tag == "Wall") {
             //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
             cmdSpecialEffect(this.transform.position);
-            cmdArrowStick();
+            cmdArrowStick(other.transform);
             return;
         }
         // Not attack same connection client object except AI Enemy
@@ -86,7 +86,7 @@ public class UnitProjectile : NetworkBehaviour
             elementalEffect(element, other.transform.GetComponent<Unit>());
             CmdDealDamage(other.gameObject, damageToDeals);
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals} / {damageToDealOriginal}");
-            cmdArrowStick();
+            cmdArrowStick(other.transform);
         }
     }
     [Command]
@@ -135,17 +135,19 @@ public class UnitProjectile : NetworkBehaviour
         NetworkServer.Spawn(effect, connectionToClient);
     }
     [Command]
-    private void cmdArrowStick()
+    private void cmdArrowStick(Transform other)
     {
-        arrowStick();
+        arrowStick(other);
     }
     [Server]
-    void arrowStick()
+    void arrowStick(Transform other)
     {
         // move the arrow deep inside the enemy or whatever it sticks to
         transform.Translate(depth * Vector3.forward);
-        //GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        if(other != null)
+        transform.parent = other.transform;
         //Physics.IgnoreCollision(col.collider, transform.collider);
     }
 
