@@ -47,6 +47,12 @@ public class UnitProjectile : NetworkBehaviour
     {
         bool isFlipped = false;
         damageToDeals = damageToDealOriginal;
+        if (other.tag == "Wall") {
+            //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
+            cmdSpecialEffect(this.transform.position);
+            cmdArrowStick();
+            return;
+        }
         // Not attack same connection client object except AI Enemy
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1) {
             if ((other.tag == "Player" + enemyid || other.tag == "King" + enemyid) && unitType == "Enemy" ) { return; }  //check to see if it belongs to the player, if it does, do nothing
@@ -65,12 +71,7 @@ public class UnitProjectile : NetworkBehaviour
                 }
              }
         }
-        if (other.tag == "Wall") {
-            //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
-            cmdSpecialEffect(this.transform.position);
-            arrowStick();
-        }
-        else if (other.TryGetComponent<Health>(out Health health))
+        if (other.TryGetComponent<Health>(out Health health))
         {
             //Debug.Log($"player ID {player.GetPlayerID()}");
             //Debug.Log(playerid);
@@ -85,7 +86,7 @@ public class UnitProjectile : NetworkBehaviour
             elementalEffect(element, other.transform.GetComponent<Unit>());
             CmdDealDamage(other.gameObject, damageToDeals);
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals} / {damageToDealOriginal}");
-            arrowStick();
+            cmdArrowStick();
         }
     }
     [Command]
@@ -133,12 +134,19 @@ public class UnitProjectile : NetworkBehaviour
         GameObject effect = Instantiate(specialEffectPrefab, position, Quaternion.Euler(new Vector3(0, 0, 0)));
         NetworkServer.Spawn(effect, connectionToClient);
     }
-
+    [Command]
+    private void cmdArrowStick()
+    {
+        arrowStick();
+    }
+    [Server]
     void arrowStick()
     {
         // move the arrow deep inside the enemy or whatever it sticks to
         transform.Translate(depth * Vector3.forward);
+        //GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        //Physics.IgnoreCollision(col.collider, transform.collider);
     }
 
     [Command]
