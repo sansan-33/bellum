@@ -8364,6 +8364,7 @@ MonoBehaviour:
   charIcon: {fileID: 638942301}
   skillIcon: {fileID: 0}
   stars: {fileID: 0}
+  cardFrame: {fileID: 0}
   cardTimerImage: {fileID: 0}
 --- !u!54 &179376446
 Rigidbody:
@@ -39734,6 +39735,7 @@ MonoBehaviour:
   charIcon: {fileID: 1918308225}
   skillIcon: {fileID: 0}
   stars: {fileID: 0}
+  cardFrame: {fileID: 0}
   cardTimerImage: {fileID: 0}
 --- !u!54 &803953342
 Rigidbody:
@@ -70464,6 +70466,7 @@ MonoBehaviour:
   charIcon: {fileID: 0}
   skillIcon: {fileID: 0}
   stars: {fileID: 0}
+  cardFrame: {fileID: 0}
   cardTimerImage: {fileID: 0}
 --- !u!114 &1400101946
 MonoBehaviour:
