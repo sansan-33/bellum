@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class JoinLobbyMenu : MonoBehaviour
 {
     [SerializeField] private GameObject landingPagePanel = null;
+    [SerializeField] private GameObject multiplayerPanel = null;
+    [SerializeField] private GameObject unitPreviewPanel = null;
     [SerializeField] private TMP_InputField addressInput = null;
     [SerializeField] private Button joinButton = null;
 
@@ -50,6 +52,9 @@ public class JoinLobbyMenu : MonoBehaviour
 
         gameObject.SetActive(false);
         landingPagePanel.SetActive(false);
+        unitPreviewPanel.SetActive(false);
+        multiplayerPanel.SetActive(true);
+
     }
 
     private void HandleClientDisconnected()

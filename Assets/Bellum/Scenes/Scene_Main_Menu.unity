@@ -23226,7 +23226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1320012659
 RectTransform:
   m_ObjectHideFlags: 0
@@ -42205,6 +42205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   landingPagePanel: {fileID: 325234869}
+  multiplayerPanel: {fileID: 384340323}
+  unitPreviewPanel: {fileID: 1354260147}
   addressInput: {fileID: 427691605}
   joinButton: {fileID: 173376980}
 --- !u!114 &2129502617
