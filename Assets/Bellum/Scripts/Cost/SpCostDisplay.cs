@@ -164,7 +164,7 @@ public class SpCostDisplay : MonoBehaviour
                     
                     if (onePlayerMode == true)
                     {
-                        Debug.Log(onePlayerMode);
+                       // Debug.Log(onePlayerMode);
                         iSpecialAttack.OnPointerDown();
                     }
 
