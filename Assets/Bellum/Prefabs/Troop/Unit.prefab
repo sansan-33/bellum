@@ -1120,8 +1120,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &2460804451879552499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,8 +1160,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &2460804451879552497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1200,8 +1200,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &2460804451879552509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1240,8 +1240,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &2460804451879552506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1280,8 +1280,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &2460804451879552507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,8 +1320,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &2460804451879552504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1360,8 +1360,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &8177061792055659751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1496,9 +1496,9 @@ MonoBehaviour:
   shield: {fileID: 3007018670020009129}
   IsFrezze: 0
   IsElectricShock: 0
-  specialEffectPrefab: {fileID: 1965343156803978, guid: aa8d6482d70a23445b4b2a928ed1b845, type: 3}
+  specialEffectPrefab: {fileID: 1965343156803978, guid: 3dc1e9ee58f1d453aa8ee52e54bde010, type: 3}
   blinkDuration: 0.2
-  blinkIntensity: 10
+  blinkIntensity: 5
 --- !u!114 &6338718717875103638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,8 +1806,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.6.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!1 &2598530083062933460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2154,7 +2154,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &3959836454772949414
@@ -3329,7 +3329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1, y: 4.75}
+  m_AnchoredPosition: {x: 0.1, y: 3.97}
   m_SizeDelta: {x: 0.26433623, y: 0.17310166}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1184994199853394038
