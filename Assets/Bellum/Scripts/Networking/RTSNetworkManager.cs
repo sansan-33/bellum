@@ -98,7 +98,7 @@ public class RTSNetworkManager : NetworkManager
        
         isGameInProgress = true;
         SetupUnitDict();
-        ServerChangeScene("Scene_Map_02");
+        ServerChangeScene("Scene_Map_01");
     }
 
     public void StartMission(string chapter, string mission)
@@ -107,7 +107,7 @@ public class RTSNetworkManager : NetworkManager
         isGameInProgress = true;
         SetupUnitDict();
         Debug.Log($"StartMission ==> chapter:{chapter} mission:{mission}");
-        ServerChangeScene("Scene_Map_02");
+        ServerChangeScene("Scene_Map_0" + chapter);
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn)

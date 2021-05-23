@@ -58,6 +58,7 @@ public class Stun : NetworkBehaviour, ISpecialAttack
             btn = _btn;
         }
 
+
             if (spCost.useSpCost == true)
             {
             //if (spCost.SPAmount < SPCost) { return; }
