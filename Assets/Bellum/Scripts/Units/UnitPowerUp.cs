@@ -9,40 +9,8 @@ public class UnitPowerUp : NetworkBehaviour
 {
     [SerializeField] private GameObject specialEffectPrefab = null;
     [SerializeField] private GameObject fxEffectPrefab = null;
-    [SerializeField] private BattleFieldRules battleFieldRules = null;
     public bool canSpawnEffect = true;
-    bool CanPowerUp = true;
-    Unit unit;
-    Transform unitTransform;
-   
-    [Command]
-    public void CmdUnitPowerUp()
-    {
-        unit = GetComponentInParent<Unit>();
-        unitTransform = GetComponentInParent<Transform>();
-        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1 && CompareTag("Player1")){
-            CanPowerUp = false;
-        }
-        //Debug.Log($"cmdPowerUp CanPowerUp ? {CanPowerUp} battleFieldRules Is In Own Field() {battleFieldRules.IsInOwnField()}");
-        if (!battleFieldRules.IsInOwnField() && CanPowerUp)
-        {
-            //Debug.Log($"cmdPowerUp {unit.unitType}");
-            switch (unit.unitType)
-            {
-                /*
-                case UnitMeta.UnitType.FOOTMAN :
-                    if (unit.isScaled) { break; }
-                    ServerPowerUp(unit.gameObject,2,1,0,0,0,-1,0,0);
-                    Scale(unitTransform, unit.gameObject);
-                    RpcScale(unitTransform, unit.gameObject);
-                    break;
-                */
-                case UnitMeta.UnitType.CAVALRY :
-                    ServerSetSpeed(10,false);
-                    break;
-            }
-        }
-    }
+  
     private void Scale()
     {
         transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);

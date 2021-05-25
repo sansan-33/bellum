@@ -251,7 +251,7 @@ public class TacticalBehavior : MonoBehaviour
     {
         string target = "";
         if (group == (int)BehaviorSelectionType.Hold || group == (int)BehaviorSelectionType.Defend) {
-            target = provoke ? "Provoke" + enemyid : (enemyCount > 0 ? "Player" + enemyid : "King" + enemyid);
+            target = enemyCount > 0 ?  "Player" + enemyid : "King" + enemyid;
             return target;
         }
         if (provoke) {
@@ -371,12 +371,12 @@ public class TacticalBehavior : MonoBehaviour
     {
         List<GameObject> troops;
         var sb = new System.Text.StringBuilder();
-        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + ENEMYID);
+        GameObject[] armies = GameObject.FindGameObjectsWithTag("Player" + PLAYERID);
         troops = armies.ToList();
-        armies = GameObject.FindGameObjectsWithTag("King" + ENEMYID);
+        armies = GameObject.FindGameObjectsWithTag("King" + PLAYERID);
         if(armies.Length > 0)
         troops.AddRange(armies);
-        armies = GameObject.FindGameObjectsWithTag("Provoke" + ENEMYID);
+        armies = GameObject.FindGameObjectsWithTag("Provoke" + PLAYERID);
         if (armies.Length > 0)
         troops.AddRange(armies);
         foreach (GameObject army in troops) {

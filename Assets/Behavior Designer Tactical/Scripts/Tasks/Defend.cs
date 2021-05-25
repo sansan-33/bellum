@@ -30,6 +30,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
             // 2 * PI = 360 degrees
             theta = 2 * Mathf.PI / agents.Count;
+            GameObject target = GameObject.FindGameObjectWithTag(targetTag.Value);
+            if (target == null) { return; }
             targetTagPosition = GameObject.FindGameObjectWithTag(targetTag.Value).transform.position;
         }
 
@@ -90,15 +92,16 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                         targetTransforms.RemoveAt(i);
                     }
                 }
-                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": No Target ==> Defend " + HEARTBEAT++);
+                tacticalAgent.AttackPosition = false;
+                tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": No Target. Stop moving if in Attack Position ? [ " + tacticalAgent.AttackPosition + "] ... " + HEARTBEAT++);
                 tacticalAgent.RotateTowards(Quaternion.LookRotation(targetTagPosition - defendObject.Value.transform.position));
-                tacticalAgent.transform.GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.DEFEND);
+                //tacticalAgent.transform.GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.DEFEND);
             }
 
             // The agent isn't attacking. Move near the defend object.
             if (!tacticalAgent.AttackPosition) {
                 var targetPosition = defendObject.Value.transform.TransformPoint(radius.Value * Mathf.Sin(theta * formationIndex), 0, radius.Value * Mathf.Cos(theta * formationIndex));
-                tacticalAgent.UpdateRotation(true);
+                //tacticalAgent.UpdateRotation(true);
                 //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + " = " + ": moving distance " + (int) Vector3.Distance(tacticalAgent.transform.position, targetPosition) );
                 tacticalAgent.SetDestination(targetPosition);
                 if (tacticalAgent.HasArrived()) {

@@ -48,26 +48,39 @@ public class UnitAnimator : NetworkBehaviour
 
     void ChangeAnimationState(AnimState newState)
     {
-        //if(GetComponent<Unit>().unitKey == UnitMeta.UnitKey.THOR) Debug.Log($"{GetComponent<Unit>().unitKey} ChangeAnimationState {currentState} / {newState}");
         if (currentState == newState) return;
         string animState = newState.ToString();
-        if (newState == AnimState.ATTACK) { animState = attackState; }
-        if (newState == AnimState.LOCOMOTION) animState = locomotionState;
-        networkAnim.animator.Play(animState, -1, 0f);
+        ResetAll(animState);
+        if (newState == AnimState.ATTACK) {
+            animState = attackState;
+            networkAnim.SetTrigger(animState);
+            return;
+        }
+        if (newState == AnimState.LOCOMOTION) {
+            animState = locomotionState;
+        }
+        networkAnim.animator.SetBool(animState, true);
         currentState = newState;
     }
+    void ResetAll(string animState)
+    {
+        networkAnim.animator.SetBool("DEFEND", false);
+        networkAnim.animator.SetBool(locomotionState, false);
+        networkAnim.animator.SetBool(animState, false);
+    }
+   
     public void HandleStateControl(AnimState newState)
     {
-        if (newState == AnimState.ATTACK) {
-            if (!isAttacking) {
+        if (!isAttacking) {
+            if (newState == AnimState.ATTACK) {
                 isAttacking = true;
-                networkAnim.animator.SetFloat("animSpeed", clipLength / GetComponent<IAttack>().RepeatAttackDelay() );
+                networkAnim.animator.SetFloat("animSpeed", clipLength / GetComponent<IAttack>().RepeatAttackDelay());
                 Invoke("AttackCompleted", clipLength);
             }
-        }
-        ChangeAnimationState(newState);
+            ChangeAnimationState(newState);
+        }  
     }
-    
+     
     private void AttackCompleted()
     {
         isAttacking = false;

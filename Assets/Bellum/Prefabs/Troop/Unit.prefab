@@ -1041,7 +1041,6 @@ GameObject:
   - component: {fileID: 8657336790187348894}
   - component: {fileID: 7886504477174588649}
   - component: {fileID: 2171270098197511395}
-  - component: {fileID: 1632355196208456466}
   - component: {fileID: 3007018670020009129}
   - component: {fileID: 720455803087774091}
   - component: {fileID: 4733497917111374923}
@@ -1569,23 +1568,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   specialEffectPrefab: {fileID: 100000, guid: 3d4907e6bd39f474b8fd8220920e65c4, type: 3}
-  fxEffectPrefab: {fileID: 1651284899731740, guid: 1962cefffce3e49e9b674ababb5c735f, type: 3}
-  battleFieldRules: {fileID: 1632355196208456466}
+  fxEffectPrefab: {fileID: 1817900190835674, guid: 8c3e13e635ce8461990fca5255cf3b37, type: 3}
   canSpawnEffect: 1
---- !u!114 &1632355196208456466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2460804451879552006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50df5e2879d8844518abda053d97a392, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MiddleLine: {fileID: 0}
-  unitTransform: {fileID: 2460804451879552489}
 --- !u!114 &3007018670020009129
 MonoBehaviour:
   m_ObjectHideFlags: 0

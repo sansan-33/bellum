@@ -66,14 +66,13 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     {
         GetComponent<UnitAnimator>().SetFloat("moveSpeed", Math.Abs(GetVelocity().z));
         GetComponent<UnitAnimator>().SetFloat("direction", GetVelocity().x);
-      
+        GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.LOCOMOTION);
         position.y = 0;
         if (ai.canMove && ai.destination == position) {
             //if (gameObject.name.ToLower().Contains("tank"))
             //    Debug.Log($"same destination {ai.destination} target {position} , save memory not start path");
             return;
         }
-         GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.LOCOMOTION);
         ai.canMove = true;
         //if (Time.time > lastRepath + repathRate && seeker.IsDone())
         //{

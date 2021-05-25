@@ -55,6 +55,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             Transform target = null;
             IDamageable damageable = null;
             ClosestTarget(transform, ref target, ref damageable);
+            if (target == null) { return baseStatus; }
             var attackCenter = target.position;
             var attackRotation = CenterAttackRotation(attackCenter);
             var offset = Vector3.zero;

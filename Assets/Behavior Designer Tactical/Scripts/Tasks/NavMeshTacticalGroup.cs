@@ -35,7 +35,6 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             /// </summary>
             public override void SetDestination(Vector3 destination)
             {
-                unit.GetUnitPowerUp().CmdUnitPowerUp();
                 unit.GetUnitMovement().move(destination);
             }
             /// <summary>

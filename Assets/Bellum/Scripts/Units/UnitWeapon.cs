@@ -18,6 +18,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     [SerializeField] private float attackRange=5f;
     [SerializeField] public LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject specialEffectPrefab  = null;
+    [SerializeField] private GameObject slashEffectPrefab = null;
     [SerializeField] private bool IsAreaOfEffect = false;
     private float calculatedDamageToDeal ;
     private float originalDamage;
@@ -115,7 +116,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 }
                 //other.transform.GetComponent<Unit>().GetUnitMovement().CmdTrigger("gethit");
                
-                cmdSpecialEffect(other.transform.position);
+                cmdSpecialEffect(other.transform.position, IsAreaOfEffect);
                 if ( UnitMeta.ShakeCamera.ContainsKey (UnitMeta.UnitRaceTypeKey[unit.race][unit.unitType])) { cmdCMVirtual(); }
                 //cmdCMFreeLook();
                 if(!IsAreaOfEffect)
@@ -163,10 +164,14 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
         if (flipText) { TargetCommandText(opponentIdentity.connectionToClient, floatingText, opponentIdentity); }
     }
     [Command]
-    private void cmdSpecialEffect(Vector3 position)
+    private void cmdSpecialEffect(Vector3 position, bool isAOE)
     {
         GameObject effect = Instantiate(specialEffectPrefab, position, Quaternion.Euler(new Vector3(0, 0, 0)));
         NetworkServer.Spawn(effect, connectionToClient);
+        if (isAOE) {
+            effect = Instantiate(slashEffectPrefab, position, Quaternion.Euler(new Vector3(0, 0, 0)));
+            NetworkServer.Spawn(effect, connectionToClient);
+        }
     }
     public void CMVirtual()
     {

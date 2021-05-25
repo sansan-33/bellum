@@ -43,6 +43,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   specialEffectPrefab: {fileID: 100006, guid: f50d6452269444f75955054f0dd71292, type: 3}
+  slashEffectPrefab: {fileID: 3693725344986569911, guid: a75f6395e1487b344a0ffafad66fc95a, type: 3}
   IsAreaOfEffect: 1
   DashDamage: 100
   IsKingSP: 0
