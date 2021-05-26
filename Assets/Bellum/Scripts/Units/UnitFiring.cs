@@ -43,7 +43,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     [Server]
     private void FireProjectile(Vector3 targetPosition)
     {
-        Debug.Log($"{name} firing now to target position {targetPosition}");
+        //Debug.Log($"{name} firing now to target position {targetPosition}");
         for (var i = 0; i < numShots; i++)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
@@ -58,6 +58,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
 
             GameObject projectileInstance = Instantiate(projectilePrefab, projectileSpawnPoint.position + spawnOffset, projectileRotation);
             projectileInstance.GetComponent<UnitProjectile>().SetDamageToDeal(damageToDeal, damageToDealFactor);
+            if(fireRange > 20)
             projectileInstance.GetComponent<UnitProjectile>().ServerTargetObjectTF(targetPosition);
 
             NetworkServer.Spawn(projectileInstance, connectionToClient);

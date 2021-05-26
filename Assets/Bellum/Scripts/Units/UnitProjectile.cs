@@ -23,7 +23,7 @@ public class UnitProjectile : NetworkBehaviour
     float depth = 1.5f;
 
     // launch variables
-    Vector3 TargetObjectPos;
+    Vector3 TargetObjectPos = Vector3.zero;
     // state
     private bool bTouchingGround;
     // cache
@@ -48,58 +48,31 @@ public class UnitProjectile : NetworkBehaviour
         RTSPlayer player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerid = player.GetPlayerID();
         enemyid = player.GetEnemyID();
+        bTouchingGround = false;
         initialRotation = rb.rotation;
-        //rb.velocity = transform.forward * launchForce;
         Launch();
     }
-
-    // launches the object towards the TargetObject with a given LaunchAngle
-    void LaunchX()
+    void Launch()
     {
+        if (TargetObjectPos == Vector3.zero)
+        {
+            rb.velocity = transform.forward * launchForce;
+            return;
+        }
+
         float LaunchAngle = 70f;
+        float platformOffset = 0f;
         // think of it as top-down view of vectors: 
         //   we don't care about the y-component(height) of the initial and target position.
-        Vector3 projectileXZPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        
+        Vector3 projectileXZPos = new Vector3(transform.position.x, transform.position.y , transform.position.z);
         Vector3 targetXZPos = new Vector3(TargetObjectPos.x, transform.position.y, TargetObjectPos.z);
 
         // rotate the object to face the target
         transform.LookAt(targetXZPos);
 
         // shorthands for the formula
-        float R = Vector3.Distance(projectileXZPos, targetXZPos);
-        float G = Physics.gravity.y;
-        float tanAlpha = Mathf.Tan(LaunchAngle * Mathf.Deg2Rad);
-        float H = TargetObjectPos.y - transform.position.y;
-
-        // calculate the local space components of the velocity 
-        // required to land the projectile on the target object 
-        float Vz = Mathf.Sqrt(G * R * R / (2.0f * (H - R * tanAlpha)));
-        float Vy = tanAlpha * Vz;
-
-        // create the velocity vector in local space and get it in global space
-        Vector3 localVelocity = new Vector3(0f, Vy, Vz);
-        Vector3 globalVelocity = transform.TransformDirection(localVelocity);
-
-        // launch the object by setting its initial velocity and flipping its state
-        rb.velocity = globalVelocity;
-        //bTargetReady = false;
-    }
-
-    void Launch()
-    {
-        float LaunchAngle = 70f;
-        float platformOffset = 0f;
-        // think of it as top-down view of vectors: 
-        //   we don't care about the y-component(height) of the initial and target position.
-        
-        Vector3 projectileXZPos = new Vector3(transform.position.x, 0.0f, transform.position.z);
-        Vector3 targetXZPos = new Vector3(TargetObjectPos.x, 0.0f, TargetObjectPos.z);
-
-        // rotate the object to face the target
-        transform.LookAt(targetXZPos);
-
-        // shorthands for the formula
-        float R = Vector3.Distance(projectileXZPos, targetXZPos);
+        float R = Vector3.Distance(projectileXZPos, targetXZPos) - 1f;
         float G = Physics.gravity.y;
         float tanAlpha = Mathf.Tan(LaunchAngle * Mathf.Deg2Rad);
         float H = (TargetObjectPos.y + platformOffset) - transform.position.y;
@@ -114,8 +87,6 @@ public class UnitProjectile : NetworkBehaviour
         Vector3 globalVelocity = transform.TransformDirection(localVelocity);
 
         // launch the object by setting its initial velocity and flipping its state
-        Debug.Log($"Unit Projectile Launch to target pos: {TargetObjectPos}, projectileXZPos {projectileXZPos}, targetXZPos {targetXZPos}, distance {R}");
-
         rb.velocity = globalVelocity;
         //bTargetReady = false;
     }
@@ -134,6 +105,7 @@ public class UnitProjectile : NetworkBehaviour
     private void OnTriggerEnter(Collider other) //sphere collider is used to differentiate between the unit itself, and the attack range (fireRange)
     {
         bool isFlipped = false;
+        bTouchingGround = true;
         damageToDeals = damageToDealOriginal;
         if (other.tag == "Wall") {
             //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
@@ -163,7 +135,7 @@ public class UnitProjectile : NetworkBehaviour
         {
             //Debug.Log($"player ID {player.GetPlayerID()}");
             //Debug.Log(playerid);
-            bTouchingGround = true;
+            
             opponentIdentity = (playerid == 1) ? GetComponent<NetworkIdentity>() : other.GetComponent<NetworkIdentity>();
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals}"); 
             //Debug.Log($"before strengthWeakness{damageToDeals}");
