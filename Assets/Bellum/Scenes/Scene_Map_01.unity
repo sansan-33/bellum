@@ -27700,7 +27700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSlotParent: {fileID: 98332008}
-  cardSlotPrefab: {fileID: 6641416256118448248, guid: 308c4a8e961b8491c836362eeec36c57, type: 3}
+  cardSlotPrefab: {fileID: 6641416256118448248, guid: 60c3ae771d9f2498bb675f000517bd8b, type: 3}
   cardDealer: {fileID: 1928337289}
   unitSkillArt: {fileID: 4933990136420628866, guid: f8246d89bf59440c095199ba1f691fce, type: 3}
   singleHandStart: {fileID: 98332008}
