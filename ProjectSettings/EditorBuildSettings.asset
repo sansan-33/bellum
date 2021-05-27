@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Bellum/Scenes/Scene_Map_01.unity
     guid: bf1bc5a35642e4249a4ac620393431ae
-  - enabled: 0
+  - enabled: 1
     path: Assets/Bellum/Scenes/Scene_Map_03.unity
     guid: 286d5bea387bcf142b76089add5d561b
   - enabled: 1
@@ -32,8 +32,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Bellum/Scenes/Scene_Shop.unity
     guid: 5fe848f2b004e4832ac47ae9b6ab5d05
-  - enabled: 0
+  - enabled: 1
     path: Assets/Bellum/Scenes/Scene_Map_02.unity
     guid: ff7de028405f52049bda7899eb919985
+  - enabled: 1
+    path: Assets/Bellum/Scenes/Scene_Map_04.unity
+    guid: 4d2f76f5e3b153f4ca07b38b23afc754
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b2d72b6c3eb79462d919124a79096683, type: 2}
