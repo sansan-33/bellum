@@ -26,9 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Bellum/Scenes/Scene_Map_03.unity
     guid: 286d5bea387bcf142b76089add5d561b
-  - enabled: 1
-    path: Assets/Bellum/Scenes/Scene_Map_04.unity
-    guid: 03aba02ddf812e24f95af5bd88864e87
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Bellum/Scenes/stage/Scene_Stage_Menu.unity
     guid: 40b5f04abd4e848b0bd61a7ecf26428d
