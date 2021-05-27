@@ -4024,7 +4024,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: c02aef4bf59894e8f8f7fffdbbbf49c2, type: 2}
+  m_GlobalFontAsset: {fileID: 0}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
@@ -8111,7 +8111,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "192.168.2.181\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c02aef4bf59894e8f8f7fffdbbbf49c2, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -7045202509956377693, guid: c02aef4bf59894e8f8f7fffdbbbf49c2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -10593,7 +10593,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c02aef4bf59894e8f8f7fffdbbbf49c2, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -7045202509956377693, guid: c02aef4bf59894e8f8f7fffdbbbf49c2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -30050,7 +30050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 47
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
       propertyPath: spawnPrefabs.Array.data[42]
@@ -30072,6 +30072,10 @@ PrefabInstance:
       propertyPath: spawnPrefabs.Array.data[46]
       value: 
       objectReference: {fileID: 3693725344986569911, guid: a75f6395e1487b344a0ffafad66fc95a, type: 3}
+    - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
+      propertyPath: spawnPrefabs.Array.data[47]
+      value: 
+      objectReference: {fileID: 100004, guid: 426dcf24d92fa4d3d8157d050492ad1a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
 --- !u!1 &1493916669

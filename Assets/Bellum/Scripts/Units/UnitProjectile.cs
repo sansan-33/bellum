@@ -48,7 +48,6 @@ public class UnitProjectile : NetworkBehaviour
         RTSPlayer player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerid = player.GetPlayerID();
         enemyid = player.GetEnemyID();
-        bTouchingGround = false;
         initialRotation = rb.rotation;
         Launch();
     }
@@ -59,7 +58,7 @@ public class UnitProjectile : NetworkBehaviour
             rb.velocity = transform.forward * launchForce;
             return;
         }
-
+        
         float LaunchAngle = 70f;
         float platformOffset = 0f;
         // think of it as top-down view of vectors: 
@@ -88,6 +87,7 @@ public class UnitProjectile : NetworkBehaviour
 
         // launch the object by setting its initial velocity and flipping its state
         rb.velocity = globalVelocity;
+        bTouchingGround = false;
         //bTargetReady = false;
     }
 

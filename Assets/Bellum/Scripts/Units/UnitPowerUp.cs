@@ -28,6 +28,10 @@ public class UnitPowerUp : NetworkBehaviour
         gameObject.tag = "Provoke" + tag.Substring(tag.Length-1);
         fxEffect();
     }
+    private void Healing()
+    {
+        GetComponent<Healing>().ServerEnableHealing(true);
+    }
     [ClientRpc]
     private void RpcScale(Transform unitTransform, GameObject unit)
     {
@@ -184,6 +188,9 @@ public class UnitPowerUp : NetworkBehaviour
                 break;
             case UnitMeta.UnitSkill.PROVOKE:
                 Provoke();
+                break;
+            case UnitMeta.UnitSkill.HEAL:
+                Healing();
                 break;
             case UnitMeta.UnitSkill.NOTHING:
             default:

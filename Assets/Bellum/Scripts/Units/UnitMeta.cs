@@ -244,13 +244,13 @@ public class UnitMeta
         { UnitKey.ELFMAGE , WeaponType.SPELL},
         { UnitKey.ELFFOOTMAN , WeaponType.AXE },
         { UnitKey.ELFDEMONHUNTER , WeaponType.AXE },
-        { UnitKey.ELFTREEANT , WeaponType.HAMMER },
+        { UnitKey.ELFTREEANT , WeaponType.PUNCH },
         { UnitKey.ELFWALL , WeaponType.NOTHING }
     };
     public static Dictionary<UnitType, UnitSkill> UnitTypeSkillOne = new Dictionary<UnitType, UnitSkill>()
     {
         { UnitType.ARCHER, UnitSkill.NOTHING } ,
-        { UnitType.MAGIC, UnitSkill.NOTHING} ,
+        { UnitType.MAGIC, UnitSkill.HEAL} ,
         { UnitType.CAVALRY, UnitSkill.NOTHING } ,
         { UnitType.FOOTMAN, UnitSkill.NOTHING },
         { UnitType.TANK, UnitSkill.NOTHING }
