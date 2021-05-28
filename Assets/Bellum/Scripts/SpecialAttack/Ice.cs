@@ -178,7 +178,7 @@ public class Ice : MonoBehaviour, ISpecialAttack
                 //Instantiate(iceEffect, unit.transform);
                 if (unit == null) { return; }
                 //Debug.Log($"spawn to {unit.transform}");
-                FindObjectOfType<SpawnSpEffect>().CmdSpawnEffect(0, unit.transform);
+                //FindObjectOfType<SpawnSpEffect>().CmdSpawnEffect(0, unit.transform);
             }
         }
         

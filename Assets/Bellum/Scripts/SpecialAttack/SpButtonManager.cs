@@ -103,11 +103,15 @@ public class SpButtonManager : MonoBehaviour
                 {
                     if (unit.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO || unit.GetComponent<Unit>().unitType == UnitMeta.UnitType.KING)
                     {
-                        SpecialAttackType specialAttackType = (SpecialAttackType)Enum.Parse(typeof(SpecialAttackType), unit.specialkey.ToUpper());
-                        // Debug.Log($"1 player mode specialAttackType: {specialAttackType}, SpecialAttackPrefab[specialAttackType]: {SpecialAttackPrefab[specialAttackType]}");
-                        GameObject specialAttack = SpecialAttackPrefab[specialAttackType];
-                        
-                        InstantiateSpButton(unit.specialAttackType, unit.GetComponent<Unit>(), specialAttack, true);
+                        //Debug.Log($"unit.specialkey{unit.specialkey} {unit.name}");
+                        if(unit.specialkey == null)
+                        {
+                            SpecialAttackType specialAttackType = (SpecialAttackType)Enum.Parse(typeof(SpecialAttackType), unit.specialkey.ToUpper());
+                            // Debug.Log($"1 player mode specialAttackType: {specialAttackType}, SpecialAttackPrefab[specialAttackType]: {SpecialAttackPrefab[specialAttackType]}");
+                            GameObject specialAttack = SpecialAttackPrefab[specialAttackType];
+
+                            InstantiateSpButton(unit.specialAttackType, unit.GetComponent<Unit>(), specialAttack, true);
+                        }
                     }
                 }
             }

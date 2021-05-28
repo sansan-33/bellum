@@ -25,7 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField] float cardOffset = 150f; // NO Effect to change here, need to set it in inspector
     [SerializeField] float cardMoveSpeed = 10;// NO Effect to change here, need to set it in inspector
     [SerializeField] int MAXCARDSTAR = 2;
-   
+    [SerializeField] bool isEnemy;
+
     [Header("Debug")]
     [SerializeField] List<List<Card>> playerHand = new List<List<Card>>();
     int totalCardSlot = 0;
@@ -52,6 +53,10 @@ public class Player : MonoBehaviour
             totalCardSlot++;
             cardslot.transform.position = singleHandStart.transform.position + new Vector3(totalCardSlot * cardOffset, 0, 0);
             cardSlotlist.Add(cardslot);
+            if(isEnemy == true)
+            {
+                cardslot.GetComponent<RectTransform>().SetAnchor(AnchorPresets.TopCenter);
+            }
         }
     }
     public void moveCardAt(int cardMovingindex, string direction)

@@ -6808,7 +6808,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bc6c744d3bee9f14f91f3e4e40272362, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7019,7 +7018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatedGameObject: {fileID: 171784}
-  Delay: 5.6
+  Delay: 0.1
 --- !u!114 &114369375792084428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7033,7 +7032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeactivatedGameObject: {fileID: 134866}
-  DeactivateTime: 5.6
+  DeactivateTime: 10000
 --- !u!1 &111786
 GameObject:
   m_ObjectHideFlags: 0

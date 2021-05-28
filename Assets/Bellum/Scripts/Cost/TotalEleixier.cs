@@ -10,6 +10,7 @@ public class TotalEleixier : MonoBehaviour
 {
     [SerializeField] TMP_Text eleixerSpeed;
     [SerializeField] public Image eleixerBarImage = null;
+    [SerializeField] public Image enemyeleixerBarImage = null;
 
     public int maxEleixer = 10;
     public float maxEleixerTimer;
@@ -35,6 +36,10 @@ public class TotalEleixier : MonoBehaviour
             }
         }
         eleixerBarImage.fillAmount = (float)eleixer / (float)maxEleixer;
+        if (enemyeleixerBarImage != null)
+        {
+            enemyeleixerBarImage.fillAmount = (float)eleixer / (float)maxEleixer;
+        }
     }
     public void speedUpEleixier(BehaviorSelectionType selectionType)
     {
