@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System.Collections;
+using Cinemachine;
 using Mirror;
 using UnityEngine;
 
@@ -13,8 +14,9 @@ public class FlipCamera : MonoBehaviour
     public Light lightPlayer1;
     public Light lightSecondaryPlayer0;
     public Light lightSecondaryPlayer1;
-
-
+    float lensSize = 28f;
+    private CinemachineVirtualCamera camCurrent;
+    private bool zooming = false;
     public void Awake()
     {
 
@@ -24,6 +26,7 @@ public class FlipCamera : MonoBehaviour
         if (player.GetPlayerID() == 0)
         {
             camPlayer0.enabled = true;
+            camCurrent = camPlayer0;
             //lightPlayer0.enabled = true;
             //lightSecondaryPlayer0.enabled = true;
             groundPlayer0.SetActive(true);
@@ -36,6 +39,7 @@ public class FlipCamera : MonoBehaviour
         else
         {
             camPlayer1.enabled = true;
+            camCurrent = camPlayer1;
             //lightPlayer1.enabled = true;
             //lightSecondaryPlayer1.enabled = true;
             groundPlayer1.SetActive(true);
@@ -46,4 +50,18 @@ public class FlipCamera : MonoBehaviour
             StaticClass.IsFlippedCamera = true;
         }
      }
+    public void Update()
+    {
+        if (zooming) return;
+        StartCoroutine(ZoomCamera());
+    }
+    private IEnumerator ZoomCamera()
+    {
+        zooming = true;
+        while (camCurrent.m_Lens.OrthographicSize > lensSize)
+        {
+            yield return new WaitForSeconds(0.01f);
+            camCurrent.m_Lens.OrthographicSize -= 0.15f;
+        }
+    }
 }
