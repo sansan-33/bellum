@@ -15,6 +15,7 @@ public class GameStartDisplay : NetworkBehaviour
     [SerializeField] private GameObject maskRed = null;
     [SerializeField] private GameObject vsFrame = null;
     [SerializeField] private GameObject vsText = null;
+    [SerializeField] public CharacterArt Arts;
 
 
     [SyncVar(hook = "StartTiming")]
@@ -39,6 +40,7 @@ public class GameStartDisplay : NetworkBehaviour
     {
         if (playerVSParent == null || IS_PLAYER_LOADED) { yield break; }
         playerVSParent.SetActive(true);
+        LoadPlayerData();
         StartCoroutine(LerpPosition(maskBlue.transform,400f,0f, .5f));
         yield return LerpPosition(maskRed.transform, -400f, 0f, .5f);
         StartCoroutine(LerpPosition(vsFrame.transform, 2000f, 2000f, .5f));
@@ -79,6 +81,17 @@ public class GameStartDisplay : NetworkBehaviour
             yield return null;
         }
         transform.rotation = endValue;
+    }
+    void LoadPlayerData()
+    {
+        maskBlue.GetComponent<PlayerVS>().charIcon.sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.KING].ToString()].image;
+        maskBlue.GetComponent<PlayerVS>().PlayerName.text = "";
+        maskBlue.GetComponent<PlayerVS>().TotalPower.text = "";
+
+        maskRed.GetComponent<PlayerVS>().charIcon.sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.KING].ToString()].image;
+        maskRed.GetComponent<PlayerVS>().PlayerName.text = "";
+        maskRed.GetComponent<PlayerVS>().TotalPower.text = "";
+
     }
     private void GameStartCountDown()
     {
