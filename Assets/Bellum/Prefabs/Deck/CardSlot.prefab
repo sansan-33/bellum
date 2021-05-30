@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4869430473639482189}
-  - component: {fileID: 6288707311666510435}
   - component: {fileID: 6641416256118448248}
   m_Layer: 5
   m_Name: CardSlot
@@ -37,14 +36,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &6288707311666510435
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2351456440052362051}
-  m_CullTransparentMesh: 0
 --- !u!114 &6641416256118448248
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class EnemyCardDealer : MonoBehaviour
         //Debug.Log($"OnUpdateElexier{elexier}");
         this.elexier = elexier;
         if (nextCard == null) { return; }
-        if(nextCard.GetUnitElexier() < this.elexier)
+        if(nextCard.GetUnitElexier() <= this.elexier)
         {
             /*RectTransform rect = nextCard.GetComponent<RectTransform>();
             float x = rect.localScale.x;
@@ -36,7 +36,7 @@ public class EnemyCardDealer : MonoBehaviour
             float z = rect.localScale.z;
             rect.localScale = new Vector3(x /= (float)1.5, y /= (float)1.5, z /= (float)1.5);*/
             nextCard.OnPointerDown();
-            StartCoroutine(SelectNextCard(1));
+            StartCoroutine(SelectNextCard(3));
         }
         
     }
