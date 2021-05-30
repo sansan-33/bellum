@@ -35,14 +35,21 @@ public class EnemyCardDealer : MonoBehaviour
             float y = rect.localScale.y;
             float z = rect.localScale.z;
             rect.localScale = new Vector3(x /= (float)1.5, y /= (float)1.5, z /= (float)1.5);*/
-            nextCard.OnPointerDown();
+
+            StartCoroutine(OnPointerDownNextCard());
             StartCoroutine(SelectNextCard(3));
         }
         
     }
+    private IEnumerator OnPointerDownNextCard()
+    {
+        yield return new WaitForSeconds(1);
+        nextCard.OnPointerDown();
+    }
     private IEnumerator SelectNextCard(int waitSec)
     {
         yield return new WaitForSeconds(waitSec);
+
        // Debug.Log("SelectNextCard");
         nextCard = cards[Random.Range(0, cards.Count - 1)];
         RectTransform rect = nextCard.GetComponent<RectTransform>();
