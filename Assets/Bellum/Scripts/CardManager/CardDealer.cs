@@ -66,7 +66,7 @@ public class CardDealer : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.5f);
         }
         cardDeckUsed.Clear();
         string cardkey;
@@ -99,12 +99,16 @@ public class CardDealer : MonoBehaviour
         CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
         //CardFace randomCard = cardDeck[3];
         cardDeckUsed.Add(randomCard);
+        //Debug.Log($"{player.name} is enemy = {player.isEnemy}");
         if (player.isEnemy == true)
         {
             //Debug.Log("enemy card");
             lastCard.enemyCard = true;
         }
+        //Debug.Log($"{lastCard.enemyCard}");
+        //Debug.Log("Set card before");
         lastCard.SetCard(randomCard);
+        //Debug.Log("Set card after");
         lastCard.cardStar.text = "1";
         lastCard.cardSpawnButton.GetComponentInChildren<Text>().text = randomCard.numbers.ToString();
         int cardnumber = (int)randomCard.numbers;

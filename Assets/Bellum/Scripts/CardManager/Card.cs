@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
+    
     public CardFace cardFace;
     public int cardPlayerHandIndex = 0;
     [SerializeField] public TMP_Text eleixerText;
@@ -39,6 +40,7 @@ public class Card : MonoBehaviour
     public void Start()
     {
         if (NetworkClient.connection.identity == null) { return; }
+        //Debug.Log("Start");
         RectTransform rect = GetComponent<RectTransform>();
         originalx = rect.localScale.x;
         originaly = rect.localScale.y;
@@ -55,17 +57,23 @@ public class Card : MonoBehaviour
     }
     IEnumerator HandleScale()
     {
-        yield return new WaitForSeconds(0.1f);
+       /* Debug.Log("handle scale");
+        if (GetComponentInParent<Player>())
+        {
+          //  Debug.Log($"HandleScale {enemyCard} player -->{GetComponentInParent<Player>().name}");
+        }*/
+        
         if(enemyCard == true)
         {
-            //Debug.Log($"Getting scale");
+           //Debug.Log($"Getting scale");
             RectTransform rect = GetComponent<RectTransform>();
             float x = rect.localScale.x;
             float y = rect.localScale.y;
             float z = rect.localScale.z;
-            rect.localScale = new Vector3(x *= (float)0.5, y *= (float)0.5, z *= (float)0.5);
+            rect.localScale = new Vector3( (float)0.5,  (float)0.5,(float)0.5);
             GetComponentInChildren<Button>().enabled = false;
         }
+        yield return null;
         //enemyCard = false;
     }
     IEnumerator SetLocalFactory()
@@ -84,6 +92,7 @@ public class Card : MonoBehaviour
     }
     public void SetCard(CardFace _cardFace)
     {
+       // Debug.Log("calling set card");
         cardFace = new CardFace(_cardFace.suit, _cardFace.numbers, _cardFace.star, _cardFace.stats);
         StartCoroutine(HandleScale());
     }
@@ -114,6 +123,7 @@ public class Card : MonoBehaviour
             dealManagers.totalEleixers.eleixer -= uniteleixer;
         }
         GetComponent<RectTransform>().localScale = new Vector3(originalx, originaly, originalz);
+        //Debug.Log(GetComponent<RectTransform>().localScale);
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
         dealManagers.Hit(enemyCard);
         enemyCard = false;
