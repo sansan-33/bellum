@@ -1711,7 +1711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGlobal: 1
-  priority: 0
+  priority: 1
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 96eb7089e60cc1f448e9730712223be1, type: 2}
@@ -43056,7 +43056,7 @@ Camera:
   field of view: 50
   orthographic: 1
   orthographic size: 40
-  m_Depth: 0
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
