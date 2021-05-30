@@ -43205,7 +43205,7 @@ MonoBehaviour:
   groundPlayer1: {fileID: 1447520726}
   lightPlayer0: {fileID: 1651308106}
   lightPlayer1: {fileID: 810888061}
-  lightSecondaryPlayer0: {fileID: 0}
+  lightSecondaryPlayer0: {fileID: 1651308106}
   lightSecondaryPlayer1: {fileID: 2010540869}
 --- !u!4 &1690794287
 Transform:
