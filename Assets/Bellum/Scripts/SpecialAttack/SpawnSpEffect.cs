@@ -10,7 +10,8 @@ public class SpawnSpEffect : NetworkBehaviour
     private List<GameObject> effectLists2 = new List<GameObject>();
     private List<GameObject> effectLists3 = new List<GameObject>();
     // Start is called before the first frame update
-    [Command(ignoreAuthority = true)]
+    //[Command(ignoreAuthority = true)]
+    [Command(requiresAuthority = false)]
     public void CmdSpawnEffect(int effectNum, Transform transform)
     {
         //Debug.Log($"{effectNum},{transform} at cmd");

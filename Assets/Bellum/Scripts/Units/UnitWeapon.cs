@@ -186,7 +186,8 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     {
         cmdCMVirtual();
     }
-    [Command(ignoreAuthority = true)]
+    //[Command(ignoreAuthority = true)]
+    [Command(requiresAuthority = false)]
     private void cmdCMVirtual()
     {
         if (GameObject.Find("camVirtual") == null) {

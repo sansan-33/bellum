@@ -72,7 +72,9 @@ public class UnitPowerUp : NetworkBehaviour
     /// <summary>
     /// Do not pass 0 in repeatAttackDelay
     /// </summary>
-    [Command(ignoreAuthority = true)]
+    //[Command(ignoreAuthority = true)]
+    [Command(requiresAuthority = false)]
+
     public void CmdSpecialEffect(double repeatAttackDelay, int speed)
     {
         ServerSpecialEffect(repeatAttackDelay, speed);
@@ -116,8 +118,8 @@ public class UnitPowerUp : NetworkBehaviour
         else
             CmdPowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
     }
-    //[Command(requiresAuthority = false)]
-    [Command(ignoreAuthority = true)]
+    //[Command(ignoreAuthority = true)]
+    [Command(requiresAuthority = false)]
     public void CmdPowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
     {
         //Debug.Log($"CmdPowerUp Speed ==  > {speed}");

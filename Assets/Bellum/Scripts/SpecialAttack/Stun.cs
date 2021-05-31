@@ -121,7 +121,8 @@ public class Stun : NetworkBehaviour, ISpecialAttack
     {
         CmdCMVirtual();
     }
-    [Command(ignoreAuthority = true)]
+    //[Command(ignoreAuthority = true)]
+    [Command(requiresAuthority = false)]
     public void CmdCMVirtual()
     {
         //Debug.Log("CmdCMVirtual");
