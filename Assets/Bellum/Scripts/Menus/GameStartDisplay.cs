@@ -3,6 +3,7 @@ using System.Collections;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameStartDisplay : NetworkBehaviour
 {
@@ -90,11 +91,10 @@ public class GameStartDisplay : NetworkBehaviour
     }
     IEnumerator LoadPlayerData()
     {
-        //maskBlue.GetComponent<PlayerVS>().charIcon.sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.KING].ToString()].image;
         maskBlue.GetComponent<PlayerVS>().PlayerName.text = StaticClass.Username;
         maskBlue.GetComponent<PlayerVS>().TotalPower.text = StaticClass.TotalPower;
-        maskBlue.GetComponent<PlayerVS>().charIcon.GetComponent<SpriteRenderer>().gameObject.SetActive(true);
-        maskBlue.GetComponent<PlayerVS>().charIcon.GetComponent<SpriteRenderer>().sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.KING].ToString()].image;
+        maskBlue.GetComponent<PlayerVS>().charIcon.GetComponent<Image>().sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.KING].ToString()].image;
+        maskBlue.GetComponent<PlayerVS>().charIcon.GetComponent<Image>().enabled = true;
         maskBlue.SetActive(true);
         if (StaticClass.Chapter == null) {
             StaticClass.Chapter = "1";
@@ -108,7 +108,8 @@ public class GameStartDisplay : NetworkBehaviour
         for (int i = 0; i < apiManager.data.Count; i++) {
             TotalPower += Int32.Parse(apiManager.data[i]["power"]);
         }
-        maskRed.GetComponent<PlayerVS>().charIcon.sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[race][UnitMeta.UnitType.KING].ToString()].image;
+        maskRed.GetComponent<PlayerVS>().charIcon.GetComponent<Image>().sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[race][UnitMeta.UnitType.KING].ToString()].image;
+        maskRed.GetComponent<PlayerVS>().charIcon.GetComponent<Image>().enabled = true;
         maskRed.GetComponent<PlayerVS>().PlayerName.text = race.ToString() + StaticClass.Mission;
         maskRed.GetComponent<PlayerVS>().TotalPower.text = TotalPower.ToString();
         maskRed.SetActive(true);
