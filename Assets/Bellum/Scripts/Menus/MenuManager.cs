@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private FirebaseManager firebaseManager = null;
-    
+    [SerializeField] public GameObject unitPreviewParent;
+
     public void GoToMainMenu()
     {
         SceneManager.LoadScene("Scene_Main_Menu");
@@ -39,6 +40,7 @@ public class MenuManager : MonoBehaviour
     }
     public void GoToLogin()
     {
+        if(unitPreviewParent != null ) unitPreviewParent.SetActive(false);
         firebaseManager.ShowLoginProfile();
     }
     public void GoToShop()
