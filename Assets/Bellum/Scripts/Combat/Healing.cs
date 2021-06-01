@@ -46,10 +46,10 @@ public class Healing : NetworkBehaviour
             return;
         }
         */
-
-        GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + player.GetPlayerID());
-        GameObject king = GameObject.FindGameObjectWithTag("King" + player.GetPlayerID());
-        GameObject[] provokeTanks = GameObject.FindGameObjectsWithTag("Provoke" + player.GetPlayerID());
+        string playerid = tag.Substring(tag.Length - 1);
+        GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + playerid);
+        GameObject king = GameObject.FindGameObjectWithTag("King" + playerid);
+        GameObject[] provokeTanks = GameObject.FindGameObjectsWithTag("Provoke" + playerid);
         armies = new List<GameObject>();
         if(units != null && units.Length > 0)
         armies = units.ToList();

@@ -25,10 +25,11 @@ public class SlidingNumber : MonoBehaviour
     IEnumerator slideNumber()
     {
         while (currentNumber != desiredNumber) {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
 
             if (initialNumber < desiredNumber) {
-                currentNumber += (animationTime * Time.deltaTime) * (desiredNumber - initialNumber);
+                currentNumber += (animationTime * Time.deltaTime * 0.1f) * (desiredNumber - initialNumber);
+                //currentNumber += 1;
                 if (currentNumber >= desiredNumber)
                     currentNumber = desiredNumber;
             }
