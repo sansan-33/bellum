@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using Mirror;
-using SimpleJSON;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class GameStartDisplay : NetworkBehaviour
 {
@@ -94,11 +90,13 @@ public class GameStartDisplay : NetworkBehaviour
     }
     IEnumerator LoadPlayerData()
     {
-        maskBlue.GetComponent<PlayerVS>().charIcon.sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.KING].ToString()].image;
+        //maskBlue.GetComponent<PlayerVS>().charIcon.sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.KING].ToString()].image;
         maskBlue.GetComponent<PlayerVS>().PlayerName.text = StaticClass.Username;
         maskBlue.GetComponent<PlayerVS>().TotalPower.text = StaticClass.TotalPower;
-
-        if(StaticClass.Chapter == null) {
+        maskBlue.GetComponent<PlayerVS>().charIcon.GetComponent<SpriteRenderer>().gameObject.SetActive(true);
+        maskBlue.GetComponent<PlayerVS>().charIcon.GetComponent<SpriteRenderer>().sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.KING].ToString()].image;
+        maskBlue.SetActive(true);
+        if (StaticClass.Chapter == null) {
             StaticClass.Chapter = "1";
             StaticClass.Mission = "1";
         }
@@ -113,6 +111,8 @@ public class GameStartDisplay : NetworkBehaviour
         maskRed.GetComponent<PlayerVS>().charIcon.sprite = Arts.CharacterArtDictionary[UnitMeta.UnitRaceTypeKey[race][UnitMeta.UnitType.KING].ToString()].image;
         maskRed.GetComponent<PlayerVS>().PlayerName.text = race.ToString() + StaticClass.Mission;
         maskRed.GetComponent<PlayerVS>().TotalPower.text = TotalPower.ToString();
+        maskRed.SetActive(true);
+
 
     }
     private void GameStartCountDown()
