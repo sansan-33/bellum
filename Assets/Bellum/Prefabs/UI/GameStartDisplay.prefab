@@ -917,11 +917,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7655618541220493805}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4c086ae3052a4ce6bc11947010d6bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: b46548de88ed0f1429cf1d143885f38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   numberText: {fileID: 7655618542753851934}
-  animationTime: 1.5
+  animationTime: 10
 --- !u!1 &7655618541374238277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,7 +2029,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lv.3
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
   m_sharedMaterial: {fileID: 2830636965969884548, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
@@ -2350,11 +2350,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7655618542967443652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4c086ae3052a4ce6bc11947010d6bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: b46548de88ed0f1429cf1d143885f38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   numberText: {fileID: 7655618542998104462}
-  animationTime: 1.5
+  animationTime: 10
 --- !u!1 &7655618542998104448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,7 +2420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lv.3
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
   m_sharedMaterial: {fileID: 2830636965969884548, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
