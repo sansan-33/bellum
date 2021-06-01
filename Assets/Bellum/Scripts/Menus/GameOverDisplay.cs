@@ -72,5 +72,6 @@ public class GameOverDisplay : MonoBehaviour
         if (gameOverDisplayParent == null) { gameOverDisplayParent = GetComponentInChildren<Canvas>(); }
         winnerNameText.text = $"Someone give up";
         gameOverDisplayParent.enabled = true;
+        cardDisplay.enabled = false;
     }
 }
