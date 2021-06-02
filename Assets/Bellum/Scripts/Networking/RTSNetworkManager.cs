@@ -90,7 +90,18 @@ public class RTSNetworkManager : NetworkManager
         jsonResult = JSON.Parse(rawJson);
         userTeamDict.Add(userid + "_" + playerid, jsonResult);
         //Debug.Log($"jsonResult {webReq.url } {jsonResult}");
-
+    }
+    public IEnumerator LoadTotalPower(string userid)
+    {
+        int TotalPower = 0;
+        APIManager apiManager = new APIManager();
+        yield return apiManager.GetTotalPower(userid, ChapterMissionMeta.ChapterMissionTeam[StaticClass.Chapter + "-" + StaticClass.Mission]);
+        for (int i = 0; i < apiManager.data.Count; i++)
+        {
+            TotalPower += Int32.Parse(apiManager.data["GetTotalPower"][i]["power"]);
+        }
+        yield return null;
+        //return TotalPower.ToString();
     }
     public void StartGame()
     {
@@ -124,6 +135,9 @@ public class RTSNetworkManager : NetworkManager
         player.SetEnemyID(player.GetPlayerID() == 0 ? 1 : 0);
         player.SetTeamEnemyColor(teamsColor[player.GetEnemyID()]);
         player.SetPartyOwner(Players.Count == 1);
+        //yield return LoadTotalPower(player.GetUserID());
+        player.SetTotalPower("");
+
     }
 
     public override void OnServerSceneChanged(string sceneName)

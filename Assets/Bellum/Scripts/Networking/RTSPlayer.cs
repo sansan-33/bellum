@@ -29,6 +29,12 @@ public class RTSPlayer : NetworkBehaviour
     private string userid = "1";
     [SyncVar]
     private string race = "HUMAN";
+    [SyncVar]
+    private string totalPower = "???";
+    [SyncVar]
+    private string enemyRace = "HUMAN";
+    [SyncVar]
+    private string enemyTotalPower = "???";
 
     public event Action<int> ClientOnResourcesUpdated;
 
@@ -55,6 +61,18 @@ public class RTSPlayer : NetworkBehaviour
     public string GetRace()
     {
         return race;
+    }
+    public string GetEnemyRace()
+    {
+        return enemyRace;
+    }
+    public string GetTotalPower()
+    {
+        return totalPower;
+    }
+    public string GetEmenyTotalPower()
+    {
+        return enemyTotalPower;
     }
     public string GetDisplayName()
     {
@@ -156,6 +174,21 @@ public class RTSPlayer : NetworkBehaviour
     public void SetRace(string race)
     {
         this.race = race;
+    }
+    [Server]
+    public void SetEnemyRace(string race)
+    {
+        this.enemyRace = race;
+    }
+    [Server]
+    public void SetTotalPower(string power)
+    {
+        this.totalPower = power;
+    }
+    [Server]
+    public void SetEnmeyTotalPower(string power)
+    {
+        this.enemyTotalPower = power;
     }
     [Server]
     public void SetDisplayName(string displayName)
