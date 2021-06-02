@@ -30084,6 +30084,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2616846832148046254, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
+      propertyPath: clientMaxMessageSize
+      value: 16384
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616846832148046254, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
+      propertyPath: serverMaxMessageSize
+      value: 16384
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
+      propertyPath: networkAddress
+      value: leonardwong.amcrestddns.com
+      objectReference: {fileID: 0}
     - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
       propertyPath: spawnPrefabs.Array.size
       value: 49
