@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Mirror;
 using TMPro;
 using UnityEngine;
@@ -91,6 +92,13 @@ public class GameStartDisplay : NetworkBehaviour
     }
     IEnumerator LoadPlayerData()
     {
+
+        List<RTSPlayer> players = ((RTSNetworkManager)NetworkManager.singleton).Players;
+        for (int i = 0; i < players.Count; i++)
+        {
+            Debug.Log($"LoadPlayerData {players[i].GetUserID()}");
+        }
+
         maskBlue.GetComponent<PlayerVS>().PlayerName.text = StaticClass.Username;
         maskBlue.GetComponent<SlidingNumber>().SetNumber(Int32.Parse(StaticClass.TotalPower));
         //maskBlue.GetComponent<PlayerVS>().TotalPower.text = StaticClass.TotalPower;
