@@ -228,6 +228,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         playerGround.resetLayer();
         yield return GetComponent<Card>().HandleDropUnit(spawnPos);
         dealManagers.totalEleixers.eleixer -= uniteleixer;
+        Debug.Log($"drag card{GetComponent<Card>().enemyCard}");
         // Special Checking for Wall Button Card not under Card Slot (player)
         Player playerDeck = GetComponentInParent<Player>();
         if (playerDeck != null)

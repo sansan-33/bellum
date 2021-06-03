@@ -366,7 +366,8 @@ public class EnemyAI : MonoBehaviour
                 localFactory.CmdDropUnit(RTSplayer.GetEnemyID(), unitPos, StaticClass.enemyRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType)type).ToString(), unitsize, cardFace.stats.cardLevel,
                     cardFace.stats.health * (int)statUpFactor, cardFace.stats.attack * (int)statUpFactor, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense * (int)statUpFactor, cardFace.stats.special, cardFace.stats.specialkey,
                     cardFace.stats.passivekey, (int)cardFace.star + 1, RTSplayer.GetTeamColor(), Quaternion.identity);
-            enemyPlayer.moveCard(card.cardPlayerHandIndex);
+        card.enemyCard = false;
+        enemyPlayer.moveCard(card.cardPlayerHandIndex);
             cardDealer.Hit(true);
             
        // }

@@ -124,11 +124,7 @@ public class CardDealer : MonoBehaviour
         lastCard.stars.transform.GetChild(0).Find("Active").gameObject.SetActive(true);
         lastCard.skillIcon.gameObject.SetActive(false);
         Debug.Log($"{player.name} is enemy = {player.isEnemy}");
-        if (player.isEnemy == true)
-        {
-            Debug.Log("enemy card");
-            lastCard.enemyCard = true;
-        }
+        lastCard.enemyCard = player.isEnemy ? true : false;
         Debug.Log($"{lastCard.enemyCard}");
         Debug.Log("Set card before");
         lastCard.SetCard(randomCard);
