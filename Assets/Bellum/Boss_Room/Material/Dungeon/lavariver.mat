@@ -125,7 +125,7 @@ Material:
     - Color_5CE90B7B: {r: 1, g: 1, b: 1, a: 0}
     - Color_8AF701E9: {r: 1, g: 1, b: 1, a: 0}
     - Color_C33180AA: {r: 1, g: 1, b: 1, a: 0}
-    - _BaseColor: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 0.84967643, b: 0, a: 1}
     - _EmissionColor: {r: 3.9533494, g: 1.386777, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
