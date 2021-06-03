@@ -5320,7 +5320,7 @@ PrefabInstance:
     - target: {fileID: 137659035099858278, guid: 7743970d390edcf4c93b92b244e1d7cd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 32e56706bc095814b9fff2654fd5336b, type: 2}
+      objectReference: {fileID: 2100000, guid: 19686552e21d346b893573cc260b3459, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7743970d390edcf4c93b92b244e1d7cd, type: 3}
 --- !u!4 &166835669 stripped
@@ -18231,7 +18231,7 @@ PrefabInstance:
     - target: {fileID: 137659035099858278, guid: 7743970d390edcf4c93b92b244e1d7cd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 32e56706bc095814b9fff2654fd5336b, type: 2}
+      objectReference: {fileID: 2100000, guid: 19686552e21d346b893573cc260b3459, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7743970d390edcf4c93b92b244e1d7cd, type: 3}
 --- !u!4 &482815784 stripped
@@ -31952,7 +31952,7 @@ PrefabInstance:
     - target: {fileID: 137659035099858278, guid: 7743970d390edcf4c93b92b244e1d7cd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 32e56706bc095814b9fff2654fd5336b, type: 2}
+      objectReference: {fileID: 2100000, guid: 19686552e21d346b893573cc260b3459, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7743970d390edcf4c93b92b244e1d7cd, type: 3}
 --- !u!4 &860865191 stripped
@@ -33636,7 +33636,7 @@ PrefabInstance:
     - target: {fileID: 137659035099858278, guid: 7743970d390edcf4c93b92b244e1d7cd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 32e56706bc095814b9fff2654fd5336b, type: 2}
+      objectReference: {fileID: 2100000, guid: 19686552e21d346b893573cc260b3459, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7743970d390edcf4c93b92b244e1d7cd, type: 3}
 --- !u!4 &906382711 stripped
@@ -49594,6 +49594,7 @@ MonoBehaviour:
   unitTypesList2: 0100000002000000
   unitTypesList3: 03000000
   attackType: 3
+  statUpFactor: 0
   SpList1: 0300000001000000
   SpList2: 000000000200000004000000
 --- !u!1 &1267594954
