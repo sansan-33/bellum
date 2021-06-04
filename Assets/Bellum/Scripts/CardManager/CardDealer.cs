@@ -106,8 +106,8 @@ public class CardDealer : MonoBehaviour
     {
             //Debug.Log("DealingCard");
             Card lastCard = cardObjectPool.GetObject().GetComponent<Card>();
-            CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
-            //CardFace randomCard = cardDeck[3];
+            //CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
+            CardFace randomCard = cardDeck[3];
             cardDeckUsed.Add(randomCard);
 
             lastCard.cardStar.text = "1";

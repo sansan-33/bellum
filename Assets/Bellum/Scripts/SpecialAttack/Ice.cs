@@ -56,7 +56,7 @@ public class Ice : MonoBehaviour, ISpecialAttack
     
     public void OnPointerDown()
     {
-        
+        return;
         enemyList.Clear();
         UnitRepeatAttackDelaykeys.Clear();
         UnitSpeedkeys.Clear();

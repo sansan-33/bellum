@@ -45,6 +45,7 @@ public class GoldenSlash : MonoBehaviour, ISpecialAttack
 
     public void OnPointerDown()
     {
+        
         //Debug.Log($"GoldenSlash FindAttackTargetInDistance");
         // if (attackPoint == null) { return; }
         if (!SpButtonManager.unitBtn.TryGetValue(GetComponentInParent<Unit>().unitKey, out Button btn))
