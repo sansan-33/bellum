@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
         playerHand[0].Add(card);
       if(isEnemy == true)
         {
-            enemyCardDealer.SetCards(card);
+            //enemyCardDealer.SetCards(card);
         }
         card.transform.SetParent(cardSlotlist[playerHand[0].Count-1].transform);
         yield return MoveCardTo(card.transform, cardSlotlist[playerHand[0].Count - 1].transform.position, card);
