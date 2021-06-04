@@ -29,8 +29,13 @@ public class Shield : NetworkBehaviour
     {
         Debug.Log($"gameobject {this.gameObject.name} {this.shieldHealth} / {shieldHealth}");
         this.shieldHealth = shieldHealth;
+    }
+    [Command]
+    public void CmdSetShield(int shieldHealth)
+    {
+        Debug.Log($"gameobject {this.gameObject.name} {this.shieldHealth} / {shieldHealth}");
+        this.shieldHealth = shieldHealth;
         ServerSetShield();
-        // NetworkServer.Spawn(ShieldEffect, connectionToClient);//.transform.localScale = new Vector3(5, 5, 5);
     }
     [Server]
     public void ServerSetShield()
@@ -61,7 +66,6 @@ public class Shield : NetworkBehaviour
             //  Debug.Log($"destroy {ShieldEffect}");
             //Destroy(shield);
             DestroyImmediate(shield, true);
-
         }
     }
     // Update is called once per frame
