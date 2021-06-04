@@ -65,7 +65,7 @@ public class Card : MonoBehaviour
         
         if(enemyCard == true)
         {
-           Debug.Log($"Getting scale");
+           //Debug.Log($"Getting scale");
             RectTransform rect = GetComponent<RectTransform>();
             float x = rect.localScale.x;
             float y = rect.localScale.y;
@@ -145,7 +145,7 @@ public class Card : MonoBehaviour
     }
     public void ResetScale()
     {
-        Debug.Log("Reset Scale");
+       
         GetComponent<RectTransform>().localScale = new Vector3(originalx, originaly, originalz);
     }
     public void DropUnit(Vector3 spawnPoint)
