@@ -369,7 +369,7 @@ public class EnemyAI : MonoBehaviour
         cardDealer.Hit(true);
             
        // }
-         SpecialAttack(type);
+        //SpecialAttack(type);
         yield return null;
     }
     private void SpecialAttack(UnitMeta.UnitType type)
