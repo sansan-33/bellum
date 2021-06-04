@@ -61,7 +61,7 @@ public class DefendSP : MonoBehaviour, ISpecialAttack
                 {
                     //Debug.Log($"Spawn Shield {shield.name}");
                     // Set shield health
-                    shield.GetComponent<Shield>().CmdSetShieldHealth(shieldHealths);
+                    shield.GetComponent<Shield>().CmdSetShield(shieldHealths);
                     
                 }
             }
@@ -76,7 +76,7 @@ public class DefendSP : MonoBehaviour, ISpecialAttack
                 {
                     // Set shield health
                     //Debug.Log($"shielding {shield.name}");
-                    shield.GetComponent<Shield>().CmdSetShieldHealth(shieldHealths);
+                    shield.GetComponent<Shield>().CmdSetShield(shieldHealths);
                 }
             }
 
