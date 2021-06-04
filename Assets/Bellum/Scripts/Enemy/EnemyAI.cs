@@ -294,7 +294,7 @@ public class EnemyAI : MonoBehaviour
         CardFace cardFace = card.cardFace;
         if (localFactory == null) { yield return SetLocalFactory(); }
         if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
-        Vector3 unitPos;
+        Vector3 unitPos = new Vector3(0,0,0);
         List<GameObject> LeftSideUnits = new List<GameObject>();
         List<GameObject> RightSideUnits = new List<GameObject>();
         GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + 0);
@@ -328,10 +328,14 @@ public class EnemyAI : MonoBehaviour
                     if (unit.transform.position.z > halfLine.position.z)
                     {
                         unitPos = unit.transform.position;
+                        break;
                     }
                 }
-                Debug.Log("Using startRightPos");
-                unitPos = startRightPos;
+                if (unitPos == new Vector3(0, 0, 0))
+                {
+                    Debug.Log("Using startRightPos");
+                    unitPos = startRightPos;
+                }
                 break;
             case Position.left:
                 foreach (GameObject unit in LeftSideUnits)
@@ -340,10 +344,14 @@ public class EnemyAI : MonoBehaviour
                     if (unit.transform.position.z > halfLine.position.z)
                     {
                         unitPos = unit.transform.position;
+                        break;
                     }
                 }
-                Debug.Log("Using startLeftPos");
-                unitPos = startLeftPos;
+                if (unitPos == new Vector3(0, 0, 0))
+                {
+                    Debug.Log("Using startLeftPos");
+                    unitPos = startLeftPos;
+                }
                 break;
             default:
                 Debug.Log("Using startCentrePos");
