@@ -25,10 +25,14 @@ public class RTSNetworkManager : NetworkManager
     [SerializeField] private GameObject kingPrefab = null;
     [SerializeField] private GameObject undeadHeroPrefab = null;
     [SerializeField] private GameObject undeadKingPrefab = null;
+    [SerializeField] private GameObject undeadQueenPrefab = null;
     [SerializeField] private GameObject archerPrefab = null;
     [SerializeField] private GameObject odinPrefab = null;
     [SerializeField] private GameObject thorPrefab = null;
     [SerializeField] private GameObject lokiPrefab = null;
+    [SerializeField] private GameObject elfTreeantPrefab = null;
+    [SerializeField] private GameObject elfDemonHunterPrefab = null;
+    [SerializeField] private GameObject elfQueenPrefab = null;
 
     [SerializeField] private GameOverHandler gameOverHandlerPrefab = null;
     [SerializeField] private GameBoardHandler gameBoardHandlerPrefab = null;
@@ -211,9 +215,14 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(UnitMeta.UnitKey.ARCHER, archerPrefab);
         unitDict.Add(UnitMeta.UnitKey.RIDER, riderPrefab);
         unitDict.Add(UnitMeta.UnitKey.UNDEADKING, undeadKingPrefab);
+        unitDict.Add(UnitMeta.UnitKey.UNDEADQUEEN, undeadQueenPrefab);
         unitDict.Add(UnitMeta.UnitKey.ODIN, odinPrefab);
         unitDict.Add(UnitMeta.UnitKey.THOR, thorPrefab);
         unitDict.Add(UnitMeta.UnitKey.LOKI, lokiPrefab);
+        unitDict.Add(UnitMeta.UnitKey.ELFQUEEN, elfQueenPrefab);
+        unitDict.Add(UnitMeta.UnitKey.ELFDEMONHUNTER, elfDemonHunterPrefab);
+        unitDict.Add(UnitMeta.UnitKey.ELFTREEANT, elfTreeantPrefab);
+
     }
 
     #endregion
