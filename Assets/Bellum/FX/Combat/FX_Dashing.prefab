@@ -4815,6 +4815,7 @@ GameObject:
   - component: {fileID: 4886237638803385113}
   - component: {fileID: 4886237638803385190}
   - component: {fileID: 4886237638803385191}
+  - component: {fileID: 6747206216835130079}
   m_Layer: 0
   m_Name: FX_Dashing
   m_TagString: Untagged
@@ -9609,6 +9610,23 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &6747206216835130079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886237638803385188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &6289418197369148797
 GameObject:
   m_ObjectHideFlags: 0

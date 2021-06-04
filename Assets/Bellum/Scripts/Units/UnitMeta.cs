@@ -264,7 +264,7 @@ public class UnitMeta
     {
         { UnitType.ARCHER, UnitSkill.NOTHING } ,
         { UnitType.MAGIC, UnitSkill.TORNADO} ,
-        { UnitType.CAVALRY, UnitSkill.CHARGE } ,
+        { UnitType.CAVALRY, UnitSkill.DASH } ,
         { UnitType.FOOTMAN, UnitSkill.SNEAK },
         { UnitType.TANK, UnitSkill.SHIELD }
     };

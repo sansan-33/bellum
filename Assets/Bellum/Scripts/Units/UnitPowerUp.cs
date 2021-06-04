@@ -150,7 +150,7 @@ public class UnitPowerUp : NetworkBehaviour
         gameObject.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
         GetComponent<RVOController>().layer = tag.Contains("0") ? RVOLayer.Layer3 : RVOLayer.Layer2;
         GetComponent<RVOController>().collidesWith = tag.Contains("0") ? RVOLayer.Layer2 : RVOLayer.Layer3;
-        HandleUnitSKill(star, attack, repeatAttackDelay);
+        HandleUnitSKill(star, attack, repeatAttackDelay, speed);
         if ( StaticClass.IsFlippedCamera ){
             gameObject.GetComponent<HealthDisplay>().flipHealthBar();
         }
@@ -161,7 +161,7 @@ public class UnitPowerUp : NetworkBehaviour
         //Debug.Log($"{gameObject.tag} : {gameObject.name} RpcPowerUp cardLevel {cardLevel} health {health} speed {speed}");
         HandlePowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
     }
-    private void HandleUnitSKill(int star, int attack, float repeatAttackDelay)
+    private void HandleUnitSKill(int star, int attack, float repeatAttackDelay, float speed)
     {
         if (gameObject.GetComponent<Unit>().unitType == UnitMeta.UnitType.KING || gameObject.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO) { return; } 
         UnitMeta.UnitSkill skill = UnitMeta.UnitStarSkill[star][gameObject.GetComponent<Unit>().unitType];
@@ -189,6 +189,9 @@ public class UnitPowerUp : NetworkBehaviour
             case UnitMeta.UnitSkill.CHARGE:
                 Charging(attack, repeatAttackDelay);
                 break;
+            case UnitMeta.UnitSkill.DASH:
+                Dashing(speed);
+                break;
             case UnitMeta.UnitSkill.SNEAK:
                 Sneak(attack, repeatAttackDelay);
                 break;
@@ -203,7 +206,7 @@ public class UnitPowerUp : NetworkBehaviour
     }
     private void Shield()
     {
-        ShieldAura shield = GetComponent<ShieldAura>();
+        ShieldAura shield = GetComponentInChildren<ShieldAura>();
         if (shield == null) { return; }
         shield.aura();
         
@@ -218,6 +221,12 @@ public class UnitPowerUp : NetworkBehaviour
     {
         if(TryGetComponent(out Healing healing))
         GetComponent<Healing>().ServerEnableHealing(true);
+    }
+    private void Dashing(float speed)
+    {
+        SetSpeed(speed * 2, false);
+        GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
+        NetworkServer.Spawn(specialEffect, connectionToClient);
     }
     private void Tornado()
     {
@@ -253,8 +262,9 @@ public class UnitPowerUp : NetworkBehaviour
     {
         gameObject.GetComponent<IAttack>().ScaleDamageDeal(attack, repeatAttackDelay, 3);
         Debug.Log($"Charging attack {attack} repeatAttackDelay {repeatAttackDelay}");
-        GameObject fxEffect = Instantiate(fxEffectPrefab, GetComponent<IAttack>().AttackPoint());
-        NetworkServer.Spawn(fxEffect, connectionToClient);
+        fxEffect();
+        //GameObject fxEffect = Instantiate(fxEffectPrefab, GetComponent<IAttack>().AttackPoint());
+        //NetworkServer.Spawn(fxEffect, connectionToClient);
     }
     private void fxEffect()
     {
