@@ -37,10 +37,10 @@ public class CardDealer : MonoBehaviour
     [SerializeField] Card buttonWall;
     [SerializeField] public TotalEleixier totalEleixers;
     [SerializeField] public Shader greyScaleShader;
-
+    [SerializeField] private bool spawnEnemyCard = false;
     public static event Action UserCardLoaded;
     public SimpleObjectPool cardObjectPool;
-
+    public static event Action FinishDealEnemyCard;
     void Start()
     {
         TacticalBehavior.UnitTagUpdated += StartShuffleDeck;
@@ -54,7 +54,10 @@ public class CardDealer : MonoBehaviour
     private void StartShuffleDeck()
     {
         StartCoroutine(ShuffleDeck(false));
-        StartCoroutine(ShuffleDeck(true));
+        if(spawnEnemyCard == true)
+        {
+            StartCoroutine(ShuffleDeck(true));
+        }
        // StartCoroutine(DealCards(3, 0f, 0.1f, players[1]));
     }
     IEnumerator ShuffleDeck(bool enemySpawn)
@@ -83,7 +86,11 @@ public class CardDealer : MonoBehaviour
         }
         buttonWall.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, cardstats[ UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString() ]));
         int index = enemySpawn ? 1 : 0;
-        yield return DealCards(3, 0f, 0.1f, players[index]); 
+        yield return DealCards(3, 0f, 0.1f, players[index]);
+        if(enemySpawn == true)
+        {
+            FinishDealEnemyCard?.Invoke();
+        }
     }
 
     void DealCard(Player player,  bool left = true)
@@ -99,16 +106,7 @@ public class CardDealer : MonoBehaviour
         CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
         //CardFace randomCard = cardDeck[3];
         cardDeckUsed.Add(randomCard);
-        //Debug.Log($"{player.name} is enemy = {player.isEnemy}");
-        if (player.isEnemy == true)
-        {
-           // Debug.Log("enemy card");
-            lastCard.enemyCard = true;
-        }
-        //Debug.Log($"{lastCard.enemyCard}");
-        //Debug.Log("Set card before");
-        lastCard.SetCard(randomCard);
-        //Debug.Log("Set card after");
+       
         lastCard.cardStar.text = "1";
         lastCard.cardSpawnButton.GetComponentInChildren<Text>().text = randomCard.numbers.ToString();
         int cardnumber = (int)randomCard.numbers;
@@ -129,8 +127,14 @@ public class CardDealer : MonoBehaviour
         lastCard.cardFrame.transform.GetChild(0).gameObject.SetActive(true);
         lastCard.stars.transform.GetChild(0).Find("Active").gameObject.SetActive(true);
         lastCard.skillIcon.gameObject.SetActive(false);
-        
+        //Debug.Log($"{player.name} is enemy = {player.isEnemy}");
+        lastCard.enemyCard = player.isEnemy;
+        //Debug.Log($"{lastCard.enemyCard}");
+        //Debug.Log("Set card before");
+        lastCard.SetCard(randomCard);
+      // Debug.Log($"Set card after {lastCard.cardFace.numbers}");
         //Player takes card
+        //Debug.Log($"{player.name} is enemy = {player.isEnemy} card enemy card --> {lastCard.enemyCard}");
         yield return player.AddCard(lastCard, left);  
     }
     IEnumerator DealCards(int numberOfCards, float delay, float waitTime, Player player, bool left = true, bool reveal = false)

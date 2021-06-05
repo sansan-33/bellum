@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using Pathfinding.RVO;
@@ -9,8 +10,10 @@ public class UnitPowerUp : NetworkBehaviour
 {
     [SerializeField] private GameObject specialEffectPrefab = null;
     [SerializeField] private GameObject fxEffectPrefab = null;
+    [SerializeField] private Material sneakyMaterial = null;
     public bool canSpawnEffect = true;
-  
+    private Material[] origialMaterial;
+
     private void Scale()
     {
         transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
@@ -147,7 +150,7 @@ public class UnitPowerUp : NetworkBehaviour
         gameObject.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
         GetComponent<RVOController>().layer = tag.Contains("0") ? RVOLayer.Layer3 : RVOLayer.Layer2;
         GetComponent<RVOController>().collidesWith = tag.Contains("0") ? RVOLayer.Layer2 : RVOLayer.Layer3;
-        HandleUnitSKill(star, attack, repeatAttackDelay);
+        HandleUnitSKill(star, attack, repeatAttackDelay, speed);
         if ( StaticClass.IsFlippedCamera ){
             gameObject.GetComponent<HealthDisplay>().flipHealthBar();
         }
@@ -158,7 +161,7 @@ public class UnitPowerUp : NetworkBehaviour
         //Debug.Log($"{gameObject.tag} : {gameObject.name} RpcPowerUp cardLevel {cardLevel} health {health} speed {speed}");
         HandlePowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
     }
-    private void HandleUnitSKill(int star, int attack, float repeatAttackDelay)
+    private void HandleUnitSKill(int star, int attack, float repeatAttackDelay, float speed)
     {
         if (gameObject.GetComponent<Unit>().unitType == UnitMeta.UnitType.KING || gameObject.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO) { return; } 
         UnitMeta.UnitSkill skill = UnitMeta.UnitStarSkill[star][gameObject.GetComponent<Unit>().unitType];
@@ -168,17 +171,29 @@ public class UnitPowerUp : NetworkBehaviour
             case UnitMeta.UnitSkill.SCALE:
                 Scale();
                 break;
+            case UnitMeta.UnitSkill.SHIELD:
+                Shield();
+                break;
             case UnitMeta.UnitSkill.VOLLEY:
                 Volley();
                 break;
             case UnitMeta.UnitSkill.PROVOKE:
                 Provoke();
                 break;
+            case UnitMeta.UnitSkill.TORNADO:
+                Tornado();
+                break;
             case UnitMeta.UnitSkill.HEAL:
                 Healing();
                 break;
             case UnitMeta.UnitSkill.CHARGE:
                 Charging(attack, repeatAttackDelay);
+                break;
+            case UnitMeta.UnitSkill.DASH:
+                Dashing(speed);
+                break;
+            case UnitMeta.UnitSkill.SNEAK:
+                Sneak(attack, repeatAttackDelay);
                 break;
             case UnitMeta.UnitSkill.NOTHING:
             default:
@@ -189,6 +204,13 @@ public class UnitPowerUp : NetworkBehaviour
     {
         GetComponent<UnitFiring>().SetNumberOfShoot(3);
     }
+    private void Shield()
+    {
+        ShieldAura shield = GetComponentInChildren<ShieldAura>();
+        if (shield == null) { return; }
+        shield.aura();
+        
+    }
     private void Provoke()
     {
         //GetComponent<UnitFiring>().SetNumberOfShoot(3);
@@ -197,13 +219,52 @@ public class UnitPowerUp : NetworkBehaviour
     }
     private void Healing()
     {
+        if(TryGetComponent(out Healing healing))
         GetComponent<Healing>().ServerEnableHealing(true);
+    }
+    private void Dashing(float speed)
+    {
+        SetSpeed(speed * 2, false);
+        GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
+        NetworkServer.Spawn(specialEffect, connectionToClient);
+    }
+    private void Tornado()
+    {
+        float offset = tag.Contains("0") ? 10f : -10f;
+        Transform transform = GetComponentInParent<Transform>();
+        Vector3 position = new Vector3 (transform.position.x, transform.position.y, transform.position.z + offset);
+        GameObject specialEffect = Instantiate(specialEffectPrefab, position, Quaternion.identity);
+        specialEffect.GetComponent<Tornado>().SetPlayerType(Int32.Parse(tag.Substring(tag.Length - 1)));
+        NetworkServer.Spawn(specialEffect, connectionToClient);
+    }
+    private void Sneak(int attack, float repeatAttackDelay)
+    {
+        gameObject.tag = "Sneaky" + tag.Substring(tag.Length - 1);
+        gameObject.GetComponent<IAttack>().ScaleDamageDeal(attack, repeatAttackDelay, 10);
+        foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            //Material[]  mats = new Material[] {sneakyMaterial, skinnedMeshRenderer.materials[1] };
+            origialMaterial = skinnedMeshRenderer.materials;
+            Material[]  mats = new Material[] {sneakyMaterial};
+            skinnedMeshRenderer.materials = mats;
+        }
+    }
+    [Command]
+    public void CmdSneakOff()
+    {
+        gameObject.tag = "Player" + tag.Substring(tag.Length - 1);
+        foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            skinnedMeshRenderer.materials = origialMaterial;
+        }
     }
     private void Charging(int attack, float repeatAttackDelay)
     {
         gameObject.GetComponent<IAttack>().ScaleDamageDeal(attack, repeatAttackDelay, 3);
-        GameObject fxEffect = Instantiate(fxEffectPrefab, GetComponent<IAttack>().AttackPoint());
-        NetworkServer.Spawn(fxEffect, connectionToClient);
+        Debug.Log($"Charging attack {attack} repeatAttackDelay {repeatAttackDelay}");
+        fxEffect();
+        //GameObject fxEffect = Instantiate(fxEffectPrefab, GetComponent<IAttack>().AttackPoint());
+        //NetworkServer.Spawn(fxEffect, connectionToClient);
     }
     private void fxEffect()
     {

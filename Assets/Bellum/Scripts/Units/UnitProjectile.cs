@@ -40,8 +40,6 @@ public class UnitProjectile : NetworkBehaviour
             transform.rotation = Quaternion.LookRotation(rb.velocity) * initialRotation;
         }
     }
-
-
     public override void OnStartClient()
     {
         if (NetworkClient.connection.identity == null) { return; }
@@ -101,7 +99,6 @@ public class UnitProjectile : NetworkBehaviour
         this.damageToDeals = damageToDeal == 0 ? this.damageToDeals : damageToDeal;
         damageToDealOriginal = (int) (damageToDealOriginal * newDamageToDealFactor);
     }
-    
     private void OnTriggerEnter(Collider other) //sphere collider is used to differentiate between the unit itself, and the attack range (fireRange)
     {
         bool isFlipped = false;
@@ -115,8 +112,8 @@ public class UnitProjectile : NetworkBehaviour
         }
         // Not attack same connection client object except AI Enemy
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1) {
-            if ((other.tag == "Player" + enemyid || other.tag == "King" + enemyid) && unitType == "Enemy" ) { return; }  //check to see if it belongs to the player, if it does, do nothing
-            if ((other.tag == "Player" + playerid || other.tag == "King" + playerid ) && unitType == "Player") { return; }  //check to see if it belongs to the player, if it does, do nothing
+            if ( other.tag.Contains(enemyid.ToString()) && unitType == "Enemy" ) { return; }  //check to see if it belongs to the player, if it does, do nothing
+            if ( other.tag.Contains(playerid.ToString()) && unitType == "Player") { return; }  //check to see if it belongs to the player, if it does, do nothing
         }
         else // Multi player seneriao
         {
@@ -155,6 +152,12 @@ public class UnitProjectile : NetworkBehaviour
     {
         TargetObjectPos = targetObjectPos;
     }
+    [Server]
+    public void SetPlayerType(int playerid)
+    {
+        this.unitType = playerid == 0 ? "Player" : "Enemy";
+    }
+
     [Command]
     public void CmdDealDamage(GameObject enemy, float damge)
     {

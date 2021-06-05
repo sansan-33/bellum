@@ -65,13 +65,20 @@ public class Card : MonoBehaviour
         
         if(enemyCard == true)
         {
-          // Debug.Log($"Getting scale");
+            //Debug.Log($"Getting scale up");
             RectTransform rect = GetComponent<RectTransform>();
             float x = rect.localScale.x;
             float y = rect.localScale.y;
             float z = rect.localScale.z;
             rect.localScale = new Vector3( (float)0.5,  (float)0.5,(float)0.5);
             GetComponentInChildren<Button>().enabled = false;
+        }
+        else
+        {
+            //Debug.Log($"Getting scale down");
+            RectTransform rect = GetComponent<RectTransform>();
+            rect.localScale = new Vector3(1, 1, 1);
+            GetComponentInChildren<Button>().enabled = true;
         }
         yield return null;
         //enemyCard = false;
@@ -126,14 +133,21 @@ public class Card : MonoBehaviour
             playerID = player.GetPlayerID();
             teamColor = player.GetTeamColor();
         }
-        GetComponent<RectTransform>().localScale = new Vector3(originalx, originaly, originalz);
+
         //Debug.Log(GetComponent<RectTransform>().localScale);
-        
+        ResetScale();
         this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
-        dealManagers.Hit(enemyCard);
+        var _enemyCard = enemyCard;
         enemyCard = false;
+        dealManagers.Hit(_enemyCard);
+       
         //Debug.Log("re set enemy card");
         localFactory.CmdSpawnUnit( StaticClass.playerRace, (UnitMeta.UnitType)type, (int)cardFace.star + 1, playerID, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, teamColor);
+    }
+    public void ResetScale()
+    {
+       
+        GetComponent<RectTransform>().localScale = new Vector3(originalx, originaly, originalz);
     }
     public void DropUnit(Vector3 spawnPoint)
     {
@@ -142,6 +156,8 @@ public class Card : MonoBehaviour
     public IEnumerator HandleDropUnit(Vector3 spawnPoint)
     {
         if (localFactory == null) { yield return SetLocalFactory(); }
+        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
+        enemyCard = false;
         int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
         if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
         appearEffectPool.UseParticles(spawnPoint);
@@ -150,8 +166,16 @@ public class Card : MonoBehaviour
             playerID = player.GetPlayerID();
             teamColor = player.GetTeamColor();
         }
-            //Debug.Log($"Card ==> DropUnit {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / Race { StaticClass.playerRace} / playerID {playerID } / SpwanPoint {spawnPoint } / unitsize {unitsize } / Card Stats {cardFace.stats}");
+       // if(cardFace.stats == null)
+       // {
+       //     localFactory.CmdDropUnit(playerID, spawnPoint, StaticClass.playerRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType)type).ToString(), unitsize, 1, 1, 1, 1, 1, 1, 1, null, cardFace.stats.passivekey, (int)cardFace.star + 1, teamColor, Quaternion.identity);
+
+       // }
+      //  else
+       // {
             localFactory.CmdDropUnit(playerID, spawnPoint, StaticClass.playerRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType)type).ToString(), unitsize, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, (int)cardFace.star + 1, teamColor, Quaternion.identity);
+       // }
+        //Debug.Log($"Card ==> DropUnit {cardFace.numbers} / star {cardFace.star} / Unit Type {type} / Race { StaticClass.playerRace} / playerID {playerID } / SpwanPoint {spawnPoint } / unitsize {unitsize } / Card Stats {cardFace.stats}");
         yield return null;
     }
     public void destroy()

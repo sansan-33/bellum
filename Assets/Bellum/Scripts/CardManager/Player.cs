@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
     }
     public IEnumerator AddCard(Card card, bool left = true)
     {
-        //Debug.Log($"Player.AddCard() ==> {card.cardFace.suit.ToString() }");
+        //Debug.Log($"Player.AddCard() ==> {name } {card.enemyCard}");
         card.cardPlayerHandIndex = playerHand[0].Count;
         playerHand[0].Add(card);
       if(isEnemy == true)
@@ -114,7 +114,10 @@ public class Player : MonoBehaviour
             enemyCardDealer.SetCards(card);
         }
         card.transform.SetParent(cardSlotlist[playerHand[0].Count-1].transform);
-        yield return MoveCardTo(card.transform, cardSlotlist[playerHand[0].Count - 1].transform.position, card);
+       
+            yield return MoveCardTo(card.transform, cardSlotlist[playerHand[0].Count - 1].transform.position, card);
+        
+   
         //StartCoroutine(mergeCard());
 
     }
@@ -190,7 +193,7 @@ public class Player : MonoBehaviour
     IEnumerator MoveCardTo(Transform cardTransform, Vector3 targetPosition, Card card = null)
     {
         // break if card is merged
-        while (cardTransform != null && (cardTransform.position - targetPosition).sqrMagnitude > 0.00000001f)
+       while (cardTransform != null && (cardTransform.position - targetPosition).sqrMagnitude > 0.00000001f && isEnemy == false)
         {
             cardTransform.position = Vector3.MoveTowards(cardTransform.position, targetPosition, Time.deltaTime * cardMoveSpeed);
             cardTransform.localEulerAngles = Vector3.Lerp(cardTransform.localEulerAngles, v360, Time.deltaTime * 5);
@@ -203,7 +206,10 @@ public class Player : MonoBehaviour
             //Debug.Log($"inside MoveCardTo() if (cardTransform != null) cardTransform.position:{cardTransform.position}");
         }
         //Debug.Log($"+++++ Player.MoveCardTo() call mergeCard()");
-        yield return mergeCard();
+       
+            yield return mergeCard();
+        
+        
     }
 
     public void moveCard(int index, bool isShiftCard = true)
@@ -212,6 +218,7 @@ public class Player : MonoBehaviour
         if (playerHand[0].Count > 0)
         {
             //playerHand[0][index].destroy();
+            playerHand[0][index].enemyCard = false;
             CardRemoved?.Invoke(playerHand[0][index]);
             playerHand[0].RemoveAt(index);
         }

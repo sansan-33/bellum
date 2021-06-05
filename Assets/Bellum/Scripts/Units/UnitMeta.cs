@@ -30,7 +30,7 @@ public class UnitMeta
     public enum WeaponType { THSWORD, SHSWORD, BOW, HAMMER, SPEAR, DAGGER , SPELL,AXE, LANCE, PUNCH, NOTHING};
      
     public static Dictionary<UnitType, int> UnitSize = new Dictionary<UnitType, int>() { { UnitType.FOOTMAN, 3 }, { UnitType.ARCHER, 2 } };
-    public static Dictionary<UnitKey, bool> UnitKeyRider = new Dictionary<UnitKey, bool>() { { UnitKey.CAVALRY, true }, { UnitKey.GODCAVALRY, true }, { UnitKey.RIDER, true } };
+    public static Dictionary<UnitKey, bool> UnitKeyRider = new Dictionary<UnitKey, bool>() { { UnitKey.CAVALRY, true }, { UnitKey.GODCAVALRY, true }, { UnitKey.RIDER, true }, { UnitKey.ELFCAVALRY, true } };
     public static Dictionary<UnitType, float> DefendRadius = new Dictionary<UnitType, float>() { { UnitType.HERO, 8f }, { UnitType.KING, 8f } };
     public static Dictionary<UnitType, int> UnitSelfDestory = new Dictionary<UnitType, int>() { { UnitType.WALL, 10 }  };
     public static Dictionary<UnitType, int> UnitEleixer = new Dictionary<UnitType, int>()
@@ -50,7 +50,7 @@ public class UnitMeta
         { UnitType.ARCHER, TacticalBehavior.BehaviorSelectionType.Attack } ,
         { UnitType.MAGIC, TacticalBehavior.BehaviorSelectionType.Attack } ,
         { UnitType.CAVALRY, TacticalBehavior.BehaviorSelectionType.Charge } ,
-        { UnitType.FOOTMAN, TacticalBehavior.BehaviorSelectionType.Surround },
+        { UnitType.FOOTMAN, TacticalBehavior.BehaviorSelectionType.Attack },
         { UnitType.HERO, TacticalBehavior.BehaviorSelectionType.Defend },
         { UnitType.TANK, TacticalBehavior.BehaviorSelectionType.Attack },
         { UnitType.KING, TacticalBehavior.BehaviorSelectionType.Defend }
@@ -263,10 +263,10 @@ public class UnitMeta
     public static Dictionary<UnitType, UnitSkill> UnitTypeSkillOne = new Dictionary<UnitType, UnitSkill>()
     {
         { UnitType.ARCHER, UnitSkill.NOTHING } ,
-        { UnitType.MAGIC, UnitSkill.HEAL} ,
-        { UnitType.CAVALRY, UnitSkill.CHARGE } ,
-        { UnitType.FOOTMAN, UnitSkill.NOTHING },
-        { UnitType.TANK, UnitSkill.NOTHING }
+        { UnitType.MAGIC, UnitSkill.TORNADO} ,
+        { UnitType.CAVALRY, UnitSkill.DASH } ,
+        { UnitType.FOOTMAN, UnitSkill.SNEAK },
+        { UnitType.TANK, UnitSkill.SHIELD }
     };
     public static Dictionary<UnitType, UnitSkill> UnitTypeSkillTwo = new Dictionary<UnitType, UnitSkill>()
     {

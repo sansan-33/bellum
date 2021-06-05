@@ -41,6 +41,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37188967630:android:2ff6cdb1a406a5bd9c449f",
+        "android_client_info": {
+          "package_name": "com.sansan33.bellum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "37188967630-fc5lqfvrprt271misvu7bv4k52ff4clh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnVXm-sx336gUEUZOwUAulzzjwIQNOx6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "37188967630-fc5lqfvrprt271misvu7bv4k52ff4clh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "37188967630-3osg0ll18hh33tqo96ca13vg607c8v3p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sansan.bellum-33"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

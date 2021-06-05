@@ -56,7 +56,7 @@ public class Ice : MonoBehaviour, ISpecialAttack
     
     public void OnPointerDown()
     {
-        
+        return;
         enemyList.Clear();
         UnitRepeatAttackDelaykeys.Clear();
         UnitSpeedkeys.Clear();
@@ -195,7 +195,7 @@ public class Ice : MonoBehaviour, ISpecialAttack
     }
     private void IceBreak(GameObject unit)
     {
-        //if(unit == null) { return; }
+        if(effect == null) { return; }
         
         //Debug.Log($"ice break {effect} {effect.transform.parent.name}");
         effect.GetComponentInChildren<RFX4_StartDelay>().Enable();
