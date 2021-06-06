@@ -39,6 +39,8 @@ public class CardDealer : MonoBehaviour
     [SerializeField] public TotalEleixier totalEleixers;
     [SerializeField] public Shader greyScaleShader;
     [SerializeField] private bool spawnEnemyCard = false;
+    [SerializeField] public CharacterArt Arts;
+
     public static event Action UserCardLoaded;
     public SimpleObjectPool cardObjectPool;
     public static event Action FinishDealEnemyCard;
@@ -118,6 +120,7 @@ public class CardDealer : MonoBehaviour
         if (UnitMeta.UnitEleixer.TryGetValue((UnitMeta.UnitType)type, out int value)) { uniteleixer = value; }
 
         Material mat = new Material(greyScaleShader);
+        //lastCard.cardSpawnButton.GetComponentInChildren<Image>().sprite = Arts.CharacterArtDictionary[ ].image;
         lastCard.cardSpawnButton.GetComponentInChildren<Image>().sprite  = lastCard.GetComponent<Card>().sprite[cardnumber];
         lastCard.cardSpawnButton.GetComponentInChildren<Image>().material = mat;
         lastCard.eleixerText.text = uniteleixer.ToString();
