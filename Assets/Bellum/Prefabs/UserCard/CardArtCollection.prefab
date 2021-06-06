@@ -50,17 +50,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterArtImages:
   - name: 0
-    image: {fileID: 21300000, guid: 19eb3d96595a545dc93a4442abee52fe, type: 3}
+    image: {fileID: 21300000, guid: 8485c0072f0474770ab689cfa31ec5bf, type: 3}
   - name: 1
-    image: {fileID: 21300000, guid: e5c60846e895943ffab05afee641972d, type: 3}
+    image: {fileID: 21300000, guid: d584df9c821bc46b0bd00ef4c4c843f8, type: 3}
   - name: 2
-    image: {fileID: 21300000, guid: 95e0fff01f7244e9388aac5f19e67c35, type: 3}
+    image: {fileID: 21300000, guid: 8ecb4d7934956426882ae269fd85209b, type: 3}
   - name: 3
-    image: {fileID: 21300000, guid: c027e1b8847dc44baa621f78c5e5676e, type: 3}
+    image: {fileID: 21300000, guid: c7ae54b63b5df433fbae59bea1a2962a, type: 3}
   - name: 4
     image: {fileID: 21300000, guid: d4be16f90d6fe4d5fb287a6d5774e467, type: 3}
   - name: 5
-    image: {fileID: 21300000, guid: 9b0058175f7b2432ba4bce3ba56538fe, type: 3}
+    image: {fileID: 21300000, guid: 457dd2e86ed7e470992768dee2287e1d, type: 3}
   - name: 6
     image: {fileID: 21300000, guid: 43804c382c0814710a2472389e3a79a6, type: 3}
   - name: 7
@@ -70,11 +70,11 @@ MonoBehaviour:
   - name: 9
     image: {fileID: 21300000, guid: 144cc2aef8bf34c14b602b3a08d10af6, type: 3}
   - name: 10
-    image: {fileID: 21300000, guid: 3dfff1fb1442f4239a384a88bf6b794a, type: 3}
+    image: {fileID: 21300000, guid: b71b85e7d5c7141eb8d8ebdb10ff2a61, type: 3}
   - name: 11
     image: {fileID: 21300000, guid: 46d2bf8f83a47f642a51d6c922e6055a, type: 3}
   - name: 12
-    image: {fileID: 21300000, guid: 3bfe32a0a03f84211b0a3af0bb33c764, type: 3}
+    image: {fileID: 21300000, guid: b86c46437232a4e4e8e76a8d813fe751, type: 3}
   - name: 13
     image: {fileID: 21300000, guid: 14aa03ec263a14e57907fc9e03c4e29e, type: 3}
   - name: 14
