@@ -221,7 +221,7 @@ public class EnemyAI : MonoBehaviour
                    // cardStats.attack *= statUpFactor;
                    // cardStats.health *= statUpFactor;
                    // cardStats.defense *= statUpFactor;
-                    unit.GetComponent<UnitPowerUp>().PowerUp(1, unit.name, unit.GetComponent<Unit>().GetSpawnPointIndex(), cardStats.star, cardStats.cardLevel, cardStats.health * 100000000,
+                    unit.GetComponent<UnitPowerUp>().PowerUp(1, unit.name, unit.GetComponent<Unit>().GetSpawnPointIndex(), cardStats.star, cardStats.cardLevel, cardStats.health * statUpFactor,
                         cardStats.attack * statUpFactor, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense * statUpFactor, cardStats.special, cardStats.specialkey,
                         cardStats.passivekey, RTSplayer.GetTeamEnemyColor());
                 }
