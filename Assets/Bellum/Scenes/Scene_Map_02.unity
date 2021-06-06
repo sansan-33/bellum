@@ -46310,6 +46310,8 @@ MonoBehaviour:
   eleixerSpeed: {fileID: 1688759785}
   eleixerBarImage: {fileID: 82786994}
   enemyeleixerBarImage: {fileID: 575627780}
+  eleixerValue: {fileID: 1680559611}
+  enemyEleixerValue: {fileID: 1652696425}
   maxEleixer: 10
   maxEleixerTimer: 3
   eleixer: 0
@@ -52775,9 +52777,10 @@ MonoBehaviour:
   cardDeck: []
   cardDeckUsed: []
   buttonWall: {fileID: 1905806133}
+  EnemyButtonWall: {fileID: 2073914765}
   totalEleixers: {fileID: 1128753618}
   greyScaleShader: {fileID: 4800000, guid: bc48e7f9d79b24d7496ce905f1c5a0d1, type: 3}
-  spawnEnemyCard: 0
+  spawnEnemyCard: 1
   cardObjectPool: {fileID: 351360194}
 --- !u!4 &1261610359
 Transform:
@@ -52801,7 +52804,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261610356}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c50cf0051aefa42a68200bf9ce99a1b2, type: 3}
   m_Name: 
@@ -52815,15 +52818,15 @@ MonoBehaviour:
   unitType: 0000000001000000020000000300000004000000
   position: 0000000000000000010000000100000002000000
   unitTypesList: 0000000004000000
-  unitTypesList2: 0100000002000000
-  unitTypesList3: 03000000
-  startLeftPos: {x: 0, y: 0, z: 0}
-  startRightPos: {x: 0, y: 0, z: 0}
-  startCentrePos: {x: 0, y: 0, z: 0}
+  unitTypesList2: 03000000
+  unitTypesList3: 0200000001000000
+  startLeftPos: {x: 23, y: 0.15, z: -14}
+  startRightPos: {x: 44, y: 0.15, z: -14}
+  startCentrePos: {x: 36, y: 0.15, z: -27}
   attackType: 3
-  statUpFactor: 0
+  statUpFactor: 3
   SpList1: 0300000001000000
-  SpList2: 000000000200000004000000
+  SpList2: 000000000400000002000000
 --- !u!1 &1267594954
 GameObject:
   m_ObjectHideFlags: 0
@@ -53142,7 +53145,7 @@ MonoBehaviour:
   unitSkillArt: {fileID: 4933990136420628866, guid: f8246d89bf59440c095199ba1f691fce, type: 3}
   singleHandStart: {fileID: 986101251}
   screenOffset: 0
-  cardOffset: 60
+  cardOffset: 42
   cardMoveSpeed: 5000
   MAXCARDSTAR: 3
   isEnemy: 1
@@ -82789,7 +82792,7 @@ MonoBehaviour:
   cardTimer: 0
   sprite: []
   playerID: 0
-  enemyCard: 0
+  enemyCard: 1
   cardStar: {fileID: 0}
   cardSpawnButton: {fileID: 0}
   charIcon: {fileID: 0}
