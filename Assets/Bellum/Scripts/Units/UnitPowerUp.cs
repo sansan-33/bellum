@@ -224,7 +224,7 @@ public class UnitPowerUp : NetworkBehaviour
     }
     private void Dashing(float speed)
     {
-        SetSpeed(speed * 2, false);
+        SetSpeed(speed * 1.5f, false);
         GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
         NetworkServer.Spawn(specialEffect, connectionToClient);
     }
