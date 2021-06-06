@@ -13,6 +13,7 @@ public class MissionButton : MonoBehaviour, IPointerDownHandler
     {
         Debug.Log($"MissionButton clicked, chapter {StaticClass.Chapter} - {mission}");
         StaticClass.Mission = mission;
+        StaticClass.enemyRace = (UnitMeta.Race) Int32.Parse(StaticClass.Chapter);
         stagePanel.SetActive(false);
         loadingPanel.SetActive(true);
         NetworkClient.connection.identity.GetComponent<RTSPlayer>().CmdStartMission(StaticClass.Chapter, mission);
