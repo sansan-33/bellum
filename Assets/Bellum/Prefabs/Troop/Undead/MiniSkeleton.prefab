@@ -66,6 +66,25 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: -2816831979779957640}
+--- !u!114 &4284367940268292849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7815172197941435234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074f34fc0622d43b3b4f3c2c7177f5e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  shieldBarParent: {fileID: 0}
+  healthBarParent: {fileID: 0}
+  ShieldEffect: {fileID: 0}
+  ShieldHealthBar: {fileID: 0}
+  shieldHealth: 0
 --- !u!1001 &2894524478724016149
 PrefabInstance:
   m_ObjectHideFlags: 0
