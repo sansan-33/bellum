@@ -27,7 +27,7 @@ public class TacticalBehavior : MonoBehaviour
     private Dictionary<int, Dictionary<int, Dictionary<int, List<BehaviorTree>>>> behaviorTreeGroups = new Dictionary<int, Dictionary < int, Dictionary<int, List<BehaviorTree>>>>();
 
     public enum BehaviorSelectionType { Attack, Charge, MarchingFire, Flank, Ambush, ShootAndScoot, Leapfrog, Surround, Defend, Hold, Retreat, Reinforcements, Last };
-    public enum TaticalAttack { SPINATTACK, CAVALRYCHARGES, OFF  };
+    public enum TaticalAttack { SPINATTACK, CAVALRYCHARGES, ARROWRAIN, OFF  };
     private TaticalAttack[] TaticalAttackCurrent = { TaticalAttack.OFF, TaticalAttack.OFF };
 
     private Dictionary<int, Dictionary<int, GameObject>> leaders = new Dictionary<int, Dictionary<int, GameObject>>();
@@ -548,7 +548,7 @@ public class TacticalBehavior : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.5f);
                     flip *= -1;
-                    spawnPoint = new Vector3(kingPoint.x + (offset * flip), kingPoint.y , kingPoint.z + 15);
+                    spawnPoint = new Vector3(kingPoint.x + (offset * flip), kingPoint.y , kingPoint.z + 10);
                     Debug.Log($"CAVALRYCHARGES {unitspawn} , spawnPoint {spawnPoint}, kingPoint {kingPoint}");
                     localFactory.CmdDropUnit(playerid, spawnPoint, StaticClass.playerRace, UnitMeta.UnitType.CAVALRY , UnitMeta.UnitType.CAVALRY.ToString(), 1, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey, 1, player.GetTeamColor(), Quaternion.identity);
                     offset += 2;
@@ -559,6 +559,23 @@ public class TacticalBehavior : MonoBehaviour
                 TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.HERO);
                 TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.KING);
 
+                break;
+            case TaticalAttack.ARROWRAIN:
+                TaticalAttackCurrent[playerid] = TaticalAttack.ARROWRAIN;
+                cardStats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.ARCHER].ToString()];
+                TryTB((int)BehaviorSelectionType.Hold, UnitMeta.UnitType.ARCHER);
+                unitTactical[UnitMeta.UnitType.ARCHER] = BehaviorSelectionType.Hold;
+                while (unitspawn <= 12)
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    flip *= -1;
+                    spawnPoint = new Vector3(kingPoint.x + (offset * flip), kingPoint.y, kingPoint.z + 10);
+                    Debug.Log($"CAVALRYCHARGES {unitspawn} , spawnPoint {spawnPoint}, kingPoint {kingPoint}");
+                    localFactory.CmdDropUnit(playerid, spawnPoint, StaticClass.playerRace, UnitMeta.UnitType.ARCHER, UnitMeta.UnitType.ARCHER.ToString(), 1, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey, 1, player.GetTeamColor(), Quaternion.identity);
+                    offset += 2;
+                    unitspawn++;
+                }
+                TryTB((int)BehaviorSelectionType.Charge, UnitMeta.UnitType.ARCHER);
                 break;
             default:
                 break;

@@ -13403,6 +13403,7 @@ GameObject:
   - component: {fileID: 339919799}
   - component: {fileID: 339919798}
   - component: {fileID: 339919797}
+  - component: {fileID: 339919800}
   m_Layer: 2
   m_Name: SPButton
   m_TagString: SPButton
@@ -13513,6 +13514,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339919795}
   m_CullTransparentMesh: 0
+--- !u!114 &339919800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339919795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f35bfa6afe7f4a9594eeabb3086d05f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  tacticalBehavior: {fileID: 873072821}
 --- !u!1 &340833914
 GameObject:
   m_ObjectHideFlags: 0
@@ -53389,6 +53404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cards: []
+  TB: {fileID: 0}
   halfLine: {fileID: 1567778614}
   wall: {fileID: 2073914765}
   player: {fileID: 1649025845}
