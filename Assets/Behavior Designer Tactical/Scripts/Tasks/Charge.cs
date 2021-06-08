@@ -12,7 +12,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
     public class Charge : NavMeshTacticalGroup
     {
         [Tooltip("The number of agents that should be in a row")]
-        public SharedInt agentsPerRow = 2;
+        public SharedInt agentsPerRow = 12;
         [Tooltip("The separation between agents")]
         public SharedVector2 separation = new Vector2(2, 2);
         [Tooltip("The distance to stop charging and start attacking")]

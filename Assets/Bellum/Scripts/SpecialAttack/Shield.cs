@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Shield : NetworkBehaviour
 {
 
-    [SerializeField] private GameObject shieldBarParent = null;
+    //[SerializeField] private GameObject shieldBarParent = null;
     [SerializeField] private GameObject healthBarParent = null;
     [SerializeField] public GameObject ShieldEffect;
     [SerializeField] private Image ShieldHealthBar;
@@ -21,7 +21,7 @@ public class Shield : NetworkBehaviour
 
     private void Awake()
     {
-        startRotation = shieldBarParent.transform.rotation;
+        //startRotation = shieldBarParent.transform.rotation;
     }
 
     [Command]
@@ -54,7 +54,7 @@ public class Shield : NetworkBehaviour
     }
     private void UpdateShieldHealth(float oldHealth, float newHealth)
     {
-        shieldBarParent.SetActive(true);
+        //shieldBarParent.SetActive(true);
         healthBarParent.SetActive(true);
         //Debug.Log($"fillamout {ShieldHealthBar.fillAmount},health {shieldHealth}, max {maxShieldHealth}");
         ShieldHealthBar.fillAmount = shieldHealth / maxShieldHealth;
@@ -71,7 +71,7 @@ public class Shield : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        shieldBarParent.transform.rotation = startRotation;
+        //shieldBarParent.transform.rotation = startRotation;
         if (maxShieldHealth == 0 && FindObjectOfType<DefendSP>())
         {
             maxShieldHealth = FindObjectOfType<DefendSP>().shieldHealths;

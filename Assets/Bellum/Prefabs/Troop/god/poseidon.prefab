@@ -759,6 +759,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2898956138471870661}
     m_Modifications:
+    - target: {fileID: 350828370269555827, guid: d5bff9e88bf6c454bad0ad29aa7ec30e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4013354438904151874, guid: d5bff9e88bf6c454bad0ad29aa7ec30e, type: 3}
       propertyPath: m_Name
       value: ShieldSkill
