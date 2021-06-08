@@ -546,7 +546,7 @@ public class TacticalBehavior : MonoBehaviour
                 cardStats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.FOOTMAN].ToString()];
                 while (unitspawn <= 3) {
                     yield return new WaitForSeconds(0.5f);
-                    localFactory.CmdSpawnUnit(StaticClass.playerRace, UnitMeta.UnitType.FOOTMAN, 3, PLAYERID, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey, player.GetTeamColor());
+                    localFactory.CmdSpawnUnit(StaticClass.playerRace, UnitMeta.UnitType.FOOTMAN, 3, playerid, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey, player.GetTeamColor());
                     unitspawn++;
                 }
                 TryTB((int)BehaviorSelectionType.Defend, UnitMeta.UnitType.FOOTMAN);

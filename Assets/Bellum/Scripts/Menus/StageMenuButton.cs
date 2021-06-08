@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class StageMenuButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] public string chapter = null;
+    [SerializeField] public GameObject missionContentParent = null;
     public static event Action<int> TabClicked;
 
     public void OnPointerClick(PointerEventData eventData)
