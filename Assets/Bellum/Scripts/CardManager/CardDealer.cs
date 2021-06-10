@@ -34,8 +34,17 @@ public class CardDealer : MonoBehaviour
     [SerializeField] List<CardFace> cardDeckUsed = new List<CardFace>();
     [SerializeField] public Dictionary<string, CardStats> userCardStatsDict = new Dictionary<string, CardStats>();
     [SerializeField] public Dictionary<UnitMeta.UnitKey, Unit> playerUnitDict = new Dictionary<UnitMeta.UnitKey, Unit>();
+
+    // Buildings Buttons reference
     [SerializeField] Card buttonWall;
+    [SerializeField] Card buttonBarrack;
+    [SerializeField] Card buttonTower;
+    [SerializeField] Card buttonCatapult;
     [SerializeField] Card EnemyButtonWall;
+    [SerializeField] Card EnemyButtonBarrack;
+    [SerializeField] Card EnemyButtonTower;
+    [SerializeField] Card EnemyButtonCatapult;
+
     [SerializeField] public TotalEleixier totalEleixers;
     [SerializeField] public Shader greyScaleShader;
     [SerializeField] private bool spawnEnemyCard = false;
@@ -88,8 +97,7 @@ public class CardDealer : MonoBehaviour
                 cardDeck.Add(new CardFace(suit, (Card_Numbers)number, Card_Stars.Bronze, cardstats[cardkey]));
             }
         }
-        buttonWall.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, cardstats[ UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString() ]));
-        EnemyButtonWall.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
+        SetBuildingsCard(cardstats);
         int index = enemySpawn ? 1 : 0;
         yield return DealCards(3, 0f, 0.1f, players[index], index);
         if(enemySpawn == true)
@@ -97,7 +105,18 @@ public class CardDealer : MonoBehaviour
             FinishDealEnemyCard?.Invoke();
         }
     }
+    void SetBuildingsCard(Dictionary<String, CardStats> _cardstats)
+    {
+        buttonWall.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
+        buttonBarrack.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
+        buttonTower.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
+        buttonCatapult.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
+        EnemyButtonWall.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
+        EnemyButtonBarrack.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
+        EnemyButtonTower.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
+        EnemyButtonCatapult.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
 
+    }
     void DealCard(Player player, int playersIndex,  bool left = true)
     {
         //Debug.Log("Dealing Card to " + player.playerName);

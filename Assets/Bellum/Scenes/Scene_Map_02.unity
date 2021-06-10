@@ -54530,7 +54530,13 @@ MonoBehaviour:
   cardDeck: []
   cardDeckUsed: []
   buttonWall: {fileID: 298748896}
+  buttonBarrack: {fileID: 1681273116}
+  buttonTower: {fileID: 162936899}
+  buttonCatapult: {fileID: 700589448}
   EnemyButtonWall: {fileID: 2073914765}
+  EnemyButtonBarrack: {fileID: 0}
+  EnemyButtonTower: {fileID: 0}
+  EnemyButtonCatapult: {fileID: 0}
   totalEleixers: {fileID: 1128753618}
   greyScaleShader: {fileID: 4800000, guid: bc48e7f9d79b24d7496ce905f1c5a0d1, type: 3}
   spawnEnemyCard: 1
@@ -73062,7 +73068,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 50
+  field of view: 138
   orthographic: 1
   orthographic size: 40
   m_Depth: 0
@@ -73129,8 +73135,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745352323}
-  m_LocalRotation: {x: 0, y: -0.9124173, z: 0.40926117, w: 0}
-  m_LocalPosition: {x: 35.5, y: 82.6, z: 37.86}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 36.1, y: 78.100006, z: -113.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -16,6 +16,9 @@ public class UnitFactory : NetworkBehaviour
     [SerializeField] private GameObject spearmanPrefab = null;
     [SerializeField] private GameObject kingPrefab = null;
     [SerializeField] private GameObject humanWallPrefab = null;
+    [SerializeField] private GameObject humanTowerPrefab = null;
+    [SerializeField] private GameObject humanBarrackPrefab = null;
+    [SerializeField] private GameObject humanCatapultPrefab = null;
 
     // Undead
     [SerializeField] private GameObject miniSkeletonPrefab = null;
@@ -27,6 +30,9 @@ public class UnitFactory : NetworkBehaviour
     [SerializeField] private GameObject undeadKingPrefab = null;
     [SerializeField] private GameObject undeadLichPrefab = null;
     [SerializeField] private GameObject undeadWallPrefab = null;
+    [SerializeField] private GameObject undeadTowerPrefab = null;
+    [SerializeField] private GameObject undeadBarrackPrefab = null;
+    [SerializeField] private GameObject undeadCatapultPrefab = null;
 
     // god
     [SerializeField] private GameObject godarcherPrefab = null;
@@ -38,6 +44,9 @@ public class UnitFactory : NetworkBehaviour
     [SerializeField] private GameObject godspearmanPrefab = null;
     [SerializeField] private GameObject odinPrefab = null;
     [SerializeField] private GameObject godwallPrefab = null;
+    [SerializeField] private GameObject godTowerPrefab = null;
+    [SerializeField] private GameObject godBarrackPrefab = null;
+    [SerializeField] private GameObject godCatapultPrefab = null;
 
     // elf
     [SerializeField] private GameObject elfrangerPrefab = null;
@@ -49,6 +58,9 @@ public class UnitFactory : NetworkBehaviour
     [SerializeField] private GameObject elffootmanPrefab = null;
     [SerializeField] private GameObject elftreeantPrefab = null;
     [SerializeField] private GameObject elfwallPrefab = null;
+    [SerializeField] private GameObject elfTowerPrefab = null;
+    [SerializeField] private GameObject elfBarrackPrefab = null;
+    [SerializeField] private GameObject elfCatapultPrefab = null;
 
     [SerializeField] private GameBoardHandler gameBoardHandlerPrefab = null;
 
@@ -161,11 +173,9 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(UnitMeta.UnitKey.GIANT, giantPrefab);
         unitDict.Add(UnitMeta.UnitKey.UNDEADHERO, undeadHeroPrefab);
         unitDict.Add(UnitMeta.UnitKey.UNDEADARCHER, undeadArcherPrefab);
-        unitDict.Add(UnitMeta.UnitKey.UNDEADWALL, undeadWallPrefab);
         unitDict.Add(UnitMeta.UnitKey.RIDER, riderPrefab);
         unitDict.Add(UnitMeta.UnitKey.LICH, undeadLichPrefab);
         unitDict.Add(UnitMeta.UnitKey.UNDEADKING, undeadKingPrefab);
-        unitDict.Add(UnitMeta.UnitKey.HUMANWALL, humanWallPrefab);
         unitDict.Add(UnitMeta.UnitKey.GODARCHER, godarcherPrefab);
         unitDict.Add(UnitMeta.UnitKey.THOR, thorPrefab);
         unitDict.Add(UnitMeta.UnitKey.LOKI, lokiPrefab);
@@ -174,7 +184,6 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(UnitMeta.UnitKey.GODMAGE, godmagePrefab);
         unitDict.Add(UnitMeta.UnitKey.GODCAVALRY, godcavalryPrefab);
         unitDict.Add(UnitMeta.UnitKey.ODIN, odinPrefab);
-        unitDict.Add(UnitMeta.UnitKey.GODWALL, godwallPrefab);
         unitDict.Add(UnitMeta.UnitKey.ELFRANGER, elfrangerPrefab);
         unitDict.Add(UnitMeta.UnitKey.ELFDEMONHUNTER, elfdemonhunterPrefab);
         unitDict.Add(UnitMeta.UnitKey.ELFGOLEM, elfgolemPrefab);
@@ -182,10 +191,27 @@ public class UnitFactory : NetworkBehaviour
         unitDict.Add(UnitMeta.UnitKey.ELFMAGE, elfmagePrefab);
         unitDict.Add(UnitMeta.UnitKey.ELFCAVALRY, elfcavalryPrefab);
         unitDict.Add(UnitMeta.UnitKey.ELFTREEANT, elftreeantPrefab);
-        unitDict.Add(UnitMeta.UnitKey.ELFWALL, elfwallPrefab);
         unitDict.Add(UnitMeta.UnitKey.ELFQUEEN, elfqueenPrefab);
         unitDict.Add(UnitMeta.UnitKey.UNDEADQUEEN, undeadQueenPrefab);
         unitDict.Add(UnitMeta.UnitKey.MULAN, mulanPrefab);
+
+        // ====================== Buildings =============================
+        unitDict.Add(UnitMeta.UnitKey.HUMANBARRACK, humanBarrackPrefab);
+        unitDict.Add(UnitMeta.UnitKey.HUMANTOWER, humanTowerPrefab);
+        unitDict.Add(UnitMeta.UnitKey.HUMANCATAPULT, humanCatapultPrefab);
+        unitDict.Add(UnitMeta.UnitKey.UNDEADBARRACK, undeadBarrackPrefab);
+        unitDict.Add(UnitMeta.UnitKey.UNDEADTOWER, undeadTowerPrefab);
+        unitDict.Add(UnitMeta.UnitKey.UNDEADCATAPULT, undeadCatapultPrefab);
+        unitDict.Add(UnitMeta.UnitKey.ELFBARRACK, elfBarrackPrefab);
+        unitDict.Add(UnitMeta.UnitKey.ELFTOWER, elfTowerPrefab);
+        unitDict.Add(UnitMeta.UnitKey.ELFCATAPULT, elfCatapultPrefab);
+        unitDict.Add(UnitMeta.UnitKey.GODBARRACK, godBarrackPrefab);
+        unitDict.Add(UnitMeta.UnitKey.GODTOWER, godTowerPrefab);
+        unitDict.Add(UnitMeta.UnitKey.GODCATAPULT, godCatapultPrefab);
+        unitDict.Add(UnitMeta.UnitKey.ELFWALL, elfwallPrefab);
+        unitDict.Add(UnitMeta.UnitKey.GODWALL, godwallPrefab);
+        unitDict.Add(UnitMeta.UnitKey.HUMANWALL, humanWallPrefab);
+        unitDict.Add(UnitMeta.UnitKey.UNDEADWALL, undeadWallPrefab);
 
     }
     public GameObject GetUnitPrefab(UnitMeta.Race race, UnitMeta.UnitType unitType)
