@@ -8,6 +8,7 @@ using static SpecialAttackDict;
 
 public class EnemyAI : MonoBehaviour
 {
+    private bool usedTatical = false;
     private bool canSpawnUnit = true;
     private bool savingCardForDefend = false;
     private int elexier = 0;
@@ -66,6 +67,7 @@ public class EnemyAI : MonoBehaviour
         TotalEleixier.UpdateEnemyElexier += OnUpdateElexier;
         GameOverHandler.ClientOnGameOver += HandleGameOver;
         Unit.ClientOnUnitSpawned += UrgentDefend;
+        Unit.ClientOnUnitDespawned += Rage;
     }
     private void OnDestroy()
     {
@@ -73,6 +75,11 @@ public class EnemyAI : MonoBehaviour
         TotalEleixier.UpdateEnemyElexier -= OnUpdateElexier;
         GameOverHandler.ClientOnGameOver -= HandleGameOver;
         Unit.ClientOnUnitSpawned -= UrgentDefend;
+        Unit.ClientOnUnitDespawned -= Rage;
+        if (GameObject.FindGameObjectWithTag("King1"))
+        {
+            GameObject.FindGameObjectWithTag("King1").GetComponent<Health>().ClientOnHealthUpdated -= OnHealthUpdated;
+        }
     }
     private void StartSpawnnEnemy()
     {
@@ -97,6 +104,7 @@ public class EnemyAI : MonoBehaviour
         Sp.Add(unitType[3], SpList2);
         Sp.Add(unitType[4], SpList1);
 
+        GameObject.FindGameObjectWithTag("King1").GetComponent<Health>().ClientOnHealthUpdated += OnHealthUpdated;
       /*  Mission.Add(1, Difficulty.OneStar);
         Mission.Add(2, Difficulty.TwoStar);
         Mission.Add(3, Difficulty.ThreeStar);
@@ -128,17 +136,40 @@ public class EnemyAI : MonoBehaviour
         }
         yield return null;
     }
+    private void Rage(Unit unit)
+    {
+        //Debug.Log($"tag == {unit.tag} type = {unit.unitType} use T {usedTatical}");
+        //Need to change Tag;
+        if (unit.CompareTag("Untagged") && unit.unitType == UnitMeta.UnitType.HERO  && usedTatical == false)
+        {
+            if (chapter >= 4 && mission >= 3)
+            {
+                usedTatical = true;
+                TB.taticalAttack(TacticalBehavior.TaticalAttack.CAVALRYCHARGES, RTSplayer.GetEnemyID());
+            }
+            else if(chapter >= 4 && mission == 2)
+            {
+                usedTatical = true;
+                TB.taticalAttack(TacticalBehavior.TaticalAttack.ABSOLUTEDEFENSE, RTSplayer.GetEnemyID());
+            }
+            else if(chapter >= 4 && mission == 1)
+            {
+                usedTatical = true;
+                TB.taticalAttack(TacticalBehavior.TaticalAttack.ARROWRAIN, RTSplayer.GetEnemyID());
+            }
+        }
+    }
     private void UrgentDefend(Unit unit)
     {
         StartCoroutine(Defend(unit));
     }
     private void OnHealthUpdated(int currentHealth, int maxHealth, int lastDamageDeal)
     {
-        StartCoroutine(HandleHealthUpdate(currentHealth));
-    }
-    private IEnumerator HandleHealthUpdate(int current)
-    {
-        yield return null;
+        if (currentHealth <= maxHealth / 2 && chapter >= 3 && usedTatical == false)
+        {
+            usedTatical = true;
+            TB.taticalAttack(TacticalBehavior.TaticalAttack.SPINATTACK, RTSplayer.GetEnemyID());
+        }
     }
     private IEnumerator Defend(Unit unit)
     {
@@ -230,6 +261,10 @@ public class EnemyAI : MonoBehaviour
                     unit.GetComponent<UnitPowerUp>().PowerUp(1, unit.name, unit.GetComponent<Unit>().GetSpawnPointIndex(), cardStats.star, cardStats.cardLevel, cardStats.health * statUpFactor,
                         cardStats.attack * statUpFactor, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense * statUpFactor, cardStats.special, cardStats.specialkey,
                         cardStats.passivekey, RTSplayer.GetTeamEnemyColor());
+                }
+                if (chapter == 4)
+                {
+                    TB.taticalAttack(TacticalBehavior.TaticalAttack.CAVALRYCHARGES, RTSplayer.GetEnemyID());
                 }
                 return unitTypesList3;
         }
