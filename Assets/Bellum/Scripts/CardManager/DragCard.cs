@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    [SerializeField] Card CardParent;
     [SerializeField] private LayerMask floorMask = new LayerMask();
     public static Vector2 startPos;
     public string direction;
@@ -141,7 +140,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 {
                     hittedDict.Clear();
                     //Debug.Log($"DragCard.ShiftCard() {dragCardPlayerHandIndex } to  {hittedCard.cardPlayerHandIndex } / direction {direction} call moveCardAt()");
-                    CardParent.GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex, direction);
+                    GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex, direction);
                     //Prevent moving 2 cards in  one hitted, need to wait 0.5 sec for next move
                     IS_HITTED_TIMER = true;
                     //Debug.Log($"DragCard.ShiftCard() set IS_HITTED_TIMER to true:{IS_HITTED_TIMER}");
@@ -215,8 +214,8 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 Debug.Log($"End Drag Failed {name} {tag}");
             }
         } else {
-            Vector3 pos = CardParent.GetComponentInParent<CardSlot>().transform.position;
-            CardParent.GetComponentInParent<Player>().dragCardMerge();
+            Vector3 pos = GetComponentInParent<CardSlot>().transform.position;
+            GetComponentInParent<Player>().dragCardMerge();
             // Set the dragged card position right under the last hitted card slot again, did it in moveOneCard, need to set it again otheriwse it will stop in the middle.
             transform.position = pos;
             //Debug.Log($"DragCard.OnEndDrag() update transform.position: {transform.position}");
