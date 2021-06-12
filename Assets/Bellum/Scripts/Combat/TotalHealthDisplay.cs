@@ -28,13 +28,17 @@ public class TotalHealthDisplay : MonoBehaviour
         if (NetworkClient.connection.identity == null) { return; }
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         YourName.text = "Player" + player.GetPlayerID();
+
+        //Debug.Log($"TotalHealthDisplay.Start() TotalPlayerHealthBar.type:{TotalPlayerHealthBar.type}, TotalEnemyHealthBar.type:{TotalEnemyHealthBar.type}");
         if (player.GetTeamColor() == Color.red) {
             Sprite tmp = TotalPlayerHealthBar.sprite;
             TotalPlayerHealthBar.sprite = TotalEnemyHealthBar.sprite;
             TotalEnemyHealthBar.sprite = tmp;
             TotalPlayerHealthBar.type = Image.Type.Filled;
             TotalEnemyHealthBar.type = Image.Type.Filled;
+            //Debug.Log($"TotalHealthDisplay.Start() inside if TotalPlayerHealthBar.type:{TotalPlayerHealthBar.type}, TotalEnemyHealthBar.type:{TotalEnemyHealthBar.type}");
         }
+        //Debug.Log($"TotalHealthDisplay.Start() after if TotalPlayerHealthBar.type:{TotalPlayerHealthBar.type}, TotalEnemyHealthBar.type:{TotalEnemyHealthBar.type}");
     }
     private void OnDestroy()
     {
@@ -66,6 +70,7 @@ public class TotalHealthDisplay : MonoBehaviour
         }
         newProgress = (float)currentPlayerTotalHealth / (float)maxPlayerTotalHealth;
         TotalPlayerHealthBar.fillAmount = newProgress;
+        //Debug.Log($"TotalHealthDisplay.TotalPlayerHealthdisplay() TotalPlayerHealthBar.fillAmount:{TotalPlayerHealthBar.fillAmount}");
         TotalPlayerHealths.text = currentPlayerTotalHealth.ToString();
     }
     private void TotalEnemyHealth()
@@ -87,11 +92,12 @@ public class TotalHealthDisplay : MonoBehaviour
         newProgress = (float)currentEnemyTotalHealth / (float)maxEnemyTotalHealth;
         TotalEnemyHealths.text = currentEnemyTotalHealth.ToString();
         TotalEnemyHealthBar.fillAmount = newProgress;
+        //Debug.Log($"TotalHealthDisplay.TotalEnemyHealth() TotalEnemyHealthBar.fillAmount:{TotalEnemyHealthBar.fillAmount}");
 
     }
     public void SetTotalHealthToDie(string winnerTag)
     {
-        Debug.Log($"Total Health Display ==> Player ID {player.GetPlayerID()} SetTotalHealthToDie {winnerTag}" );
+        //Debug.Log($"Total Health Display ==> Player ID {player.GetPlayerID()} SetTotalHealthToDie {winnerTag}" );
         if (winnerTag == UnitMeta.REDTEAM)
         {
             TotalPlayerHealthBar.fillAmount = 0f;
