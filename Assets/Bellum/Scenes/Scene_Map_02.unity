@@ -29320,7 +29320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &733509481
 Transform:
   m_ObjectHideFlags: 0
@@ -52039,8 +52039,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216442610}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 92.90824, y: -52.9, z: -37.671883}
+  m_LocalRotation: {x: -0, y: 0.99998724, z: -0, w: 0.005062608}
+  m_LocalPosition: {x: -21.976856, y: -52.9, z: -20.863697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 363083022}
@@ -52131,8 +52131,8 @@ Transform:
   - {fileID: 289331338}
   - {fileID: 885435662}
   m_Father: {fileID: 0}
-  m_RootOrder: 32
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_RootOrder: 31
+  m_LocalEulerAnglesHint: {x: 0, y: 179.42, z: 0}
 --- !u!1 &1218389226
 GameObject:
   m_ObjectHideFlags: 0
@@ -60058,7 +60058,7 @@ Transform:
   m_LocalScale: {x: 31.532297, y: 0.001, z: 53.532978}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1400931548
 GameObject:
@@ -71934,7 +71934,7 @@ MonoBehaviour:
   camPlayer0: {fileID: 306119243}
   camPlayer1: {fileID: 831989508}
   groundPlayer0: {fileID: 733509480}
-  groundPlayer1: {fileID: 0}
+  groundPlayer1: {fileID: 1216442610}
   lightPlayer0: {fileID: 1651308106}
   lightPlayer1: {fileID: 810888061}
   lightSecondaryPlayer0: {fileID: 1651308106}
@@ -74263,7 +74263,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 138
+  field of view: 50
   orthographic: 1
   orthographic size: 40
   m_Depth: 0
@@ -74330,8 +74330,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745352323}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 36.1, y: 78.100006, z: -113.3}
+  m_LocalRotation: {x: 0, y: -0.9124173, z: 0.40926117, w: 0}
+  m_LocalPosition: {x: 35.5, y: 82.6, z: 37.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -85150,7 +85150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMesh: {fileID: 1341351379}
-  enemyMesh: {fileID: 0}
+  enemyMesh: {fileID: 1543992520}
   enemyHalf: {fileID: 231569920}
   playerHalf: {fileID: 1220243422}
 --- !u!4 &2034338625
