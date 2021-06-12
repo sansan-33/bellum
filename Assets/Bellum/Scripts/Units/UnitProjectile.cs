@@ -111,7 +111,7 @@ public class UnitProjectile : NetworkBehaviour
         bool isFlipped = false;
         bTouchingGround = true;
         damageToDeals = damageToDealOriginal;
-        if (other.tag == "Wall") {
+        if (other.tag.Contains("Building")) {
             //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
             cmdSpecialEffect(this.transform.position);
             cmdArrowStick(other.transform);
