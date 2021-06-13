@@ -38,8 +38,8 @@ public class UnitProjectile : NetworkBehaviour
         {
             // update the rotation of the projectile during trajectory motion
             //transform.rotation = Quaternion.LookRotation(rb.velocity) * initialRotation;
+            // This will fix wrong enemy arrow rotation 
             transform.rotation = Quaternion.LookRotation(rb.velocity)  ;
-
         }
     }
     public override void OnStartClient()
