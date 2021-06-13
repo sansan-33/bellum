@@ -238,10 +238,13 @@ public class EnemyAI : MonoBehaviour
         switch (mission)
         {
             case 1:
+                statUpFactor = 1;
                 return unitTypesList;
             case 2:
+                statUpFactor = 1;
                 return unitTypesList2;
             case 3:
+                statUpFactor = 1;
                 return unitTypesList3;
             default:
                 if (localFactory == null) { SetLocalFactory(); }
