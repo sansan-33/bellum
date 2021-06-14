@@ -29,15 +29,15 @@ public class UnitAnimator : NetworkBehaviour
     {
         //Initial state set to prevent attack state delay when checking current state and new state
         currentState = AnimState.IDLE;
-        string weapontype = "_" + UnitMeta.KeyWeaponType[GetComponent<Unit>().unitKey].ToString().ToUpper();
+        //string weapontype = "_" + UnitMeta.KeyWeaponType[GetComponent<Unit>().unitKey].ToString().ToUpper();
         AnimationClip[] clips = networkAnim.animator.runtimeAnimatorController.animationClips;
         foreach (AnimationClip clip in clips)
         {
             //Debug.Log($"Attack anim {clip.name} {clip.length}");
             //if (clip.name  == "ATTACK" + weapontype)
-            if (clip.name == "ATTACK" + weapontype)
+            if (clip.name == "ATTACK")
             {
-                    clipLength = clip.length;
+                clipLength = clip.length;
                 attackState = clip.name;
                 break;
             }
@@ -57,17 +57,13 @@ public class UnitAnimator : NetworkBehaviour
             networkAnim.SetTrigger(animState);
             return;
         }
-        if (newState == AnimState.LOCOMOTION) {
-            animState = locomotionState;
-        }
-        //networkAnim.animator.SetBool(animState, true);
-        networkAnim.animator.SetTrigger(animState);
+        networkAnim.animator.SetBool(animState,true);
         currentState = newState;
     }
     void ResetAll(string animState)
     {
         networkAnim.animator.SetBool("DEFEND", false);
-        networkAnim.animator.SetBool(locomotionState, false);
+        networkAnim.animator.SetBool("LOCOMOTION", false);
         //networkAnim.animator.SetBool(animState, false);
     }
    

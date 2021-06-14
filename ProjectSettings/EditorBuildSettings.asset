@@ -35,5 +35,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Bellum/Scenes/Scene_Map_03.unity
     guid: 64cffaa1cba2b4541ada99196d96b389
+  - enabled: 1
+    path: Assets/Bellum/Scenes/Scene_Map_04.unity
+    guid: 896b0d899f1f9da4684924dc3ab1c584
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b2d72b6c3eb79462d919124a79096683, type: 2}
