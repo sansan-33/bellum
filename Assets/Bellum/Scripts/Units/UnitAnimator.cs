@@ -34,16 +34,17 @@ public class UnitAnimator : NetworkBehaviour
         foreach (AnimationClip clip in clips)
         {
             //Debug.Log($"Attack anim {clip.name} {clip.length}");
-            if (clip.name  == "ATTACK" + weapontype)
+            //if (clip.name  == "ATTACK" + weapontype)
+            if (clip.name == "ATTACK" + weapontype)
             {
-                clipLength = clip.length;
+                    clipLength = clip.length;
                 attackState = clip.name;
                 break;
             }
         }
         locomotionState = "LOCOMOTION";
-        if (UnitMeta.UnitKeyRider.TryGetValue(GetComponent<Unit>().unitKey, out bool isRider))
-            locomotionState = "WALK_RIDER";  
+        //if (UnitMeta.UnitKeyRider.TryGetValue(GetComponent<Unit>().unitKey, out bool isRider))
+        //    locomotionState = "WALK_RIDER";  
     }
 
     void ChangeAnimationState(AnimState newState)
@@ -52,31 +53,32 @@ public class UnitAnimator : NetworkBehaviour
         string animState = newState.ToString();
         ResetAll(animState);
         if (newState == AnimState.ATTACK) {
-            animState = attackState;
+            //animState = attackState;
             networkAnim.SetTrigger(animState);
             return;
         }
         if (newState == AnimState.LOCOMOTION) {
             animState = locomotionState;
         }
-        networkAnim.animator.SetBool(animState, true);
+        //networkAnim.animator.SetBool(animState, true);
+        networkAnim.animator.SetTrigger(animState);
         currentState = newState;
     }
     void ResetAll(string animState)
     {
         networkAnim.animator.SetBool("DEFEND", false);
         networkAnim.animator.SetBool(locomotionState, false);
-        networkAnim.animator.SetBool(animState, false);
+        //networkAnim.animator.SetBool(animState, false);
     }
    
     public void HandleStateControl(AnimState newState)
     {
         if (!isAttacking) {
-            //if (newState != AnimState.LOCOMOTION)
-            //{
-            //    SetFloat("moveSpeed", 0);
+            if (newState != AnimState.LOCOMOTION)
+            {
+                SetFloat("moveSpeed", 0);
             //    SetFloat("direction", 0);
-            //}
+            }
             if (newState == AnimState.ATTACK) {
                 isAttacking = true;
                 networkAnim.animator.SetFloat("animSpeed", clipLength / GetComponent<IAttack>().RepeatAttackDelay());
