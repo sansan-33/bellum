@@ -14,6 +14,7 @@ public class SaveSystem : ScriptableObject
 
 	void OnEnable()
 	{
+		Debug.Log("On enable");
 		_loadLocation.OnLoadingRequested += CacheLoadLocations;
 	}
 
@@ -27,7 +28,7 @@ public class SaveSystem : ScriptableObject
 		LocationSO locationSO = locationsToLoad as LocationSO;
 		if (locationSO)
 		{
-			saveData._locationId = locationSO.Guid;
+			saveData._locationId = StaticClass.UserID;
 		}
 
 		SaveDataToDisk();
@@ -37,6 +38,7 @@ public class SaveSystem : ScriptableObject
 	{
 		if (FileManager.LoadFromFile(saveFilename, out var json))
 		{
+			Debug.Log($"Load System {json}");
 			saveData.LoadFromJson(json);
 			return true;
 		}

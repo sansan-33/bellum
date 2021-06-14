@@ -14,6 +14,8 @@ public class LobbyMenu : MonoBehaviour
 
     private void Start()
     {
+        FileManager.WriteToFile("save.chop", JsonUtility.ToJson(StaticClass.UserID));
+        Debug.Log("Start");
         RTSNetworkManager.ClientOnConnected += HandleClientConnected;
         RTSPlayer.AuthorityOnPartyOwnerStateUpdated += AuthorityHandlePartyOwnerStateUpdated;
         RTSPlayer.ClientOnInfoUpdated += ClientHandleInfoUpdated;
