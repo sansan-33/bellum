@@ -19,6 +19,7 @@ public class GameStartDisplay : NetworkBehaviour
     [SerializeField] private GameObject vsText = null;
     [SerializeField] public CharacterArt Arts;
     public static event Action ServerGameStart;
+    public static event Action ServerGameSpeedUp;
 
 
     [SyncVar(hook = "StartTiming")]
@@ -27,6 +28,7 @@ public class GameStartDisplay : NetworkBehaviour
     private float Timer = 180;
     bool IS_PLAYER_LOADED = false;
     RTSPlayer player;
+    float SPEEPUPTIME = 170f; // will speed up eleixier recovery after 10s
 
     public override void OnStartClient()
     {
@@ -161,6 +163,7 @@ public class GameStartDisplay : NetworkBehaviour
         //Debug.Log($"oldTime:{oldTime}newTime:{newTime}");
         float minutes = Mathf.FloorToInt(newTime / 60);
         float seconds = Mathf.FloorToInt(newTime % 60);
+        if (newTime <= SPEEPUPTIME && newTime >= SPEEPUPTIME - 10) { ServerGameSpeedUp?.Invoke(); }
         if (newTime <= 0) { return; }
         Times.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }

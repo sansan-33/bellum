@@ -19,13 +19,18 @@ public class TotalEleixier : MonoBehaviour
     private float eleixerTimer = 4f;
     public int eleixer = 0;
     public int enemyEleixer = 0;
+    bool IS_SPEEDUP = false;
     public static event Action<int> UpdateEnemyElexier;
     // Start is called before the first frame update
     void Start()
     {
         maxEleixerTimer = eleixerTimer;
+        GameStartDisplay.ServerGameSpeedUp += speedUpEleixier;
     }
-
+    private void OnDestroy()
+    {
+        GameStartDisplay.ServerGameSpeedUp -= speedUpEleixier;
+    }
     // Update is called once per frame
     private void Update()
     {
@@ -52,20 +57,11 @@ public class TotalEleixier : MonoBehaviour
             enemyeleixerBarImage.fillAmount = (float)enemyEleixer / (float)maxEleixer;
         }
     }
-    public void speedUpEleixier(BehaviorSelectionType selectionType)
+    public void speedUpEleixier()
     {
-       
-        if (selectionType== BehaviorSelectionType.Attack|| selectionType == BehaviorSelectionType.Flank)
-        {
-            maxEleixerTimer = 2f;
-            eleixerSpeed.text = "X 2 eleixer";
-        }
-        else
-        {
-            maxEleixerTimer = 4f;
-            eleixerSpeed.text = "X 1 eleixer";
-        }
-       
-
+        if (IS_SPEEDUP) { return; }
+        maxEleixerTimer = maxEleixerTimer / 3f;
+        eleixerSpeed.text = "X 3";
+        IS_SPEEDUP = true;
     }
 }

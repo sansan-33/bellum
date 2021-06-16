@@ -8,7 +8,7 @@ public class UnitAnimator : NetworkBehaviour
     [SerializeField] public NetworkAnimator networkAnim;
     AnimatorClipInfo[] m_CurrentClipInfo;
     [SyncVar] private AnimState currentState;
-    public enum AnimState { ATTACK, DEFEND, GETHIT, LOCOMOTION, NOTHING, IDLE , DIE};
+    public enum AnimState { ATTACK, DEFEND, GETHIT, LOCOMOTION, NOTHING, IDLE , DIE, PROVOKE};
     public bool isAttacking = false;
     private float clipLength = 0f;
     private string attackState = "";
@@ -52,7 +52,7 @@ public class UnitAnimator : NetworkBehaviour
         if (currentState == newState) return;
         string animState = newState.ToString();
         ResetAll(animState);
-        if (newState == AnimState.ATTACK) {
+        if (newState == AnimState.ATTACK || newState == AnimState.PROVOKE) {
             //animState = attackState;
             networkAnim.SetTrigger(animState);
             return;
