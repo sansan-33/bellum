@@ -7,6 +7,7 @@ using UnityEngine;
 public class UnitAnimator : NetworkBehaviour
 {
     [SerializeField] public NetworkAnimator networkAnim;
+    [SerializeField] public AudioSource audioSource;
     AnimatorClipInfo[] m_CurrentClipInfo;
     [SyncVar] private AnimState currentState;
     public enum AnimState { ATTACK, ATTACK0, ATTACK1, ATTACK2, DEFEND, GETHIT, LOCOMOTION, NOTHING, IDLE , DIE, PROVOKE};
@@ -18,6 +19,7 @@ public class UnitAnimator : NetworkBehaviour
     public override void OnStartServer()
     {
         networkAnim = GetComponent<NetworkAnimator>();
+        audioSource = GetComponent<AudioSource>();
         rand = new System.Random();
         SetAnimationState();
     }
@@ -51,6 +53,8 @@ public class UnitAnimator : NetworkBehaviour
         ResetAll(animState);
         if (newState == AnimState.ATTACK0 || newState == AnimState.ATTACK1  || newState == AnimState.ATTACK2 || newState == AnimState.PROVOKE) {
             networkAnim.SetTrigger(animState);
+            if(audioSource !=null)
+            audioSource.PlayDelayed(0.2f);
             return;
         }
         networkAnim.animator.SetBool(animState, true);
