@@ -11,6 +11,7 @@ public class StageMenu : MonoBehaviour
 {
     [SerializeField] public Sprite[] ChapterTitleSprites = new Sprite[4];
     [SerializeField] public GameObject titleObject;
+    private bool IS_RANKING = false;
 
     private void Start()
     {
@@ -53,9 +54,15 @@ public class StageMenu : MonoBehaviour
     {
         
     }
+    public void setIsRanking()
+    {
+        IS_RANKING = true;
+    }
+
     public void LeaveLobby()
     {
         if (StaticClass.Chapter != null && StaticClass.Mission != null ) { return; }
+        if (IS_RANKING) { return; }
 
         if (NetworkServer.active && NetworkClient.isConnected)
         {

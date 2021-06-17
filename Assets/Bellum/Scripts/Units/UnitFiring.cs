@@ -161,12 +161,12 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
             animState = UnitAnimator.AnimState.ATTACK0;
         else if (localDistance < 400f)
             animState = UnitAnimator.AnimState.ATTACK1;
-        else if (localDistance < 150f)
+        else if (localDistance < 300f)
             animState = UnitAnimator.AnimState.ATTACK2;
 
-        if (GetComponent<Unit>().unitType == UnitMeta.UnitType.ARCHER) { 
-            Debug.Log($"{name} Unit Firing  ==> localDistance {localDistance} animState {animState}");
-        }
+        //if (GetComponent<Unit>().unitType == UnitMeta.UnitType.ARCHER) { 
+        //    Debug.Log($"{name} Unit Firing  ==> localDistance {localDistance} animState {animState}");
+        //}
         targeter.transform.GetComponent<UnitAnimator>().StateControl(animState);
         StartCoroutine(FireProjjectile(targetPosition));
     }

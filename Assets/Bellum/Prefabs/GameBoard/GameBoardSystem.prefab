@@ -1464,8 +1464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d43b66af1807447691de23cb356f0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PointType: 1
-  spawnPointIndex: 0
+  PointType: 0
+  spawnPointIndex: 3
 --- !u!1 &4697855862745176171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,7 +1561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PointType: 0
-  spawnPointIndex: 0
+  spawnPointIndex: 1
 --- !u!1 &4801796878261229958
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,8 +2515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d43b66af1807447691de23cb356f0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PointType: 1
-  spawnPointIndex: 0
+  PointType: 0
+  spawnPointIndex: 2
 --- !u!1 &7544787868458388697
 GameObject:
   m_ObjectHideFlags: 0
@@ -2707,8 +2707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d43b66af1807447691de23cb356f0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PointType: 1
-  spawnPointIndex: 0
+  PointType: 0
+  spawnPointIndex: 4
 --- !u!1 &7785336794998936383
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,4 +47,8 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Scene_Shop");
     }
+    public void GoToRanking()
+    {
+        SceneManager.LoadScene("Scene_Ranking");
+    }
 }

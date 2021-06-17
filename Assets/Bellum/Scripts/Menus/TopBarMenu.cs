@@ -51,4 +51,8 @@ public class TopBarMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Scene_Character_Menu");
     }
+    public void GoToStageMenu()
+    {
+        SceneManager.LoadScene("Scene_Stage_Menu");
+    }
 }
