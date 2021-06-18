@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Mirror;
+using SimpleJSON;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -82,10 +83,11 @@ public class GameOverDisplay : MonoBehaviour
             totalKill += army.GetComponent<HealthDisplay>().kills;
         }
         stat2Text.text = totalKill.ToString();
+        int dieCount = 0;
         if (winnerObject != null)
         {
             stat3Text.text = Convert.ToInt32(winnerObject.GetComponent<Health>().getCurrentHealth()).ToString();
-            StartCoroutine(updateUserRankingInfo(Convert.ToInt32(Timer), totalKill, Convert.ToInt32(winnerObject.GetComponent<Health>().getCurrentHealth())));
+            StartCoroutine(updateUserRankingInfo(Convert.ToInt32(Timer), totalKill, Convert.ToInt32(winnerObject.GetComponent<Health>().getCurrentHealth()), dieCount));
         }
     }
     private void ClientHandleGameOverdraw()
@@ -100,12 +102,20 @@ public class GameOverDisplay : MonoBehaviour
         gameOverDisplayParent.enabled = true;
         cardDisplay.enabled = false;
     }
-    IEnumerator updateUserRankingInfo(int timeleft, int killcount, int health)
+    IEnumerator updateUserRankingInfo(int timeleft, int killcount, int health, int dieCount)
     {
         int point = 0;
         point += timeleft;   
         point += killcount;    // Time Left
         point += health;
-        yield return apiManager.UpdateEventRanking(StaticClass.UserID, StaticClass.EventRankingID, point.ToString());
+        point = point - dieCount;
+        yield return apiManager.GetEventRanking(StaticClass.EventRankingID, StaticClass.UserID);
+        JSONNode jsonResult = apiManager.data["GetEventRanking"];
+        if (jsonResult.Count == 0) { yield break; }
+        int currentEventPoint = Int32.Parse(jsonResult[0]["point"].ToString().Trim('"'));
+        if (point > currentEventPoint)
+            yield return apiManager.UpdateEventRanking(StaticClass.UserID, StaticClass.EventRankingID, point.ToString());
+        else
+            yield return null;
     }
 }

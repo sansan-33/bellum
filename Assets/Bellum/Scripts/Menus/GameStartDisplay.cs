@@ -163,7 +163,7 @@ public class GameStartDisplay : NetworkBehaviour
         //Debug.Log($"oldTime:{oldTime}newTime:{newTime}");
         float minutes = Mathf.FloorToInt(newTime / 60);
         float seconds = Mathf.FloorToInt(newTime % 60);
-        if (newTime <= SPEEPUPTIME && newTime >= SPEEPUPTIME - 10) { ServerGameSpeedUp?.Invoke(); }
+        if (newTime <= SPEEPUPTIME && newTime >= SPEEPUPTIME - 60) { ServerGameSpeedUp?.Invoke(); }
         if (newTime <= 0) { return; }
         Times.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
