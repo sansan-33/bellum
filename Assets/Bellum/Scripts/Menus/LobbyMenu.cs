@@ -23,7 +23,11 @@ public class LobbyMenu : MonoBehaviour
     }
     private IEnumerator Testenumerator()
     {
-        yield return new WaitForSeconds(10);
+        Debug.Log($"userID = {StaticClass.UserID} {StaticClass.UserID == ""}");
+        while(StaticClass.UserID == "")
+        {
+            yield return new WaitForSeconds(1);
+        }
         saveSystem.CacheLoadLocations(null, true);
         yield return new WaitForSeconds(10);
         saveSystem.LoadSaveDataFromDisk();
