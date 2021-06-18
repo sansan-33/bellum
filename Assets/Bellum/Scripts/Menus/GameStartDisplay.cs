@@ -167,5 +167,8 @@ public class GameStartDisplay : NetworkBehaviour
         if (newTime <= 0) { return; }
         Times.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-     
+    public string GetGameTimer()
+    {
+        return Timer.ToString();
+    } 
 }

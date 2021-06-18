@@ -16,6 +16,8 @@ public class FirebaseManager : MonoBehaviour
     public FirebaseAuth auth;
     public FirebaseUser user;
     public event Action authStateChanged;
+    public static event Action userNameChanged;
+    public event Action userCreated;
     public FirebaseApp app;
 
     //Firebase variables
@@ -36,11 +38,11 @@ public class FirebaseManager : MonoBehaviour
 
     //User Profile variables
     [Header("Profile")]
-    [SerializeField] private TMP_Text usernameProfileText = null;
+    [SerializeField] private TMP_InputField usernameProfileText = null;
     [SerializeField] private TMP_Text useridProfileText = null;
     [SerializeField] private GameObject userProfilePopUp = null;
 
- 
+    APIManager apiManager;
 
     //Auto Login
     [Header("Auto Login")]
@@ -67,6 +69,24 @@ public class FirebaseManager : MonoBehaviour
     {
         usernameProfileText.text = user.DisplayName;
         useridProfileText.text = user.UserId;
+    }
+    public void UpdateUserProfile()
+    {
+        StartCoroutine(HandleUserProfile());
+    }
+    IEnumerator HandleUserProfile()
+    {
+        Debug.Log($"UpdateUserProfile id {user.UserId} name{usernameProfileText.text}");
+        UserProfile userProfile = new UserProfile();
+        userProfile.DisplayName = usernameProfileText.text;
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var ProfileTask = user.UpdateUserProfileAsync(userProfile);
+        //Wait until the task completes
+        yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
+        StartCoroutine(apiManager.UpdateUserNameProfile(user.UserId, usernameProfileText.text));
+        StaticClass.Username = usernameProfileText.text;
+        userNameChanged?.Invoke();
+        Debug.Log($"In Firebase manager apiManager is null ? {apiManager == null}");
     }
     //Function for the sign out button
     public void HandleSignOut()
@@ -121,6 +141,7 @@ public class FirebaseManager : MonoBehaviour
     }
     private void Start()
     {
+        apiManager = new APIManager();
         StartCoroutine(AutoLogin());
     }
     IEnumerator AutoLogin()
@@ -288,7 +309,7 @@ public class FirebaseManager : MonoBehaviour
                         signupPopUp.SetActive(false);
                         warningRegisterText.text = "";
                         ClearRegisterFeilds();
-                        
+                        apiManager.UpdateUserNameProfile(user.UserId, user.DisplayName);
                     }
                 }
             }

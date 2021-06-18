@@ -14,12 +14,14 @@ public class TopBarMenu : MonoBehaviour
     {
         userProfileManager.userProfileChanged += HandleProfileUpdate;
         userProfileManager.requestTextUpdate += UserProfileTextUpdate;
+        FirebaseManager.userNameChanged += UserProfileTextUpdate; 
 
     }
     private void OnDestroy()
     {
         userProfileManager.userProfileChanged -= HandleProfileUpdate;
         userProfileManager.requestTextUpdate -= UserProfileTextUpdate;
+        FirebaseManager.userNameChanged -= UserProfileTextUpdate;
     }
 
     public void Start()
@@ -38,7 +40,7 @@ public class TopBarMenu : MonoBehaviour
    
     public void UserProfileTextUpdate()
     {
-        //Debug.Log($"Top Bar User Profile Text Update");
+        Debug.Log($"Top Bar User Profile Text Update");
         username.text = StaticClass.Username;
         gold.text = StaticClass.gold;
         diamond.text = StaticClass.diamond;

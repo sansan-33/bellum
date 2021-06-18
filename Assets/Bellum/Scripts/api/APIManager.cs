@@ -18,8 +18,15 @@ public class APIManager
         webReq.url = string.Format("{0}/{1}/{2}/{3}", APIConfig.urladdress, APIConfig.cardService, userid, cardkeys);
         yield return webReq.SendWebRequest();
         string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
-        data.Add("GetTotalPower", JSON.Parse(rawJson));
+        if (data.ContainsKey("GetTotalPower"))
+        {
+            data["GetTotalPower"] = JSON.Parse(rawJson);
+        }
+        else
+        {
+            data.Add("GetTotalPower", JSON.Parse(rawJson));
 
+        }
     }
     public IEnumerator GetTeamInfo(string userid)
     {
@@ -30,7 +37,14 @@ public class APIManager
         webReq.url = string.Format("{0}/{1}/{2}", APIConfig.urladdress, APIConfig.teamService, userid);
         yield return webReq.SendWebRequest();
         string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
-        data.Add("GetTeamInfo", JSON.Parse(rawJson));
+        if (data.ContainsKey("GetTeamInfo"))
+        {
+            data["GetTeamInfo"] = JSON.Parse(rawJson);
+        }
+        else
+        {
+            data.Add("GetTeamInfo", JSON.Parse(rawJson));
+        }
     }
     public IEnumerator GetEventRanking(string eventid, string userid)
     {
@@ -66,10 +80,13 @@ public class APIManager
     }
     public IEnumerator UpdateUserNameProfile(string userid, string name)
     {
+        Debug.Log($"UpdateUserNameProfile ");
+
         UnityWebRequest webReq = new UnityWebRequest();
         webReq.downloadHandler = new DownloadHandlerBuffer();
         webReq.url = string.Format("{0}/{1}/{2}/{3}", APIConfig.urladdress, APIConfig.userProfileNameService, userid, name);
         webReq.method = "put";
+        Debug.Log($"update user name {webReq.url }");
         yield return webReq.SendWebRequest();
     }
 }
