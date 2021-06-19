@@ -10,7 +10,7 @@ public class UserProfileManager : MonoBehaviour
     [SerializeField] private FirebaseManager firebaseManager;
     public event Action userProfileChanged;
     public event Action requestTextUpdate;
-
+  
     private void Awake()
     {
         if(firebaseManager!= null)

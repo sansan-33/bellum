@@ -121,7 +121,7 @@ public class GameOverDisplay : MonoBehaviour
     IEnumerator updateUserRankingInfo(int timeleft, int killcount, int health, int dieCount, int crownCount)
     {
         int point = 0;
-        point += timeleft;   
+        point += (timeleft * 3);   
         point += killcount;    // Time Left
         point += health;
         point += (crownCount * 500);

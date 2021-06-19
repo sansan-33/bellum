@@ -27,4 +27,8 @@ public class SaveSystem : ScriptableObject
 	{
 		FileManager.WriteToFile(saveFilename, "");
 	}
+	public void SaveToFile()
+	{
+		FileManager.WriteToFile(saveFilename, saveData.ToJson());
+	}
 }

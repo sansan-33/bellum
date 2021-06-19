@@ -24894,6 +24894,7 @@ MonoBehaviour:
   usernameProfileText: {fileID: 505219626}
   useridProfileText: {fileID: 563820115}
   userProfilePopUp: {fileID: 1304818096}
+  saveSystem: {fileID: 11400000, guid: edc355c4a7d5028408d322b90814e19e, type: 2}
 --- !u!1 &1108439527
 GameObject:
   m_ObjectHideFlags: 0
@@ -33137,7 +33138,6 @@ MonoBehaviour:
   - {fileID: 249989596}
   - {fileID: 1950800663}
   - {fileID: 1081286833}
-  saveSystem: {fileID: 11400000, guid: edc355c4a7d5028408d322b90814e19e, type: 2}
 --- !u!850595691 &1326720650
 LightingSettings:
   m_ObjectHideFlags: 0

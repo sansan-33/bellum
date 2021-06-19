@@ -43,6 +43,7 @@ public class FirebaseManager : MonoBehaviour
     [SerializeField] private GameObject userProfilePopUp = null;
 
     APIManager apiManager;
+    [SerializeField] private SaveSystem saveSystem;
 
     //Auto Login
     [Header("Auto Login")]
@@ -148,8 +149,11 @@ public class FirebaseManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         string ip = GetLocalIPv4();
+        saveSystem.LoadSaveDataFromDisk();
+        Debug.Log($"saveSystem.saveData.ToJson : {saveSystem.saveData.ToJson()}");
+
         //if (StaticClass.UserID == null || StaticClass.UserID.Length == 0 )
-            yield return Login(IPEmail[ip][0], IPEmail[ip][1]);
+        yield return Login(IPEmail[ip][0], IPEmail[ip][1]);
     }
     void AuthStateChanged(object sender, System.EventArgs eventArgs)
     {
@@ -216,7 +220,9 @@ public class FirebaseManager : MonoBehaviour
             user = LoginTask.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.Email);
             warningLoginText.text = "";
-
+            saveSystem.saveData._email = _email;
+            saveSystem.saveData._password = _password;
+            saveSystem.SaveToFile();
             loginPopUp.SetActive(false);
             authStateChanged?.Invoke();
             ClearLoginFeilds();
