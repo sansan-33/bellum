@@ -206,6 +206,7 @@ public class Card : MonoBehaviour
         int elexier;
         if (cardTimerImage != null && cardFace.numbers != Card_Numbers.BARRACK && cardFace.numbers !=Card_Numbers.TOWER && cardFace.numbers != Card_Numbers.CATAPULT && cardFace.numbers != Card_Numbers.WALL)
         {
+            onClick = false;
             elexier = enemyCard ? dealManagers.totalEleixers.enemyEleixer : dealManagers.totalEleixers.eleixer;
             if (elexier < uniteleixer)
             {
