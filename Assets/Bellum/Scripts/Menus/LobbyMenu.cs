@@ -28,7 +28,7 @@ public class LobbyMenu : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
         }
-        saveSystem.CacheLoadLocations(null, true);
+        //saveSystem.CacheLoadLocations(null, true);
         yield return new WaitForSeconds(10);
         saveSystem.LoadSaveDataFromDisk();
     }
