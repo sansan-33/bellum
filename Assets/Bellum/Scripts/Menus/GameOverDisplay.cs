@@ -15,6 +15,10 @@ public class GameOverDisplay : MonoBehaviour
     [SerializeField] private TMP_Text stat1Text = null;
     [SerializeField] private TMP_Text stat2Text = null;
     [SerializeField] private TMP_Text stat3Text = null;
+    [SerializeField] private TMP_Text stat4Text = null;
+    [SerializeField] private TMP_Text stat5Text = null;
+    [SerializeField] private TMP_Text totalText = null;
+
     [SerializeField] private GameObject camFreeLookPrefab = null;
     [SerializeField] private Canvas cardDisplay = null;
     [SerializeField] private TMP_Text crownBlueText = null;
@@ -74,6 +78,8 @@ public class GameOverDisplay : MonoBehaviour
             //Destroy(transform.root.gameObject);
         });
         winnerNameText.color = winner.ToLower() == "blue" ? Color.blue : Color.red;
+        int crownCount = winner.ToLower() == "blue" ? Int32.Parse(crownBlueText.text) : Int32.Parse(crownRedText.text);
+
         cardDisplay.enabled = false;
         stat1Text.text = Convert.ToInt32(Timer).ToString();
         List<GameObject> troops = tacticalBehavior.GetAllTroops();
@@ -84,10 +90,20 @@ public class GameOverDisplay : MonoBehaviour
         }
         stat2Text.text = totalKill.ToString();
         int dieCount = 0;
+        foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
+        {
+            if (factroy.GetComponent<UnitFactory>().hasAuthority)
+            {
+                UnitFactory localFactory = factroy.GetComponent<UnitFactory>();
+                dieCount = localFactory.GetUnitSpawnCount((winner.ToLower() == "blue" ? 0 : 1)) - troops.Count;
+            }
+        }
         if (winnerObject != null)
         {
             stat3Text.text = Convert.ToInt32(winnerObject.GetComponent<Health>().getCurrentHealth()).ToString();
-            StartCoroutine(updateUserRankingInfo(Convert.ToInt32(Timer), totalKill, Convert.ToInt32(winnerObject.GetComponent<Health>().getCurrentHealth()), dieCount));
+            stat4Text.text = crownCount.ToString() + " * 500 ";
+            stat5Text.text = dieCount.ToString();
+            StartCoroutine(updateUserRankingInfo(Convert.ToInt32(Timer), totalKill, Convert.ToInt32(winnerObject.GetComponent<Health>().getCurrentHealth()), dieCount, crownCount));
         }
     }
     private void ClientHandleGameOverdraw()
@@ -102,13 +118,16 @@ public class GameOverDisplay : MonoBehaviour
         gameOverDisplayParent.enabled = true;
         cardDisplay.enabled = false;
     }
-    IEnumerator updateUserRankingInfo(int timeleft, int killcount, int health, int dieCount)
+    IEnumerator updateUserRankingInfo(int timeleft, int killcount, int health, int dieCount, int crownCount)
     {
         int point = 0;
         point += timeleft;   
         point += killcount;    // Time Left
         point += health;
+        point += (crownCount * 500);
         point = point - dieCount;
+        totalText.text = point.ToString();
+
         yield return apiManager.GetEventRanking(StaticClass.EventRankingID, StaticClass.UserID);
         JSONNode jsonResult = apiManager.data["GetEventRanking"];
         if (jsonResult.Count == 0) { yield break; }

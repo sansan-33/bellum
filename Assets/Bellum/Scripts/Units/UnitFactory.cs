@@ -234,4 +234,8 @@ public class UnitFactory : NetworkBehaviour
     {
         return unitDict[unitKey];
     }
+    public int GetUnitSpawnCount(int playerid)
+    {
+        return  unitSpawnCount[playerid];
+    }
 }
