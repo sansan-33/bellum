@@ -8,10 +8,12 @@ using static SpecialAttackDict;
 
 public class EnemyAI : MonoBehaviour
 {
+    private bool usingCard = true;
     private bool FinishDealEnemyCard = false;
     private bool usedTatical = false;
     private bool canSpawnUnit = true;
     private bool savingCardForDefend = false;
+    private bool handledDict = false;
     private int elexier = 0;
     private Card nextCard;
     private Card urgentSpawn;
@@ -72,6 +74,8 @@ public class EnemyAI : MonoBehaviour
         GameOverHandler.ClientOnGameOver += HandleGameOver;
         Unit.ClientOnUnitSpawned += UrgentDefend;
         Unit.ClientOnUnitDespawned += Rage;
+        InvokeRepeating("HandleSpawnEnemyBackUp", 15, 15);
+        usingCard = false;
     }
     private void OnDestroy()
     {
@@ -92,24 +96,29 @@ public class EnemyAI : MonoBehaviour
     }
     private IEnumerator HandleDictionary(List<UnitMeta.UnitType> factor)
     {
-        StratergyPostion.Add(unitType[0], position[0]);
-        StratergyPostion.Add(unitType[1], position[1]);
-        StratergyPostion.Add(unitType[2], position[2]);
-        StratergyPostion.Add(unitType[3], position[3]);
-        StratergyPostion.Add(unitType[4], position[4]);
+        if (handledDict == false)
+        {
+            handledDict = true;
+            StratergyPostion.Add(unitType[0], position[0]);
+            StratergyPostion.Add(unitType[1], position[1]);
+            StratergyPostion.Add(unitType[2], position[2]);
+            StratergyPostion.Add(unitType[3], position[3]);
+            StratergyPostion.Add(unitType[4], position[4]);
 
-        factor.Add(UnitMeta.UnitType.CAVALRY);
-        Stratergy.Add(0, unitTypesList);
-        Stratergy.Add(1, unitTypesList2);
-        Stratergy.Add(2, unitTypesList3);
+            factor.Add(UnitMeta.UnitType.CAVALRY);
+            Stratergy.Add(0, unitTypesList);
+            Stratergy.Add(1, unitTypesList2);
+            Stratergy.Add(2, unitTypesList3);
 
-        Sp.Add(unitType[0], SpList1);
-        Sp.Add(unitType[1], SpList1);
-        Sp.Add(unitType[2], SpList1);
-        Sp.Add(unitType[3], SpList2);
-        Sp.Add(unitType[4], SpList1);
+            Sp.Add(unitType[0], SpList1);
+            Sp.Add(unitType[1], SpList1);
+            Sp.Add(unitType[2], SpList1);
+            Sp.Add(unitType[3], SpList2);
+            Sp.Add(unitType[4], SpList1);
 
-        GameObject.FindGameObjectWithTag("King1").GetComponent<Health>().ClientOnHealthUpdated += OnHealthUpdated;
+            GameObject.FindGameObjectWithTag("King1").GetComponent<Health>().ClientOnHealthUpdated += OnHealthUpdated;
+        }
+        
       /*  Mission.Add(1, Difficulty.OneStar);
         Mission.Add(2, Difficulty.TwoStar);
         Mission.Add(3, Difficulty.ThreeStar);
@@ -120,26 +129,36 @@ public class EnemyAI : MonoBehaviour
     
     private IEnumerator HandleSpawnnEnemy()
     {
-        //yield return new WaitForSeconds(1f);
-        List<UnitMeta.UnitType>  lists = HandleMission();
+        List<UnitMeta.UnitType> lists = HandleMission();
         yield return HandleDictionary(lists);
         //yield return new WaitForSeconds(2f);
         while (!ISGAMEOVER)
-        {
-            yield return new WaitForSeconds(2.5f);
-           // Debug.Log($"HandleSpawnnEnemy {cards.Count}");
-            if (canSpawnUnit == true)
-            {//Debug.Log("HandleSpawnnEnemy");
-                yield return SelectCard(true);
-                yield return new WaitForSeconds(2f);
-                yield return SpawnEnemy();
+            {
+                yield return new WaitForSeconds(2.5f);
+                // Debug.Log($"HandleSpawnnEnemy {cards.Count}");
+                if (canSpawnUnit == true)
+                {//Debug.Log("HandleSpawnnEnemy");
+                    yield return SelectCard(true);
+                    yield return new WaitForSeconds(2f);
+                    yield return SpawnEnemy();
+                    //if (timer <= 0) { localFactory.GetComponent<Player>().dragCardMerge(); }
+                }
+                usingCard = true;
+                //yield return SelectWallPos(); 
             }
-           
-            //yield return SelectWallPos();
-             
-           
-        }
+        //yield return new WaitForSeconds(1f);
+
+        //Debug.Log("End game");
         yield return null;
+    }
+    private void HandleSpawnEnemyBackUp()
+    {
+        if(usingCard == false)
+        {
+            Debug.Log("glichted");
+            StopCoroutine(HandleSpawnnEnemy());
+            StartCoroutine(HandleSpawnnEnemy());
+        }
     }
     private void Rage(Unit unit)
     {
@@ -290,7 +309,7 @@ public class EnemyAI : MonoBehaviour
     {
         if(dragCard == true && FinishDealEnemyCard == true)
         {
-            Debug.Log("SameCard");
+            //Debug.Log("SameCard");
             List<Card> Archers = new List<Card>();
             List<Card> Cavalrys = new List<Card>();
             List<Card> Footmans = new List<Card>();
@@ -308,23 +327,23 @@ public class EnemyAI : MonoBehaviour
                 {
                     case Card_Numbers.ARCHER:
                         Archers.Add(card);
-                        Debug.Log("Add Archers");
+                       // Debug.Log("Add Archers");
                         break;
                     case Card_Numbers.CAVALRY:
                         Cavalrys.Add(card);
-                        Debug.Log("Add Cavalrys");
+                       // Debug.Log("Add Cavalrys");
                         break;
                     case Card_Numbers.FOOTMAN:
                         Footmans.Add(card);
-                        Debug.Log("Add Footmans");
+                        //Debug.Log("Add Footmans");
                         break;
                     case Card_Numbers.MAGIC:
                         Magics.Add(card);
-                        Debug.Log("Add Magics");
+                        //Debug.Log("Add Magics");
                         break;
                     case Card_Numbers.TANK:
                         Tanks.Add(card);
-                        Debug.Log("Add Tanks");
+                        //Debug.Log("Add Tanks");
                         break;
                 }
             }
@@ -332,11 +351,12 @@ public class EnemyAI : MonoBehaviour
             {
                 if(cards.Count >= 2)
                 {
-                    Debug.Log($"{cards[0].cardFace.numbers} has over 2 card");
+                    //Debug.Log($"{cards[0].cardFace.numbers} has over 2 card");
                     yield return SameStar(cards);
                 }
             }
         }
+        yield return enemyPlayer.mergeCard();
         yield return null;
     }
     private IEnumerator SameStar(List<Card> cards)
@@ -345,7 +365,7 @@ public class EnemyAI : MonoBehaviour
         
             Card beforeNewCard = cards[0];
             Card card = cards[1];
-            Debug.Log($"{beforeNewCard.cardFace.numbers} is {beforeNewCard.cardFace.star} == {card.cardFace.numbers} is {card.cardFace.star}");
+           // Debug.Log($"{beforeNewCard.cardFace.numbers} is {beforeNewCard.cardFace.star} == {card.cardFace.numbers} is {card.cardFace.star}");
             if (beforeNewCard == card) { Debug.Log("Card"); }
             if (beforeNewCard.cardFace.star == card.cardFace.star)
             {
@@ -359,7 +379,7 @@ public class EnemyAI : MonoBehaviour
        
         Vector2 original = beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition;
         Vector2 finishPos = card.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition;
-        Debug.Log($"DragCard {original} {finishPos}");
+        //Debug.Log($"DragCard {original} {finishPos}");
         float a = 1f;
         /*while (beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition != finishPos)
         {
@@ -404,7 +424,7 @@ public class EnemyAI : MonoBehaviour
             }
         } 
 
-        yield return enemyPlayer.mergeCard();
+       
         //dealManagers.GetComponent<CardDealer>().Hit(true);
         yield return null;
     }
@@ -447,9 +467,9 @@ public class EnemyAI : MonoBehaviour
         
             nextCard = _card;
             RectTransform rect = nextCard.GetComponent<RectTransform>();
-            float x = rect.localScale.x;
-            float y = rect.localScale.y;
-            float z = rect.localScale.z;
+            //float x = rect.localScale.x;
+            //float y = rect.localScale.y;
+            //float z = rect.localScale.z;
             rect.localScale = new Vector3(cardSizeUpFactor, cardSizeUpFactor, cardSizeUpFactor);
         
        
@@ -732,9 +752,9 @@ public class EnemyAI : MonoBehaviour
     {
         cards.Remove(card);
     }
-    private void Update()
-    {
-       // Debug.Log(cards.Count);
-    }
+   // private void Update()
+    //{
+        //timer -= Time.deltaTime;
+    //}
 }
 

@@ -8,14 +8,14 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
-    
+    public Image buttonImage;
     public CardFace cardFace;
     public int cardPlayerHandIndex = 0;
     [SerializeField] public TMP_Text eleixerText;
     public float cardTimer = 0;
     [SerializeField] public List<Sprite> sprite = new List<Sprite>();
     [SerializeField] public Dictionary<UnitMeta.UnitSkill , Sprite> SkillImageDictionary = new Dictionary<UnitMeta.UnitSkill, Sprite>();
-
+    public bool onClick = false;
     private UnitFactory localFactory;
     private CardDealer dealManagers;
     private ParticlePool appearEffectPool;
@@ -32,6 +32,8 @@ public class Card : MonoBehaviour
     [SerializeField] public GameObject stars;
     [SerializeField] public GameObject cardFrame;
     [SerializeField] private Image cardTimerImage;
+    [SerializeField] private float relodTime = 30;
+    private float timer;
     private float effectAmount = 1f;
     private float originalx;
     private float originaly;
@@ -45,6 +47,7 @@ public class Card : MonoBehaviour
         originalx = rect.localScale.x;
         originaly = rect.localScale.y;
         originalz = rect.localScale.z;
+        timer = relodTime;
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         playerID = player.GetPlayerID();
         //playerRace =  (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), player.GetRace());
@@ -65,7 +68,7 @@ public class Card : MonoBehaviour
         
         if(enemyCard == true)
         {
-           Debug.Log($"Getting scale up");
+           //Debug.Log($"Getting scale up");
             RectTransform rect = GetComponent<RectTransform>();
             float x = rect.localScale.x;
             float y = rect.localScale.y;
@@ -75,7 +78,7 @@ public class Card : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Getting scale down");
+            //Debug.Log($"Getting scale down");
             RectTransform rect = GetComponent<RectTransform>();
             rect.localScale = new Vector3(1, 1, 1);
             GetComponentInChildren<Button>().enabled = true;
@@ -116,6 +119,7 @@ public class Card : MonoBehaviour
         //Debug.Log("OnpointerDown");
         if (GetComponent<DragCard>().unitPreviewInstance != null) { return; }
         if (localFactory == null) { StartCoroutine(SetLocalFactory()); }
+        if (onClick == true) { return; }
 
         int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
         //Debug.Log(enemyCard);
@@ -140,7 +144,7 @@ public class Card : MonoBehaviour
         var _enemyCard = enemyCard;
         enemyCard = false;
         dealManagers.Hit(_enemyCard);
-       
+        onClick = true;
         //Debug.Log("re set enemy card");
         localFactory.CmdSpawnUnit( StaticClass.playerRace, (UnitMeta.UnitType)type, (int)cardFace.star + 1, playerID, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, teamColor);
     }
@@ -155,28 +159,33 @@ public class Card : MonoBehaviour
     }
     public IEnumerator HandleDropUnit(Vector3 spawnPoint)
     {
-        if (localFactory == null) { yield return SetLocalFactory(); }
-        player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
-      
-        int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
-        if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
-        appearEffectPool.UseParticles(spawnPoint);
-        //Debug.Log($" drop wall{cardFace.stats}");
-        if (enemyCard == false)
+        if (onClick == false)
         {
-            playerID = player.GetPlayerID();
-            teamColor = player.GetTeamColor();
-            localFactory.CmdDropUnit(playerID, spawnPoint, StaticClass.playerRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType)type).ToString(), unitsize, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, (int)cardFace.star + 1, teamColor, Quaternion.identity);
-            
-        }
-        else
-        {
-             playerID = player.GetEnemyID();
-            teamColor = player.GetTeamEnemyColor();
-            localFactory.CmdDropUnit(playerID, spawnPoint, StaticClass.enemyRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType)type).ToString(), unitsize, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, (int)cardFace.star + 1, teamColor, Quaternion.identity);
+            if (localFactory == null) { yield return SetLocalFactory(); }
+            player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
 
-        }
-          enemyCard = false;
+            int type = (int)cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
+            if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
+            appearEffectPool.UseParticles(spawnPoint);
+            //Debug.Log($" drop wall{cardFace.stats}");
+            if (enemyCard == false)
+            {
+                playerID = player.GetPlayerID();
+                teamColor = player.GetTeamColor();
+                localFactory.CmdDropUnit(playerID, spawnPoint, StaticClass.playerRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType)type).ToString(), unitsize, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, (int)cardFace.star + 1, teamColor, Quaternion.identity);
+
+            }
+            else
+            {
+                playerID = player.GetEnemyID();
+                teamColor = player.GetTeamEnemyColor();
+                localFactory.CmdDropUnit(playerID, spawnPoint, StaticClass.enemyRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType)type).ToString(), unitsize, cardFace.stats.cardLevel, cardFace.stats.health, cardFace.stats.attack, cardFace.stats.repeatAttackDelay, cardFace.stats.speed, cardFace.stats.defense, cardFace.stats.special, cardFace.stats.specialkey, cardFace.stats.passivekey, (int)cardFace.star + 1, teamColor, Quaternion.identity);
+
+            }
+            onClick = true;
+            enemyCard = false;
+        } 
+      
         // if(cardFace.stats == null)
         // {
         //     localFactory.CmdDropUnit(playerID, spawnPoint, StaticClass.playerRace, (UnitMeta.UnitType)type, ((UnitMeta.UnitType)type).ToString(), unitsize, 1, 1, 1, 1, 1, 1, 1, null, cardFace.stats.passivekey, (int)cardFace.star + 1, teamColor, Quaternion.identity);
@@ -195,7 +204,7 @@ public class Card : MonoBehaviour
     private void Update()
     {
         int elexier;
-        if (cardTimerImage != null)
+        if (cardTimerImage != null && cardFace.numbers != Card_Numbers.BARRACK && cardFace.numbers !=Card_Numbers.TOWER && cardFace.numbers != Card_Numbers.CATAPULT && cardFace.numbers != Card_Numbers.WALL)
         {
             elexier = enemyCard ? dealManagers.totalEleixers.enemyEleixer : dealManagers.totalEleixers.eleixer;
             if (elexier < uniteleixer)
@@ -210,7 +219,29 @@ public class Card : MonoBehaviour
                 cardTimerImage.gameObject.SetActive(false);
                 effectAmount = 0.1f;
             }
+            //Debug.Log(cardSpawnButton.GetComponentInChildren<Image>().name);
             cardSpawnButton.GetComponentInChildren<Image>().material.SetFloat("_Greyscale", effectAmount);
+        }
+        else if(cardTimerImage != null)
+        {
+            if(onClick == true)
+            {
+                cardTimerImage.gameObject.SetActive(true);
+                timer -= Time.deltaTime;
+                float fillAmount = (float)timer / relodTime;
+                //Debug.Log($"fillAmount:{fillAmount}relodTime:{relodTime}timer:{timer}");
+                cardTimerImage.fillAmount = Mathf.SmoothDamp(cardTimerImage.fillAmount, 1 - fillAmount, ref progressImageVelocity, 0.5f);
+                effectAmount = 1f;
+                if (timer <= 0)
+                {
+                    onClick = false;
+                    timer = relodTime;
+                    cardTimerImage.fillAmount = 1f;
+                    cardTimerImage.gameObject.SetActive(false);
+                    effectAmount = 0.1f;
+                }
+                buttonImage.material.SetFloat("_Greyscale", effectAmount);
+            }
         }
         
     }
