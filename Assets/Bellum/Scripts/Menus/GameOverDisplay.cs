@@ -130,6 +130,7 @@ public class GameOverDisplay : MonoBehaviour
         point += (crownCount * 500);
         point += Convert.ToInt32(StaticClass.HighestDamage) * 30;
         point = point - dieCount;
+        point = point * 1 + ( (Int32.Parse(StaticClass.Mission) - 1) / 10);
         totalText.text = point.ToString();
 
         yield return apiManager.GetEventRanking(StaticClass.EventRankingID, StaticClass.UserID);
