@@ -8,6 +8,7 @@ using static SpecialAttackDict;
 
 public class EnemyAI : MonoBehaviour
 {
+    private bool FinishDealEnemyCard = false;
     private bool usedTatical = false;
     private bool canSpawnUnit = true;
     private bool savingCardForDefend = false;
@@ -24,6 +25,8 @@ public class EnemyAI : MonoBehaviour
     private Vector3 heroPos;
     private int mission;
     private int chapter;
+    private float progressImageVelocity;
+    [SerializeField] private bool dragCard = true;
     [SerializeField] private float cardSizeUpFactor = 0.625f;
     [SerializeField] private TacticalBehavior TB;
     [SerializeField] private Transform halfLine;
@@ -84,6 +87,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void StartSpawnnEnemy()
     {
+        FinishDealEnemyCard = true;
         StartCoroutine(HandleSpawnnEnemy());
     }
     private IEnumerator HandleDictionary(List<UnitMeta.UnitType> factor)
@@ -280,6 +284,129 @@ public class EnemyAI : MonoBehaviour
         //if (card.GetComponentInParent<Player>()) { Debug.Log($"belong to {card.GetComponentInParent<Player>().name}"); }
         
         this.cards.Add(card);
+        StartCoroutine(SameCard());
+    }
+    private IEnumerator SameCard()
+    {
+        if(dragCard == true && FinishDealEnemyCard == true)
+        {
+            Debug.Log("SameCard");
+            List<Card> Archers = new List<Card>();
+            List<Card> Cavalrys = new List<Card>();
+            List<Card> Footmans = new List<Card>();
+            List<Card> Magics = new List<Card>();
+            List<Card> Tanks = new List<Card>();
+            List<List<Card>> numOfEachCard = new List<List<Card>>();
+            numOfEachCard.Add(Archers);
+            numOfEachCard.Add(Cavalrys);
+            numOfEachCard.Add(Footmans);
+            numOfEachCard.Add(Magics);
+            numOfEachCard.Add(Tanks);
+            foreach (Card card in cards) 
+            {
+                switch (card.cardFace.numbers)
+                {
+                    case Card_Numbers.ARCHER:
+                        Archers.Add(card);
+                        Debug.Log("Add Archers");
+                        break;
+                    case Card_Numbers.CAVALRY:
+                        Cavalrys.Add(card);
+                        Debug.Log("Add Cavalrys");
+                        break;
+                    case Card_Numbers.FOOTMAN:
+                        Footmans.Add(card);
+                        Debug.Log("Add Footmans");
+                        break;
+                    case Card_Numbers.MAGIC:
+                        Magics.Add(card);
+                        Debug.Log("Add Magics");
+                        break;
+                    case Card_Numbers.TANK:
+                        Tanks.Add(card);
+                        Debug.Log("Add Tanks");
+                        break;
+                }
+            }
+            foreach(List<Card> cards in numOfEachCard)
+            {
+                if(cards.Count >= 2)
+                {
+                    Debug.Log($"{cards[0].cardFace.numbers} has over 2 card");
+                    yield return SameStar(cards);
+                }
+            }
+        }
+        yield return null;
+    }
+    private IEnumerator SameStar(List<Card> cards)
+    {
+       // int i = 0;
+        
+            Card beforeNewCard = cards[0];
+            Card card = cards[1];
+            Debug.Log($"{beforeNewCard.cardFace.numbers} is {beforeNewCard.cardFace.star} == {card.cardFace.numbers} is {card.cardFace.star}");
+            if (beforeNewCard == card) { Debug.Log("Card"); }
+            if (beforeNewCard.cardFace.star == card.cardFace.star)
+            {
+                yield return DragCard(beforeNewCard, card);
+            }
+        
+        yield return null;
+    }
+    private IEnumerator DragCard(Card beforeNewCard, Card card )
+    {
+       
+        Vector2 original = beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition;
+        Vector2 finishPos = card.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition;
+        Debug.Log($"DragCard {original} {finishPos}");
+        float a = 1f;
+        /*while (beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition != finishPos)
+        {
+            a -= Time.deltaTime;
+            Debug.Log($"mov card to {original}");
+            float x = beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition.x;
+            x = Mathf.SmoothDamp(beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition.x,
+                finishPos.x, ref progressImageVelocity, 0.01f);
+            beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition = new Vector3(x, original.y, 0);
+            if (original.y != finishPos.y) { Debug.Log("y not same"); break; }
+            if (a <= 0) { Debug.Log("Time out"); break; }
+        }
+        a = 1f;
+        while (card.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition != original)
+        {
+            a -= Time.deltaTime;
+            Debug.Log($"mov card to {original}");
+            float x = card.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition.x;
+            x = Mathf.SmoothDamp(card.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition.x,
+                original.x, ref progressImageVelocity, 0.01f);
+            beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition = new Vector3(x, original.y, 0);
+            if (original.y != finishPos.y) { Debug.Log("y not same"); break; }
+            if (a <= 0) { Debug.Log("Time out"); break; }
+        }*/
+         beforeNewCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition = finishPos;
+        card.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition = original;
+        int i = beforeNewCard.cardPlayerHandIndex;
+        if (i < card.cardPlayerHandIndex)
+        {
+            while (i < card.cardPlayerHandIndex)
+            {
+                enemyPlayer.moveCardAt(beforeNewCard.cardPlayerHandIndex, "right");
+                i++;
+            }
+        }
+        else
+        {
+            while (i > card.cardPlayerHandIndex)
+            {
+                enemyPlayer.moveCardAt(beforeNewCard.cardPlayerHandIndex, "left");
+                i++;
+            }
+        } 
+
+        yield return enemyPlayer.mergeCard();
+        //dealManagers.GetComponent<CardDealer>().Hit(true);
+        yield return null;
     }
     private void OnUpdateElexier(int elexier)
     {

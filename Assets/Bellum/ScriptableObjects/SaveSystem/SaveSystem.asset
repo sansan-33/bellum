@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _loadLocation: {fileID: 11400000, guid: b4b77c65f112749a39649dbc37db050a, type: 2}
   _playerInventory: {fileID: 11400000, guid: 9d03925f9765f47838beba6d7e993408, type: 2}
-  saveFilename: save.bellum
+  saveFilename: 'save.bellum '
   backupSaveFilename: save.bellum.bak
   saveData:
     _locationId: d102ba8fe3b291249aeb9de4b95c1904

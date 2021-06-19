@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
         //StartCoroutine(mergeCard());
 
     }
-    IEnumerator mergeCard()
+    public  IEnumerator mergeCard()
     {
         //Debug.Log($"Player.mergeCard() Calling Mereg {PrintAllCards(playerHand[0])}");
         //Debug.Log($"Start merge cards in hand  {playerHand[0].Count}");

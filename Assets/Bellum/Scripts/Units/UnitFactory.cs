@@ -68,6 +68,7 @@ public class UnitFactory : NetworkBehaviour
   
     [SerializeField]
     private int spawnMoveRange = 1000;
+    private Dictionary<int,int> unitSpawnCount = new Dictionary<int, int>()  { {0,3} ,{ 1, 3 } };
    
     public override void OnStartClient()
     {
@@ -160,6 +161,7 @@ public class UnitFactory : NetworkBehaviour
             //Debug.Log($"unit.GetComponent<UnitPowerUp>().RpcPowerUp(unit, star){unit.GetComponent<UnitPowerUp>()}");
             spawnCount--;
             spawnCountOffset += 5;
+            unitSpawnCount[playerID] = unitSpawnCount[playerID] + 1;
         }
         yield return null;
     }
@@ -231,5 +233,9 @@ public class UnitFactory : NetworkBehaviour
     public GameObject GetUnitPrefab(UnitMeta.UnitKey unitKey)
     {
         return unitDict[unitKey];
+    }
+    public int GetUnitSpawnCount(int playerid)
+    {
+        return  unitSpawnCount[playerid];
     }
 }
