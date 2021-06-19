@@ -32,7 +32,7 @@ public class GameOverDisplay : MonoBehaviour
         Timer -= Time.deltaTime;
         if(Timer <= 0) {
             int blueCrown = Int32.Parse(crownBlueText.text);
-            int redCrown = Int32.Parse(crownBlueText.text);
+            int redCrown = Int32.Parse(crownRedText.text);
             if (blueCrown != redCrown && (blueCrown + redCrown) > 0 ) {
                 ClientHandleGameOver(blueCrown > redCrown ? "blue" : "red");
             } else
@@ -129,8 +129,9 @@ public class GameOverDisplay : MonoBehaviour
 
         yield return apiManager.GetEventRanking(StaticClass.EventRankingID, StaticClass.UserID);
         JSONNode jsonResult = apiManager.data["GetEventRanking"];
-        if (jsonResult.Count == 0) { yield break; }
-        int currentEventPoint = Int32.Parse(jsonResult[0]["point"].ToString().Trim('"'));
+        int currentEventPoint = 0;
+        if (jsonResult.Count > 0) { currentEventPoint = Int32.Parse(jsonResult[0]["point"].ToString().Trim('"'));  }
+        Debug.Log($"updateUserRankingInfo point: {point} currentEventPoint : {currentEventPoint}");
         if (point > currentEventPoint)
             yield return apiManager.UpdateEventRanking(StaticClass.UserID, StaticClass.EventRankingID, point.ToString());
         else

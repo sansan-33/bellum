@@ -30,10 +30,10 @@ public class MenuRanking : MonoBehaviour
         yield return apiManager.GetEventRanking(eventid, userid);
         JSONNode jsonResult = apiManager.data["GetEventRanking"];
         UserRankItem[] userRank = (userid.Length > 0) ? listMeParent.GetComponents<UserRankItem>() : userRankContentParent.GetComponentsInChildren<UserRankItem>();
-        Debug.Log($"userRank item {userRank.Length} {jsonResult}");
+        //Debug.Log($"userRank item {userRank.Length} {jsonResult}");
         for (int i = 0; i < jsonResult.Count; i++)
         {
-            Debug.Log($"jsonresult : userid {jsonResult[i]["userid"].ToString()} point {jsonResult[i]["point"].ToString()}");
+            //Debug.Log($"jsonresult : userid {jsonResult[i]["userid"].ToString()} point {jsonResult[i]["point"].ToString()}");
             userRank[i].userid.text = jsonResult[i]["name"].ToString().Trim('"');
             userRank[i].point.text = jsonResult[i]["point"].ToString().Trim('"');
             userRank[i].position.text = jsonResult[i]["position"].ToString().Trim('"');
