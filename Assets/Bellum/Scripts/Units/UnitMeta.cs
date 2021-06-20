@@ -322,7 +322,7 @@ public class UnitMeta
     {
         { UnitType.ARCHER, UnitSkill.NOTHING } ,
         { UnitType.MAGIC, UnitSkill.NOTHING} ,
-        { UnitType.CAVALRY, UnitSkill.CHARGE } ,
+        { UnitType.CAVALRY, UnitSkill.NOTHING } ,
         { UnitType.FOOTMAN, UnitSkill.NOTHING },
         { UnitType.TANK, UnitSkill.NOTHING }
     };

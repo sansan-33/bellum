@@ -261,7 +261,7 @@ public class UnitPowerUp : NetworkBehaviour
         //GetComponent<UnitFiring>().SetNumberOfShoot(3);
         GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.PROVOKE);
         gameObject.tag = "Provoke" + tag.Substring(tag.Length - 1);
-        fxEffect();
+        fxEffect(GetComponentInParent<Transform>());
     }
     private void Healing()
     {
@@ -309,13 +309,13 @@ public class UnitPowerUp : NetworkBehaviour
     {
         gameObject.GetComponent<IAttack>().ScaleDamageDeal(attack, repeatAttackDelay, 3);
         Debug.Log($"Charging attack {attack} repeatAttackDelay {repeatAttackDelay}");
-        fxEffect();
+        fxEffect(GetComponent<IAttack>().AttackPoint());
         //GameObject fxEffect = Instantiate(fxEffectPrefab, GetComponent<IAttack>().AttackPoint());
         //NetworkServer.Spawn(fxEffect, connectionToClient);
     }
-    private void fxEffect()
+    private void fxEffect(Transform transform)
     {
-        GameObject fxEffect = Instantiate(fxEffectPrefab, GetComponentInParent<Transform>());
+        GameObject fxEffect = Instantiate(fxEffectPrefab, transform);
         NetworkServer.Spawn(fxEffect, connectionToClient);
     }
     //======================================================== End of Unit Factory   ================================================================
