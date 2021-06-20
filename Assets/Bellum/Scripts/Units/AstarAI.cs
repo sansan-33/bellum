@@ -13,7 +13,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     public Path path;
 
     [SerializeField] public int maxSpeed = 100;
-
+    [SerializeField] public float acceleration = 0f;
     public float nextWaypointDistance = 3;
 
     private int currentWaypoint = 0;
@@ -83,7 +83,12 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
         //if (gameObject.name.ToLower().Contains("tank"))
         //        Debug.Log($"ServerMove : {gameObject.name} move from {transform.position} to target {position} /  {ai.destination}, save memory not start path");
             ai.destination = position;
+            if(name.Contains("CAVALRY"))
+            Debug.Log($"Astra AI {name} {acceleration} ");
+            if (acceleration > 0 && GetSpeed(UnitMeta.SpeedType.CURRENT) < GetSpeed(UnitMeta.SpeedType.MAX)) { SetSpeed(UnitMeta.SpeedType.CURRENT, GetSpeed(UnitMeta.SpeedType.CURRENT) + acceleration); }
+
             ai.SearchPath();
+
             //seeker.StartPath(transform.position, position, OnPathComplete);
         //}
     }
@@ -149,7 +154,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
                 break;
             }
         }
-
+       
         // Slow down smoothly upon approaching the end of the path
         // This value will smoothly go from 1 to 0 as the agent approaches the last waypoint in the path.
         var speedFactor = reachedEndOfPath ? Mathf.Sqrt(distanceToWaypoint / nextWaypointDistance) : 1f;
@@ -167,7 +172,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
         // If you are writing a 2D game you may want to remove the CharacterController and instead modify the position directly
         transform.position += velocity * Time.deltaTime;
         if (IS_STUNNED) { CmdStop(); }
-    }
+      }
 
     [Command]
     public void CmdRotate(Quaternion targetRotation)
@@ -295,6 +300,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     public void SetSpeed(UnitMeta.SpeedType speedType, float _speed)
     {
         if (ai == null) { ai = GetComponent<AIPath>(); }
+        
         switch (speedType)
         {
             case UnitMeta.SpeedType.MAX:
@@ -307,7 +313,10 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
                 break;
         }
     }
-
+    public void SetAcceleration(float _acceleration)
+    {
+        acceleration = _acceleration;
+    }
     public Vector3 GetVelocity()
     {
         return ai.velocity;

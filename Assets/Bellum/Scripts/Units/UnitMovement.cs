@@ -9,6 +9,8 @@ public class UnitMovement : NetworkBehaviour , IUnitMovement
     [SerializeField] public int maxSpeed = 100;
     [SerializeField] private NavMeshAgent agent = null;
     [SerializeField] public GameObject circleMarker = null;
+    [SerializeField] public float acceleration = 0f;
+
     private Collider other;
     public bool isCollided = false;
     public float originalSpeed;
@@ -201,5 +203,13 @@ public class UnitMovement : NetworkBehaviour , IUnitMovement
     public void provoke(bool provoke)
     {
 
+    }
+    public void SetAcceleration(float _acceleration)
+    {
+        acceleration = _acceleration;
+    }
+    public float GetAcceleration()
+    {
+        return acceleration;
     }
 }

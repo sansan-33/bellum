@@ -60,6 +60,35 @@ public class UnitPowerUp : NetworkBehaviour
     {
         SpeedUp(speed, accumulate);
     }
+
+    [Command]
+    public void CmdAccelerate(float acceleration)
+    {
+        ServerAccelerate(acceleration);
+    }
+    [Server]
+    public void ServerAccelerate(float acceleration)
+    {
+        Accelerate(acceleration);
+    }
+    public void SetAcceleration(float acceleration)
+    {
+        if (acceleration < 0) { return; }
+        if (isServer)
+            RpcAccelerate(acceleration);
+        else
+            CmdAccelerate(acceleration);
+    }
+    private void Accelerate(float acceleration)
+    {
+        GetComponent<Unit>().GetUnitMovement().SetAcceleration(acceleration);
+    }
+    [ClientRpc]
+    private void RpcAccelerate(float acceleration )
+    {
+        Accelerate(acceleration);
+    }
+
     // ======================================= Special Attack setting ==================================== 
     // Sample Template for Mirror CMD SERVER RPC Usage
     /// <summary>
@@ -151,7 +180,7 @@ public class UnitPowerUp : NetworkBehaviour
         GetComponent<RVOController>().layer = tag.Contains("0") ? RVOLayer.Layer3 : RVOLayer.Layer2;
         GetComponent<RVOController>().collidesWith = tag.Contains("0") ? RVOLayer.Layer3 : RVOLayer.Layer2;
         //GetComponent<RVOController>().collidesWith = tag.Contains("0") ? RVOLayer.Layer2 : RVOLayer.Layer3;
-        HandleUnitSkill(UnitMeta.UnitSkill.DEFAULT, star, attack, repeatAttackDelay, speed);
+        HandleUnitSkill(UnitMeta.UnitSkill.DEFAULT, star, attack, repeatAttackDelay);
         if ( StaticClass.IsFlippedCamera ){
             gameObject.GetComponent<HealthDisplay>().flipHealthBar();
         }
@@ -162,7 +191,7 @@ public class UnitPowerUp : NetworkBehaviour
         //Debug.Log($"{gameObject.tag} : {gameObject.name} RpcPowerUp cardLevel {cardLevel} health {health} speed {speed}");
         HandlePowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
     }
-    private void HandleUnitSkill(UnitMeta.UnitSkill skill, int star, int attack, float repeatAttackDelay, float speed)
+    private void HandleUnitSkill(UnitMeta.UnitSkill skill, int star, int attack, float repeatAttackDelay)
     {
         UnitMeta.UnitType unitType = gameObject.GetComponent<Unit>().unitType;
         if (unitType == UnitMeta.UnitType.KING || unitType == UnitMeta.UnitType.HERO
@@ -195,10 +224,11 @@ public class UnitPowerUp : NetworkBehaviour
                 Healing();
                 break;
             case UnitMeta.UnitSkill.CHARGE:
+                Dashing(0.5f);
                 Charging(attack, repeatAttackDelay);
                 break;
             case UnitMeta.UnitSkill.DASH:
-                Dashing(speed);
+                Dashing(0.5f);
                 break;
             case UnitMeta.UnitSkill.SNEAK:
                 Sneak(attack, repeatAttackDelay);
@@ -238,9 +268,10 @@ public class UnitPowerUp : NetworkBehaviour
         if(TryGetComponent(out Healing healing))
         GetComponent<Healing>().ServerEnableHealing(true);
     }
-    private void Dashing(float speed)
+    private void Dashing(float acceleration)
     {
-        SetSpeed(speed * 1.5f, false);
+        //SetSpeed(speed * 1.5f, false);
+        SetAcceleration(acceleration);
         GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
         NetworkServer.Spawn(specialEffect, connectionToClient);
     }

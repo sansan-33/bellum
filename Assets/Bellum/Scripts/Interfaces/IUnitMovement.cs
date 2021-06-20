@@ -17,4 +17,6 @@ public interface IUnitMovement
     void SetVelocity(Vector3 velocity);
     float GetRadius();
     void provoke(bool provoke);
+    void SetAcceleration(float accerlation);
+    float GetAcceleration();
 }

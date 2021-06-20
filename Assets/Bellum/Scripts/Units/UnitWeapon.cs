@@ -22,7 +22,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     [SerializeField] private bool IsAreaOfEffect = false;
     private float calculatedDamageToDeal ;
     private float originalDamage;
-    public float DashDamageFactor = 2f;
+    public float DashDamageFactor = 1f;
     public bool IsKingSP = false;
     NetworkIdentity opponentIdentity;
     bool m_Started;
@@ -94,14 +94,15 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
             if (other.TryGetComponent<Health>(out Health health))
             {
                 opponentIdentity = (player.GetPlayerID() == 1) ? GetComponent<NetworkIdentity>() : other.GetComponent<NetworkIdentity>();
+
                 //Debug.Log($"Original damage {damageToDeal}, {this.GetComponent<Unit>().unitType} , {other.GetComponent<Unit>().unitType} ");
-                
                 calculatedDamageToDeal = StrengthWeakness.calculateDamage(unit.unitType, other.GetComponent<Unit>().unitType, damageToDeal);
                 //cmdDamageText(other.transform.position, calculatedDamageToDeal, originalDamage, opponentIdentity, isFlipped);
-
-                if (unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.CURRENT) == unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.MAX))
+                //Debug.Log($"Unit Weapon speed current: {unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.CURRENT)}  max: {unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.MAX)} ");
+                if (unit.unitType == UnitMeta.UnitType.CAVALRY && unit.GetUnitMovement().GetAcceleration() > 0f)
                 {
-                    calculatedDamageToDeal *= DashDamageFactor;
+                    Debug.Log($"Unit Weapon speed current: {unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.CURRENT)}  max: {unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.MAX)} calculatedDamageToDeal {calculatedDamageToDeal} * {DashDamageFactor}");
+                    calculatedDamageToDeal *= (DashDamageFactor + unit.GetUnitMovement().GetSpeed(UnitMeta.SpeedType.CURRENT) );
                 }
                 yield return new WaitForSeconds(GetComponent<IAttack>().RepeatAttackDelay() - .6f);
                 if (other == null || ! health.IsAlive()) { continue; }
