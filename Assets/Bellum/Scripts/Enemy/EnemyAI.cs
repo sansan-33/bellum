@@ -382,18 +382,18 @@ public class EnemyAI : MonoBehaviour
         Card finishedCard = card == cards.Count - 1 ? cards[card - 1] : cards[card + 1];
         //Vector2 finishPos = finishedCard.GetComponentInParent<CardSlot>().GetComponentInParent<RectTransform>().anchoredPosition;
             //Debug.Log($"DragCard {original} {finishPos}");
-        float timer = 1.5f;
+        float timer = 1.1f;
 
         float x = cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition.x;
-         Debug.Log($"Drag card {enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>())} < {enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>())}");
+         //Debug.Log($"Drag card {enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>())} < {enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>())}");
         if(enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>()) < enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>()))
         {
             while (enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>()) <= enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>()))
             {
-                Debug.Log("left");
+                //Debug.Log("left");
                 timer -= Time.deltaTime;
-                Debug.Log($"pos = {cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition}");
-                Debug.Log($"card slot index = {enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>())} going to {enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>())}");
+                //Debug.Log($"pos = {cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition}");
+                //Debug.Log($"card slot index = {enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>())} going to {enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>())}");
                 x = Mathf.SmoothDamp(cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition.x,
                     1000, ref progressImageVelocity, 1f);
                 cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition = new Vector3(x, 0, 0);
@@ -410,10 +410,10 @@ public class EnemyAI : MonoBehaviour
         {
             while(enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>()) >= enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>()))
             {
-                Debug.Log("right");
+                //Debug.Log("right");
                 timer -= Time.deltaTime;
-                Debug.Log($"pos = {cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition}");
-                Debug.Log($"card slot index = {enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>())} going to {enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>())}");
+                //Debug.Log($"pos = {cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition}");
+                //Debug.Log($"card slot index = {enemyPlayer.cardSlotlist.IndexOf(cards[beforeNewCard].GetComponentInParent<CardSlot>())} going to {enemyPlayer.cardSlotlist.IndexOf(finishedCard.GetComponentInParent<CardSlot>())}");
                 x = Mathf.SmoothDamp(cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition.x,
                     -1000, ref progressImageVelocity, 1f);
                 cards[beforeNewCard].GetComponent<RectTransform>().anchoredPosition = new Vector3(x, 0, 0);
