@@ -33,16 +33,16 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     private float lastAttackTime;
     private void Start()
     {
-        UnitProjectile.onKilled += OnHandleKilled;
-        UnitProjectile.onKilled += RpcOnHandleKilled;
+        UnitProjectile.onKilled += HandleKilled;
+        //UnitProjectile.onKilled += RpcOnHandleKilled;
         rtsPlayer = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         
         if (AUTOFIRE) StartCoroutine(autoFire());
     }
     private void OnDestroy()
     {
-        UnitProjectile.onKilled -= OnHandleKilled;
-        UnitProjectile.onKilled -= RpcOnHandleKilled;
+        UnitProjectile.onKilled -= HandleKilled;
+        //UnitProjectile.onKilled -= RpcOnHandleKilled;
     }
 
     IEnumerator autoFire()
@@ -198,6 +198,23 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
         if (UnitMeta.BuildingUnit.Contains(GetComponent<Unit>().unitType)) { return; }
         GetComponent<HealthDisplay>().HandleKillText(1);
         ScaleDamageDeal(0,0,damageToDealFactor + powerUpFactor);
+    }
+    private void HandleKilled()
+    {
+        if (isServer)
+            RpcOnHandleKilled();
+        else
+            cmdHandleKilled();
+    }
+    [Command(requiresAuthority = false)]
+    private void cmdHandleKilled()
+    {
+        ServerHandleKilled();
+    }
+    [Server]
+    private void ServerHandleKilled()
+    {
+        OnHandleKilled();
     }
     [ClientRpc]
     public void RpcOnHandleKilled()

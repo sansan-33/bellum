@@ -328,11 +328,11 @@ public class EnemyAI : MonoBehaviour
                 {
                     case Card_Numbers.ARCHER:
                         Archers.Add(card);
-                       // Debug.Log("Add Archers");
+                        //Debug.Log("Add Archers");
                         break;
                     case Card_Numbers.CAVALRY:
                         Cavalrys.Add(card);
-                       // Debug.Log("Add Cavalrys");
+                        //Debug.Log("Add Cavalrys");
                         break;
                     case Card_Numbers.FOOTMAN:
                         Footmans.Add(card);
@@ -366,7 +366,7 @@ public class EnemyAI : MonoBehaviour
         
             Card beforeNewCard = cards[0];
             Card card = cards[1];
-           // Debug.Log($"{beforeNewCard.cardFace.numbers} is {beforeNewCard.cardFace.star} == {card.cardFace.numbers} is {card.cardFace.star}");
+            //Debug.Log($"{beforeNewCard.cardFace.numbers} is {beforeNewCard.cardFace.star} == {card.cardFace.numbers} is {card.cardFace.star}");
             //if (beforeNewCard == card) { Debug.Log("Card"); }
             if (beforeNewCard.cardFace.star == card.cardFace.star)
             {

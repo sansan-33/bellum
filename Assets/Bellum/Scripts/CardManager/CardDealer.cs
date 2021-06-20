@@ -108,7 +108,7 @@ public class CardDealer : MonoBehaviour
     void SetBuildingsCard(Dictionary<String, CardStats> _cardstats)
     {
         buttonWall.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.WALL, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.WALL].ToString()]));
-        Debug.Log($"Set Building Card {UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.BARRACK].ToString()} ");
+        //Debug.Log($"Set Building Card {UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.BARRACK].ToString()} ");
         buttonBarrack.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.BARRACK, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.BARRACK].ToString()]));
         buttonTower.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.TOWER, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.TOWER].ToString()]));
         buttonCatapult.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.CATAPULT, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.CATAPULT].ToString()]));

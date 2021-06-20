@@ -88,6 +88,7 @@ public class GameOverDisplay : MonoBehaviour
         foreach (GameObject army in troops)
         {
             totalKill += army.GetComponent<HealthDisplay>().kills;
+            //Debug.Log($"totalKill = {totalKill} + {army.name} kill {army.GetComponent<HealthDisplay>().kills}");
         }
         stat2Text.text = totalKill.ToString();
         int dieCount = 0;
