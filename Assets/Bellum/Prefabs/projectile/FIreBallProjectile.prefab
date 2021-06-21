@@ -22,7 +22,7 @@ PrefabInstance:
     - target: {fileID: 654064029696477334, guid: e56a8980663089e49b62b9e74b3e8e6a, type: 3}
       propertyPath: specialEffectPrefab
       value: 
-      objectReference: {fileID: 8731154961833307504, guid: db1e18daf61256e4d9a59fb608d4515f, type: 3}
+      objectReference: {fileID: 9188933456874364125, guid: c707b25b8db404fe9802dee58b319663, type: 3}
     - target: {fileID: 2181674515776115725, guid: e56a8980663089e49b62b9e74b3e8e6a, type: 3}
       propertyPath: m_AngularDrag
       value: 0.05
