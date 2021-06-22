@@ -138,7 +138,9 @@ public class UnitFactory : NetworkBehaviour
         //yield return new WaitForSeconds(waitTime);
         while (spawnCount > 0)
         {
-            Vector3 spawnOffset = Random.insideUnitSphere * spawnMoveRange * spawnCountOffset;
+            //Vector3 spawnOffset = Random.insideUnitSphere * spawnMoveRange * spawnCountOffset;
+            Vector3 spawnOffset = spawnPosition;
+            spawnOffset.x = spawnCountOffset;
             spawnOffset.y = 0;
             spawnOffset.z = 0;
             GameObject unit = Instantiate(unitPrefab, spawnPosition + spawnOffset, rotation) as GameObject;
@@ -160,7 +162,7 @@ public class UnitFactory : NetworkBehaviour
             }
             //Debug.Log($"unit.GetComponent<UnitPowerUp>().RpcPowerUp(unit, star){unit.GetComponent<UnitPowerUp>()}");
             spawnCount--;
-            spawnCountOffset += 5;
+            spawnCountOffset += 1;
             unitSpawnCount[playerID] = unitSpawnCount[playerID] + 1;
         }
         yield return null;

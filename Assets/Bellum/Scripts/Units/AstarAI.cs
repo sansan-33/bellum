@@ -83,8 +83,8 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
         //if (gameObject.name.ToLower().Contains("tank"))
         //        Debug.Log($"ServerMove : {gameObject.name} move from {transform.position} to target {position} /  {ai.destination}, save memory not start path");
             ai.destination = position;
-            if(name.Contains("CAVALRY"))
-            Debug.Log($"Astra AI {name} {acceleration} ");
+            //if(name.Contains("CAVALRY"))
+            //Debug.Log($"Astra AI {name} {acceleration} ");
             if (acceleration > 0 && GetSpeed(UnitMeta.SpeedType.CURRENT) < GetSpeed(UnitMeta.SpeedType.MAX)) { SetSpeed(UnitMeta.SpeedType.CURRENT, GetSpeed(UnitMeta.SpeedType.CURRENT) + acceleration); }
 
             ai.SearchPath();

@@ -180,11 +180,13 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (unitPreviewInstance == null)
         {
             unitPreviewInstance = Instantiate(unitPrefab);
-            Transform unitBody = Instantiate(UnitPrefab.transform.Find("Body"));
-            unitBody.SetParent(unitPreviewInstance.transform);
-            //unitPreviewInstance.transform.SetParent(transform);
-            unitPreviewInstance.transform.position = new Vector3();
-            unitBody.position = new Vector3();
+            for (int i = 0; i < unitsize; i++) {
+                Transform unitBody = Instantiate(UnitPrefab.transform.Find("Body"));
+                unitBody.SetParent(unitPreviewInstance.transform);
+                //unitPreviewInstance.transform.SetParent(transform);
+                unitPreviewInstance.transform.position = new Vector3();
+                unitBody.position = new Vector3(unitPreviewInstance.transform.position.x + i, unitPreviewInstance.transform.position.y, unitPreviewInstance.transform.position.z);
+            }
         }
         // unitPreviewInstance.transform.position = mousePos;
         //Debug.Log(unitPreviewInstance.transform.position);

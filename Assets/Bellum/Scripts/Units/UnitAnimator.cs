@@ -10,7 +10,7 @@ public class UnitAnimator : NetworkBehaviour
     [SerializeField] public AudioSource audioSource;
     AnimatorClipInfo[] m_CurrentClipInfo;
     [SyncVar] private AnimState currentState;
-    public enum AnimState { ATTACK, ATTACK0, ATTACK1, ATTACK2, DEFEND, GETHIT, LOCOMOTION, NOTHING, IDLE , DIE, PROVOKE};
+    public enum AnimState { ATTACK, ATTACK0, ATTACK1, ATTACK2, DEFEND, GETHIT, LOCOMOTION, NOTHING, IDLE , DIE, PROVOKE, VICTORY};
     public bool isAttacking = false;
     private Dictionary<string, float> clipLength =  new Dictionary<string, float>();
     System.Random rand;
@@ -46,6 +46,7 @@ public class UnitAnimator : NetworkBehaviour
 
     void ChangeAnimationState(AnimState newState)
     {
+        Debug.Log($"ChangeAnimationState:  {newState}");
         if (currentState == newState) return;
         //if (currentState.ToString().Contains("ATTACK") && newState.ToString().Contains("ATTACK")) return;
         string animState = newState.ToString();
@@ -63,6 +64,7 @@ public class UnitAnimator : NetworkBehaviour
     {
         networkAnim.animator.SetBool("DEFEND", false);
         networkAnim.animator.SetBool("LOCOMOTION", false);
+        networkAnim.animator.SetBool("VICTORY", false);
         networkAnim.animator.SetBool(animState, false);
     }
    

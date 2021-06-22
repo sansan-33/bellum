@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BehaviorDesigner.Runtime.Tactical;
 using Mirror;
 using UnityEngine;
@@ -23,6 +24,12 @@ public class UnitProjectile : NetworkBehaviour
 
     // launch variables
     Vector3 TargetObjectPos = Vector3.zero;
+    Vector3 initialPosition;
+    [SyncVar]
+    public bool IS_CHAIN_ATTACK = false;
+    public bool IS_CHAIN_ENDED = false;
+
+    private bool HITTED = true; // initial state , if hitted = true, will move the hammer to next target
     // state
     private bool bTouchingGround;
     // cache
@@ -48,10 +55,16 @@ public class UnitProjectile : NetworkBehaviour
         playerid = player.GetPlayerID();
         enemyid = player.GetEnemyID();
         initialRotation = rb.rotation;
+        initialPosition = this.transform.position;
         Launch();
     }
     void Launch()
     {
+        if (IS_CHAIN_ATTACK)
+        {
+            StartCoroutine(chainAttack());
+            return;  
+        }
         if (TargetObjectPos == Vector3.zero)
         {
             rb.velocity = transform.forward * launchForce;
@@ -99,6 +112,7 @@ public class UnitProjectile : NetworkBehaviour
 
     public override void OnStartServer()
     {
+        if(!IS_CHAIN_ATTACK)
         Invoke(nameof(DestroySelf), destroyAfterSeconds);
     }
     public void SetDamageToDeal(int damageToDeal , float newDamageToDealFactor)
@@ -112,11 +126,21 @@ public class UnitProjectile : NetworkBehaviour
         bool isFlipped = false;
         bTouchingGround = true;
         damageToDeals = damageToDealOriginal;
+        if (other == null) { return;  }
         if (other.tag.Contains("Building")) {
             //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
             cmdSpecialEffect(this.transform.position);
             cmdArrowStick(other.transform);
             return;
+        }
+        if (IS_CHAIN_ENDED && other.GetComponent<UnitFiring>() !=null &&  other.GetComponent<UnitFiring>().ISCHAINED )
+        {
+            if (other.tag.Contains(enemyid.ToString()) && unitType == "Enemy" || other.tag.Contains(playerid.ToString()) && unitType == "Player")
+            {
+                other.GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.VICTORY);
+                Debug.Log($"{other.name } Chain Ended {UnitAnimator.AnimState.VICTORY}");
+                DestroySelf();
+            }
         }
         // Not attack same connection client object except AI Enemy
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1) {
@@ -150,9 +174,11 @@ public class UnitProjectile : NetworkBehaviour
             //cmdDamageText(other.transform.position, damageToDeals, damageToDealOriginal, opponentIdentity, isFlipped);
             cmdSpecialEffect(other.transform.GetComponent<Unit>().GetTargeter().GetAimAtPoint().position);
             elementalEffect(element, other.transform.GetComponent<Unit>());
+            HITTED = true;
             CmdDealDamage(other.gameObject, damageToDeals);
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals} / {damageToDealOriginal}");
-            cmdArrowStick(other.transform);
+            if(!IS_CHAIN_ATTACK)
+                cmdArrowStick(other.transform);
         }
     }
     [Server]
@@ -226,6 +252,7 @@ public class UnitProjectile : NetworkBehaviour
     [Server]
     private void DestroySelf()
     {
+        Debug.Log($"{name} Self destroy after {destroyAfterSeconds}");
         if(gameObject != null)
         NetworkServer.Destroy(gameObject);
     }
@@ -257,6 +284,65 @@ public class UnitProjectile : NetworkBehaviour
         floatingText.GetComponent<DamageTextHolder>().displayText = dmgText;
         return floatingText; 
     }
-    
+    IEnumerator chainAttack()
+    {
+        GameObject target;
+        GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + enemyid);
+        GameObject king = GameObject.FindGameObjectWithTag("King" + enemyid);
+        GameObject[] provokeTanks = GameObject.FindGameObjectsWithTag("Provoke" + enemyid);
+        GameObject[] sneakyFootman = GameObject.FindGameObjectsWithTag("Sneaky" + enemyid);
+        List<GameObject> targets = new List<GameObject>();
+        targets = units.ToList();
+        if (king != null)
+            targets.Add(king);
+        if (provokeTanks != null && provokeTanks.Length > 0)
+            targets.AddRange(provokeTanks.ToList());
+        if (sneakyFootman != null && sneakyFootman.Length > 0)
+            targets.AddRange(sneakyFootman.ToList());
+        //Debug.Log($"Unit Firing ClosestTarget {targets.Count} ");
+        if (targets.Count == 0) { yield break; }
+
+        while (targets.Count > 0) {
+            if (!HITTED) {
+                yield return new WaitForSeconds(0.5f);
+                continue;
+            }
+            target = ClosestTarget(targets);
+            //Debug.Log($"{name} hit target name: {target.name}, total : {targets.Count}");
+            transform.LookAt(target.transform);
+            rb.velocity = transform.forward * launchForce;
+            HITTED = false;
+            targets.Remove(target);
+            // remove target in targets
+        }
+        //Debug.Log($"{name} exit while loop for targets total : {targets.Count}");
+        transform.LookAt(new Vector3(TargetObjectPos.x, TargetObjectPos.y+2, TargetObjectPos.z));
+        rb.velocity = transform.forward * launchForce;
+        IS_CHAIN_ENDED = true;
+    }
+    protected GameObject ClosestTarget(List<GameObject> _targets)
+    {
+        Transform targetTransform = null;
+        var distance = float.MaxValue;
+        var localDistance = 0f;
+        
+        for (int i = _targets.Count - 1; i > -1; --i)
+        {
+            if (_targets[i] != null && _targets[i].GetComponent<Health>().IsAlive())
+            {
+                if ((localDistance = (_targets[i].transform.position - initialPosition).sqrMagnitude) - _targets[i].transform.GetComponent<BoxCollider>().size.sqrMagnitude < distance)
+                {
+                    distance = localDistance;
+                    targetTransform = _targets[i].transform;
+                }
+            }
+            else
+            {
+                _targets.RemoveAt(i);
+            }
+        }
+        return targetTransform.gameObject;
+    }
+
 
 }

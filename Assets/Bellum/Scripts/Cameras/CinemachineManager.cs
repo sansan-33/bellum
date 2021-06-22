@@ -27,7 +27,7 @@ public class CinemachineManager : NetworkBehaviour {
     private float shakeTimer=.05f;
     private float secondShakeTimer=.05f;
     private float shakeTimerTotal=1f;
-    private float startingIntensity=0.005f;
+    private float startingIntensity=0.001f;
    
     public override void OnStartServer()
     {
@@ -67,7 +67,7 @@ public class CinemachineManager : NetworkBehaviour {
     private void HandleShake()
     {
         cinemachineVirtualCamera.enabled = true;
-        ShakeCamera(0.1f);
+        ShakeCamera(0.05f);
     }
     public void ShakeCamera(float _shakeTime) {
         this.shakeTime = _shakeTime;
@@ -125,7 +125,7 @@ public class CinemachineManager : NetworkBehaviour {
             }
             else
              {
-                //Debug.Log("return shake !!!!!!!!!!!");
+                Debug.Log("return shake !!!!!!!!!!!");
                 cinemachineVirtualCamera.enabled = false;
                 if (secondShakeTimer > 0)
                 {
@@ -133,8 +133,8 @@ public class CinemachineManager : NetworkBehaviour {
                     secondShakeTimer -= Time.deltaTime;
                 }
                 else { shakeTimer = .05f; 
-            //Debug.Log("re shake");
-            }
+                //Debug.Log("re shake");
+                }
             }
         }
         else {

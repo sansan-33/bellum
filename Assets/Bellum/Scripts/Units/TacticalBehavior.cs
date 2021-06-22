@@ -38,7 +38,7 @@ public class TacticalBehavior : MonoBehaviour
     private GameBoardHandler gameBoardHandlerPrefab = null;
     private Dictionary<int, GameObject> KINGBOSS = new Dictionary<int, GameObject>();
     private float newRadius = 0.1f;
-    private float newDefendRadius = 7f;
+    private float newDefendRadius = 12f;
     private Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType> unitTacticalPlayer = UnitMeta.DefaultUnitTactical;
     private Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType> unitTacticalEnemey = UnitMeta.DefaultUnitTactical;
     private Dictionary<int, Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType>> unitTactical = new Dictionary<int, Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType>>();
@@ -319,7 +319,7 @@ public class TacticalBehavior : MonoBehaviour
             if (defendObject.TryGetComponent<DefendCircle>(out DefendCircle circle))
             {
                 //The radius around the defend object to defend
-                //circle.DoRenderer(newDefendRadius);
+                circle.DoRenderer(newDefendRadius);
                 //The maximum distance that the agents can defend from the defend object
             }
         }
@@ -445,7 +445,7 @@ public class TacticalBehavior : MonoBehaviour
         foreach (GameObject army in troops) {
             sb.Append( String.Format("{0} \t {1} \n", army.name.PadRight(15), army.GetComponent<Unit>().GetTaskStatus().text )) ;
         }
-        return "sb.ToString()";
+        return sb.ToString();
     }
     public List<GameObject> GetAllTroops()
     {

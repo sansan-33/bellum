@@ -28,6 +28,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     // The number of arrows per shoot
     public int numShots=1;
     public bool AUTOFIRE = false;
+    public bool ISCHAINED = false;
     RTSPlayer rtsPlayer;
     // The last time the agent attacked
     private float lastAttackTime;
@@ -49,7 +50,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(repeatAttackDelay);
             Attack(ClosestTarget());
         }
         //yield return null;
@@ -71,6 +72,8 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
             targets.AddRange(provokeTanks.ToList());
         if (sneakyFootman != null && sneakyFootman.Length > 0)
             targets.AddRange(sneakyFootman.ToList());
+        Debug.Log($"AUTO Unit Firing ClosestTarget {targets.Count} ");
+        if (targets.Count == 0) { return Vector3.zero; }
         for (int i = targets.Count - 1; i > -1; --i)
         {
             if (targets[i].GetComponent<Health>().IsAlive())
@@ -109,7 +112,10 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
             var localDistance = (targetPosition - transform.position).sqrMagnitude;
             if (localDistance > 400f)
             projectileInstance.GetComponent<UnitProjectile>().ServerTargetObjectTF(targetPosition);
-
+            if (ISCHAINED) {
+                projectileInstance.GetComponent<UnitProjectile>().IS_CHAIN_ATTACK = true;
+                projectileInstance.GetComponent<UnitProjectile>().ServerTargetObjectTF(transform.position);
+            }
             projectileInstance.GetComponent<UnitProjectile>().SetPlayerType(Int32.Parse(tag.Substring(tag.Length - 1)));
             NetworkServer.Spawn(projectileInstance, connectionToClient);
         }   
@@ -144,7 +150,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     }
     public bool CanAttack()
     {
-        return lastAttackTime + repeatAttackDelay < Time.time;
+        return  AUTOFIRE == false && lastAttackTime + repeatAttackDelay < Time.time;
     }
 
     public float AttackAngle()
@@ -154,6 +160,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
 
     public void Attack(Vector3 targetPosition)
     {
+        if (targetPosition == null || targetPosition == Vector3.zero ) { return; }
         UnitAnimator.AnimState animState = UnitAnimator.AnimState.ATTACK;
         lastAttackTime = Time.time;
         var localDistance = (targetPosition - transform.position).sqrMagnitude;

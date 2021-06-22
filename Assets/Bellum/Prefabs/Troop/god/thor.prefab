@@ -131,8 +131,6 @@ MonoBehaviour:
   syncInterval: 0.1
   targeter: {fileID: 6907784326257026380}
   damageToDeal: 100
-  camPrefab: {fileID: 1434666941670536975, guid: d482d6539d9c6472e83a38c9c0fa768e, type: 3}
-  camFreeLookPrefab: {fileID: 795373343299834476, guid: 7dba4376eea514bdd8c393791a18d23a, type: 3}
   attackPoint: {fileID: 2310817853092107212}
   attackRange: 7
   layerMask:
@@ -162,6 +160,30 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: 7707570322649849319}
+--- !u!114 &8203769843597008542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860431621525514400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a29c67bf37c814794c341e2cb37e29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  targeter: {fileID: 6907784326257026380}
+  projectilePrefab: {fileID: 1040593944806685047, guid: 426a0da123924485ca78c48ed9d16a32, type: 3}
+  projectileSpawnPoint: {fileID: 3696528105579766784}
+  fireRange: 100
+  rotationSpeed: 100
+  repeatAttackDelay: 10
+  attackAngle: 1
+  numShots: 1
+  AUTOFIRE: 1
+  ISCHAINED: 1
 --- !u!1001 &3014692229348437158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -212,6 +234,18 @@ PrefabInstance:
     - target: {fileID: 1489045426958974518, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: targeterAttackType
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917093245144647846, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917093245144647846, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917093245144647846, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.13
       objectReference: {fileID: 0}
     - target: {fileID: 2278323069818987186, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -577,6 +611,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e990a82b8ec27834486de09cfb0df054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &3696528105579766784 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1917093245144647846, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+  m_PrefabInstance: {fileID: 3014692229348437158}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2310817853092107212 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 704806762722508650, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
