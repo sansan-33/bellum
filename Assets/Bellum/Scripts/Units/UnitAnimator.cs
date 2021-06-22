@@ -46,7 +46,7 @@ public class UnitAnimator : NetworkBehaviour
 
     void ChangeAnimationState(AnimState newState)
     {
-        Debug.Log($"1 ChangeAnimationState:  {newState}");
+        //Debug.Log($"1 ChangeAnimationState:  {newState}");
         if (currentState == newState) return;
         //if (currentState.ToString().Contains("ATTACK") && newState.ToString().Contains("ATTACK")) return;
         string animState = newState.ToString();
@@ -57,7 +57,7 @@ public class UnitAnimator : NetworkBehaviour
             audioSource.PlayDelayed(0.2f);
             return;
         }
-        Debug.Log($"2 ChangeAnimationState:  {currentState} , {animState}");
+        //Debug.Log($"2 ChangeAnimationState:  {currentState} , {animState}");
         networkAnim.animator.SetBool(animState, true);
         currentState = newState;
     }
