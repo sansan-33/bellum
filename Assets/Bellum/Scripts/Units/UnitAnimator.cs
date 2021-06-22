@@ -46,7 +46,7 @@ public class UnitAnimator : NetworkBehaviour
 
     void ChangeAnimationState(AnimState newState)
     {
-        Debug.Log($"ChangeAnimationState:  {newState}");
+        Debug.Log($"1 ChangeAnimationState:  {newState}");
         if (currentState == newState) return;
         //if (currentState.ToString().Contains("ATTACK") && newState.ToString().Contains("ATTACK")) return;
         string animState = newState.ToString();
@@ -57,6 +57,7 @@ public class UnitAnimator : NetworkBehaviour
             audioSource.PlayDelayed(0.2f);
             return;
         }
+        Debug.Log($"2 ChangeAnimationState:  {currentState} , {animState}");
         networkAnim.animator.SetBool(animState, true);
         currentState = newState;
     }
@@ -81,11 +82,14 @@ public class UnitAnimator : NetworkBehaviour
                 SetFloat("moveSpeed", 0);
             //    SetFloat("direction", 0);
             }
-            if (newState.ToString().Contains("ATTACK") || newState.ToString().Contains("PROVOKE")) {
+            if (newState.ToString().Contains("ATTACK") || newState.ToString().Contains("PROVOKE") || newState.ToString().Contains("VICTORY")) {
                 var defaultClipLength = 0f;
                 isAttacking = true;
                 clipLength.TryGetValue(newState.ToString() , out defaultClipLength);
-                networkAnim.animator.SetFloat("animSpeed", defaultClipLength / GetComponent<IAttack>().RepeatAttackDelay());
+                if(newState.ToString().Contains("VICTORY"))
+                    networkAnim.animator.SetFloat("animSpeed", 100f);
+                else
+                    networkAnim.animator.SetFloat("animSpeed", defaultClipLength / GetComponent<IAttack>().RepeatAttackDelay());
                 Invoke("AttackCompleted", GetComponent<IAttack>().RepeatAttackDelay());
             }
             ChangeAnimationState(newState);
