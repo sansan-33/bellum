@@ -41728,6 +41728,10 @@ PrefabInstance:
       value: leonardwong.amcrestddns.com
       objectReference: {fileID: 0}
     - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
+      propertyPath: greatWallPrefab
+      value: 
+      objectReference: {fileID: 2465195833285566526, guid: 7aafc8bcdcae84d05bfd50a7b26461b0, type: 3}
+    - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
       propertyPath: elfTreeantPrefab
       value: 
       objectReference: {fileID: 300388701929294696, guid: 81bd4f315fe08484ebf9525f04502c9e, type: 3}
@@ -41741,7 +41745,7 @@ PrefabInstance:
       objectReference: {fileID: 8820407336119843646, guid: 9f639b14e1b8849279b03335867352b6, type: 3}
     - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 56
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
       propertyPath: spawnPrefabs.Array.data[42]
@@ -41799,6 +41803,10 @@ PrefabInstance:
       propertyPath: spawnPrefabs.Array.data[55]
       value: 
       objectReference: {fileID: 1040593944806685047, guid: 426a0da123924485ca78c48ed9d16a32, type: 3}
+    - target: {fileID: 2616846832148046255, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
+      propertyPath: spawnPrefabs.Array.data[56]
+      value: 
+      objectReference: {fileID: 7438937032517910368, guid: 75b294c3d1d0b4d8db7297f78d3c1f18, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9dbfc72b66af0e4ab339753ae81f906, type: 3}
 --- !u!1 &1476194462

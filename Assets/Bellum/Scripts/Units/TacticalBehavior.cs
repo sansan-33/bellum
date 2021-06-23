@@ -42,6 +42,7 @@ public class TacticalBehavior : MonoBehaviour
     private Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType> unitTacticalPlayer = UnitMeta.DefaultUnitTactical;
     private Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType> unitTacticalEnemey = UnitMeta.DefaultUnitTactical;
     private Dictionary<int, Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType>> unitTactical = new Dictionary<int, Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType>>();
+    private bool ISGATEOPENED = false;
     #region Client
 
     public void Start()
@@ -248,6 +249,10 @@ public class TacticalBehavior : MonoBehaviour
     private string GetTargetName(Unit unit, int enemyCount, int playerid, int enemyid, int group, bool provoke)
     {
         string target = "";
+        if (!ISGATEOPENED) {
+            target = "Door";
+            return target;
+        }
         if (TaticalAttackCurrent[playerid] == TaticalAttack.SPINATTACK || TaticalAttackCurrent[playerid] == TaticalAttack.ARROWRAIN || TaticalAttackCurrent[playerid] == TaticalAttack.CAVALRYCHARGES)
         {
             if (provoke)

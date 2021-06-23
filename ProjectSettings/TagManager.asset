@@ -65,6 +65,11 @@ TagManager:
   - Building1
   - Die0
   - CinemachineManager
+  - GameCanvas
+  - PartyHUD
+  - HeroActionBar
+  - HeroEmoteBar
+  - Door
   layers:
   - Default
   - TransparentFX

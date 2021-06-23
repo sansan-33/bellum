@@ -164,11 +164,13 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     targets.Add(targetTag.Value);
                     if (targetTag.Value.Contains("Provoke"))
                         targets.Add("Player" + targetTag.Value.Substring(targetTag.Value.Length - 1));
-                    else
-                        targets.Add("Provoke" + targetTag.Value.Substring(targetTag.Value.Length - 1));
-
-                    foreach (string taregt in targets) { 
-                        var foundAttackGroup = GameObject.FindGameObjectsWithTag(taregt);
+                    else {
+                        if (!targetTag.Value.Contains("Door"))
+                            targets.Add("Provoke" + targetTag.Value.Substring(targetTag.Value.Length - 1));
+                    }
+                    foreach (string target in targets) {
+                        Debug.Log($"Tactical Groups {target} / total {targets.Count}");
+                        var foundAttackGroup = GameObject.FindGameObjectsWithTag(target);
                         for (int i = 0; i < foundAttackGroup.Length; ++i)
                         {
                             var damageable = (foundAttackGroup[i].GetComponentInParent(typeof(IDamageable)) as IDamageable);
