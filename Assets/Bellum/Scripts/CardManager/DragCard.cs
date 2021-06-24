@@ -63,7 +63,6 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log(Input.mousePosition);
         if (GetComponent<Card>().enemyCard == true) { return; }
         TryDragCard(Input.mousePosition.x, Input.mousePosition.y);
     }
@@ -254,6 +253,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     private void Update()
     {
+
         try
         {
             if (unitPreviewInstance == null) { return; }
