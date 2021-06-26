@@ -202,7 +202,7 @@ public class UnitProjectile : NetworkBehaviour
                 onKilled?.Invoke();
                 if (enemy.GetComponent<Unit>().unitType == UnitMeta.UnitType.DOOR)
                 {
-                    enemy.GetComponent<UnitBody>().SetRenderMaterial(unitType == "Enemy" ? "red" : "blue");
+                    enemy.GetComponent<UnitBody>().SetTeamColor(unitType == "Enemy" ? "red" : "blue");
                     GateOpened?.Invoke(unitType == "Enemy" ? "1" : "0");
                 }
             }

@@ -239,7 +239,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
                     break;
                 } else {
                     Debug.Log($"Single player seneriao collided [{other.name} + {other.tag}] vs [{name} + {tag}]");
-                    stop();
+                    //stop();
                 }
             }
         }

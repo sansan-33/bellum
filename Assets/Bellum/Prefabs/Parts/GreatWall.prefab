@@ -149,11 +149,14 @@ MonoBehaviour:
   version: 1
   uniqueID: 557720990030215557
   points:
-  - {x: 1.0000007, y: -1.4629261, z: -0.90026236}
-  - {x: -0.91334, y: -1.456336, z: -0.9462977}
-  - {x: 0.006901001, y: 1.354669, z: -0.006430972}
-  - {x: -0.92257524, y: -1.4600077, z: 0.96180624}
-  - {x: 1.0000007, y: -1.4584246, z: 0.83595747}
+  - {x: 0.99013937, y: -1.4629261, z: -0.97070783}
+  - {x: 0.0048391568, y: -1.4492791, z: -0.9423764}
+  - {x: -0.779214, y: -1.4675043, z: -0.93149817}
+  - {x: -0.4937036, y: 1.2451389, z: -0.020595899}
+  - {x: -0.993453, y: -1.4905343, z: -0.9603723}
+  - {x: -0.9917609, y: -1.4624522, z: -0.0064313803}
+  - {x: -1.001435, y: -1.4917499, z: 0.9618064}
+  - {x: 0.99368703, y: -1.5026302, z: 0.9908193}
   convex: 0
   minBoundsHeight: 1
   penaltyDelta: 0
@@ -315,7 +318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 23274858333925824, guid: 4bbd078c6ddb60541a3067158e56c828, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2245903178534314768, guid: 4bbd078c6ddb60541a3067158e56c828, type: 3}
       propertyPath: m_Size.x
@@ -435,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 23753948944517090, guid: f1863a3ca31860647b7118fcca100b85, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8364627516529510236, guid: f1863a3ca31860647b7118fcca100b85, type: 3}
       propertyPath: m_Size.x

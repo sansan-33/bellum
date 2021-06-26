@@ -19,7 +19,7 @@ public class UnitBody : NetworkBehaviour, IBody
     }
 
     //==================================== Set Skill For Unit
-    public void SetRenderMaterial(string color)
+    public void SetTeamColor(string color)
     {
         if (isServer)
             RpcRenderMaterial(color);

@@ -165,9 +165,12 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
             KilledEnemy();
             if(enemy.GetComponent<Unit>().unitType == UnitMeta.UnitType.DOOR)
             {
-                enemy.GetComponent<UnitBody>().SetRenderMaterial(unit.tag.Substring(unit.tag.Length - 1) == "0" ? "blue" : "red");
-                GateOpened?.Invoke(unit.tag.Substring(unit.tag.Length - 1));
-                Debug.Log("Gate Open in unit weapon");
+                if (enemy.GetComponent<UnitBody>() != null)
+                {
+                    enemy.GetComponent<UnitBody>().SetTeamColor(unit.tag.Substring(unit.tag.Length - 1) == "0" ? "blue" : "red");
+                    GateOpened?.Invoke(unit.tag.Substring(unit.tag.Length - 1));
+                    Debug.Log("Gate Open in unit weapon");
+                }
             }
         }
     }
