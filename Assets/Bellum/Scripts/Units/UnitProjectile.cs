@@ -11,7 +11,7 @@ public class UnitProjectile : NetworkBehaviour
     [SerializeField] private Rigidbody rb = null;
     [SerializeField] private float damageToDeals = 0;
     [SerializeField] private float damageToDealOriginal = 0;
-    [SerializeField] private float destroyAfterSeconds = 50f;
+    [SerializeField] private float destroyAfterSeconds = 20f;
     [SerializeField] private float launchForce = 10f;
     [SerializeField] private string unitType;
     [SerializeField] private GameObject specialEffectPrefab = null;
