@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Mirror;
+using Pathfinding;
 using UnityEngine;
 
 public class UnitBody : NetworkBehaviour, IBody
@@ -16,6 +17,39 @@ public class UnitBody : NetworkBehaviour, IBody
     {
         unitRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
+
+    //==================================== Set Skill For Unit
+    public void SetRenderMaterial(string color)
+    {
+        if (isServer)
+            RpcRenderMaterial(color);
+        else
+            CmdRenderMaterial(color);
+    }
+    [Command]
+    public void CmdRenderMaterial(string color)
+    {
+        ServerRenderMaterial(color);
+    }
+    [ClientRpc]
+    public void RpcRenderMaterial(string color)
+    {
+        HandleRenderMaterial(color);
+    }
+    [Server]
+    public void ServerRenderMaterial(string color)
+    {
+        HandleRenderMaterial(color);
+    }
+    private void HandleRenderMaterial(string color)
+    {
+        unitRenderer.sharedMaterial = material[color == "blue" ? 0 : 1];
+        GetComponent<GraphUpdateScene>().setTag = (color == "blue" ? 1 : 2);
+        // Recalculate all graphs
+        AstarPath.active.Scan();
+    }
+
+
     public void SetRenderMaterial(int star)
     {
         int playerid = NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID();
