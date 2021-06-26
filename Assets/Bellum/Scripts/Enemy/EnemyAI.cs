@@ -86,8 +86,7 @@ public class EnemyAI : MonoBehaviour
         GameOverHandler.ClientOnGameOver -= HandleGameOver;
         Unit.ClientOnUnitSpawned -= UrgentDefend;
         Unit.ClientOnUnitDespawned -= Rage;
-        UnitWeapon.GateOpened -= GateOpen;
-        UnitProjectile.GateOpened -= GateOpen;
+        GreatWallController.GateOpened -= GateOpen;
         if (GameObject.FindGameObjectWithTag("King1"))
         {
             GameObject.FindGameObjectWithTag("King1").GetComponent<Health>().ClientOnHealthUpdated -= OnHealthUpdated;
@@ -121,8 +120,7 @@ public class EnemyAI : MonoBehaviour
             Sp.Add(unitType[4], SpList1);
 
             GameObject.FindGameObjectWithTag("King1").GetComponent<Health>().ClientOnHealthUpdated += OnHealthUpdated;
-            UnitWeapon.GateOpened += GateOpen;
-            UnitProjectile.GateOpened += GateOpen;
+            GreatWallController.GateOpened += GateOpen;
         }
         
       /*  Mission.Add(1, Difficulty.OneStar);

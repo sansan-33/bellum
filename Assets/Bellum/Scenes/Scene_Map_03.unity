@@ -18816,8 +18816,8 @@ GameObject:
   - component: {fileID: 379699047}
   - component: {fileID: 379699051}
   - component: {fileID: 379699050}
-  - component: {fileID: 379699049}
   - component: {fileID: 379699048}
+  - component: {fileID: 379699049}
   m_Layer: 0
   m_Name: floor
   m_TagString: Untagged
@@ -18851,8 +18851,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd5e5ddd242bd64581fb5ed9c0e0507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!64 &379699049
-MeshCollider:
+--- !u!65 &379699049
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -18861,10 +18861,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 162079710}
+  serializedVersion: 2
+  m_Size: {x: 10, y: 7.3, z: 10}
+  m_Center: {x: -1.6357288e-15, y: -4.2499995, z: -0.00000011920929}
 --- !u!23 &379699050
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21377,7 +21376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &440627358
 Transform:
   m_ObjectHideFlags: 0
@@ -85357,8 +85356,8 @@ GameObject:
   - component: {fileID: 1810468395}
   - component: {fileID: 1810468399}
   - component: {fileID: 1810468398}
-  - component: {fileID: 1810468397}
   - component: {fileID: 1810468396}
+  - component: {fileID: 1810468397}
   m_Layer: 0
   m_Name: floor
   m_TagString: Untagged
@@ -85392,8 +85391,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd5e5ddd242bd64581fb5ed9c0e0507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!64 &1810468397
-MeshCollider:
+--- !u!65 &1810468397
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -85402,10 +85401,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 162079710}
+  serializedVersion: 2
+  m_Size: {x: 10, y: 7.3, z: 10}
+  m_Center: {x: -1.6357288e-15, y: -4.249998, z: 0}
 --- !u!23 &1810468398
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -98935,7 +98933,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2094897509}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -21.2, y: -46.642082, z: -23.9}
+  m_LocalPosition: {x: -21.2, y: -46.642082, z: -22.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1819716467}
