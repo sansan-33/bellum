@@ -83,6 +83,34 @@ MonoBehaviour:
     m_Key: result
     m_Metadata:
       m_Items: []
+  - m_Id: 4748960282435584
+    m_Key: skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4749032718065664
+    m_Key: stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4749078545031168
+    m_Key: damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4749128297865216
+    m_Key: defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4749173231443968
+    m_Key: attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4749243465064448
+    m_Key: health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4749281092165632
+    m_Key: speed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
