@@ -57,6 +57,9 @@ public class LanguageSelectionManager : MonoBehaviour
         LocalizationSettings.SelectedLocale = locale;
         Debug.Log($"LanguageSelectionManager.OnSelectionChanged() SelectedLocale:{LocalizationSettings.SelectedLocale}");
 
+        // Instantiate FontManger to get Default Font
+        TMP_Asset tempFont = FontManager.Instance.defaultFontEn;
+
         // TODO: inactive check for non-selected locale and active check for selected locale
 
         // TODO: update language in Setting popup
