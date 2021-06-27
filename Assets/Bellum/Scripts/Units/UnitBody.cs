@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Mirror;
 using Pathfinding;
 using UnityEngine;
@@ -6,8 +7,8 @@ using UnityEngine;
 public class UnitBody : NetworkBehaviour, IBody
 {
 
-    [SerializeField] private List< Material> material;
-    private  SkinnedMeshRenderer unitRenderer;
+    [SerializeField] private List<Material> material;
+    private SkinnedMeshRenderer unitRenderer;
     [SerializeField] public int doorIndex;
 
     public override void OnStartServer()
@@ -46,13 +47,17 @@ public class UnitBody : NetworkBehaviour, IBody
     {
         unitRenderer.sharedMaterial = material[color == "blue" ? 0 : 1];
         GetComponent<GraphUpdateScene>().setTag = (color == "blue" ? 1 : 2);
+        Debug.Log($"Door Color changed {color} ");
+        StartCoroutine(GraphUpdate());
+    }
+    IEnumerator GraphUpdate() {
+        yield return new WaitForSeconds(1f);
         Debug.Log($"Recalculate all graphs 12345678910 ");
         // Recalculate all graphs
-        AstarPath.active.Scan();
         AstarPath.active.UpdateGraphs(GetComponent<GraphUpdateScene>().GetBounds());
+        AstarPath.active.Scan();
     }
-     
-    public void SetRenderMaterial(int star)
+public void SetRenderMaterial(int star)
     {
         int playerid = NetworkClient.connection.identity.GetComponent<RTSPlayer>().GetPlayerID();
         int index = playerid == 0 ? star - 1 : 3 + star - 1;
