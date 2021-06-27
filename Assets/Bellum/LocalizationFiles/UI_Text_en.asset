@@ -78,5 +78,13 @@ MonoBehaviour:
     m_Localized: ALL
     m_Metadata:
       m_Items: []
+  - m_Id: 4717344294166528
+    m_Localized: PULL AGAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4725718247268352
+    m_Localized: RESULT
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
