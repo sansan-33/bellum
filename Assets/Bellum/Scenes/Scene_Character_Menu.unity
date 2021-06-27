@@ -18655,7 +18655,7 @@ MonoBehaviour:
   fontJp: {fileID: 0}
   fontCn: {fileID: 0}
   fontHk: {fileID: 0}
-  fontEn: {fileID: 11400000, guid: 9a2157e1f9c4c4d38841fbb92558f587, type: 2}
+  fontEn: {fileID: 11400000, guid: c7a4c991ca20e4c6ba1cd2d2df5a50b2, type: 2}
 --- !u!1 &788659845
 GameObject:
   m_ObjectHideFlags: 0

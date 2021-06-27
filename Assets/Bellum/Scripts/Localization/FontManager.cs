@@ -21,9 +21,52 @@ public class FontManager : MonoBehaviour
     {
         get
         {
+            // must get default font from FontManager since default font set in MainMenuDisplay
+            // StaticClass is a temporary place to store the default font
             if (_instance == null)
-                _instance = GameObject.FindObjectOfType<FontManager>();
-            return _instance;
+            {
+
+                FontManager tmpObject = GameObject.FindObjectOfType<FontManager>();
+                //Debug.Log($"FontManager Createion:{tmpObject}");         
+
+                if (tmpObject != null)
+                {
+                    _instance = tmpObject;
+                    StaticClass.defaultFontJp = tmpObject.defaultFontJp;
+                    StaticClass.defaultFontCn = tmpObject.defaultFontCn;
+                    StaticClass.defaultFontHk = tmpObject.defaultFontHk;
+                    StaticClass.defaultFontEn = tmpObject.defaultFontEn;
+                    //Debug.Log($"FontManager Createion Font:{tmpObject.defaultFontJp}, {tmpObject.defaultFontCn}, {tmpObject.defaultFontHk}, {tmpObject.defaultFontEn}");
+                }
+                else {
+                    GameObject coreGameObject = new GameObject(typeof(FontManager).Name);
+                    _instance = coreGameObject.AddComponent<FontManager>();
+                }
+            }
+
+            if (_instance.defaultFontJp== null)
+            {
+                _instance.defaultFontJp = StaticClass.defaultFontJp;
+
+            }
+            if (_instance.defaultFontCn == null)
+            {
+                _instance.defaultFontCn = StaticClass.defaultFontCn;
+
+            }
+            if (_instance.defaultFontHk == null)
+            {
+                _instance.defaultFontHk = StaticClass.defaultFontHk;
+
+            }
+            if (_instance.defaultFontEn == null)
+            {
+                _instance.defaultFontEn = StaticClass.defaultFontEn;
+
+            }
+            //Debug.Log($"FontManager return:{_instance}");
+            //Debug.Log($"FontManager return Font:{_instance.defaultFontJp}, {_instance.defaultFontCn}, {_instance.defaultFontHk}, {_instance.defaultFontEn}");
+            return _instance;
         }
     }
 
