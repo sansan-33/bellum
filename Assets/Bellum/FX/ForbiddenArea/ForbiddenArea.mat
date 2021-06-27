@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ForbiddenArea
-  m_Shader: {fileID: -6465566751694194690, guid: fa48e2a433d0e44bfa7e3c6f03ae478d,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: d892db5e06b08ab4a8862a0a0651dc70, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,7 +18,25 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - Texture2D_3f777878cf694ba6b9bd4e1301eb7b50:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
     - Color_6313CC90: {r: 0.8679245, g: 0.37687743, b: 0.12691349, a: 0}
+    - Vector2_ccc2d3225ea24a37aeaffa26b3464801: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
