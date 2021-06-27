@@ -1,4 +1,6 @@
-﻿public static class StaticClass
+﻿using TMPro;
+
+public static class StaticClass
 {
     public static string CrossSceneInformation { get; set; }
     public static string UserID { get; set; }
@@ -17,4 +19,8 @@
     public static string EventRankingID { get; set; }
     public static float HighestDamage { get; set; }
 
+    public static TMP_FontAsset defaultFontJp { get; set; }
+    public static TMP_FontAsset defaultFontCn { get; set; }
+    public static TMP_FontAsset defaultFontHk { get; set; }
+    public static TMP_FontAsset defaultFontEn { get; set; }
 }
