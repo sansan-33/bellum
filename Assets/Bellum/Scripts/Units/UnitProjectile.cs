@@ -204,7 +204,7 @@ public class UnitProjectile : NetworkBehaviour
                     enemy.GetComponent<UnitBody>().SetTeamColor(arrowType == "Enemy" ? "red" : "blue");
                     //GateOpened?.Invoke(arrowType == "Enemy" ? "1" : "0");
                     GreatWallController wallController = GameObject.FindGameObjectWithTag("GreatWallController").GetComponent<GreatWallController>();
-                    wallController.GateOpen(arrowType == "Enemy" ? "1" : "0");
+                    wallController.GateOpen(arrowType == "Enemy" ? "1" : "0", "0");
                 }
             }
 
