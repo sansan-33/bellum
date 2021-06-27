@@ -47411,7 +47411,7 @@ GameObject:
   - component: {fileID: 908176359}
   - component: {fileID: 908176358}
   m_Layer: 0
-  m_Name: 'PlayerRight '
+  m_Name: PlayerLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54181,7 +54181,7 @@ GameObject:
   - component: {fileID: 1009236175}
   - component: {fileID: 1009236174}
   m_Layer: 0
-  m_Name: PlayerLeft
+  m_Name: PlayerRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95720,7 +95720,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 138
+  field of view: 50
   orthographic: 1
   orthographic size: 40
   m_Depth: 0
@@ -95787,8 +95787,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745352323}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 36.1, y: 78.100006, z: -110.7}
+  m_LocalRotation: {x: 0, y: -0.92387956, z: 0.38268343, w: 0}
+  m_LocalPosition: {x: 35.5, y: 36.4, z: 15.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -110978,9 +110978,9 @@ MonoBehaviour:
   enenmyCentre: {fileID: 1627960548}
   enenmyRight: {fileID: 661591252}
   playerBack: {fileID: 680785741}
-  playerLeft: {fileID: 1009236172}
+  playerLeft: {fileID: 908176357}
   playerCentre: {fileID: 897020949}
-  playerRight: {fileID: 908176357}
+  playerRight: {fileID: 1009236172}
   enemyHalf: {fileID: 231569920}
   playerHalf: {fileID: 1220243422}
 --- !u!4 &2034338625

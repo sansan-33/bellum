@@ -35223,9 +35223,9 @@ MonoBehaviour:
   enenmyCentre: {fileID: 605593917}
   enenmyRight: {fileID: 14348485}
   playerBack: {fileID: 1307836293}
-  playerLeft: {fileID: 1823957656}
+  playerLeft: {fileID: 1804754988}
   playerCentre: {fileID: 1803468331}
-  playerRight: {fileID: 1804754988}
+  playerRight: {fileID: 1823957656}
   enemyHalf: {fileID: 874801183}
   playerHalf: {fileID: 405542955}
 --- !u!4 &732544725
@@ -86190,7 +86190,7 @@ GameObject:
   - component: {fileID: 1804754991}
   - component: {fileID: 1804754990}
   m_Layer: 0
-  m_Name: 'PlayerRight '
+  m_Name: PlayerLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87625,7 +87625,7 @@ GameObject:
   - component: {fileID: 1823957659}
   - component: {fileID: 1823957658}
   m_Layer: 0
-  m_Name: PlayerLeft
+  m_Name: PlayerRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
