@@ -111,6 +111,18 @@ MonoBehaviour:
     m_Key: speed
     m_Metadata:
       m_Items: []
+  - m_Id: 5024645664202752
+    m_Key: add
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5030485917949952
+    m_Key: select_heroes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5031035191418880
+    m_Key: save
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

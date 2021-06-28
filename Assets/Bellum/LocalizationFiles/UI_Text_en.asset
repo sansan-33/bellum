@@ -114,5 +114,17 @@ MonoBehaviour:
     m_Localized: SPEED
     m_Metadata:
       m_Items: []
+  - m_Id: 5024645664202752
+    m_Localized: ADD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5030485917949952
+    m_Localized: SELECT HEROES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5031035191418880
+    m_Localized: SAVE
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
