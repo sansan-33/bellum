@@ -39,8 +39,8 @@ public class TacticalBehavior : MonoBehaviour
     private Dictionary<int, GameObject> KINGBOSS = new Dictionary<int, GameObject>();
     private float newRadius = 0.1f;
     private float newDefendRadius = 12f;
-    private Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType> unitTacticalPlayer = UnitMeta.DefaultUnitTactical;
-    private Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType> unitTacticalEnemey = UnitMeta.DefaultUnitTactical;
+    private Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType> unitTacticalPlayer = new Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType>(UnitMeta.DefaultUnitTactical);
+    private Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType> unitTacticalEnemey = new Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType>(UnitMeta.DefaultUnitTactical);
     private Dictionary<int, Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType>> unitTactical = new Dictionary<int, Dictionary<UnitMeta.UnitType, TacticalBehavior.BehaviorSelectionType>>();
     private Dictionary<int, bool> ISGATEOPENED = new Dictionary<int, bool>();
     private int MAXDOORCOUNT = 3;
@@ -455,8 +455,8 @@ public class TacticalBehavior : MonoBehaviour
         foreach (GameObject army in troops) {
             sb.Append( String.Format("{0} \t {1} \n", army.name.PadRight(15), army.GetComponent<Unit>().GetTaskStatus().text )) ;
         }
-        return sb.ToString();
-        //return "";
+        //return sb.ToString();
+        return "";
     }
     public List<GameObject> GetAllTroops(int id)
     {
@@ -530,6 +530,16 @@ public class TacticalBehavior : MonoBehaviour
         }
         Debug.Log(sb.ToString());
     }
+    private void printCurrentUnitTactical()
+    {
+        foreach (int teamid in unitTactical.Keys)
+        {
+            foreach (var agent in unitTactical[teamid])
+            {
+                Debug.Log($"player id {teamid}, unit type {agent.Key},  tactical type {agent.Value}\n");
+            }
+        }
+    }
     public void HandleGameOver(string winner)
     {
         //Debug.Log($"Tactical Behavior ==> HandleGameOver");
@@ -597,7 +607,6 @@ public class TacticalBehavior : MonoBehaviour
                 //yield return new WaitForSeconds(4f);
                 TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.HERO, playerid);
                 TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.KING, playerid);
-                
                 break;
             case TaticalAttack.CAVALRYCHARGES:
                 TaticalAttackCurrent[playerid] = TaticalAttack.CAVALRYCHARGES;
@@ -638,15 +647,23 @@ public class TacticalBehavior : MonoBehaviour
             case TaticalAttack.ABSOLUTEDEFENSE:
                 TaticalAttackCurrent[playerid] = TaticalAttack.ABSOLUTEDEFENSE;
                 cardStats = userCardStatsDict[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.TANK].ToString()];
-                TryTB((int)BehaviorSelectionType.Defend, UnitMeta.UnitType.TANK, playerid);
+                //printCurrentUnitTactical();
+                //TryTB((int)BehaviorSelectionType.Defend, UnitMeta.UnitType.TANK, playerid);
                 unitTactical[playerid][UnitMeta.UnitType.TANK] = BehaviorSelectionType.Defend;
+                //Debug.Log($"unitTactical[playerid][UnitMeta.UnitType.TANK], playerid {playerid} =  {unitTactical[0][UnitMeta.UnitType.TANK]} ");
+                //Debug.Log($"unitTactical[playerid][UnitMeta.UnitType.TANK], playerid {1} =  {unitTactical[1][UnitMeta.UnitType.TANK]} ");
+                //var tmp = unitTactical[0];
+                //tmp[UnitMeta.UnitType.TANK] = BehaviorSelectionType.Defend;
+                //Debug.Log($"unitTactical[playerid][UnitMeta.UnitType.TANK], playerid {playerid} =  {unitTactical[0][UnitMeta.UnitType.TANK]} ");
+                //Debug.Log($"unitTactical[playerid][UnitMeta.UnitType.TANK], playerid {1} =  {unitTactical[1][UnitMeta.UnitType.TANK]} ");
                 while (unitspawn <= 5)
                 {
                     yield return new WaitForSeconds(.5f);
                     localFactory.CmdSpawnUnitPosition(StaticClass.playerRace, UnitMeta.UnitType.TANK, 2, playerid, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey, player.GetTeamColor(), UnitMeta.UnitType.FOOTMAN);
                     unitspawn++;
                 }
-                TryTB((int)BehaviorSelectionType.Defend, UnitMeta.UnitType.TANK, playerid);
+                //TryTB((int)BehaviorSelectionType.Defend, UnitMeta.UnitType.TANK, playerid);
+                //printCurrentUnitTactical();
                 break;
             default:
                 break;
