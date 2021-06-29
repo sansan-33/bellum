@@ -107,7 +107,7 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
                 //yield return new WaitForSeconds(GetComponent<IAttack>().RepeatAttackDelay() - .6f);
                 yield return null;
                 if (other == null || !health.IsAlive()) { continue; }
-                CmdDealDamage(other.gameObject, calculatedDamageToDeal, player.GetPlayerID());
+                CmdDealDamage(other.gameObject, calculatedDamageToDeal, targeter.tag.Substring(targeter.tag.Length - 1));
                 if (IsKingSP == true)
                 {
                     cmShake();
@@ -158,9 +158,9 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
     }
 
     [Command]
-    public void CmdDealDamage(GameObject enemy,  float damge, int _playerid)
+    public void CmdDealDamage(GameObject enemy,  float damge, string _playerid)
     {
-        string color = _playerid == 0 ? "blue" : "red";
+        string color = _playerid == "0" ? "blue" : "red";
         Debug.Log($"Cmd Deal Damage color : {color} ");
         if (enemy.GetComponent<Health>().DealDamage(damge)){
             KilledEnemy();

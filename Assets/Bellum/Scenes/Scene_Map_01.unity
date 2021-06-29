@@ -24567,7 +24567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 992474782160618206, guid: d9342ead96b0fec43ae9a77ee0be564a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 992474782160618206, guid: d9342ead96b0fec43ae9a77ee0be564a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -117879,10 +117879,10 @@ MonoBehaviour:
   - {fileID: 1501562330}
   - {fileID: 1417798565}
   - {fileID: 654040466}
-  enenmyBack: {fileID: 1081598552}
-  enenmyLeft: {fileID: 580916835}
-  enenmyCentre: {fileID: 1128107513}
-  enenmyRight: {fileID: 1536644333}
+  enemyBack: {fileID: 1081598552}
+  enemyLeft: {fileID: 580916835}
+  enemyCentre: {fileID: 1128107513}
+  enemyRight: {fileID: 1536644333}
   playerBack: {fileID: 703263614}
   playerLeft: {fileID: 654040466}
   playerCentre: {fileID: 1417798565}

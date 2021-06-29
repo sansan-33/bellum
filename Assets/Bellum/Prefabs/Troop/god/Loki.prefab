@@ -131,8 +131,6 @@ MonoBehaviour:
   syncInterval: 0.1
   targeter: {fileID: 6907784326257026380}
   damageToDeal: 100
-  camPrefab: {fileID: 1434666941670536975, guid: d482d6539d9c6472e83a38c9c0fa768e, type: 3}
-  camFreeLookPrefab: {fileID: 795373343299834476, guid: 7dba4376eea514bdd8c393791a18d23a, type: 3}
   attackPoint: {fileID: 2310817853092107212}
   attackRange: 7
   layerMask:
@@ -535,15 +533,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9024980063779706222, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.59
+      value: 1.367
       objectReference: {fileID: 0}
     - target: {fileID: 9024980063779706222, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.7
+      value: 1.96
       objectReference: {fileID: 0}
     - target: {fileID: 9024980063779706222, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.54
+      value: 1.89
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4649854274305143343, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}

@@ -47,8 +47,12 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             if (baseStatus != TaskStatus.Running || !started) {
                 return baseStatus;
             }
-
-            var attackCenter = CenterAttackPosition();
+            Transform target = null;
+            IDamageable damageable = null;
+            ClosestTarget(transform, ref target, ref damageable);
+            if (target == null) { return baseStatus; }
+            var attackCenter = target.position;
+            //var attackCenter = CenterAttackPosition();
             var attackRotation = ReverseCenterAttackRotation(attackCenter);
             // Move the agents into their starting position if they haven't been there already.
             if (!inPosition) {

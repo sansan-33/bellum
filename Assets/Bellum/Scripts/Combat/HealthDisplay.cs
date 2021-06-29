@@ -108,5 +108,8 @@ public class HealthDisplay : MonoBehaviour
                 break;
         }
     }
-
+    public void showHealthDisplay(bool flag)
+    {
+        healthBarParent.SetActive(flag);
+    }
 }

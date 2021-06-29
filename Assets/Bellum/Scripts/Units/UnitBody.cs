@@ -47,6 +47,7 @@ public class UnitBody : NetworkBehaviour, IBody
     {
         unitRenderer.sharedMaterial = material[color == "blue" ? 0 : 1];
         GetComponent<GraphUpdateScene>().setTag = (color == "blue" ? 1 : 2);
+        GetComponent<HealthDisplay>().showHealthDisplay(false);
         Debug.Log($"Door Color changed {color} ");
         StartCoroutine(GraphUpdate());
     }
