@@ -68,6 +68,7 @@ public class Health : NetworkBehaviour, IDamageable
         maxHealth = health == 0 ? maxHealth : health;
         maxHealth = (int) (maxHealth * factor);
         currentHealth = maxHealth;
+        ClientOnHealthUpdated?.Invoke(health, (int)currentHealth, lastDamageDeal);
     }
     public void Healing(float healAmount)
     {

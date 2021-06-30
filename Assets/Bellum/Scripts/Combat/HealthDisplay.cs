@@ -59,6 +59,8 @@ public class HealthDisplay : MonoBehaviour
         if (currentHealth < maxHealth) {
             healthBarParent.SetActive(true);
         }
+        if(currentHealth == 0)
+            healthBarParent.SetActive(false);
         //Debug.Log($"{name} HandleHealthUpdated currentHealth {currentHealth}, lastDamageDeal {lastDamageDeal} ");
     }
     IEnumerator LerpHealthBar(Image healthBar, int currentHealth, int lastDamageDeal, int maxHealth, float lerpDuration)
@@ -107,10 +109,5 @@ public class HealthDisplay : MonoBehaviour
                 defaultIcon.SetActive(true);
                 break;
         }
-    }
-    public void showHealthDisplay(bool flag)
-    {
-        healthBarParent.SetActive(flag);
-        Debug.Log($"Hide {name} Health Display {flag}");
     }
 }

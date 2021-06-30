@@ -650,12 +650,6 @@ public class TacticalBehavior : MonoBehaviour
                 //printCurrentUnitTactical();
                 //TryTB((int)BehaviorSelectionType.Defend, UnitMeta.UnitType.TANK, playerid);
                 unitTactical[playerid][UnitMeta.UnitType.TANK] = BehaviorSelectionType.Defend;
-                //Debug.Log($"unitTactical[playerid][UnitMeta.UnitType.TANK], playerid {playerid} =  {unitTactical[0][UnitMeta.UnitType.TANK]} ");
-                //Debug.Log($"unitTactical[playerid][UnitMeta.UnitType.TANK], playerid {1} =  {unitTactical[1][UnitMeta.UnitType.TANK]} ");
-                //var tmp = unitTactical[0];
-                //tmp[UnitMeta.UnitType.TANK] = BehaviorSelectionType.Defend;
-                //Debug.Log($"unitTactical[playerid][UnitMeta.UnitType.TANK], playerid {playerid} =  {unitTactical[0][UnitMeta.UnitType.TANK]} ");
-                //Debug.Log($"unitTactical[playerid][UnitMeta.UnitType.TANK], playerid {1} =  {unitTactical[1][UnitMeta.UnitType.TANK]} ");
                 while (unitspawn <= 5)
                 {
                     yield return new WaitForSeconds(.5f);

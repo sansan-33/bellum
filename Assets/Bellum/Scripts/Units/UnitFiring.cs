@@ -50,22 +50,25 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
 
     IEnumerator autoFire()
     {
+        int targetid = rtsPlayer.GetEnemyID();
         while (true)
         {
             yield return new WaitForSeconds(repeatAttackDelay);
-            Attack(ClosestTarget());
+            if (GetComponent<UnitBody>().doorColor != "blue" && GetComponent<UnitBody>().doorColor != "red") { continue; }
+            else{ targetid = GetComponent<UnitBody>().doorColor == "blue" ? 1 : 0;  }
+            Attack(ClosestTarget(targetid));
         }
         //yield return null;
     }
-    protected Vector3 ClosestTarget()
+    protected Vector3 ClosestTarget(int targetid)
     {
         Transform targetTransform = null ;
         var distance = float.MaxValue;
         var localDistance = 0f;
-        GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + rtsPlayer.GetEnemyID() );
-        GameObject king = GameObject.FindGameObjectWithTag("King" + rtsPlayer.GetEnemyID());
-        GameObject[] provokeTanks = GameObject.FindGameObjectsWithTag("Provoke" + rtsPlayer.GetEnemyID());
-        GameObject[] sneakyFootman = GameObject.FindGameObjectsWithTag("Sneaky" + rtsPlayer.GetEnemyID());
+        GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + targetid);
+        GameObject king = GameObject.FindGameObjectWithTag("King" + targetid);
+        GameObject[] provokeTanks = GameObject.FindGameObjectsWithTag("Provoke" + targetid);
+        GameObject[] sneakyFootman = GameObject.FindGameObjectsWithTag("Sneaky" + targetid);
         List<GameObject> targets = new List<GameObject>();
         targets = units.ToList();
         if (king != null)
@@ -94,14 +97,14 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
         return targetTransform.position;
     }
     [Server]
-    private void FireProjectile(Vector3 targetPosition)
+    private void HandleFireProjectile(Vector3 targetPosition)
     {
-        //Debug.Log($"{name} firing now to target position {targetPosition}");
         for (var i = 0; i < numShots; i++)
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            if (GetComponent<Unit>().unitType != UnitMeta.UnitType.DOOR)
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         
             Quaternion projectileRotation = Quaternion.LookRotation(targetPosition - projectileSpawnPoint.position);
           
@@ -118,7 +121,10 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
                 projectileInstance.GetComponent<UnitProjectile>().IS_CHAIN_ATTACK = true;
                 projectileInstance.GetComponent<UnitProjectile>().ServerTargetObjectTF(transform.position);
             }
-            projectileInstance.GetComponent<UnitProjectile>().SetPlayerType(Int32.Parse(tag.Substring(tag.Length - 1)));
+            if(GetComponent<Unit>().unitType == UnitMeta.UnitType.DOOR)
+                projectileInstance.GetComponent<UnitProjectile>().SetPlayerType(GetComponent<UnitBody>().doorColor == "blue" ? 0: 1);
+            else
+                projectileInstance.GetComponent<UnitProjectile>().SetPlayerType(Int32.Parse(tag.Substring(tag.Length - 1)));
             NetworkServer.Spawn(projectileInstance, connectionToClient);
         }   
     }
@@ -132,7 +138,7 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
     [Command]
     private void CmdFireProjectile(Vector3 targetPosition)
     {
-        FireProjectile(targetPosition);
+        HandleFireProjectile(targetPosition);
     }
     public void ChangeAttackDelay(double channgeValue)
     {
@@ -173,16 +179,16 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
         else if (localDistance < 300f)
             animState = UnitAnimator.AnimState.ATTACK2;
 
-        //if (GetComponent<Unit>().unitType == UnitMeta.UnitType.ARCHER) { 
-        //    Debug.Log($"{name} Unit Firing  ==> localDistance {localDistance} animState {animState}");
-        //}
         targeter.transform.GetComponent<UnitAnimator>().StateControl(animState);
-        StartCoroutine(FireProjjectile(targetPosition));
+        StartCoroutine(FireProjectile(targetPosition));
     }
-    IEnumerator FireProjjectile(Vector3 targetPosition)
+    IEnumerator FireProjectile(Vector3 targetPosition)
     {
         yield return new WaitForSeconds(0.2f);
-        CmdFireProjectile(targetPosition);
+        if (GetComponent<Unit>().unitType == UnitMeta.UnitType.DOOR)
+            HandleFireProjectile(targetPosition);
+        else
+            CmdFireProjectile(targetPosition);
     }
     public void ScaleAttackDelay(float factor)
     {

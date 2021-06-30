@@ -14,9 +14,8 @@ public class TeamColorSetter : NetworkBehaviour
 
     public override void OnStartServer()
     {
-
+        //Debug.Log($"TeamColorSetter {name} , {tag} ");
         RTSPlayer player = connectionToClient.identity.GetComponent<RTSPlayer>();
-        //Debug.Log($"TeamColorSetter {player} , color {player.GetTeamColor()} ");
         teamColor = player != null ? player.GetTeamColor() : Color.red;
     }
 

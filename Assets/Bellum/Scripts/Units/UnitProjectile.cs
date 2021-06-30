@@ -14,6 +14,7 @@ public class UnitProjectile : NetworkBehaviour
     [SerializeField] private float destroyAfterSeconds = 20f;
     [SerializeField] private float launchForce = 10f;
     [SerializeField] private string unitType;
+    [SerializeField] private bool isServerSpawn;
     [SerializeField] private GameObject specialEffectPrefab = null;
     [SerializeField] private ElementalDamage.Element element;
     NetworkIdentity opponentIdentity;
@@ -126,7 +127,7 @@ public class UnitProjectile : NetworkBehaviour
         bool isFlipped = false;
         bTouchingGround = true;
         damageToDeals = damageToDealOriginal;
-        if (other == null) { return;  }
+        if (other == null || other.name == "Walkable" || other.name == "Door") { return;  }
         if (other.tag.Contains("Building")) {
             //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
             cmdSpecialEffect(this.transform.position);
@@ -141,6 +142,7 @@ public class UnitProjectile : NetworkBehaviour
                 DestroySelf();
             }
         }
+        
         // Not attack same connection client object except AI Enemy
         if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1) {
             if ( other.tag.Contains(enemyid.ToString()) && unitType == "Enemy" ) { return; }  //check to see if it belongs to the player, if it does, do nothing
@@ -149,7 +151,7 @@ public class UnitProjectile : NetworkBehaviour
         else // Multi player seneriao
         {
             isFlipped = true;
-            if (this.TryGetComponent<NetworkIdentity>(out NetworkIdentity ArrowNetworkIdentity))
+            if (this.TryGetComponent<NetworkIdentity>(out NetworkIdentity ArrowNetworkIdentity) && !isServerSpawn) // Prevent Checking for Arrow Spawn by Server Object like Door
             {
                 if (!ArrowNetworkIdentity.hasAuthority) { return; }
                 if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity OtherNetworkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
@@ -161,20 +163,17 @@ public class UnitProjectile : NetworkBehaviour
         }
         if (other.TryGetComponent<Health>(out Health health))
         {
-            //Debug.Log($"player ID {player.GetPlayerID()}");
-            //Debug.Log(playerid);
-            
-            opponentIdentity = (playerid == 1) ? GetComponent<NetworkIdentity>() : other.GetComponent<NetworkIdentity>();
+            //Debug.Log($" Hitted object {other.tag}  {other.name}, Attacker arrow type is {unitType} ");
+            //opponentIdentity = (playerid == 1) ? GetComponent<NetworkIdentity>() : other.GetComponent<NetworkIdentity>();
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals}"); 
             //Debug.Log($"before strengthWeakness{damageToDeals}");
             damageToDeals = StrengthWeakness.calculateDamage(UnitMeta.UnitType.ARCHER, other.GetComponent<Unit>().unitType, damageToDeals);
-            //Debug.Log("call spawn text");
-
+           
             //cmdDamageText(other.transform.position, damageToDeals, damageToDealOriginal, opponentIdentity, isFlipped);
             cmdSpecialEffect(other.transform.GetComponent<Unit>().GetTargeter().GetAimAtPoint().position);
             elementalEffect(element, other.transform.GetComponent<Unit>());
             HITTED = true;
-            CmdDealDamage(other.gameObject, damageToDeals,unitType);
+            dealDamage(other.gameObject, damageToDeals,unitType);
             //Debug.Log($" Hit Helath Projectile OnTriggerEnter ... {this} , {other.GetComponent<Unit>().unitType} , {damageToDeals} / {damageToDealOriginal}");
             if(!IS_CHAIN_ATTACK)
                 cmdArrowStick(other.transform);
@@ -190,12 +189,24 @@ public class UnitProjectile : NetworkBehaviour
     {
         this.unitType = playerid == 0 ? "Player" : "Enemy";
     }
-
+    public void dealDamage(GameObject enemy, float damge, string arrowType)
+    {
+        if (isServerSpawn)
+            ServerDealDamage(enemy, damge, arrowType);
+        else
+            CmdDealDamage(enemy, damge, arrowType);
+    }
     [Command]
     public void CmdDealDamage(GameObject enemy, float damge, string arrowType)
     {
-        //Debug.Log($"attack{damge} DasdhDamage{DashDamage}");
-        if(enemy != null && enemy.TryGetComponent<Health>(out Health health)){
+        ServerDealDamage(enemy, damge, arrowType);
+    }
+    [Server]
+    public void ServerDealDamage(GameObject enemy, float damge, string arrowType)
+    {
+        Debug.Log($"attack {damge} / enemy {enemy} / arrowType {name} : {arrowType}");
+        if (enemy != null && enemy.TryGetComponent<Health>(out Health health))
+        {
             if (health.DealDamage(damge))
             {
                 onKilled?.Invoke();

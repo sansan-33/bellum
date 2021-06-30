@@ -10,6 +10,7 @@ public class UnitBody : NetworkBehaviour, IBody
     [SerializeField] private List<Material> material;
     private SkinnedMeshRenderer unitRenderer;
     [SerializeField] public int doorIndex;
+    [SerializeField] public string doorColor;
 
     public override void OnStartServer()
     {
@@ -47,7 +48,7 @@ public class UnitBody : NetworkBehaviour, IBody
     {
         unitRenderer.sharedMaterial = material[color == "blue" ? 0 : 1];
         GetComponent<GraphUpdateScene>().setTag = (color == "blue" ? 1 : 2);
-        GetComponent<HealthDisplay>().showHealthDisplay(false);
+        doorColor = color;
         Debug.Log($"Door Color changed {color} ");
         StartCoroutine(GraphUpdate());
     }

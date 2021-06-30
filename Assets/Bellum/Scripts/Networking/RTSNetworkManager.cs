@@ -118,7 +118,7 @@ public class RTSNetworkManager : NetworkManager
         isGameInProgress = true;
         SetupUnitDict();
         //ServerChangeScene("Scene_Map_0" + Random.Range(1, 4));
-        ServerChangeScene("Scene_Map_01");
+        ServerChangeScene("Scene_Map_03");
     }
 
     public void StartMission(string chapter, string mission)
