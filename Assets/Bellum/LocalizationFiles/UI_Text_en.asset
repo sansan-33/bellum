@@ -126,5 +126,25 @@ MonoBehaviour:
     m_Localized: SAVE
     m_Metadata:
       m_Items: []
+  - m_Id: 5741944180301824
+    m_Localized: STAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5742358598508544
+    m_Localized: HUMAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5742769107623936
+    m_Localized: UNDEAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5743047366139904
+    m_Localized: ELF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5743437096673280
+    m_Localized: GOD
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
