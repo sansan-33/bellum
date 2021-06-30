@@ -123,6 +123,26 @@ MonoBehaviour:
     m_Key: save
     m_Metadata:
       m_Items: []
+  - m_Id: 5741944180301824
+    m_Key: "stage\t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5742358598508544
+    m_Key: human
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5742769107623936
+    m_Key: undead
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5743047366139904
+    m_Key: elf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5743437096673280
+    m_Key: god
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
