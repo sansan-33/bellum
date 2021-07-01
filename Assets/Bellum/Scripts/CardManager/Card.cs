@@ -151,7 +151,7 @@ public class Card : MonoBehaviour
 
         //Debug.Log(GetComponent<RectTransform>().localScale);
         ResetScale();
-        this.GetComponentInParent<Player>().moveCard(this.cardPlayerHandIndex);
+        this.GetComponentInParent<CardPlayer>().moveCard(this.cardPlayerHandIndex);
         var _enemyCard = enemyCard;
         enemyCard = false;
         dealManagers.Hit(_enemyCard);

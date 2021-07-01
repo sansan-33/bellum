@@ -219,6 +219,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
             if (other.tag == "Unit") { continue; }  // initial object tag name , wait for tag update later
             if (other.tag == "Wall") { continue; }  // Great Wall 3 Door will not collide
             if (other.tag.Contains("Building")) { continue; }  // wall not blocked
+            if (other.tag.Contains("Trap")) { continue; }  // wall not blocked
             if (IS_MULTIPLAYER_MODE)
             {
                 if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 

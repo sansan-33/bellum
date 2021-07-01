@@ -23,7 +23,7 @@ public class PlayerTest : MonoBehaviour
         // Use the Assert class to test conditions
         Debug.Log($"Test Now 123");
         GameObject obj = new GameObject();
-        obj.AddComponent<Player>();
-        obj.GetComponent<Player>().dragCardMerge();
+        obj.AddComponent<CardPlayer>();
+        obj.GetComponent<CardPlayer>().dragCardMerge();
     }
 }

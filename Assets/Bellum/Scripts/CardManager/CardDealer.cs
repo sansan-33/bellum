@@ -29,7 +29,7 @@ public struct CardFace
 public class CardDealer : MonoBehaviour
 {
     public int MAXTOTALHAND = 6;
-    [SerializeField] List<Player> players = new List<Player>();
+    [SerializeField] List<CardPlayer> players = new List<CardPlayer>();
     [SerializeField] List<CardFace> cardDeck = new List<CardFace>();
     [SerializeField] List<CardFace> cardDeckUsed = new List<CardFace>();
     [SerializeField] public Dictionary<string, CardStats> userCardStatsDict = new Dictionary<string, CardStats>();
@@ -62,12 +62,12 @@ public class CardDealer : MonoBehaviour
     void Start()
     {
         TacticalBehavior.UnitTagUpdated += StartShuffleDeck;
-        Player.CardRemoved += RemoveCard;
+        CardPlayer.CardRemoved += RemoveCard;
     }
     void OnDestroy()
     {
         TacticalBehavior.UnitTagUpdated -= StartShuffleDeck;
-        Player.CardRemoved -= RemoveCard;
+        CardPlayer.CardRemoved -= RemoveCard;
     }
     private void StartShuffleDeck()
     {
@@ -128,13 +128,13 @@ public class CardDealer : MonoBehaviour
         EnemyButtonSiege.SetCard(new CardFace(Card_Suits.Clubs, Card_Numbers.SIEGE, Card_Stars.Bronze, _cardstats[UnitMeta.UnitRaceTypeKey[StaticClass.playerRace][UnitMeta.UnitType.SIEGE].ToString()]));
 
     }
-    void DealCard(Player player, int playersIndex,  bool left = true)
+    void DealCard(CardPlayer player, int playersIndex,  bool left = true)
     {
         //Debug.Log("Dealing Card to " + player.playerName);
         StartCoroutine(DealingCard(player, playersIndex, left));
     }
 
-    IEnumerator DealingCard(Player player, int playersIndex, bool left = true)
+    IEnumerator DealingCard(CardPlayer player, int playersIndex, bool left = true)
     {
         //Debug.Log("DealingCard");
         Card lastCard = cardObjectPool.GetObject().GetComponent<Card>();
@@ -174,7 +174,7 @@ public class CardDealer : MonoBehaviour
         //Debug.Log($"{player.name} is enemy = {player.isEnemy} card enemy card --> {lastCard.enemyCard}");
         yield return player.AddCard(lastCard, left);  
     }
-    IEnumerator DealCards(int numberOfCards, float delay, float waitTime, Player player, int playersIndex, bool left = true, bool reveal = false)
+    IEnumerator DealCards(int numberOfCards, float delay, float waitTime, CardPlayer player, int playersIndex, bool left = true, bool reveal = false)
     {
         float currentWait = waitTime;
 

@@ -34,8 +34,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private TacticalBehavior TB;
     [SerializeField] private Transform halfLine;
     [SerializeField] private Card wall;
-    [SerializeField] private Player player;
-    [SerializeField] private Player enemyPlayer;
+    [SerializeField] private CardPlayer player;
+    [SerializeField] private CardPlayer enemyPlayer;
     [SerializeField] private CardDealer cardDealer;
      private Dictionary<UnitMeta.UnitType, Position> StratergyPostion = new Dictionary<UnitMeta.UnitType, Position>()
     { };

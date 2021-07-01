@@ -92,7 +92,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     }
     public IEnumerator ShiftCard()
     {
-        if (GetComponentInParent<Player>() == null) { yield break; } // Buildings cards don't have player hand and card slot
+        if (GetComponentInParent<CardPlayer>() == null) { yield break; } // Buildings cards don't have player hand and card slot
         //Debug.Log($"DragCard.ShiftCard() start IS_HITTED_TIMER:{IS_HITTED_TIMER}");
         if (IS_HITTED_TIMER) {
             // 2021-5-15 Anthea no one turn IS_HITTED_TIMER to false. so can't drag card to other card slot.
@@ -140,7 +140,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
                 {
                     hittedDict.Clear();
                     //Debug.Log($"DragCard.ShiftCard() {dragCardPlayerHandIndex } to  {hittedCard.cardPlayerHandIndex } / direction {direction} call moveCardAt()");
-                    GetComponentInParent<Player>().moveCardAt(dragCardPlayerHandIndex, direction);
+                    GetComponentInParent<CardPlayer>().moveCardAt(dragCardPlayerHandIndex, direction);
                     //Prevent moving 2 cards in  one hitted, need to wait 0.5 sec for next move
                     IS_HITTED_TIMER = true;
                     //Debug.Log($"DragCard.ShiftCard() set IS_HITTED_TIMER to true:{IS_HITTED_TIMER}");
@@ -217,7 +217,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             }
         } else {
             Vector3 pos = GetComponentInParent<CardSlot>().transform.position;
-            GetComponentInParent<Player>().dragCardMerge();
+            GetComponentInParent<CardPlayer>().dragCardMerge();
             // Set the dragged card position right under the last hitted card slot again, did it in moveOneCard, need to set it again otheriwse it will stop in the middle.
             transform.position = pos;
             //Debug.Log($"DragCard.OnEndDrag() update transform.position: {transform.position}");
@@ -231,7 +231,7 @@ public class DragCard : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         dealManagers.totalEleixers.eleixer -= uniteleixer;
         Debug.Log($"drag card{GetComponent<Card>().enemyCard}");
         // Special Checking for Wall Button Card not under Card Slot (player)
-        Player playerDeck = GetComponentInParent<Player>();
+        CardPlayer playerDeck = GetComponentInParent<CardPlayer>();
         if (playerDeck != null)
             playerDeck.moveCard(GetComponent<Card>().cardPlayerHandIndex);
         dealManagers.GetComponent<CardDealer>().Hit(false);

@@ -69679,7 +69679,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1273236184}
   - component: {fileID: 1273236185}
-  - component: {fileID: 1273236186}
   m_Layer: 0
   m_Name: EnemyDeck
   m_TagString: Card(clone)
@@ -69717,7 +69716,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1273236183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82064cf8201c247a3b7e10eb011e4c26, type: 3}
+  m_Script: {fileID: 11500000, guid: ff71078266a934ba9b22bea6931c3c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cardSlotParent: {fileID: 986101251}
@@ -69732,23 +69731,6 @@ MonoBehaviour:
   MAXCARDSTAR: 3
   isEnemy: 1
   cardSlotlist: []
---- !u!114 &1273236186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1273236183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 2247125949
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1274042775
 GameObject:
   m_ObjectHideFlags: 0
@@ -90259,7 +90241,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1649025844}
   - component: {fileID: 1649025845}
-  - component: {fileID: 1649025846}
   m_Layer: 0
   m_Name: PlayerDeck
   m_TagString: Card(clone)
@@ -90297,7 +90278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1649025843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82064cf8201c247a3b7e10eb011e4c26, type: 3}
+  m_Script: {fileID: 11500000, guid: ff71078266a934ba9b22bea6931c3c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cardSlotParent: {fileID: 1756375045}
@@ -90308,27 +90289,10 @@ MonoBehaviour:
   singleHandStart: {fileID: 1756375045}
   screenOffset: 0
   cardOffset: 110
-  cardMoveSpeed: 5000
+  cardMoveSpeed: 500
   MAXCARDSTAR: 3
   isEnemy: 0
   cardSlotlist: []
---- !u!114 &1649025846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649025843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 325818141
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1649422093
 GameObject:
   m_ObjectHideFlags: 0
@@ -111449,6 +111413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshParent: {fileID: 0}
+  enemymMeshParent: {fileID: 0}
   playerMesh: {fileID: 1125790944}
   enemyMesh: {fileID: 1841222012}
   playerMeshAll: {fileID: 0}
