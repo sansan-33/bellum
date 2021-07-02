@@ -313,10 +313,9 @@ public class UnitPowerUp : NetworkBehaviour
     {
         //SetSpeed(speed * 1.5f, false);
         SetAcceleration(acceleration);
-        isSpecialEffectPlay = true;
-        //GameObject specialEffect = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
-        //NetworkServer.Spawn(specialEffect, connectionToClient);
-    }
+        isFXPlay = true;
+        //isSpecialEffectPlay = true;
+     }
     private void Tornado()
     {
         float offset = tag.Contains("0") ? 10f : -10f;
@@ -351,6 +350,7 @@ public class UnitPowerUp : NetworkBehaviour
     {
         gameObject.GetComponent<IAttack>().ScaleDamageDeal(attack, repeatAttackDelay, 3);
         Debug.Log($"Charging attack {attack} repeatAttackDelay {repeatAttackDelay}");
+        isSpecialEffectPlay = true;
         isFXPlay = true;
         //fxEffect(GetComponent<IAttack>().AttackPoint());
     }
@@ -368,7 +368,7 @@ public class UnitPowerUp : NetworkBehaviour
     private void spawnSpecialEffect()
     {
         if (specialEffectPrefab == null) { return; }
-        specialEffectObj = Instantiate(specialEffectPrefab, GetComponentInParent<Transform>());
+        specialEffectObj = Instantiate(specialEffectPrefab, transform);
     }
     private void fxPlay()
     {
@@ -376,6 +376,7 @@ public class UnitPowerUp : NetworkBehaviour
     }
     private void specialEffectPlay()
     {
+        //Debug.Log($"{name} specialEffectPlay");
         specialEffectObj.GetComponent<ParticleSystem>().Play();
     }
     //======================================================== End of Unit Factory   ================================================================

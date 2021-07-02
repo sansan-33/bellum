@@ -144,6 +144,7 @@ MonoBehaviour:
   repeatAttackDelay: 1
   attackAngle: 1
   textPrefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}
+  AUTOFIRE: 0
 --- !u!114 &7132728397696075945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,9 +298,13 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2171270098197511395, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
-      propertyPath: specialEffectPrefab
+      propertyPath: fxEffectPrefab
       value: 
       objectReference: {fileID: 4886237638803385188, guid: 59fb4d72c00e72e409542f948722cbbe, type: 3}
+    - target: {fileID: 2171270098197511395, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
+      propertyPath: specialEffectPrefab
+      value: 
+      objectReference: {fileID: 2220211473671690479, guid: 3c221913388654576a6426aeae235e44, type: 3}
     - target: {fileID: 2278323069818987186, guid: cb8d23f56e2ad4e64bc8eac535a3008f, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.28

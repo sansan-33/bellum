@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4127209464074185827}
   - component: {fileID: 2277436436027353907}
   - component: {fileID: 2275663843920422958}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CFX3_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4899,7 +4899,7 @@ GameObject:
   - component: {fileID: 4127280453135058783}
   - component: {fileID: 804636089005068375}
   - component: {fileID: 1995751044897942534}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CFX3 Rays Out
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9666,7 +9666,7 @@ GameObject:
   - component: {fileID: 4127414738140794087}
   - component: {fileID: 245629050846058856}
   - component: {fileID: 5862719704959950014}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CFX3 Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14433,7 +14433,7 @@ GameObject:
   - component: {fileID: 4127395497198414741}
   - component: {fileID: 8413291383030482323}
   - component: {fileID: 8535829800364471560}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CFX3 Rays In
   m_TagString: Untagged
   m_Icon: {fileID: 0}
