@@ -22,7 +22,7 @@ public class OnclickEffect : MonoBehaviour, IPointerClickHandler
         Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
         Debug.Log($"spawn pos{pos}");
         _effect = Instantiate(effect, parent);
-        _effect.GetComponent<RectTransform>().SetAnchor(AnchorPresets.MiddleCenter);
+        //_effect.GetComponent<RectTransform>().SetAnchor(AnchorPresets.MiddleCenter);
         _effect.transform.position = pos;
         _effect.GetComponent<ParticleSystem>().Play();
         
@@ -34,7 +34,7 @@ public class OnclickEffect : MonoBehaviour, IPointerClickHandler
         Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
         Debug.Log($"spawn pos{pos}");
         _effect = Instantiate(effect, parent);
-        _effect.GetComponent<RectTransform>().SetAnchor(AnchorPresets.MiddleCenter);
+        //_effect.GetComponent<RectTransform>().SetAnchor(AnchorPresets.MiddleCenter);
         _effect.transform.position = pos;
         _effect.GetComponent<ParticleSystem>().Play();
         
@@ -43,7 +43,7 @@ public class OnclickEffect : MonoBehaviour, IPointerClickHandler
     private IEnumerator DisableEffect(GameObject effect)
     {
         yield return new WaitForSeconds(0.4f);
-        //Destroy(effect);
+        Destroy(effect);
     }
     // Update is called once per frame
     void Update()
