@@ -15,18 +15,20 @@ public class LanguageSelectionManager : MonoBehaviour
     public static int Selected_Locale_Index = 0;
 
     [SerializeField] public GameObject languageSelectionPopup;
-    
+    [SerializeField] public Locale defaultLocale = null; 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        int langageId = PlayerPrefs.GetInt("Language");
+        Debug.Log($"LanguageSelectionManager.start() langageId:{langageId}");
+        OnSelectionChanged(langageId);
     }
 
     public void SelectEnglish()
@@ -51,8 +53,14 @@ public class LanguageSelectionManager : MonoBehaviour
 
     void OnSelectionChanged(int index)
     {
-        //Debug.Log($"LanguageSelectionManager.OnSelectionChanged() Selected index:{index}");
+        Debug.Log($"LanguageSelectionManager.OnSelectionChanged() Selected index:{index}");
         Selected_Locale_Index = index;
+
+        if (index >= LocalizationSettings.AvailableLocales.Locales.Count)
+        {
+            Debug.LogError($"LocalizationSettings.AvailableLocales.Locales.Count:{LocalizationSettings.AvailableLocales.Locales.Count} < index:{index}");
+            return;
+        }
 
         var locale = LocalizationSettings.AvailableLocales.Locales[index];
         LocalizationSettings.SelectedLocale = locale;
@@ -60,6 +68,10 @@ public class LanguageSelectionManager : MonoBehaviour
 
         // Instantiate FontManger to get Default Font
         TMP_Asset tempFont = FontManager.Instance.defaultFontEn;
+
+        // save
+        PlayerPrefs.SetInt("Language", index);
+        Debug.Log($"LanguageSelectionManager.OnSelectionChanged() PlayerPrefs.SetInt(Language, index):{index}");
 
         // TODO: inactive check for non-selected locale and active check for selected locale
 
