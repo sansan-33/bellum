@@ -60,7 +60,7 @@ public class RTSPlayer : NetworkBehaviour
     }
     public string GetTotalPower()
     {
-        Debug.Log($"RTS Player GetTotalPower {totalPower}");
+        //Debug.Log($"RTS Player GetTotalPower {totalPower}");
         return totalPower;
     }
     
