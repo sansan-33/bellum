@@ -12,15 +12,10 @@ public class SpawnTeam : MonoBehaviour
 {
     private UnitFactory localFactory;
 
-    private int enemyID = 0;
     private int playerID = 0;
     private Color teamColor;
-    private bool ISGAMEOVER = false;
-    [SerializeField] public Dictionary<string, CardStats> userCardStatsDict = new Dictionary<string, CardStats>();
     private Dictionary<string, JSONNode> userTeamDict = new Dictionary<string, JSONNode>();
     RTSPlayer player ;
-
-    public TacticalBehavior tacticalBehavior;
 
     void Start()
     {
@@ -29,7 +24,6 @@ public class SpawnTeam : MonoBehaviour
         player = NetworkClient.connection.identity.GetComponent<RTSPlayer>();
         StartCoroutine(LoadUserTeam(player.GetUserID()));
 
-        enemyID = player.GetEnemyID();
         playerID = player.GetPlayerID();
         teamColor = player.GetTeamEnemyColor();
         GameStartDisplay.ServerGameStart += LoadTeam;
