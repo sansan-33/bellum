@@ -7,53 +7,53 @@ using TMPro;
 
 public class LanguageSelectionManager : MonoBehaviour
 {
-    public static string STRING_TEXT_REF = "UI_Text";
-    public const int LOCALE_EN = 0;
-    public const int LOCALE_JP = 1;
-    public const int LOCALE_CN = 2;
-    public const int LOCALE_HK = 3;
+    public const string STRING_TEXT_REF = "UI_Text";
+    public const string LOCALE_EN = "en";
+    public const string LOCALE_JP = "ja";
+    public const string LOCALE_CN = "zh-Hans";
+    public const string LOCALE_HK = "zh-Hant";
     public static int Selected_Locale_Index = 0;
 
     [SerializeField] public GameObject languageSelectionPopup;
-    [SerializeField] public Locale defaultLocale = null; 
 
     // Start is called before the first frame update
     void Start()
     {
-       
+        //Debug.Log($"LanguageSelectionManager.Start()");
     }
 
     // Update is called once per frame
     void Update()
     {
-        int langageId = PlayerPrefs.GetInt("Language");
-        Debug.Log($"LanguageSelectionManager.start() langageId:{langageId}");
-        OnSelectionChanged(langageId);
+        //Debug.Log($"LanguageSelectionManager.Update()");
     }
 
     public void SelectEnglish()
     {
-        OnSelectionChanged(LOCALE_EN);
+        
+        OnSelectionChanged(getLocaleIndex(LOCALE_EN));
     }
 
     public void SelectJapanese()
     {
-        OnSelectionChanged(LOCALE_JP);
+        OnSelectionChanged(getLocaleIndex(LOCALE_JP));
     }
 
     public void SelectSimplifiedChinese()
     {
-        OnSelectionChanged(LOCALE_CN);
+        OnSelectionChanged(getLocaleIndex(LOCALE_CN));
     }
 
     public void SelectTraditionalChinese()
     {
-        OnSelectionChanged(LOCALE_HK);
+        OnSelectionChanged(getLocaleIndex(LOCALE_HK));
     }
 
-    void OnSelectionChanged(int index)
+    private void OnSelectionChanged(int index)
     {
         Debug.Log($"LanguageSelectionManager.OnSelectionChanged() Selected index:{index}");
+
+        Debug.Log($"LocalizationSettings.AvailableLocales:{LocalizationSettings.AvailableLocales.Locales}");
         Selected_Locale_Index = index;
 
         if (index >= LocalizationSettings.AvailableLocales.Locales.Count)
@@ -66,9 +66,6 @@ public class LanguageSelectionManager : MonoBehaviour
         LocalizationSettings.SelectedLocale = locale;
         Debug.Log($"LanguageSelectionManager.OnSelectionChanged() SelectedLocale:{LocalizationSettings.SelectedLocale}");
 
-        // Instantiate FontManger to get Default Font
-        TMP_Asset tempFont = FontManager.Instance.defaultFontEn;
-
         // save
         PlayerPrefs.SetInt("Language", index);
         Debug.Log($"LanguageSelectionManager.OnSelectionChanged() PlayerPrefs.SetInt(Language, index):{index}");
@@ -78,5 +75,18 @@ public class LanguageSelectionManager : MonoBehaviour
         // TODO: update language in Setting popup
     }
 
-    
+    public static int getLocaleIndex(string localeString)
+    {
+        for (int i=0; i < LocalizationSettings.AvailableLocales.Locales.Count; i++)
+        {
+            string localeName = LocalizationSettings.AvailableLocales.Locales[i].LocaleName;
+            Debug.Log($"localeName:{localeName} localeString:{localeString}");
+            if (localeName.Contains(localeString))
+            {
+                Debug.Log($"return localeIndex:{i}");
+                return i;
+            }
+        }
+        return -1;
+    }
 }
