@@ -7,9 +7,11 @@ using UnityEngine;
 public class UnitAnimator : NetworkBehaviour
 {
     [SerializeField] public NetworkAnimator networkAnim;
+    [SerializeField] public Animator anim;
     [SerializeField] public AudioSource audioSource;
     AnimatorClipInfo[] m_CurrentClipInfo;
     [SyncVar] private AnimState currentState;
+
     public enum AnimState { ATTACK, ATTACK0, ATTACK1, ATTACK2, DEFEND, GETHIT, LOCOMOTION, NOTHING, IDLE , DIE, PROVOKE, VICTORY, OPEN};
     public bool isAttacking = false;
     private Dictionary<string, float> clipLength =  new Dictionary<string, float>();
@@ -28,6 +30,7 @@ public class UnitAnimator : NetworkBehaviour
     private void SetAnimationState()
     {
         networkAnim = GetComponent<NetworkAnimator>();
+        anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         rand = new System.Random();
         //Initial state set to prevent attack state delay when checking current state and new state
@@ -46,11 +49,11 @@ public class UnitAnimator : NetworkBehaviour
 
     void ChangeAnimationState(AnimState newState)
     {
-        //Debug.Log($"1 ChangeAnimationState:  currentState: {currentState} / newState: {newState}");
+        if(name.Contains("Odin"))
+        Debug.Log($"1 {name} {tag} ChangeAnimationState:  currentState: {currentState} / newState: {newState}");
         if (currentState == newState) return;
         //if (currentState.ToString().Contains("ATTACK") && newState.ToString().Contains("ATTACK")) return;
         string animState = newState.ToString();
-        ResetAll(animState);
         if (newState == AnimState.ATTACK0 || newState == AnimState.ATTACK1  || newState == AnimState.ATTACK2 || newState == AnimState.PROVOKE) {
             networkAnim.SetTrigger(animState);
             if(audioSource !=null)
@@ -58,16 +61,18 @@ public class UnitAnimator : NetworkBehaviour
             return;
         }
         //Debug.Log($"2 ChangeAnimationState:  {currentState} , {animState}");
-        networkAnim.animator.SetBool(animState, true);
+        ResetAll(animState);
         currentState = newState;
+        anim.SetBool(animState, true);
     }
     void ResetAll(string animState)
     {
-        //Debug.Log($"2 ResetAll ");
-        networkAnim.animator.SetBool("DEFEND", false);
-        networkAnim.animator.SetBool("LOCOMOTION", false);
-        networkAnim.animator.SetBool("VICTORY", false);
-        //networkAnim.animator.SetBool(animState, false);
+        if (name.Contains("Odin"))
+            Debug.Log($"2 {name} {tag} ResetAll ");
+        anim.SetBool("DEFEND", false);
+        anim.SetBool("LOCOMOTION", false);
+        anim.SetBool("VICTORY", false);
+        anim.SetBool(animState, false);
     }
    
     public void HandleStateControl(AnimState newState)
@@ -87,10 +92,7 @@ public class UnitAnimator : NetworkBehaviour
                 var defaultClipLength = 0f;
                 isAttacking = true;
                 clipLength.TryGetValue(newState.ToString() , out defaultClipLength);
-                //if(newState.ToString().Contains("VICTORY"))
-                //    networkAnim.animator.SetFloat("animSpeed", 100f);
-                //else
-                    networkAnim.animator.SetFloat("animSpeed", defaultClipLength / GetComponent<IAttack>().RepeatAttackDelay());
+                SetFloat("animSpeed", defaultClipLength / GetComponent<IAttack>().RepeatAttackDelay());
                 Invoke("AttackCompleted", GetComponent<IAttack>().RepeatAttackDelay());
             }
             ChangeAnimationState(newState);
@@ -108,10 +110,14 @@ public class UnitAnimator : NetworkBehaviour
 
     public void StateControl(AnimState newState)
     {
-        if(isServer)
+        //if (!hasAuthority) { return;  }
+        HandleStateControl(newState);
+        /*
+        if (isServer)
             RpcStateControl(newState);
         else
             CmdStateControl(newState);
+        */
     }
    
     [Command]
@@ -131,13 +137,7 @@ public class UnitAnimator : NetworkBehaviour
     }
     public void SetFloat(string type , float value)
     {
-        networkAnim.animator.SetFloat(type, value);
-    }
-    public void SetBool(UnitAnimator.AnimState newState,  bool value)
-    {
-        Debug.Log($"{name} {tag} Unit Animatior set bool {newState.ToString()} {value}");
-        if (currentState == newState) return;
-        networkAnim.animator.SetBool(newState.ToString(), value);
+        anim.SetFloat(type, value);
     }
 }
 

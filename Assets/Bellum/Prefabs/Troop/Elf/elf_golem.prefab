@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   animator: {fileID: -1018141774067972132}
 --- !u!114 &-5286770527418771936
 MonoBehaviour:
@@ -160,6 +160,7 @@ MonoBehaviour:
   repeatAttackDelay: 1
   attackAngle: 1
   textPrefab: {fileID: 6724933681066342999, guid: 537d57b273642444ca18019397d32619, type: 3}
+  AUTOFIRE: 0
 --- !u!1001 &1395085824814575176
 PrefabInstance:
   m_ObjectHideFlags: 0
