@@ -227,6 +227,38 @@ MonoBehaviour:
     m_Key: reset_in
     m_Metadata:
       m_Items: []
+  - m_Id: 7544211422306304
+    m_Key: miniskeleton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544371284008960
+    m_Key: giant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544464271728640
+    m_Key: king
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544553765593088
+    m_Key: undeadhero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544902668771328
+    m_Key: undeadarcher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544978375958528
+    m_Key: undeadking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7545109074665472
+    m_Key: rider
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7545114279796736
+    m_Key: lich
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -230,5 +230,37 @@ MonoBehaviour:
     m_Localized: Resets in
     m_Metadata:
       m_Items: []
+  - m_Id: 7544211422306304
+    m_Localized: MINISKELETON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544371284008960
+    m_Localized: GIANT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544464271728640
+    m_Localized: KING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544553765593088
+    m_Localized: UNDEADHERO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544902668771328
+    m_Localized: UNDEADARCHER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7544978375958528
+    m_Localized: UNDEADKING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7545109074665472
+    m_Localized: RIDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7545114279796736
+    m_Localized: LICH
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
