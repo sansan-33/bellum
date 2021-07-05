@@ -77,7 +77,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 for (int i = targetTransforms.Count - 1; i > -1; --i) {
                     //Debug.Log($"1 target {targetTransforms[i].name } ==> target distance {(transform.position - targetTransforms[i].position).magnitude } , Total {targetTransforms.Count}");
                     // The target has to be alive.
-                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": checking target " + targetTransforms[i].name  + ":" + i + "/" + targetTransforms.Count + " is alive ?"  + targets[i].IsAlive() + " .. " + HEARTBEAT++);
+                    //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": checking target " + targetTransforms[i].name  + ":" + i + "/" + targetTransforms.Count + " is alive ?"  + targets[i].IsAlive() + " .. " + HEARTBEAT++);
                     if (targets[i].IsAlive()) {
                         // Start attacking if the target gets too close.
                         //if (tacticalAgent.transform.name.ToLower().Contains("king"))
@@ -110,17 +110,23 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 if (tacticalAgent.HasArrived()) {
                     // Face away from the defending object.
                     var direction = new Vector3();
-                    if (tacticalAgent.TargetTransform == null && GameObject.FindGameObjectWithTag(targetTag.Value) != null )
+                    if (tacticalAgent.TargetTransform == null)
                     {
-                        direction = GameObject.FindGameObjectWithTag(targetTag.Value).transform.position - defendObject.Value.transform.position;
-                        direction.y = 0;
-                        //direction.z = 0;
+                        GameObject defaultTarget = GameObject.FindGameObjectWithTag(targetTag.Value);
+                        if (defaultTarget != null)
+                        {
+                            direction = defaultTarget.transform.position - defendObject.Value.transform.position;
+                            direction.y = 0;
+                        }
                     }
                     else
+                    {
                         direction = targetPosition - defendObject.Value.transform.position;
+                    }
                     direction.y = 0;
                     tacticalAgent.RotateTowards(Quaternion.LookRotation(direction));
-                    //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus( TASKNAME + ": Arrived and Defend Enemy Tag" + targetTag.Value + " at direction " + direction + " . " + HEARTBEAT++);
+                    tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus( TASKNAME + ": Arrived and Defend Enemy Tag" + targetTag.Value + " at direction " + direction + " . " + HEARTBEAT++);
+                    //tacticalAgent.transform.GetComponent<UnitAnimator>().SetBool(UnitAnimator.AnimState.LOCOMOTION, false);
                     tacticalAgent.transform.GetComponent<UnitAnimator>().StateControl(UnitAnimator.AnimState.DEFEND);
                 }
             }

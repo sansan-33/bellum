@@ -169,7 +169,7 @@ public class Card : MonoBehaviour
     {
         if(mergeEffect != null)  
         mergeEffect.GetComponent<ParticleSystem>().Play();
-        Debug.Log($"{name} play merge card effect");
+        //Debug.Log($"{name} play merge card effect");
     }
     public void ResetScale()
     {
@@ -266,7 +266,7 @@ public class Card : MonoBehaviour
                 }
                 
                 GetComponent<Image>().material.SetFloat("_Greyscale", effectAmount);
-                Debug.Log($"{GetComponent<Image>().material.GetFloat("_Greyscale")} in {name}");
+                //Debug.Log($"{GetComponent<Image>().material.GetFloat("_Greyscale")} in {name}");
             }
         }
         

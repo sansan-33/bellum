@@ -125,7 +125,7 @@ public class CinemachineManager : NetworkBehaviour {
             }
             else
              {
-                Debug.Log("return shake !!!!!!!!!!!");
+                //Debug.Log("return shake !!!!!!!!!!!");
                 cinemachineVirtualCamera.enabled = false;
                 if (secondShakeTimer > 0)
                 {

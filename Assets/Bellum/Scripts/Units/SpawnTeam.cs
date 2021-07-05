@@ -16,6 +16,7 @@ public class SpawnTeam : MonoBehaviour
     private Color teamColor;
     private Dictionary<string, JSONNode> userTeamDict = new Dictionary<string, JSONNode>();
     RTSPlayer player ;
+    public static event Action UserCardLoaded;
 
     void Start()
     {
@@ -56,6 +57,7 @@ public class SpawnTeam : MonoBehaviour
             cardStats =  new CardStats(userTeamCard["star"], userTeamCard["level"], userTeamCard["health"], userTeamCard["attack"], userTeamCard["repeatattackdelay"], userTeamCard["speed"], userTeamCard["defense"], userTeamCard["special"], userTeamCard["specialkey"], userTeamCard["passivekey"]);
             localFactory.CmdSpawnTeamUnit( unitKey, 1, playerID, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey, teamColor, Quaternion.Euler(0, 180, 0)); ;
         }
+        UserCardLoaded?.Invoke();
         yield return null;
 
     }

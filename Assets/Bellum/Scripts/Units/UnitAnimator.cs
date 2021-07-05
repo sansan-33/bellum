@@ -46,7 +46,7 @@ public class UnitAnimator : NetworkBehaviour
 
     void ChangeAnimationState(AnimState newState)
     {
-        //Debug.Log($"1 ChangeAnimationState:  {newState}");
+        //Debug.Log($"1 ChangeAnimationState:  currentState: {currentState} / newState: {newState}");
         if (currentState == newState) return;
         //if (currentState.ToString().Contains("ATTACK") && newState.ToString().Contains("ATTACK")) return;
         string animState = newState.ToString();
@@ -63,10 +63,11 @@ public class UnitAnimator : NetworkBehaviour
     }
     void ResetAll(string animState)
     {
+        //Debug.Log($"2 ResetAll ");
         networkAnim.animator.SetBool("DEFEND", false);
         networkAnim.animator.SetBool("LOCOMOTION", false);
         networkAnim.animator.SetBool("VICTORY", false);
-        networkAnim.animator.SetBool(animState, false);
+        //networkAnim.animator.SetBool(animState, false);
     }
    
     public void HandleStateControl(AnimState newState)
@@ -131,6 +132,12 @@ public class UnitAnimator : NetworkBehaviour
     public void SetFloat(string type , float value)
     {
         networkAnim.animator.SetFloat(type, value);
+    }
+    public void SetBool(UnitAnimator.AnimState newState,  bool value)
+    {
+        Debug.Log($"{name} {tag} Unit Animatior set bool {newState.ToString()} {value}");
+        if (currentState == newState) return;
+        networkAnim.animator.SetBool(newState.ToString(), value);
     }
 }
 

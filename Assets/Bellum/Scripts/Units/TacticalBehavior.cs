@@ -422,7 +422,8 @@ public class TacticalBehavior : MonoBehaviour
         //troops.AddRange(GetAllTroops(ENEMYID));
         var sb = new System.Text.StringBuilder();
         foreach (Unit army in troops) {
-            sb.Append( String.Format("{0} \t {1} \n", army.name.PadRight(15), army.GetTaskStatus().text )) ;
+            if(army.TryGetComponent<AstarAI>(out AstarAI ai))
+                sb.Append( String.Format("{0} \t {1} \n", army.name.PadRight(15), army.GetTaskStatus().text )) ;
         }
         return sb.ToString();
     }

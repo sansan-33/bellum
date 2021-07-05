@@ -59,19 +59,6 @@ public class Healing : NetworkBehaviour
         //if (!hasAuthority) { return; }
 
         String playerid = tag.Substring(tag.Length - 1);
-        //if(king == null)
-        //    king = GameObject.FindGameObjectWithTag("King" + playerid);
-
-        //GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + playerid);
-        //GameObject[] provokeTanks = GameObject.FindGameObjectsWithTag("Provoke" + playerid);
-        //armies = new List<GameObject>();
-        //if (units != null && units.Length > 0)
-        //    armies = units.ToList();
-        //if (king != null)
-        //    armies.Add(king);
-        //if (provokeTanks != null && provokeTanks.Length > 0)
-        //    armies.AddRange(provokeTanks.ToList());
-        //if (armies.Count == 0) { return; }
         lastHealingTime = Time.time;
         foreach (Unit unit in rTSPlayer.GetMyUnits()) {
             //Debug.Log($"Healing {name} : {unit.unitType} , tag {tag}");

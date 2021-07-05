@@ -55,7 +55,6 @@ public class CardDealer : MonoBehaviour
     [SerializeField] private bool spawnEnemyCard = false;
     [SerializeField] public CharacterArt Arts;
 
-    public static event Action UserCardLoaded;
     public SimpleObjectPool cardObjectPool;
     public static event Action FinishDealEnemyCard;
     private RTSPlayer rtsPlayer;
@@ -246,14 +245,15 @@ public class CardDealer : MonoBehaviour
         jsonResult = JSON.Parse(rawJson);
 
         //Debug.Log($"GetUserCard ==> User Card Count {jsonResult.Count} ");
-        Unit unit;
-        CardStats cardStats;
+        //Unit unit;
+        //CardStats cardStats;
         for (int i = 0; i < jsonResult.Count; i++)
         {
             if (jsonResult[i]["cardkey"] != null && jsonResult[i]["cardkey"].ToString().Length > 0)
             {
                 //Debug.Log($"GetUserCard ==> {i} {jsonResult[i]["cardkey"]} ");
                 userCardStatsDict.Add(jsonResult[i]["cardkey"], new CardStats(jsonResult[i]["star"], jsonResult[i]["level"], jsonResult[i]["health"], jsonResult[i]["attack"], jsonResult[i]["repeatattackdelay"], jsonResult[i]["speed"], jsonResult[i]["defense"], jsonResult[i]["special"], jsonResult[i]["specialkey"], jsonResult[i]["passivekey"]));
+                /*
                 if(playerUnitDict.TryGetValue( (UnitMeta.UnitKey)Enum.Parse(typeof(UnitMeta.UnitKey), jsonResult[i]["cardkey"])  , out unit)){
                     if (unit.unitType == UnitMeta.UnitType.HERO || unit.unitType == UnitMeta.UnitType.KING)
                     {
@@ -263,9 +263,10 @@ public class CardDealer : MonoBehaviour
                         //Debug.Log($"After UnitPowerUp GetUserCard ==> Unit {unit.unitKey} / {unit.unitType} / {unit.name}");
                     }
                 }
+                */
             }
         }
-        UserCardLoaded?.Invoke();
+        //UserCardLoaded?.Invoke();
         //Debug.Log($"GetUserCard ==> {webReq.url } {jsonResult}");
     }
    
