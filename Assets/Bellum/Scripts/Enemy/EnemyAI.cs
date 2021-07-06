@@ -510,6 +510,53 @@ public class EnemyAI : MonoBehaviour
     {
         int i = 2;
         Card _card = null;
+        
+            GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + 0);
+            GameObject king = GameObject.FindGameObjectWithTag("King" + 0);
+            List<GameObject> armies = new List<GameObject>();
+            armies = units.ToList();
+            if (king != null)
+                armies.Add(king);
+           /* foreach(GameObject unit in armies)
+            {
+                UnitMeta.UnitType[] strengthWeakness = StrengthWeakness.GetStrengthWeakness(unit.GetComponent<Unit>().unitType);
+                if (strengthWeakness != null)
+                {
+                Debug.Log("strengthWeakness != null");
+                    foreach (Card card in cards)
+                    {
+                        int type = (int)card.cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
+                        if ((UnitMeta.UnitType)type == strengthWeakness[1])
+                        {
+                        Debug.Log($"using stength in {(UnitMeta.UnitType)type} to {unit.GetComponent<Unit>().unitType}");
+                            _card = card;
+                        }
+                    }
+
+                }
+            }*/
+        if(_card == null)
+        {
+            foreach (Card card in cards)
+            {
+                int type = (int)card.cardFace.numbers % System.Enum.GetNames(typeof(UnitMeta.UnitType)).Length;
+                UnitMeta.UnitType[] strengthWeakness = StrengthWeakness.GetStrengthWeakness((UnitMeta.UnitType)type);
+                if (strengthWeakness != null)
+                {
+                    foreach (GameObject unit in armies)
+                    {
+                        if (unit.GetComponent<Unit>().unitType == strengthWeakness[0])
+                        {
+                            _card = card;
+                        }
+                    }
+                }
+            }
+         }
+
+            
+            
+        
         while(_card == null)
         {
             _card = checkStar(i);
