@@ -87,6 +87,9 @@ public class UnitAnimator : NetworkBehaviour
             newState = ATTACK_RAND[n];
         }
         if (!isAttacking) {
+            if (name.Contains("TANK"))
+                Debug.Log($"HandleStateControl {name} {tag} blocked , {newState}, isAttacking ? {isAttacking}");
+
             if (newState != AnimState.LOCOMOTION)
             {
                 SetFloat("moveSpeed", 0);
@@ -118,17 +121,19 @@ public class UnitAnimator : NetworkBehaviour
 
     public void StateControl(AnimState newState)
     {
+        /*
         if (!hasAuthority) {
             if (name.Contains("TANK"))
                 Debug.Log($"{name} {tag} no authority {newState}");
             return;  }
         HandleStateControl(newState);
-        /*
+        */
+        
         if (isServer)
             RpcStateControl(newState);
         else
             CmdStateControl(newState);
-        */
+        
     }
    
     [Command]
