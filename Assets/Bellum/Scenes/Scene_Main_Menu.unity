@@ -1169,7 +1169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   languageSelectionPopup: {fileID: 51881546}
-  defaultLocale: {fileID: 0}
+  saveSystem: {fileID: 11400000, guid: edc355c4a7d5028408d322b90814e19e, type: 2}
 --- !u!1 &59220584
 GameObject:
   m_ObjectHideFlags: 0
@@ -4670,6 +4670,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &343472219
 GameObject:
   m_ObjectHideFlags: 0
@@ -4911,6 +4914,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &384340323
 GameObject:
   m_ObjectHideFlags: 0
@@ -5101,6 +5107,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &386564226
 GameObject:
   m_ObjectHideFlags: 0
@@ -11193,6 +11202,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &652364123
 GameObject:
   m_ObjectHideFlags: 0
@@ -16649,6 +16661,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &914285669
 GameObject:
   m_ObjectHideFlags: 0
@@ -17021,6 +17036,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &926339184
 GameObject:
   m_ObjectHideFlags: 0
@@ -18026,6 +18044,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &955430005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25339,6 +25360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1107067041}
   - component: {fileID: 1107067042}
+  - component: {fileID: 1107067043}
   m_Layer: 5
   m_Name: Firebase Manager
   m_TagString: Untagged
@@ -25395,6 +25417,21 @@ MonoBehaviour:
   useridProfileText: {fileID: 563820115}
   userProfilePopUp: {fileID: 1304818096}
   saveSystem: {fileID: 11400000, guid: edc355c4a7d5028408d322b90814e19e, type: 2}
+  languageSelectionManager: {fileID: 1107067043}
+--- !u!114 &1107067043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107067040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4979b4230784ed0b659a41b2b55826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  languageSelectionPopup: {fileID: 0}
+  saveSystem: {fileID: 0}
 --- !u!1 &1108439527
 GameObject:
   m_ObjectHideFlags: 0
@@ -51756,6 +51793,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1741181463
 GameObject:
   m_ObjectHideFlags: 0
@@ -52109,6 +52149,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1752342631
 GameObject:
   m_ObjectHideFlags: 0
@@ -54859,6 +54902,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1860116422
 GameObject:
   m_ObjectHideFlags: 0
@@ -57427,6 +57473,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
   parent: {fileID: 325234870}
+  floorMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1971274050
 GameObject:
   m_ObjectHideFlags: 0
