@@ -104,6 +104,11 @@ public class LocalizationResponder : MonoBehaviour
 
     public void OnLanguageChanged(Locale locale)
     {
+        if (tmpText == null)
+        {
+            return;
+        }
+
         tmpText.font = getFont(locale);
 
         // If using a specific font material, map the material to the
