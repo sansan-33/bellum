@@ -168,6 +168,9 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                         if (targetTag.Value != "Door")
                             targets.Add("Provoke" + targetTag.Value.Substring(targetTag.Value.Length - 1));
                     }
+                    if (targetTag.Value != "Door")
+                        targets.Add("King" + targetTag.Value.Substring(targetTag.Value.Length - 1));
+
                     foreach (string taregt in targets)
                     {
                         var foundAttackGroup = GameObject.FindGameObjectsWithTag(taregt);
