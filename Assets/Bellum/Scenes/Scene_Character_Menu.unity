@@ -17757,6 +17757,7 @@ GameObject:
   - component: {fileID: 725314647}
   - component: {fileID: 725314646}
   - component: {fileID: 725314648}
+  - component: {fileID: 725314649}
   m_Layer: 5
   m_Name: Contents
   m_TagString: Untagged
@@ -17837,8 +17838,26 @@ MonoBehaviour:
   Arts: {fileID: 559036263}
   unitTypeArt: {fileID: 1580773008}
   IS_TEAM_MEMBER_SELECTION: 0
+  localizationResponder: {fileID: 725314649}
   userCardFocus: {fileID: 0}
   cardSlotParent: {fileID: 0}
+--- !u!114 &725314649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725314644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0002b19311cee448a9920010f681034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fontMaterial: {fileID: 0}
+  fontJp: {fileID: 0}
+  fontCn: {fileID: 0}
+  fontHk: {fileID: 0}
+  fontEn: {fileID: 0}
 --- !u!1 &725668334
 GameObject:
   m_ObjectHideFlags: 0

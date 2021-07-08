@@ -97,7 +97,36 @@ public class LocalizationResponder : MonoBehaviour
         
     }
 
+    public TMP_FontAsset getCurrentFont()
+    {
+        return getFont(LocalizationSettings.SelectedLocale);
+    }
+
     public void OnLanguageChanged(Locale locale)
+    {
+        if (tmpText == null)
+        {
+            return;
+        }
+
+        tmpText.font = getFont(locale);
+
+        // If using a specific font material, map the material to the
+        // appropriate font texture atlas, then set the font asset's material.
+        if (fontMaterial != null)
+        {
+            fontMaterial.SetTexture("_MainTex", tmpText.font.material.mainTexture);
+            tmpText.fontMaterial = fontMaterial;
+        }
+
+        /* set label key in Localize String Event
+        // Localization label: only applies if set.
+        if (lzLabel != "")
+            tmpText.text = Language.Get(lzLabel);
+        */
+    }
+
+    private TMP_FontAsset getFont(Locale locale)
     {
         //Debug.Log($"LocalizationResponder.OnLanguageChanged Locale:{locale}");
 
@@ -106,53 +135,43 @@ public class LocalizationResponder : MonoBehaviour
 
         // determine which language is being used:
         string localeName = locale.LocaleName;
+        TMP_FontAsset font = FontManager.Instance.defaultFontEn;
+
         if (localeName.Contains(LanguageSelectionManager.LOCALE_JP))
         {
             if (fontJp == null)
                 // apply the centralized font asset setting
-                tmpText.font = FontManager.Instance.defaultFontJp;
+                font = FontManager.Instance.defaultFontJp;
             else
                 // apply the local font asset setting
-                tmpText.font = fontJp;
+                font = fontJp;
         }
         else if (localeName.Contains(LanguageSelectionManager.LOCALE_CN))
         {
             if (fontCn == null)
                 // apply the centralized font asset setting
-                tmpText.font = FontManager.Instance.defaultFontCn;
+                font = FontManager.Instance.defaultFontCn;
             else
                 // apply the local font asset setting
-                tmpText.font = fontCn;
+                font = fontCn;
         }
         else if (localeName.Contains(LanguageSelectionManager.LOCALE_HK))
         {
             if (fontHk == null)
                 // apply the centralized font asset setting
-                tmpText.font = FontManager.Instance.defaultFontHk;
+                font = FontManager.Instance.defaultFontHk;
             else
                 // apply the local font asset setting
-                tmpText.font = fontHk;
+                font = fontHk;
 
         } else
         {
             if (fontEn == null)
-                tmpText.font = FontManager.Instance.defaultFontEn;
+                font = FontManager.Instance.defaultFontEn;
             else
-                tmpText.font = fontEn;
+                font = fontEn;
         }
 
-        // If using a specific font material, map the material to the
-        // appropriate font texture atlas, then set the font asset's material.
-        if (fontMaterial != null)
-        {
-            fontMaterial.SetTexture("_MainTex", tmpText.font.material.mainTexture);
-            tmpText.fontMaterial = fontMaterial;
-        }
-
-        /* set label key in Localize String Event
-        // Localization label: only applies if set.
-        if (lzLabel != "")
-            tmpText.text = Language.Get(lzLabel);
-        */
+        return font;
     }
 }

@@ -9,12 +9,16 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using static CharacterArt;
 using static UnitTypeArt;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Localization.Settings;
+
 public class UserCardManager : MonoBehaviour
 {
     [SerializeField] GameObject userCardPrefab;
     [SerializeField] public CharacterArt Arts;
     [SerializeField] public UnitTypeArt unitTypeArt;
     [SerializeField] bool IS_TEAM_MEMBER_SELECTION;
+    [SerializeField] public LocalizationResponder localizationResponder;
     public GameObject userCardFocus;
     public GameObject cardSlotParent;
 
@@ -53,7 +57,25 @@ public class UserCardManager : MonoBehaviour
                 userCard.GetComponent<UserCardButton>().userLevelBar.SetActive(false);
                 card = allCard.Value;
             }
-            userCard.GetComponent<UserCardButton>().cardname.text = card.cardkey;
+
+            // Localization
+            //userCard.GetComponent<UserCardButton>().cardname.text = card.cardkey;
+            //Debug.Log($"UserCardManager.Populate() card.cardkey:{card.cardkey}");
+            AsyncOperationHandle<string> op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(LanguageSelectionManager.STRING_TEXT_REF, card.cardkey.ToLower(), null);
+            if (op.IsDone)
+            {
+                userCard.GetComponent<UserCardButton>().cardname.text = op.Result;
+            }
+            else
+            {
+                op.Completed += (o) => userCard.GetComponent<UserCardButton>().cardname.text = o.Result;
+            }
+            //Debug.Log($"UserCardManager.Populate() after locale userCard.GetComponent<UserCardButton>().cardname.text:{userCard.GetComponent<UserCardButton>().cardname.text}");
+            //Debug.Log($"UserCardManager.Populate() after locale localizationResponder:{localizationResponder}");
+
+            userCard.GetComponent<UserCardButton>().cardname.font = localizationResponder.getCurrentFont();
+            //Debug.Log($"UserCardManager.Populate() after locale userCard.GetComponent<UserCardButton>().cardname.font:{userCard.GetComponent<UserCardButton>().cardname.font}");
+
             userCard.GetComponent<UserCardButton>().level.text = card.level;
             userCard.GetComponent<UserCardButton>().exp.text = card.exp;
             userCard.GetComponent<UserCardButton>().cardtype = card.unittype;
