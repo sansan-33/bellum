@@ -395,6 +395,38 @@ MonoBehaviour:
     m_Key: godcatapult
     m_Metadata:
       m_Items: []
+  - m_Id: 8416912454180864
+    m_Key: door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417114686742528
+    m_Key: humansiege
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417189844475904
+    m_Key: undeadspiketrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417383927504896
+    m_Key: undeadsiege
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417528270282752
+    m_Key: elfspiketrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417707295760384
+    m_Key: elfsiege
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417816360247296
+    m_Key: godspiketrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417931133181952
+    m_Key: godsiege
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

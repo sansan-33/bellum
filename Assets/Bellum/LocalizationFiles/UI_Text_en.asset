@@ -398,5 +398,37 @@ MonoBehaviour:
     m_Localized: GODCATAPULT
     m_Metadata:
       m_Items: []
+  - m_Id: 8416912454180864
+    m_Localized: DOOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417114686742528
+    m_Localized: HUMANSIEGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417189844475904
+    m_Localized: UNDEADSPIKETRAP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417383927504896
+    m_Localized: UNDEADSIEGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417528270282752
+    m_Localized: ELFSPIKETRAP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417707295760384
+    m_Localized: ELFSIEGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417816360247296
+    m_Localized: GODSPIKETRAP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8417931133181952
+    m_Localized: GODSIEGE
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
