@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Localization.Settings;
 
 public class StageMenu : MonoBehaviour
 {
@@ -41,8 +43,18 @@ public class StageMenu : MonoBehaviour
     {
         titleObject.GetComponent<Image>().sprite = ChapterTitleSprites[chapterIndex];
         UnitMeta.Race race = (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), chapterIndex.ToString());
-        titleObject.GetComponentInChildren<TMP_Text>().text = race.ToString();
+        //titleObject.GetComponentInChildren<TMP_Text>().text = race.ToString();
 
+        // Localization
+        AsyncOperationHandle<string> op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(LanguageSelectionManager.STRING_TEXT_REF, race.ToString().ToLower(), null);
+        if (op.IsDone)
+        {
+            titleObject.GetComponentInChildren<TMP_Text>().text = op.Result;
+        }
+        else
+        {
+            op.Completed += (o) => titleObject.GetComponentInChildren<TMP_Text>().text = o.Result;
+        }
     }
 
     private void ClientHandleInfoUpdated()
