@@ -76,9 +76,9 @@ public class LanguageSelectionManager : MonoBehaviour
         //Debug.Log($"LocalizationSettings.AvailableLocales:{LocalizationSettings.AvailableLocales.Locales}");
         Selected_Locale_Index = index;
 
-        if (index >= LocalizationSettings.AvailableLocales.Locales.Count)
+        if (index >= LocalizationSettings.AvailableLocales.Locales.Count  || index < 0)
         {
-            Debug.LogError($"LocalizationSettings.AvailableLocales.Locales.Count:{LocalizationSettings.AvailableLocales.Locales.Count} < index:{index}");
+            Debug.LogError($"LocalizationSettings.AvailableLocales.Locales.Count:{LocalizationSettings.AvailableLocales.Locales.Count} < index:{index} or index<0");
             return;
         }
 
