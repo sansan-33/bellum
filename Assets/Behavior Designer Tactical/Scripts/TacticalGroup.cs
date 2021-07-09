@@ -140,11 +140,11 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         protected virtual void StartGroup()
         {
             started = true;
-
             // Clear the old group.
             targets.Clear();
             targetTransforms.Clear();
-            //Debug.Log($"Agent {Owner} checking target group value {targetGroup}");    
+            //if(Owner.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO)
+            //Debug.Log($"Agent {Owner.name} {Owner.tag} checking target group value {targetGroup}");    
             if (leader.Value == null)
             {
                 if (targetGroup.Value != null && targetGroup.Value.Count > 0)
@@ -179,7 +179,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                             var damageable = (foundAttackGroup[i].GetComponentInParent(typeof(IDamageable)) as IDamageable);
                             if (damageable != null)
                             {
-                                //Debug.Log($"Tactical Groups add target {foundAttackGroup[i].name} {foundAttackGroup[i].tag} ");
+                                //if (Owner.GetComponent<Unit>().unitType == UnitMeta.UnitType.HERO)
+                                //    Debug.Log($"Tactical Groups add target {foundAttackGroup[i].name} {foundAttackGroup[i].tag} ");
                                 AddTarget(foundAttackGroup[i].transform, damageable);
                             }
                         }
@@ -440,16 +441,19 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
         {
             var distance = float.MaxValue;
             var localDistance = 0f;
+            if (tacticalAgent.transform.name.ToLower().Contains("hero"))
+                Debug.Log($"ClosestTarget {tacticalAgent.transform.name}:{tacticalAgent.transform.tag}");
+
             for (int i = targetTransforms.Count - 1; i > -1; --i)
             {
                 if (targets[i].IsAlive())
                 {
                     //if ((localDistance = (targetTransforms[i].position - agentTransform.position).sqrMagnitude) < distance)
                     //Debug.Log($"Box size of {targetTransforms[i].name} {targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude} , local distance {(targetTransforms[i].position - agentTransform.position).sqrMagnitude} ");
-                    //if (tacticalAgent.transform.name.ToLower().Contains(debugTarget))
-                    //    Debug.Log($"Box size of {targetTransforms[i].name} {targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude} , local distance {(targetTransforms[i].position - agentTransform.position).sqrMagnitude} ");
+                    if (tacticalAgent.transform.name.ToLower().Contains("hero"))
+                        Debug.Log($"target [{i}] {targetTransforms[i].name}  , local distance {(targetTransforms[i].position - agentTransform.position).sqrMagnitude - targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude }");
 
-                        if ((localDistance = (targetTransforms[i].position - agentTransform.position).sqrMagnitude) - targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude  < distance)
+                    if ((localDistance = (targetTransforms[i].position - agentTransform.position).sqrMagnitude) - targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude  < distance)
                     {
                         distance = localDistance;
                         targetTransform = targetTransforms[i];
@@ -462,9 +466,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     targetTransforms.RemoveAt(i);
                 }
             }
-            if (tacticalAgent.transform.name.ToLower().Contains(debugTarget))
-                Debug.Log($"ClosestTarget  {targetTransform.name} {targetTransform.tag}  ");
-
+      
         }
         /// <summary>
         /// Finds a target transform closest to the agent.
