@@ -33,47 +33,12 @@ public class OnclickEffect : MonoBehaviour, IPointerClickHandler
         StartCoroutine(DisableEffect(_effect));
         a = true;
     }
-    public void OnPointerClick()
-    {
-        Debug.Log("ON click");
-        Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
-        Debug.Log($"spawn pos{pos}");
-        _effect = Instantiate(effect, parent);
-        //_effect.GetComponent<RectTransform>().SetAnchor(AnchorPresets.MiddleCenter);
-        //Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
-        Ray ray = mainCamera.ScreenPointToRay(pos);
-        Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask);
-        _effect.transform.position = hit.point;
-        Debug.Log($"Hit {hit.point}");
-        _effect.GetComponent<ParticleSystem>().Play();
-        
-        StartCoroutine(DisableEffect(_effect));
-    }
     private IEnumerator DisableEffect(GameObject effect)
     {
         yield return new WaitForSeconds(0.4f);
         Destroy(effect);
     }
     // Update is called once per frame
-    void Update()
-    {
-        /*if(a == true)
-        {
-            Vector3 pos = Input.touchCount > 0 ? Input.GetTouch(0).position : Mouse.current.position.ReadValue();
-            Debug.Log($"spawn pos{pos}");
-            _effect = Instantiate(effect, parent);
-            _effect.GetComponent<RectTransform>().SetAnchor(AnchorPresets.MiddleCenter);
-            Ray ray = mainCamera.ScreenPointToRay(pos);
-            Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity);
-            {
-                Debug.Log(hit.transform);
-                Debug.Log(hit.transform.gameObject.layer);
-                return;
-            }
-            _effect.transform.position = hit.point;
-            _effect.GetComponent<ParticleSystem>().Play();
-        }*/
-        
+   
 
-    }
 }
