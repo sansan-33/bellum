@@ -73,6 +73,6 @@ public class SpawnTeam : MonoBehaviour
         string rawJson = Encoding.Default.GetString(webReq.downloadHandler.data);
         jsonResult = JSON.Parse(rawJson);
         userTeamDict.Add(userid, jsonResult);
-        //Debug.Log($"jsonResult {webReq.url } {jsonResult}");
+        Debug.Log($"jsonResult {webReq.url } {jsonResult}");
     }
 }
