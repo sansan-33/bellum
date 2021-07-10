@@ -25,7 +25,7 @@ public class GameStartDisplay : NetworkBehaviour
     private double startTimer = 3;
     bool IS_PLAYER_LOADED = false;
     RTSPlayer player;
-    float SPEEPUPTIME = 60f; // will speed up eleixier recovery after 10s
+    double SPEEPUPTIME = 60; // will speed up eleixier recovery after 10s
     bool ISSPEEDUP = false;
     double offset=0;
     double now=0;
@@ -164,8 +164,8 @@ public class GameStartDisplay : NetworkBehaviour
     public void Timing()
     {
         if (offset <= 0.1) { return; }
-        if (now > Timer) { return; }
-        if (now <= Timer - SPEEPUPTIME && !ISSPEEDUP) { ServerGameSpeedUp?.Invoke(); ISSPEEDUP = true; }
+        if (now <= 0) { return; }
+        if (now <= Timer - SPEEPUPTIME && !ISSPEEDUP) { Debug.Log($"now{now} Timer{Timer} - SPEEPUPTIME{SPEEPUPTIME}={Timer - SPEEPUPTIME}, ISSPEEDUP ? {ISSPEEDUP} "); ServerGameSpeedUp?.Invoke(); ISSPEEDUP = true; }
         int minutes = Convert.ToInt32(now) / 60;
         float seconds = Convert.ToInt32(now % 60);
         seconds = (seconds == 60 || seconds<=0) ? 0 : seconds;

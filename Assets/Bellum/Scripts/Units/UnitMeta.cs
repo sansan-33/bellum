@@ -396,70 +396,6 @@ public class UnitMeta
     };
 }
 /*
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ARCHER',45,10,2,1,3,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('KNIGHT',150,50,2,1,2,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('MAGE',80,10,3,1,3,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('CAVALRY',70,15,2,1,10,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('SPEARMAN',5,5,1,1,2,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('HERO',500,2,0.6,1,3,180,"LIGHTNING","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('MULAN',500,2,0.6,1,3,180,"LIGHTNING","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('MINISKELETON',5,5,1,1,2,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GIANT',150,50,2,1,2,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('KING',1000,10,1,1,4,0,"SHIELD","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADHERO',500,2,0.6,0,3,0,"LIGHTNING","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADQUEEN',500,2,0.6,1,3,180,"LIGHTNING","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADARCHER',45,10,2,0,3,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADKING',1000,9,1,0,3,0,"SHIELD","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('RIDER',70,15,2,0,10,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('LICH',80,10,3,0,3,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODARCHER',45,10,2,2,2,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODKNIGHT',150,50,2,2,2,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODMAGE',80,10,3,2,3,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODCAVALRY',70,15,2,2,10,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODSPEARMAN',5,5,1,2,4,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('THOR',500,7,0.6,2,4,180,"STUN","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('LOKI',500,7,0.6,2,4,180,"SHIELD","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ODIN',1000,8,1,2,5,0,"LIGHTNING","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODWALL',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFWALL',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('HUMANWALL',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADWALL',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFRANGER',45,10,2,2,2,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFGOLEM',150,50,2,2,2,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFMAGE',80,10,3,2,3,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFCAVALRY',70,15,2,2,10,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFFOOTMAN',5,5,1,2,4,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFDEMONHUNTER',500,2,0.6,2,4,180,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFQUEEN',500,2,0.6,1,3,180,"SLASH","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFTREEANT',1000,2,0.6,2,4,180,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODBARRACK',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFBARRACK',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('HUMANBARRACK',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADBARRACK',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODTOWER',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFTOWER',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('HUMANTOWER',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADTOWER',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODCATAPULT',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFCATAPULT',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('HUMANCATAPULT',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADCATAPULT',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODSPIKETRAP',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFSPIKETRAP',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('HUMANSPIKETRAP',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADSPIKETRAP',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODSIEGE',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFSIEGE',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('HUMANSIEGE',100,0,0,0,0,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADSIEGE',100,0,0,0,0,0,"","");
-
-
-
-
-
-
-
-
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ARCHER',30,6,2,1,3,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('KNIGHT',150,40,2,1,2,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('MAGE',80,15,3,1,3,0,"","");
@@ -476,7 +412,7 @@ insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,spec
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('UNDEADKING',1000,20,1,0,3,0,"SHIELD","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('RIDER',70,25,2,0,10,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('LICH',80,15,3,0,3,0,"","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODARCHER’,30,6,2,2,2,0,"","");
+insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODARCHER',30,6,2,2,2,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODKNIGHT',150,40,2,2,2,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODMAGE',80,15,3,2,3,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODCAVALRY',70,25,2,2,10,0,"","");
@@ -495,7 +431,7 @@ insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,spec
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFFOOTMAN',15,15,1,2,4,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFDEMONHUNTER',500,10,0.6,2,4,180,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFQUEEN',800,5,0.6,1,3,180,"SLASH","");
-insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFTREEANT',1000,20.6,2,4,180,"","");
+insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFTREEANT',1000,2,0.6,2,4,180,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('GODBARRACK',100,0,0,0,0,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('ELFBARRACK',100,0,0,0,0,0,"","");
 insert into cardstat (cardkey,health,attack,repeatattackdelay,defense,speed,special,specialkey,passivekey) values ('HUMANBARRACK',100,0,0,0,0,0,"","");
