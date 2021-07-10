@@ -35,6 +35,7 @@ public class SpawnTeam : MonoBehaviour
     }
     public void LoadTeam()
     {
+        Debug.Log($"LoadTeam");
         foreach (GameObject factroy in GameObject.FindGameObjectsWithTag("UnitFactory"))
         {
             if (factroy.GetComponent<UnitFactory>().hasAuthority)
@@ -51,12 +52,17 @@ public class SpawnTeam : MonoBehaviour
         UnitMeta.Race race = (UnitMeta.Race)Enum.Parse(typeof(UnitMeta.Race), player.GetRace()); 
         string userkey = player.GetUserID();
         JSONNode userTeamCard;
+        Debug.Log($"HandleLoadTeam : {userkey} {race}");
+
         for (int i = 0; i < userTeamDict[userkey].Count; i++) {
             userTeamCard = userTeamDict[userkey][i];
             unitKey = (UnitMeta.UnitKey)Enum.Parse(typeof(UnitMeta.UnitKey), userTeamCard["cardkey"]);  
             cardStats =  new CardStats(userTeamCard["star"], userTeamCard["level"], userTeamCard["health"], userTeamCard["attack"], userTeamCard["repeatattackdelay"], userTeamCard["speed"], userTeamCard["defense"], userTeamCard["special"], userTeamCard["specialkey"], userTeamCard["passivekey"]);
+            Debug.Log($"CmdSpawnTeamUnit: unitKey {unitKey} playerID {playerID}");
             localFactory.CmdSpawnTeamUnit( unitKey, 1, playerID, cardStats.cardLevel, cardStats.health, cardStats.attack, cardStats.repeatAttackDelay, cardStats.speed, cardStats.defense, cardStats.special, cardStats.specialkey, cardStats.passivekey, teamColor, Quaternion.Euler(0, 180, 0)); ;
         }
+        Debug.Log($"UserCardLoaded Invoke");
+
         UserCardLoaded?.Invoke();
         yield return null;
 
