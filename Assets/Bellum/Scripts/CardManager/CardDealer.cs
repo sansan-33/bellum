@@ -137,8 +137,17 @@ public class CardDealer : MonoBehaviour
     {
         //Debug.Log("DealingCard");
         Card lastCard = cardObjectPool.GetObject().GetComponent<Card>();
-        CardFace randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
-        //CardFace randomCard = cardDeck[3];
+        CardFace randomCard;
+        //if (player.isEnemy == true)
+        //{
+           // randomCard = cardDeck[2];
+       // }
+       // else
+       // {
+            randomCard = cardDeck[UnityEngine.Random.Range(0, cardDeck.Count)];
+       // }
+        
+        
         cardDeckUsed.Add(randomCard);
         //Debug.Log(lastCard.transform.Find("CFX4 Sparks Explosion B"));
         lastCard.cardStar.text = "1";

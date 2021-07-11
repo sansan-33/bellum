@@ -11,7 +11,7 @@ public class Tornado : NetworkBehaviour
     int playerid = 0;
     int enemyid = 0;
     bool destoryTornado = false;
-    [SerializeField] private string unitType;
+    [SerializeField] public string unitType;
     [SerializeField] private float destroyAfterSeconds = 5f;
 
     public override void OnStartClient()

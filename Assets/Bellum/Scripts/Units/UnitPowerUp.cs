@@ -322,7 +322,7 @@ public class UnitPowerUp : NetworkBehaviour
      }
     private void Tornado()
     {
-        float offset = tag.Contains("0") ? 10f : -10f;
+        float offset = tag.Contains("0") ? 10f : -5f;
         Transform transform = GetComponentInParent<Transform>();
         Vector3 position = new Vector3 (transform.position.x, transform.position.y, transform.position.z + offset);
         GameObject scriptEffect = Instantiate(scriptEffectPrefab, position, Quaternion.identity);

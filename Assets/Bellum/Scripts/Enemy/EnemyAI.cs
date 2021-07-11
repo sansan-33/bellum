@@ -64,7 +64,8 @@ public class EnemyAI : MonoBehaviour
         {"1",1},
         {"2",2},
         {"3",3},
-        {"4",4}
+        {"4",4},
+        {"5",5}
     };
     [SerializeField] List<SpecialAttackType> SpList1;
     [SerializeField] List<SpecialAttackType> SpList2;
@@ -145,7 +146,7 @@ public class EnemyAI : MonoBehaviour
             // Debug.Log($"HandleSpawnnEnemy {cards.Count}");
             if (enemyBreakWall == false)
             {
-                SpawnSpesificUnit(UnitMeta.UnitType.FOOTMAN, Vector3.zero);
+                SpawnSpesificUnit(UnitMeta.UnitType.FOOTMAN, new Vector3(48,0,-31));
             }
             if (canSpawnUnit == true)
             {//Debug.Log("HandleSpawnnEnemy");
@@ -256,6 +257,25 @@ public class EnemyAI : MonoBehaviour
             {
                 trap.DropUnit(unit.transform.position);
             }*/
+           // Debug.Log($"unit = {unit} unit.unitType = {unit.unitType} tag = {unit.tag} star = {unit.GetComponent<CardStats>().star} ");
+            //Debug.Log($"mission == {mission} = {mission == 5} chapter == 1 = {chapter == 1} StaticClass.Mission = {StaticClass.Mission}");
+            //Debug.Log($"unit = unit {unit != null}    unit.unitType = unit.unitType  {unit.unitType == UnitMeta.UnitType.MAGIC } tag = PLayer1 {unit.CompareTag("Player1")} star = 3 {unit.GetComponent<CardStats>().star == 3 }");
+            if (unit != null && unit.unitType == UnitMeta.UnitType.MAGIC && unit.CompareTag("Player1")&& unit.GetComponent<CardStats>().star == 3 && mission == 5&& chapter == 1)
+            {
+                Tornado[] tornados = FindObjectsOfType<Tornado>();
+                Debug.Log($"tornados.Length = {tornados.Length}");
+                foreach(Tornado tornado in tornados)
+                {
+                    if (tornado.unitType == "Enemy")
+                    {
+                        Debug.Log("drop trap");
+                        Debug.Log($"pos centre{tornado.tornadoCenter.position}");
+                        trap.DropUnit(new Vector3(tornado.tornadoCenter.position.x, 0.9f, tornado.tornadoCenter.position.z));
+                    }
+
+                }
+                
+            }
         }
         if (unit.unitType == UnitMeta.UnitType.CAVALRY && unit.CompareTag("Player0") && chapter >= 2)
         {
@@ -332,7 +352,7 @@ public class EnemyAI : MonoBehaviour
                     armies.Add(king);
                 foreach (GameObject unit in armies)
                 {
-                    //Debug.Log($"AI Spawn Emeny {unit.name} {RTSplayer.GetTeamEnemyColor()}");
+                    Debug.Log($"AI Spawn Emeny {unit.name} {RTSplayer.GetTeamEnemyColor()}");
                     CardStats cardStats = unit.GetComponent<CardStats>();
                    // cardStats.attack *= statUpFactor;
                    // cardStats.health *= statUpFactor;
@@ -736,6 +756,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void SpawnUnit(Vector3 unitPos,Card card, UnitMeta.UnitType type)
     {
+        Debug.Log(unitPos);
         CardFace cardFace = card.cardFace;
         if (!UnitMeta.UnitSize.TryGetValue((UnitMeta.UnitType)type, out int unitsize)) { unitsize = 1; }
         FindObjectOfType<TotalEleixier>().enemyEleixer -= card.GetUnitElexier();
