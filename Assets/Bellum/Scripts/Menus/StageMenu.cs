@@ -13,7 +13,7 @@ public class StageMenu : MonoBehaviour
 {
     [SerializeField] public Sprite[] ChapterTitleSprites = new Sprite[4];
     [SerializeField] public GameObject titleObject;
-    private bool IS_RANKING = false;
+    private bool IS_STAGE_MISSION = false;
 
     private void Start()
     {
@@ -60,7 +60,7 @@ public class StageMenu : MonoBehaviour
     private void ClientHandleInfoUpdated()
     {
         NetworkClient.connection.identity.GetComponent<RTSPlayer>().CmdSetUserInfo(StaticClass.UserID, StaticClass.playerRace.ToString(), StaticClass.TotalPower);
-        Debug.Log($"Stage Menu ClientHandleInfoUpdated {StaticClass.UserID} , {StaticClass.playerRace.ToString()} , {StaticClass.TotalPower}");
+        //Debug.Log($"Stage Menu ClientHandleInfoUpdated {StaticClass.UserID} , {StaticClass.playerRace.ToString()} , {StaticClass.TotalPower}");
         //List<RTSPlayer> players = ((RTSNetworkManager)NetworkManager.singleton).Players;
     }
 
@@ -68,15 +68,15 @@ public class StageMenu : MonoBehaviour
     {
         
     }
-    public void setIsRanking()
+    public void setStageMission(bool value)
     {
-        IS_RANKING = true;
+        IS_STAGE_MISSION = value;
     }
 
     public void LeaveLobby()
     {
         if (StaticClass.Chapter != null && StaticClass.Mission != null ) { return; }
-        if (IS_RANKING) { return; }
+        if (!IS_STAGE_MISSION) { return; }
 
         if (NetworkServer.active && NetworkClient.isConnected)
         {

@@ -119,12 +119,20 @@ MonoBehaviour:
   kingPrefab: {fileID: 860431621525514400, guid: 71c5ac0cad7b34577b29d6dcf8e5f5cf, type: 3}
   undeadHeroPrefab: {fileID: 2221716286051992153, guid: 998afe2754a09004f82e7821363a8113, type: 3}
   undeadKingPrefab: {fileID: 860431621525514400, guid: 83a79278d12ff45138a7a8a98f61436e, type: 3}
+  undeadQueenPrefab: {fileID: 0}
   archerPrefab: {fileID: 6744575988926894544, guid: f7c51e484e3d2400b9ee482acd63be85, type: 3}
   odinPrefab: {fileID: 860431621525514400, guid: 2a159a053ad7ef04ca4f9451efd9a4c1, type: 3}
   thorPrefab: {fileID: 860431621525514400, guid: f1daea1b777044048a68460fcf509d29, type: 3}
   lokiPrefab: {fileID: 860431621525514400, guid: f43aaf46a6ee8584e87f1da345a30b27, type: 3}
+  elfTreeantPrefab: {fileID: 300388701929294696, guid: 81bd4f315fe08484ebf9525f04502c9e, type: 3}
+  elfDemonHunterPrefab: {fileID: 8820407336119843646, guid: 9f639b14e1b8849279b03335867352b6, type: 3}
+  elfQueenPrefab: {fileID: 5390492540286391888, guid: 7c9ff02aae3ca4530b51dec22f0c28d8, type: 3}
   gameOverHandlerPrefab: {fileID: 4035699833470688585, guid: 9420570756c60ac4face05b533eb2774, type: 3}
   gameBoardHandlerPrefab: {fileID: 1617644115191324618, guid: 3ff91ecdddf434ef9b9402866119f3f0, type: 3}
+  greatWallPrefab: {fileID: 2465195833285566526, guid: 7aafc8bcdcae84d05bfd50a7b26461b0, type: 3}
+  doorLeftPrefab: {fileID: 6947259221661263850, guid: 44f512ffe2aa64e7fbe1ce48b2a53bbb, type: 3}
+  doorMiddlePrefab: {fileID: 6947259221661263850, guid: 96ee8dc30349e4d65a9c9958d0b9ce68, type: 3}
+  doorRightPrefab: {fileID: 6947259221661263850, guid: 5607d8687f45047aaa1d97275abbc823, type: 3}
 --- !u!114 &2616846832148046254
 MonoBehaviour:
   m_ObjectHideFlags: 0

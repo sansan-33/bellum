@@ -8,6 +8,7 @@ public class MissionButton : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] public string mission = null;
     [SerializeField] public GameObject loadingPanel = null;
+    [SerializeField] public StageMenu stageMenu = null;
     [SerializeField] public GameObject stagePanel = null;
     [SerializeField] public TMP_Text desc = null;
     public void OnPointerDown(PointerEventData eventData)
@@ -17,6 +18,7 @@ public class MissionButton : MonoBehaviour, IPointerDownHandler
         StaticClass.enemyRace = (UnitMeta.Race) (Int32.Parse(StaticClass.Chapter) - 1);
         stagePanel.SetActive(false);
         loadingPanel.SetActive(true);
+        stageMenu.setStageMission(true);
         NetworkClient.connection.identity.GetComponent<RTSPlayer>().CmdStartMission(StaticClass.Chapter, mission);
 
     }

@@ -366,7 +366,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 0}
 --- !u!114 &54888526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2719,7 +2718,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 0}
 --- !u!114 &355614759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3022,18 +3020,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1140806812}
-        m_TargetAssemblyTypeName: StageMenu, Assembly-CSharp
-        m_MethodName: setIsRanking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &407782393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3085,7 +3071,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &408715082
 GameObject:
   m_ObjectHideFlags: 0
@@ -9791,7 +9776,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!114 &597141647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10419,6 +10403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mission: 3
   loadingPanel: {fileID: 1634428899}
+  stageMenu: {fileID: 1140806812}
   stagePanel: {fileID: 1116770361}
   desc: {fileID: 279269101}
 --- !u!114 &634198697
@@ -10434,7 +10419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &645319864
 GameObject:
   m_ObjectHideFlags: 0
@@ -11703,6 +11687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mission: 1
   loadingPanel: {fileID: 1634428899}
+  stageMenu: {fileID: 1140806812}
   stagePanel: {fileID: 1116770361}
   desc: {fileID: 319750519}
 --- !u!114 &752001807
@@ -11718,7 +11703,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &757230930
 GameObject:
   m_ObjectHideFlags: 0
@@ -11879,7 +11863,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 0}
 --- !u!114 &758822325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12375,7 +12358,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!114 &805716841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13434,7 +13416,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 0}
 --- !u!114 &977138491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13648,7 +13629,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &986291405
 GameObject:
   m_ObjectHideFlags: 0
@@ -14156,7 +14136,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!114 &1081828017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16537,7 +16516,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!114 &1447327849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18725,7 +18703,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &1682504336
 GameObject:
   m_ObjectHideFlags: 0
@@ -24420,6 +24397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mission: 4
   loadingPanel: {fileID: 1634428899}
+  stageMenu: {fileID: 1140806812}
   stagePanel: {fileID: 1116770361}
   desc: {fileID: 660365403}
 --- !u!114 &1781536390
@@ -24435,7 +24413,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &1795822529
 GameObject:
   m_ObjectHideFlags: 0
@@ -24813,6 +24790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mission: 2
   loadingPanel: {fileID: 1634428899}
+  stageMenu: {fileID: 1140806812}
   stagePanel: {fileID: 1116770361}
   desc: {fileID: 986291407}
 --- !u!114 &1843806759
@@ -24828,7 +24806,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &1859646522
 GameObject:
   m_ObjectHideFlags: 0
@@ -25230,6 +25207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mission: 5
   loadingPanel: {fileID: 1634428899}
+  stageMenu: {fileID: 1140806812}
   stagePanel: {fileID: 1116770361}
   desc: {fileID: 0}
 --- !u!114 &1886608257
@@ -25245,7 +25223,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &1893113927
 GameObject:
   m_ObjectHideFlags: 0
@@ -25697,7 +25674,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &1936603476
 GameObject:
   m_ObjectHideFlags: 0
@@ -31479,7 +31455,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &2037241951
 GameObject:
   m_ObjectHideFlags: 0
@@ -31599,7 +31574,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!1 &2039700023
 GameObject:
   m_ObjectHideFlags: 0
@@ -31788,7 +31762,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 4289207977908457395, guid: d299c83a3413f154bb6ca2a97c67597b, type: 3}
-  parent: {fileID: 1116770363}
 --- !u!114 &2040186019
 MonoBehaviour:
   m_ObjectHideFlags: 0
