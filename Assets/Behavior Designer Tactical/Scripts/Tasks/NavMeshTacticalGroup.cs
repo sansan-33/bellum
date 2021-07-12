@@ -51,6 +51,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
             /// </summary>
             public override bool RotateTowards(Quaternion targetRotation)
             {
+               
                 Vector3 eulerRotation = targetRotation.eulerAngles;
                 targetRotation = Quaternion.Euler(eulerRotation.x, eulerRotation.y, 0); // fix the unit rotate z axis like falling down
                 unit.GetUnitMovement().rotate(targetRotation);
@@ -60,6 +61,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                     return true;
                 }
                 return false;
+               
             }
             /// <summary>
             /// Returns the radius of the agent.

@@ -585,7 +585,7 @@ public class TacticalBehavior : MonoBehaviour
                     offset += 2;
                     unitspawn++;
                 }
-                TryTB((int)BehaviorSelectionType.Charge, UnitMeta.UnitType.CAVALRY, playerid);
+                TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.CAVALRY, playerid);
                 //yield return new WaitForSeconds(4f);
                 TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.HERO, playerid);
                 TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.KING, playerid);

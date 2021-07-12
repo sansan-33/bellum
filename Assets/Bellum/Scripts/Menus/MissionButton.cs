@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MissionButton : MonoBehaviour, IPointerDownHandler , IPointerClickHandler
+public class MissionButton : MonoBehaviour, IPointerDownHandler  
 {
     [SerializeField] public string mission = null;
     [SerializeField] public GameObject loadingPanel = null;
@@ -14,7 +14,7 @@ public class MissionButton : MonoBehaviour, IPointerDownHandler , IPointerClickH
     [SerializeField] public TMP_Text desc = null;
     [SerializeField] public ScrollRect parentScrollRect = null;
     bool canClick = false;
-
+    /*
     public void OnPointerClick(PointerEventData eventData)
     {
         if (canClick == true)
@@ -24,13 +24,17 @@ public class MissionButton : MonoBehaviour, IPointerDownHandler , IPointerClickH
         }
         canClick = true;
     }
-
+    */
     public void OnPointerDown(PointerEventData eventData)
     {
 
         if (parentScrollRect.velocity.magnitude > 0)
         {
             canClick = false;
+        }
+        else
+        {
+            goToMission();
         }
     }
     private void goToMission()

@@ -489,7 +489,7 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 IDamageable collideTarget = collideTargetTransform.GetComponent<IDamageable>();
                 tacticalAgent.TargetTransform = collideTargetTransform;
                 tacticalAgent.TargetDamagable = collideTarget;
-                tacticalAgent.RotateTowardsPosition(tacticalAgent.TargetTransform.position);
+                //tacticalAgent.RotateTowardsPosition(tacticalAgent.TargetTransform.position);
 
             }
             else if (tacticalAgent.TargetTransform == null || !tacticalAgent.TargetDamagable.IsAlive())
