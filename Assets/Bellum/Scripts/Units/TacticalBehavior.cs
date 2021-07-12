@@ -221,7 +221,7 @@ public class TacticalBehavior : MonoBehaviour
     {
         string target = "";
         if (!ISGATEOPENED[playerid] && OPENDOORCOUNT < MAXDOORCOUNT) {
-            if (unit.unitType != UnitMeta.UnitType.KING && unit.unitType != UnitMeta.UnitType.HERO)
+            if (unit.unitType != UnitMeta.UnitType.KING && unit.unitType != UnitMeta.UnitType.HERO && unit.unitType != UnitMeta.UnitType.QUEEN)
             {
                 target = "Door";
                 return target;
@@ -261,7 +261,6 @@ public class TacticalBehavior : MonoBehaviour
     {
         if (group == (int)BehaviorSelectionType.Hold || group == (int)BehaviorSelectionType.Defend)
         {
-            //Debug.Log($"set Defend Object {defendObject.name} king {king.name} / {king.tag}");
             float radius = newRadius;
             float defendRadius = newDefendRadius;
             float chaseDistance = 10f;
@@ -417,6 +416,7 @@ public class TacticalBehavior : MonoBehaviour
     public string GetTacticalStatus()
     {
         List<Unit> troops = GetAllTroops(PLAYERID);
+        troops.AddRange(GetAllTroops(ENEMYID));
         var sb = new System.Text.StringBuilder();
         foreach (Unit army in troops) {
             if(army.TryGetComponent<AstarAI>(out AstarAI ai))
@@ -569,6 +569,7 @@ public class TacticalBehavior : MonoBehaviour
                 TryTB((int)BehaviorSelectionType.Defend, UnitMeta.UnitType.FOOTMAN, playerid);
                 //yield return new WaitForSeconds(4f);
                 TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.HERO, playerid);
+                TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.QUEEN, playerid);
                 TryTB((int)BehaviorSelectionType.Attack, UnitMeta.UnitType.KING, playerid);
                 break;
             case TaticalAttack.CAVALRYCHARGES:

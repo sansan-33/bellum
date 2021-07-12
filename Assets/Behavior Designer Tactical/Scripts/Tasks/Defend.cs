@@ -75,7 +75,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 // Loop through the possible target transforms and determine which transform is the closest to each agent.
                 // tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": searching " + targetTransforms.Count + " target withing defend radius " + defendRadius.Value  + " .. " + HEARTBEAT++);
                 for (int i = targetTransforms.Count - 1; i > -1; --i) {
-                    //Debug.Log($"1 target {targetTransforms[i].name } ==> target distance {(transform.position - targetTransforms[i].position).magnitude } , Total {targetTransforms.Count}");
+                    //if (tacticalAgent.transform.name.ToLower().Contains("queen") && tacticalAgent.transform.tag.Contains("0"))
+                    //Debug.Log($"1 target {targetTransforms[i].name } ==> target distance {(transform.position - targetTransforms[i].position).magnitude } defend radius {defendRadius.Value}, Total {targetTransforms.Count}");
                     // The target has to be alive.
                     //tacticalAgent.transform.GetComponent<Unit>().SetTaskStatus(TASKNAME + ": checking target " + targetTransforms[i].name  + ":" + i + "/" + targetTransforms.Count + " is alive ?"  + targets[i].IsAlive() + " .. " + HEARTBEAT++);
                     if (targets[i].IsAlive()) {

@@ -28,6 +28,8 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     public float repathRate = 0.5f;
     private float lastRepath = float.NegativeInfinity;
     private bool IS_MULTIPLAYER_MODE = false;
+    string playerid = "-1";
+    Vector3 bodySize = new Vector3(0.1f, 0.1f, 0.1f);
 
     [SyncVar] bool agentArrived = false;
 
@@ -35,6 +37,7 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     {
         //seeker = GetComponent<Seeker>();
         ai = GetComponent<AIPath>();
+        bodySize = GetComponent<BoxCollider>().size;
     }
     public override void OnStartClient()
     {
@@ -200,7 +203,6 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     [Server]
     public void ServerRotate(Quaternion targetRotation)
     {
-        //ai.updateRotation = false;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, ai.rotationSpeed);
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, ai.rotationSpeed * Time.deltaTime);
     }
@@ -222,22 +224,26 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
     }
     public bool isCollide()
     {
-        if (isProvoked) return false;
-        float sneakyOffset = 1f;
-        if (transform.tag.Contains("Sneaky")) sneakyOffset=0.1f;
+        //if (isProvoked) return false;
+        if (other != null && other.GetComponent<Health>().IsAlive()) { return true; }
+
+        float sneakyOffset = (transform.tag.Contains("Sneaky")) ? 0.1f : 1f;
         //Debug.Log($"AstarAI is collide ?  {isCollided}");
-        Collider[] hitColliders = Physics.OverlapBox(GetComponent<Targeter>().GetAimAtPoint().transform.position, transform.localScale * GetComponent<IAttack>().AttackDistance() * sneakyOffset, Quaternion.identity, LayerMask.GetMask("Unit"));
+        Collider[] hitColliders = Physics.OverlapBox(GetComponent<Targeter>().GetAimAtPoint().transform.position, bodySize * sneakyOffset, Quaternion.identity, LayerMask.GetMask("Unit"));
         int i = 0;
-        string playerid = transform.tag.Substring(transform.tag.Length - 1);
         isCollided = false;
+        if(playerid == "-1")
+            playerid = transform.tag.Substring(transform.tag.Length - 1);
+
         //Check when there is a new collider coming into contact with the box
         while (i < hitColliders.Length)
         {
             other = hitColliders[i++];
             if (other.tag == "Unit") { continue; }  // initial object tag name , wait for tag update later
+            //if (other.tag == "Door") { continue; }  // Door Not blocked
             if (other.tag == "Wall") { continue; }  // Great Wall 3 Door will not collide
             if (other.tag.Contains("Building")) { continue; }  // wall not blocked
-            if (other.tag.Contains("Trap")) { continue; }  // wall not blocked
+            if (other.tag.Contains("Trap")) { continue; }  // trap not blocked
             if (IS_MULTIPLAYER_MODE)
             {
                 if (other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity))  //try and get the NetworkIdentity component to see if it's a unit/building 
@@ -262,7 +268,8 @@ public class AstarAI : NetworkBehaviour, IUnitMovement
                 //}
             }
         }
-        
+        if (!isCollided)
+            other = null;
         return isCollided;
     }
 

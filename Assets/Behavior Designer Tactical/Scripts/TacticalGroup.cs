@@ -450,8 +450,8 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 {
                     //if ((localDistance = (targetTransforms[i].position - agentTransform.position).sqrMagnitude) < distance)
                     //Debug.Log($"Box size of {targetTransforms[i].name} {targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude} , local distance {(targetTransforms[i].position - agentTransform.position).sqrMagnitude} ");
-                    if (tacticalAgent.transform.name.ToLower().Contains("king"))
-                        Debug.Log($"target [{i}] {targetTransforms[i].name} {targetTransforms[i].tag} , local distance {(targetTransforms[i].position - agentTransform.position).sqrMagnitude - targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude }");
+                    //if (tacticalAgent.transform.name.ToLower().Contains("king"))
+                    //    Debug.Log($"target [{i}] {targetTransforms[i].name} {targetTransforms[i].tag} , local distance {(targetTransforms[i].position - agentTransform.position).sqrMagnitude - targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude }");
 
                     if ((localDistance = (targetTransforms[i].position - agentTransform.position).sqrMagnitude) - targetTransforms[i].GetComponent<BoxCollider>().size.sqrMagnitude  < distance)
                     {
@@ -536,14 +536,16 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
                 tacticalAgent.SetDestination(tacticalAgent.TargetTransform.position);
                 //tacticalAgent.SetDestination(SurroundTraget(tacticalAgent.TargetTransform.position));
                 tacticalAgent.AttackPosition = true;
-                
+                if (tacticalAgent.transform.gameObject.GetComponent<Unit>().GetUnitMovement().collided())
+                    Debug.Log($"{tacticalAgent.transform.tag} / {tacticalAgent.transform.name} collided with target {tacticalAgent.TargetTransform.transform.name  },  distance {Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position)} , AttackDistance() {tacticalAgent.AttackAgent.AttackDistance() }?  ");
+
                 if (tacticalAgent.transform.name.ToLower().Contains(debugTarget) && tacticalAgent.transform.tag.Contains("0")  && ISDEBUG)
                     Debug.Log($"{tacticalAgent.transform.name} Can See Target {tacticalAgent.CanSeeTarget() } {tacticalAgent.TargetTransform.transform.name  } distance {Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position)} , AttackDistance() {tacticalAgent.AttackAgent.AttackDistance() }? tacticalAgent.SurroundPosition {tacticalAgent.SurroundPosition}");
             } else
             {
-                if (tacticalAgent.transform.name.ToLower().Contains(debugTarget) && tacticalAgent.transform.tag.Contains("0") && ISDEBUG)
-                    Debug.Log($"{tacticalAgent.transform.name} STOP ,  Can See Target {tacticalAgent.CanSeeTarget()} ");
                 tacticalAgent.Stop();
+                if (!tacticalAgent.RotateTowardsPosition(tacticalAgent.TargetTransform.position) && ISDEBUG)
+                    Debug.Log($"{tacticalAgent.transform.name} STOP ,  but rotation is false !!!!!! ");
                 return tacticalAgent.RotateTowardsPosition(tacticalAgent.TargetTransform.position);
             }
             return false;
