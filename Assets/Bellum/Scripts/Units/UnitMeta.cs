@@ -26,7 +26,7 @@ public class UnitMeta
                         HUMANTOWER,HUMANBARRACK,HUMANCATAPULT, UNDEADTOWER, UNDEADBARRACK, UNDEADCATAPULT, ELFTOWER, ELFBARRACK, ELFCATAPULT, GODTOWER, GODBARRACK, GODCATAPULT, DOOR,
                         HUMANSPIKETRAP, HUMANSIEGE, UNDEADSPIKETRAP, UNDEADSIEGE, ELFSPIKETRAP, ELFSIEGE, GODSPIKETRAP, GODSIEGE
     };
-    public enum UnitType { ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN, WALL, TOWER, BARRACK, CATAPULT, HERO, KING, ALL, DOOR, SIEGE, TRAP, QUEEN };
+    public enum UnitType { ARCHER, TANK, MAGIC, CAVALRY, FOOTMAN, SIEGE, WALL, TOWER, BARRACK, CATAPULT, HERO, KING, ALL, DOOR, TRAP, QUEEN };
     public enum UnitSkill { DASH, SHIELD, HEAL, TORNADO, VOLLEY, SLOW, PROVOKE, CHARGE, SNEAK, SCALE, NOTHING, DEFAULT, ARROWRAIN };
     public enum UnitPosition { FORWARD, MIDFIELDER, DEFENDER, GOALIE, WALL};
     public enum Race { HUMAN, UNDEAD, ELF, GOD, ALL };
@@ -49,7 +49,7 @@ public class UnitMeta
         { UnitType.BARRACK, 1 },
         { UnitType.TOWER, 1 },
         { UnitType.CATAPULT, 1 },
-        { UnitType.SIEGE, 1 },
+        { UnitType.SIEGE, 3 },
         { UnitType.TRAP, 1 }
     };
     
@@ -62,7 +62,8 @@ public class UnitMeta
         { UnitType.HERO, TacticalBehavior.BehaviorSelectionType.Defend },
         { UnitType.QUEEN, TacticalBehavior.BehaviorSelectionType.Defend },
         { UnitType.TANK, TacticalBehavior.BehaviorSelectionType.Attack },
-        { UnitType.KING, TacticalBehavior.BehaviorSelectionType.Defend }
+        { UnitType.KING, TacticalBehavior.BehaviorSelectionType.Defend },
+        { UnitType.SIEGE, TacticalBehavior.BehaviorSelectionType.Attack }
     };
     public static Dictionary<UnitType, UnitPosition> DefaultUnitPosition = new Dictionary<UnitType, UnitPosition>()
     {
@@ -365,7 +366,8 @@ public class UnitMeta
         { UnitType.MAGIC, UnitSkill.NOTHING} ,
         { UnitType.CAVALRY, UnitSkill.NOTHING } ,
         { UnitType.FOOTMAN, UnitSkill.NOTHING },
-        { UnitType.TANK, UnitSkill.NOTHING }
+        { UnitType.TANK, UnitSkill.NOTHING },
+        { UnitType.SIEGE, UnitSkill.NOTHING }
     };
     public static Dictionary<UnitType, UnitSkill> UnitTypeSkillTwo = new Dictionary<UnitType, UnitSkill>()
     {
@@ -373,7 +375,8 @@ public class UnitMeta
         { UnitType.MAGIC, UnitSkill.HEAL} ,
         { UnitType.CAVALRY, UnitSkill.DASH } ,
         { UnitType.FOOTMAN, UnitSkill.SNEAK },
-        { UnitType.TANK, UnitSkill.PROVOKE }
+        { UnitType.TANK, UnitSkill.PROVOKE },
+        { UnitType.SIEGE, UnitSkill.NOTHING }
     };
     public static Dictionary<UnitType, UnitSkill> UnitTypeSkillThree = new Dictionary<UnitType, UnitSkill>()
     {
@@ -381,7 +384,8 @@ public class UnitMeta
         { UnitType.MAGIC, UnitSkill.TORNADO} ,
         { UnitType.CAVALRY, UnitSkill.CHARGE } ,
         { UnitType.FOOTMAN, UnitSkill.SCALE },
-        { UnitType.TANK, UnitSkill.SHIELD }
+        { UnitType.TANK, UnitSkill.SHIELD },
+        { UnitType.SIEGE, UnitSkill.NOTHING }
     };
     public static Dictionary<int, Dictionary<UnitType, UnitSkill>> UnitStarSkill = new Dictionary<int, Dictionary<UnitType, UnitSkill>>()
     {

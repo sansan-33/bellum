@@ -54,8 +54,11 @@ public class UnitFiring : NetworkBehaviour, IAttackAgent, IAttack
         while (true)
         {
             yield return new WaitForSeconds(repeatAttackDelay);
-            if (GetComponent<UnitBody>().doorColor != "blue" && GetComponent<UnitBody>().doorColor != "red") { continue; }
-            else{ targetid = GetComponent<UnitBody>().doorColor == "blue" ? 1 : 0;  }
+            if (GetComponent<Unit>().unitType == UnitMeta.UnitType.DOOR)
+            {
+                if (GetComponent<UnitBody>().doorColor != "blue" && GetComponent<UnitBody>().doorColor != "red") { continue; }
+                else { targetid = GetComponent<UnitBody>().doorColor == "blue" ? 1 : 0; }
+            }
             Attack(ClosestTarget(targetid));
         }
         //yield return null;

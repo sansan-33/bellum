@@ -655,9 +655,9 @@ public class TacticalBehavior : MonoBehaviour
         ISGATEOPENED[Int32.Parse(playerid)] = true;
         OPENDOORCOUNT++;
         //Debug.Log($"Team {playerid} , open door {doorIndex} , count {OPENDOORCOUNT} / {MAXDOORCOUNT} ");
-        UnitMeta.UnitKey unitKey = SpButtonManager.unitBtn.ElementAt(Int32.Parse(doorIndex)).Key;
-        if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1 || Int32.Parse(playerid) == PLAYERID)
-            TryTB((int)TacticalBehavior.BehaviorSelectionType.Attack, UnitMeta.KeyType[unitKey], Int32.Parse(playerid));
+        //UnitMeta.UnitKey unitKey = SpButtonManager.unitBtn.ElementAt(Int32.Parse(doorIndex)).Key;
+        //if (((RTSNetworkManager)NetworkManager.singleton).Players.Count == 1 || Int32.Parse(playerid) == PLAYERID)
+        //    TryTB((int)TacticalBehavior.BehaviorSelectionType.Attack, UnitMeta.KeyType[unitKey], Int32.Parse(playerid));
         //Debug.Log($"Attack now please !!!  {UnitMeta.KeyType[unitKey]} ");
     }
     #endregion

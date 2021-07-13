@@ -133,6 +133,7 @@ MonoBehaviour:
   attackAngle: 1
   numShots: 1
   AUTOFIRE: 1
+  ISCHAINED: 0
 --- !u!114 &2622424950089706745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +161,7 @@ MonoBehaviour:
   onDeselected:
     m_PersistentCalls:
       m_Calls: []
-  unitType: 6
+  unitType: 7
   race: 0
   unitKey: 36
   isLeader: 0
@@ -213,6 +214,7 @@ MonoBehaviour:
   syncInterval: 0.1
   specialEffectPrefab: {fileID: 0}
   fxEffectPrefab: {fileID: 0}
+  scriptEffectPrefab: {fileID: 0}
   sneakyMaterial: {fileID: 0}
   canSpawnEffect: 1
 --- !u!114 &5968037162167011512
@@ -246,6 +248,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   networkAnim: {fileID: 4396386862740862449}
+  anim: {fileID: 0}
+  audioSource: {fileID: 0}
+  isAttacking: 0
 --- !u!95 &8162523643598916116
 Animator:
   serializedVersion: 3

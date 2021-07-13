@@ -173,7 +173,7 @@ MonoBehaviour:
   onDeselected:
     m_PersistentCalls:
       m_Calls: []
-  unitType: 5
+  unitType: 6
   race: 0
   unitKey: 14
   isLeader: 0
@@ -195,6 +195,7 @@ MonoBehaviour:
   syncInterval: 0.1
   specialEffectPrefab: {fileID: 0}
   fxEffectPrefab: {fileID: 0}
+  scriptEffectPrefab: {fileID: 0}
   sneakyMaterial: {fileID: 0}
   canSpawnEffect: 1
 --- !u!65 &2518779855497947378

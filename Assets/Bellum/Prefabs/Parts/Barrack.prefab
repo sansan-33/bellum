@@ -105,7 +105,7 @@ MonoBehaviour:
   onDeselected:
     m_PersistentCalls:
       m_Calls: []
-  unitType: 7
+  unitType: 8
   race: 0
   unitKey: 37
   isLeader: 0
@@ -142,6 +142,7 @@ MonoBehaviour:
   syncInterval: 0.1
   specialEffectPrefab: {fileID: 0}
   fxEffectPrefab: {fileID: 0}
+  scriptEffectPrefab: {fileID: 0}
   sneakyMaterial: {fileID: 0}
   canSpawnEffect: 1
 --- !u!114 &7787812190307891898
@@ -175,6 +176,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   networkAnim: {fileID: 7787812190307891898}
+  anim: {fileID: 0}
+  audioSource: {fileID: 0}
+  isAttacking: 0
 --- !u!1 &4713597574683672276
 GameObject:
   m_ObjectHideFlags: 0

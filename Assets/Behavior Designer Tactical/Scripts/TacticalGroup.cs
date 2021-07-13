@@ -531,21 +531,18 @@ namespace BehaviorDesigner.Runtime.Tactical.Tasks
 
             FindAttackTarget();
             
-            if (!tacticalAgent.CanSeeTarget() || Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position) > tacticalAgent.AttackAgent.AttackDistance())
+            //if (!tacticalAgent.CanSeeTarget() || Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position) > tacticalAgent.AttackAgent.AttackDistance())
+            if (Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position) > tacticalAgent.AttackAgent.AttackDistance())
             {
                 tacticalAgent.SetDestination(tacticalAgent.TargetTransform.position);
                 //tacticalAgent.SetDestination(SurroundTraget(tacticalAgent.TargetTransform.position));
                 tacticalAgent.AttackPosition = true;
                 if (tacticalAgent.transform.gameObject.GetComponent<Unit>().GetUnitMovement().collided())
-                    Debug.Log($"{tacticalAgent.transform.tag} / {tacticalAgent.transform.name} collided with target {tacticalAgent.TargetTransform.transform.name  },  distance {Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position)} , AttackDistance() {tacticalAgent.AttackAgent.AttackDistance() }?  ");
-
-                if (tacticalAgent.transform.name.ToLower().Contains(debugTarget) && tacticalAgent.transform.tag.Contains("0")  && ISDEBUG)
-                    Debug.Log($"{tacticalAgent.transform.name} Can See Target {tacticalAgent.CanSeeTarget() } {tacticalAgent.TargetTransform.transform.name  } distance {Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position)} , AttackDistance() {tacticalAgent.AttackAgent.AttackDistance() }? tacticalAgent.SurroundPosition {tacticalAgent.SurroundPosition}");
-            } else
-            {
+                    Debug.LogError($"{tacticalAgent.transform.tag} / {tacticalAgent.transform.name} collided with target {tacticalAgent.TargetTransform.transform.name} / {tacticalAgent.TargetTransform.transform.tag},  distance {Vector3.Distance(tacticalAgent.TargetTransform.position, transform.position)} , AttackDistance() {tacticalAgent.AttackAgent.AttackDistance() }?  ");
+            } else {
                 tacticalAgent.Stop();
                 if (!tacticalAgent.RotateTowardsPosition(tacticalAgent.TargetTransform.position) && ISDEBUG)
-                    Debug.Log($"{tacticalAgent.transform.name} STOP ,  but rotation is false !!!!!! ");
+                    Debug.LogError($"{tacticalAgent.transform.tag}/{tacticalAgent.transform.name} STOP ,  but rotation is false !!!!!! ");
                 return tacticalAgent.RotateTowardsPosition(tacticalAgent.TargetTransform.position);
             }
             return false;
