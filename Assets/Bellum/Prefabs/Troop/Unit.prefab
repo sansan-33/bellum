@@ -1346,7 +1346,7 @@ MonoBehaviour:
   onSelected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3836861167407539888}
+      - m_Target: {fileID: 641317823713200231}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1361,7 +1361,7 @@ MonoBehaviour:
   onDeselected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3836861167407539888}
+      - m_Target: {fileID: 641317823713200231}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1508,6 +1508,7 @@ MonoBehaviour:
   syncInterval: 0.1
   specialEffectPrefab: {fileID: 100000, guid: a66737023181f468595fdd8386cdad71, type: 3}
   fxEffectPrefab: {fileID: 1817900190835674, guid: 8c3e13e635ce8461990fca5255cf3b37, type: 3}
+  scriptEffectPrefab: {fileID: 0}
   sneakyMaterial: {fileID: 0}
   canSpawnEffect: 1
 --- !u!114 &3007018670020009129
@@ -1665,6 +1666,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   networkAnim: {fileID: 0}
+  anim: {fileID: 0}
   audioSource: {fileID: 0}
   isAttacking: 0
 --- !u!114 &5187453383860487590
@@ -1748,7 +1750,6 @@ MonoBehaviour:
   syncInterval: 0.1
   healingPrefab: {fileID: 100004, guid: 426dcf24d92fa4d3d8157d050492ad1a, type: 3}
   particleSysytemPlay: 0
-  healingPS: {fileID: 0}
 --- !u!1 &2598530083062933460
 GameObject:
   m_ObjectHideFlags: 0

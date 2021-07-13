@@ -36772,7 +36772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFace:
     suit: 0
-    numbers: 6
+    numbers: 8
     star: 0
     stats: {fileID: 0}
   cardPlayerHandIndex: 0
@@ -52782,7 +52782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFace:
     suit: 0
-    numbers: 8
+    numbers: 9
     star: 0
     stats: {fileID: 0}
   cardPlayerHandIndex: 0
@@ -54753,7 +54753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFace:
     suit: 0
-    numbers: 5
+    numbers: 6
     star: 0
     stats: {fileID: 0}
   cardPlayerHandIndex: 0
@@ -58234,7 +58234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFace:
     suit: 0
-    numbers: 8
+    numbers: 9
     star: 0
     stats: {fileID: 0}
   cardPlayerHandIndex: 0
@@ -64660,7 +64660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFace:
     suit: 0
-    numbers: 5
+    numbers: 6
     star: 0
     stats: {fileID: 0}
   cardPlayerHandIndex: 0
@@ -76455,7 +76455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFace:
     suit: 0
-    numbers: 6
+    numbers: 8
     star: 0
     stats: {fileID: 0}
   cardPlayerHandIndex: 0
@@ -107192,13 +107192,11 @@ MonoBehaviour:
   buttonBarrack: {fileID: 559671447}
   buttonTower: {fileID: 2134787536}
   buttonCatapult: {fileID: 968482644}
-  buttonSiege: {fileID: 968482644}
   buttonSpikeTrap: {fileID: 681656537}
   EnemyButtonWall: {fileID: 880822304}
   EnemyButtonBarrack: {fileID: 1331862990}
   EnemyButtonTower: {fileID: 1176117996}
   EnemyButtonCatapult: {fileID: 856916321}
-  EnemyButtonSiege: {fileID: 968482644}
   EnemyButtonSpikeTrap: {fileID: 681656537}
   totalEleixers: {fileID: 739865865}
   greyScaleShader: {fileID: 4800000, guid: bc48e7f9d79b24d7496ce905f1c5a0d1, type: 3}
