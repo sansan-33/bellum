@@ -128,14 +128,14 @@ public class RTSNetworkManager : NetworkManager
             GameOverHandler gameOverHandlerInstance = Instantiate(gameOverHandlerPrefab);
             GameBoardHandler gameBoardHandlerInstance = Instantiate(gameBoardHandlerPrefab);
             GreatWallController greatWallInstance = Instantiate(greatWallPrefab, gameBoardHandlerInstance.middleLinePoint.position, Quaternion.identity);
-            GameObject doorMiddleInstance = Instantiate(doorMiddlePrefab, gameBoardHandlerInstance.middleDoorPoint.position, Quaternion.identity);
+            //GameObject doorMiddleInstance = Instantiate(doorMiddlePrefab, gameBoardHandlerInstance.middleDoorPoint.position, Quaternion.identity);
             GameObject doorLeftInstance = Instantiate(doorLeftPrefab, gameBoardHandlerInstance.leftDoorPoint.position, Quaternion.identity);
             GameObject doorRightInstance = Instantiate(doorRightPrefab, gameBoardHandlerInstance.rightDoorPoint.position, Quaternion.identity);
 
             NetworkServer.Spawn(gameBoardHandlerInstance.gameObject);
             NetworkServer.Spawn(gameOverHandlerInstance.gameObject);
             NetworkServer.Spawn(greatWallInstance.gameObject);
-            NetworkServer.Spawn(doorMiddleInstance.gameObject);
+            //NetworkServer.Spawn(doorMiddleInstance.gameObject);
             NetworkServer.Spawn(doorLeftInstance.gameObject);
             NetworkServer.Spawn(doorRightInstance.gameObject);
 
