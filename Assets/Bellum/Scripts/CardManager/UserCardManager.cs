@@ -37,9 +37,23 @@ public class UserCardManager : MonoBehaviour
         GameObject userCard;
         CharacterImage characterImage;
         UserCard card;
+
         foreach (var allCard in allCardDict)
         {
             //Debug.Log($"Character Art Key : {allCard.Key}  ");
+            if (IS_TEAM_MEMBER_SELECTION)
+            {
+                // load KING, QUEEN and HERO cards only
+                //Debug.Log($"IS_TEAM_MEMBER_SELECTION allCard.Value.unittype: {allCard.Value.unittype}"); 
+                if (Enum.TryParse(allCard.Value.unittype, out UnitMeta.UnitType unitType))
+                {
+                    if (!UnitMeta.TeamUnitType.Contains(unitType))
+                    {
+                        continue;
+                    }
+                }
+            }
+            
             characterImage = Arts.CharacterArtDictionary[allCard.Key];
             userCard = Instantiate(userCardPrefab);
             userCard.GetComponent<UserCardButton>().characterImage.sprite = characterImage.image ;
