@@ -1,18 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Mirror;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class Meteor : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class ImpectSmash : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    [SerializeField] GameObject meteorPrefab;
+    [SerializeField] int damage = 10;
     [SerializeField] GameObject dragcCirclePrefab;
     private PlayerGround playerGround;
     private GameObject dragCircle;
+    private RTSPlayer RTSplayer;
+    private GameObject impectType;
+    private SpecialAttackDict.SpecialAttackType SpecialAttackType;
     // Start is called before the first frame update
     void Start()
     {
+        RTSplayer = NetworkClient.connection.identity.GetComponent<RTSPlayer>(); 
         GameObject[] grounds = GameObject.FindGameObjectsWithTag("FightGround");
         foreach (GameObject ground in grounds)
         {
@@ -23,9 +30,17 @@ public class Meteor : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDragHand
             }
         }
     }
+    public void SetImpectType(GameObject prefab)
+    {
+        impectType = prefab;
+    }
+    public void SetSpecialAttackType(SpecialAttackDict.SpecialAttackType type)
+    {
+        SpecialAttackType = type;
+    }
     public void OnPointerDown()
     {
-
+   
     }
     public int GetSpCost()
     {
@@ -50,12 +65,32 @@ public class Meteor : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDragHand
         Ray ray = Camera.main.ScreenPointToRay(pos);
         //if the floor layer is not floor it will not work!!!
         if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) { return; }
-        Instantiate(meteorPrefab).transform.position = hit.point;
+        GameObject impect = Instantiate(impectType);
+        impect.transform.position = hit.point;
+        if (SpecialAttackType == SpecialAttackDict.SpecialAttackType.TORNADO)
+        {
+            impect.GetComponent<Tornado>().SetPlayerType(RTSplayer.GetPlayerID());
+        }
+        GameObject[] units = GameObject.FindGameObjectsWithTag("Player" + 1);
+        GameObject king = GameObject.FindGameObjectWithTag("King" + 1);
+        List<GameObject> armies = new List<GameObject>();
+        armies = units.ToList();
+        if (king != null)
+            armies.Add(king);
+        foreach (GameObject unit in armies)
+        {
+            Debug.Log($"finded {unit} circle pos {dragCircle.transform.position} - pos {unit.transform.position} = sqrMagnitude {(dragCircle.transform.position - unit.transform.position).sqrMagnitude}");
+            if ((dragCircle.transform.position - unit.transform.position).sqrMagnitude < 27)
+            {
+                unit.GetComponent<Health>().DealDamage(damage);
+            }
+        }
         Destroy(dragCircle);
     }
     // Update is called once per frame
     void Update()
     {
         
+       
     }
 }

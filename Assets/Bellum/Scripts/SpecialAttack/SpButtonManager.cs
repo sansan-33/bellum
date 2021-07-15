@@ -18,7 +18,10 @@ public class SpButtonManager : MonoBehaviour
     [SerializeField] public GameObject stunPrefab;
     [SerializeField] public GameObject shieldPrefab;
     [SerializeField] public GameObject slashPrefab;
-    [SerializeField] public GameObject meteorPrefab;
+    [SerializeField] public GameObject impectSmashPrefab;
+    [SerializeField] GameObject meteorPrefab;
+    [SerializeField] GameObject fireArrowPrefab;
+    [SerializeField] GameObject tornadoPrefab;
     [SerializeField] private Transform spPrefabParent;
     public Dictionary<SpecialAttackType, GameObject> SpecialAttackPrefab = new Dictionary<SpecialAttackType, GameObject>();
 
@@ -213,7 +216,26 @@ public class SpButtonManager : MonoBehaviour
         buttonChild.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
         spawnedSpButtonUnit.Add(unit.unitKey);
         buttons.Add(button.GetComponent<Button>());
-        Instantiate(meteorPrefab, button.transform);
+
+        //hard code sp type is TORNADO
+        spType = SpecialAttackType.TORNADO;
+
+        if(spType == SpecialAttackType.FIREARROW)
+        {
+           var impectSmash = Instantiate(impectSmashPrefab, button.transform);
+            impectSmash.GetComponent<ImpectSmash>().SetImpectType(fireArrowPrefab);
+        }
+        if (spType == SpecialAttackType.METEOR)
+        {
+            var impectSmash = Instantiate(impectSmashPrefab, button.transform);
+            impectSmash.GetComponent<ImpectSmash>().SetImpectType(meteorPrefab);
+        }
+        if (spType == SpecialAttackType.TORNADO)
+        {
+            var impectSmash = Instantiate(impectSmashPrefab, button.transform);
+            impectSmash.GetComponent<ImpectSmash>().SetImpectType(tornadoPrefab);
+            impectSmash.GetComponent<ImpectSmash>().SetSpecialAttackType(SpecialAttackType.TORNADO);
+        }
         // Instantiate specialAttack
         GameObject specialAttackObj = Instantiate(specialAttack, spPrefabParent);
 

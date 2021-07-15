@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4133795529073687063}
   - component: {fileID: 1641051739239314339}
   m_Layer: 0
-  m_Name: Meteor
+  m_Name: ImpectSmash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,5 +133,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbcbf98fdc22400ea3acf51a683ffd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meteorPrefab: {fileID: 138484, guid: 32ec3ec418a336747afa71cf65f20e67, type: 3}
+  damage: 10
   dragcCirclePrefab: {fileID: 7418258379690402191, guid: 5a92b13fd33afcd4da9492bd30f22d36, type: 3}
