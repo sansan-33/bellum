@@ -247,14 +247,12 @@ public class UnitProjectile : NetworkBehaviour
      
     private void specialEffect(Vector3 position )
     {
-        /*
-        if (isLocalPlayer)
-        {
+        //if (isLocalPlayer)
+        //{
             //            RpcSpecialEffect(position);
             //      else
             CmdSpecialEffect(position);
-        }
-        */
+        //}
     }
     [ClientRpc]
     private void RpcSpecialEffect(Vector3 position)
