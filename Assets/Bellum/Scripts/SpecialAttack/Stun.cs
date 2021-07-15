@@ -135,7 +135,7 @@ public class Stun : NetworkBehaviour, ISpecialAttack
                 if (unit == null) { continue; }
                 CardStats cardStats = unit.GetComponent<CardStats>();
                 UnitRepeatAttackDelaykeys.TryGetValue(unit, out float repeatAttackDelay);
-                UnitSpeedkeys.TryGetValue(unit, out int speed);
+                UnitSpeedkeys.TryGetValue(unit, out float speed);
                 unit.GetComponent<UnitPowerUp>().SpecialEffect(repeatAttackDelay, speed);  
             }
             FindObjectOfType<SpawnSpEffect>().destroyEffect(1);
@@ -146,7 +146,7 @@ public class Stun : NetworkBehaviour, ISpecialAttack
     {
 
     };
-    public static Dictionary<GameObject, int> UnitSpeedkeys = new Dictionary<GameObject, int>()
+    public static Dictionary<GameObject, float> UnitSpeedkeys = new Dictionary<GameObject, float>()
     {
 
     };

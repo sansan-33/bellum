@@ -7,7 +7,7 @@ public class CardStats : MonoBehaviour
     public int health;
     public int attack;
     public float repeatAttackDelay;
-    public int speed;
+    public float speed;
     public int defense;
     public int special;
     public string specialkey;
@@ -15,11 +15,11 @@ public class CardStats : MonoBehaviour
     [HideInInspector] public SpecialAttackDict.SpecialAttackType specialAttackType = SpecialAttackDict.SpecialAttackType.ICE;
 
     public CardStats() { }
-    public CardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special = 0, string specialkey ="", string passivekey = "")
+    public CardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special = 0, string specialkey ="", string passivekey = "")
     {
         SetCardStats(star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special,  specialkey, passivekey);
     }
-    public void SetCardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special = 0, string specialkey = "", string passivekey = "")
+    public void SetCardStats(int star, int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special = 0, string specialkey = "", string passivekey = "")
     {
         this.star = star;
         this.cardLevel = cardLevel;

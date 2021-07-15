@@ -5,6 +5,8 @@ using UnityEngine;
 public class GreatWallController : NetworkBehaviour
 {
     public static event Action<string, string> GateOpened;
+    [SyncVar(hook = nameof(HandleDynamicBlock))]
+    private bool IS_BLOCKED = false;
 
     //==================================== Set Skill For Unit
     public void GateOpen(string playerid, string doorIndex)
@@ -33,6 +35,7 @@ public class GreatWallController : NetworkBehaviour
     {
         GateOpened?.Invoke("" + playerid, doorIndex);
     }
+    /*
     void OnEnable()
     {
         foreach (MeshRenderer wall in GetComponentsInChildren<MeshRenderer>())
@@ -40,4 +43,17 @@ public class GreatWallController : NetworkBehaviour
             wall.enabled = false;
         }
     }
+    */
+    public void dynamicBlock(bool is_block)
+    {
+        IS_BLOCKED = is_block;
+    }
+    private void HandleDynamicBlock(bool old_block, bool new_block)
+    {
+        transform.GetChild(0).gameObject.SetActive(new_block);
+        // Recalculate only the first grid graph
+        var graphToScan = AstarPath.active.data.gridGraph;
+        AstarPath.active.Scan(graphToScan);
+    }
+
 }

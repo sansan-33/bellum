@@ -52,8 +52,8 @@ public class TacticalBehavior : MonoBehaviour
         ENEMYID = player.GetEnemyID();
         unitTactical[PLAYERID] = unitTacticalPlayer;
         unitTactical[ENEMYID] = unitTacticalEnemey;
-        ISGATEOPENED[PLAYERID] = false;
-        ISGATEOPENED[ENEMYID] = false;
+        ISGATEOPENED[PLAYERID] = true;
+        ISGATEOPENED[ENEMYID] = true;
         StartCoroutine(AssignTag());
 
         behaviorTreeGroups.Add(PLAYERID, playerBehaviorTreeGroup);

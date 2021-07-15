@@ -101,7 +101,7 @@ public class UnitFactory : NetworkBehaviour
         }
     }
     [Command]
-    public void CmdSpawnTeamUnit(UnitMeta.UnitKey unitKey, int star, int playerID, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor, Quaternion unitRotation)
+    public void CmdSpawnTeamUnit(UnitMeta.UnitKey unitKey, int star, int playerID, int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor, Quaternion unitRotation)
     {
         if (!UnitMeta.UnitSize.TryGetValue(UnitMeta.KeyType[unitKey] , out int unitsize)) { unitsize = 1; }
 
@@ -111,7 +111,7 @@ public class UnitFactory : NetworkBehaviour
         StartCoroutine(ServerSpwanUnit(playerID, spawnPosition, unitDict[unitKey], UnitMeta.KeyType[unitKey].ToString(), unitsize, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, star, teamColor, unitRotation, spawnPointObject.GetComponent<SpawnPoint>().spawnPointIndex));
     }
     [Command]
-    public void CmdSpawnUnitPosition(UnitMeta.Race race, UnitMeta.UnitType unitType, int star, int playerID, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor, UnitMeta.UnitType spawnUnitType)
+    public void CmdSpawnUnitPosition(UnitMeta.Race race, UnitMeta.UnitType unitType, int star, int playerID, int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor, UnitMeta.UnitType spawnUnitType)
     {
         if (!UnitMeta.UnitSize.TryGetValue(unitType, out int unitsize)) { unitsize = 1; }
 
@@ -120,7 +120,7 @@ public class UnitFactory : NetworkBehaviour
         StartCoroutine(ServerSpwanUnit(playerID, spawnPosition, unitDict[UnitMeta.UnitRaceTypeKey[race][unitType]], unitType.ToString(), unitsize, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, star, teamColor, Quaternion.identity, spawnPointObject.GetComponent<SpawnPoint>().spawnPointIndex));
     }
     [Command]
-    public void CmdSpawnUnitRotation(UnitMeta.Race race, UnitMeta.UnitType unitType, int star, int playerID,int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor,  Quaternion unitRotation)
+    public void CmdSpawnUnitRotation(UnitMeta.Race race, UnitMeta.UnitType unitType, int star, int playerID,int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor,  Quaternion unitRotation)
     {
         if (!UnitMeta.UnitSize.TryGetValue(unitType, out int unitsize)) { unitsize = 1; }
 
@@ -130,7 +130,7 @@ public class UnitFactory : NetworkBehaviour
         StartCoroutine(ServerSpwanUnit(playerID, spawnPosition, unitDict[UnitMeta.UnitRaceTypeKey[race][unitType]], unitType.ToString(), unitsize, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey , star, teamColor, unitRotation , spawnPointObject.GetComponent<SpawnPoint>().spawnPointIndex));
     }
     [Command]
-    public void CmdSpawnUnit(UnitMeta.Race race, UnitMeta.UnitType unitType, int star, int playerID,int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
+    public void CmdSpawnUnit(UnitMeta.Race race, UnitMeta.UnitType unitType, int star, int playerID,int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
     {
         if (!UnitMeta.UnitSize.TryGetValue(unitType, out int unitsize)) { unitsize = 1; }
 
@@ -139,7 +139,7 @@ public class UnitFactory : NetworkBehaviour
         StartCoroutine(ServerSpwanUnit(playerID, spawnPosition, unitDict[UnitMeta.UnitRaceTypeKey[race][unitType]], unitType.ToString(), unitsize, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, star, teamColor, Quaternion.identity, spawnPointObject.GetComponent<SpawnPoint>().spawnPointIndex));
     }
     [Server]
-    private IEnumerator ServerSpwanUnit(int playerID, Vector3 spawnPosition, GameObject unitPrefab, string unitName, int spawnCount,int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey ,int star, Color teamColor, Quaternion rotation, int spawnPointIndex)
+    private IEnumerator ServerSpwanUnit(int playerID, Vector3 spawnPosition, GameObject unitPrefab, string unitName, int spawnCount,int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey ,int star, Color teamColor, Quaternion rotation, int spawnPointIndex)
     {
         //float waitTime = 0.1f;
         int spawnCountOffset = 0;
@@ -178,7 +178,7 @@ public class UnitFactory : NetworkBehaviour
         yield return null;
     }
     [Command]
-    public void CmdDropUnit(int playerID, Vector3 spawnPosition, UnitMeta.Race race, UnitMeta.UnitType unitType,string unitName, int spawnCount,int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special,string specialkey, string passivekey , int star, Color teamColor, Quaternion rotation)
+    public void CmdDropUnit(int playerID, Vector3 spawnPosition, UnitMeta.Race race, UnitMeta.UnitType unitType,string unitName, int spawnCount,int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special,string specialkey, string passivekey , int star, Color teamColor, Quaternion rotation)
     {
         GameObject spawnPointObject = gameBoardHandlerPrefab.GetSpawnPointObject(unitType, playerID);
         StartCoroutine(ServerSpwanUnit(playerID, spawnPosition, unitDict[UnitMeta.UnitRaceTypeKey[race][unitType]], unitName, spawnCount, cardLevel, health, attack, repeatAttackDelay, speed, defense, special , specialkey, passivekey , star, teamColor, rotation, spawnPointObject.GetComponent<SpawnPoint>().spawnPointIndex));

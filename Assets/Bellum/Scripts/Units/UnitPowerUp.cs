@@ -125,7 +125,7 @@ public class UnitPowerUp : NetworkBehaviour
     /// <summary>
     /// Do not pass 0 in repeatAttackDelay
     /// </summary>
-    public void SpecialEffect(double repeatAttackDelay, int speed)
+    public void SpecialEffect(double repeatAttackDelay, float speed)
     {
         if (isServer)
             RpcSpecialEffect(repeatAttackDelay, speed);
@@ -138,7 +138,7 @@ public class UnitPowerUp : NetworkBehaviour
     //[Command(ignoreAuthority = true)]
     [Command(requiresAuthority = false)]
 
-    public void CmdSpecialEffect(double repeatAttackDelay, int speed)
+    public void CmdSpecialEffect(double repeatAttackDelay, float speed)
     {
         ServerSpecialEffect(repeatAttackDelay, speed);
     }
@@ -146,7 +146,7 @@ public class UnitPowerUp : NetworkBehaviour
     /// Do not pass 0 in repeatAttackDelay
     /// </summary>
     [Server]
-    public void ServerSpecialEffect(double repeatAttackDelay, int speed)
+    public void ServerSpecialEffect(double repeatAttackDelay, float speed)
     {
         HandleSpecialEffect(repeatAttackDelay, speed);
     }
@@ -154,7 +154,7 @@ public class UnitPowerUp : NetworkBehaviour
     /// Do not pass 0 in repeatAttackDelay
     /// </summary>
     [ClientRpc]
-    public void RpcSpecialEffect(double repeatAttackDelay, int speed)
+    public void RpcSpecialEffect(double repeatAttackDelay, float speed)
     {
         HandleSpecialEffect(repeatAttackDelay, speed);
     }
@@ -162,7 +162,7 @@ public class UnitPowerUp : NetworkBehaviour
     /// Do not pass 0 in repeatAttackDelay.
     /// /// if you want to stop the unit attack pass MaxValue
     /// </summary>
-    public void HandleSpecialEffect(double repeatAttackDelay, int speed )
+    public void HandleSpecialEffect(double repeatAttackDelay, float speed )
     {
         SetSpeed(speed, false);
         //repeatAttackDelay = 0;
@@ -174,7 +174,7 @@ public class UnitPowerUp : NetworkBehaviour
 
     //================================================= Unit Factory Power Up + Card Stats Init  ===========================================================
 
-    public void PowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
+    public void PowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
     {
         if (isServer) 
             RpcPowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
@@ -183,20 +183,20 @@ public class UnitPowerUp : NetworkBehaviour
     }
     //[Command(ignoreAuthority = true)]
     [Command(requiresAuthority = false)]
-    public void CmdPowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
+    public void CmdPowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
     {
         //Debug.Log($"CmdPowerUp Speed ==  > {speed}");
         ServerPowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
     }
     [Server]
-    public void ServerPowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
+    public void ServerPowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
     {
         //Debug.Log("ServerpowerUp");
         HandlePowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
         //if comment this line . player 2 name is lower case with (clone) , card stats and other things not sync
         RpcPowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);
     }
-    public void HandlePowerUp(int playerID, string unitName, int spawnPointIndex, int star,int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
+    public void HandlePowerUp(int playerID, string unitName, int spawnPointIndex, int star,int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
     {
         //Debug.Log($"HandlePowerUp StaticClass.IsFlippedCamera {StaticClass.IsFlippedCamera} , {gameObject.tag} : {gameObject.name}/{unitName} ==> powerUp , star {star} ,cardLevel {cardLevel}, health {health}, attack {attack}, repeatAttackDelay {repeatAttackDelay}, speed {speed}, defense {defense}, special {special} ");
         gameObject.name = unitName;
@@ -225,7 +225,7 @@ public class UnitPowerUp : NetworkBehaviour
 
     }
     [ClientRpc]
-    public void RpcPowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, int speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
+    public void RpcPowerUp(int playerID, string unitName, int spawnPointIndex, int star, int cardLevel, int health, int attack, float repeatAttackDelay, float speed, int defense, int special, string specialkey, string passivekey, Color teamColor)
     {
         //Debug.Log($"RpcPowerUp {gameObject.tag} : {gameObject.name} RpcPowerUp cardLevel {cardLevel} health {health} speed {speed}");
         HandlePowerUp(playerID, unitName, spawnPointIndex, star, cardLevel, health, attack, repeatAttackDelay, speed, defense, special, specialkey, passivekey, teamColor);

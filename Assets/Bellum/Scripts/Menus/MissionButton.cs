@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MissionButton : MonoBehaviour, IPointerDownHandler  
+public class MissionButton : MonoBehaviour, IPointerUpHandler  
 {
     [SerializeField] public string mission = null;
     [SerializeField] public GameObject loadingPanel = null;
@@ -25,9 +25,10 @@ public class MissionButton : MonoBehaviour, IPointerDownHandler
         canClick = true;
     }
     */
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
 
+        Debug.Log($"scroll velocity {parentScrollRect.velocity.magnitude}");
         if (parentScrollRect.velocity.magnitude > 0)
         {
             canClick = false;

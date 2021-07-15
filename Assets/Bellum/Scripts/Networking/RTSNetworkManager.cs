@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Mirror;
-using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -12,12 +11,12 @@ using Random = UnityEngine.Random;
 
 public class RTSNetworkManager : NetworkManager
 {
+    /*
     [SerializeField] private GameObject undeadArcherPrefab = null;
     [SerializeField] private GameObject miniSkeletonPrefab = null;
     [SerializeField] private GameObject knightPrefab = null;
     [SerializeField] private GameObject heroPrefab = null;
     [SerializeField] private GameObject spearmanPrefab = null;
-    [SerializeField] private GameObject unitFactoryPrefab = null;
     [SerializeField] private GameObject giantPrefab = null;
     [SerializeField] private GameObject magePrefab = null;
     [SerializeField] private GameObject cavalryPrefab = null;
@@ -33,14 +32,14 @@ public class RTSNetworkManager : NetworkManager
     [SerializeField] private GameObject elfTreeantPrefab = null;
     [SerializeField] private GameObject elfDemonHunterPrefab = null;
     [SerializeField] private GameObject elfQueenPrefab = null;
-
+    */
+    [SerializeField] private GameObject unitFactoryPrefab = null;
     [SerializeField] private GameOverHandler gameOverHandlerPrefab = null;
     [SerializeField] private GameBoardHandler gameBoardHandlerPrefab = null;
     [SerializeField] private GreatWallController greatWallPrefab = null;
     [SerializeField] private GameObject doorLeftPrefab = null;
     [SerializeField] private GameObject doorMiddlePrefab = null;
     [SerializeField] private GameObject doorRightPrefab = null;
-    private Dictionary<string, JSONNode> userTeamDict = new Dictionary<string, JSONNode>();
 
     public static event Action ClientOnConnected;
     public static event Action ClientOnDisconnected;
@@ -128,34 +127,34 @@ public class RTSNetworkManager : NetworkManager
         {
             GameOverHandler gameOverHandlerInstance = Instantiate(gameOverHandlerPrefab);
             GameBoardHandler gameBoardHandlerInstance = Instantiate(gameBoardHandlerPrefab);
+            NetworkServer.Spawn(gameBoardHandlerInstance.gameObject);
+            NetworkServer.Spawn(gameOverHandlerInstance.gameObject);
+
             GreatWallController greatWallInstance = Instantiate(greatWallPrefab, gameBoardHandlerInstance.middleLinePoint.position, Quaternion.identity);
+            GameObject doorUpperLeftInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.leftDoorPoint.position.x, gameBoardHandlerInstance.leftDoorPoint.position.y, gameBoardHandlerInstance.leftDoorPoint.position.z - 15), Quaternion.identity);
+            GameObject doorUpperRightInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.rightDoorPoint.position.x, gameBoardHandlerInstance.rightDoorPoint.position.y, gameBoardHandlerInstance.rightDoorPoint.position.z - 15), Quaternion.identity);
+            GameObject doorLowerLeftInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.leftDoorPoint.position.x, gameBoardHandlerInstance.leftDoorPoint.position.y, gameBoardHandlerInstance.leftDoorPoint.position.z + 15), Quaternion.identity);
+            GameObject doorLowerRightInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.rightDoorPoint.position.x, gameBoardHandlerInstance.rightDoorPoint.position.y, gameBoardHandlerInstance.rightDoorPoint.position.z + 15), Quaternion.identity);
+            NetworkServer.Spawn(doorUpperLeftInstance.gameObject);
+            NetworkServer.Spawn(doorUpperRightInstance.gameObject);
+            NetworkServer.Spawn(doorLowerLeftInstance.gameObject);
+            NetworkServer.Spawn(doorLowerRightInstance.gameObject);
+            NetworkServer.Spawn(greatWallInstance.gameObject);
+
+            /*
             GameObject doorMiddleInstance = Instantiate(doorLeftPrefab, gameBoardHandlerInstance.middleDoorPoint.position, Quaternion.identity);
             GameObject doorLeftInstance = Instantiate(doorLeftPrefab, gameBoardHandlerInstance.leftDoorPoint.position, Quaternion.identity);
             GameObject doorRightInstance = Instantiate(doorLeftPrefab, gameBoardHandlerInstance.rightDoorPoint.position, Quaternion.identity);
 
             GameObject doorUpperMiddleInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.middleDoorPoint.position.x, gameBoardHandlerInstance.middleDoorPoint.position.y, gameBoardHandlerInstance.middleDoorPoint.position.z - 15), Quaternion.identity);
-            GameObject doorUpperLeftInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.leftDoorPoint.position.x, gameBoardHandlerInstance.leftDoorPoint.position.y, gameBoardHandlerInstance.leftDoorPoint.position.z - 15), Quaternion.identity);
-            GameObject doorUpperRightInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.rightDoorPoint.position.x, gameBoardHandlerInstance.rightDoorPoint.position.y, gameBoardHandlerInstance.rightDoorPoint.position.z - 15), Quaternion.identity);
-
+            
             GameObject doorLowerMiddleInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.middleDoorPoint.position.x, gameBoardHandlerInstance.middleDoorPoint.position.y, gameBoardHandlerInstance.middleDoorPoint.position.z + 15), Quaternion.identity);
-            GameObject doorLowerLeftInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.leftDoorPoint.position.x, gameBoardHandlerInstance.leftDoorPoint.position.y, gameBoardHandlerInstance.leftDoorPoint.position.z + 15), Quaternion.identity);
-            GameObject doorLowerRightInstance = Instantiate(doorLeftPrefab, new Vector3(gameBoardHandlerInstance.rightDoorPoint.position.x, gameBoardHandlerInstance.rightDoorPoint.position.y, gameBoardHandlerInstance.rightDoorPoint.position.z + 15), Quaternion.identity);
-
-
-            NetworkServer.Spawn(gameBoardHandlerInstance.gameObject);
-            NetworkServer.Spawn(gameOverHandlerInstance.gameObject);
-            NetworkServer.Spawn(greatWallInstance.gameObject);
 
             NetworkServer.Spawn(doorMiddleInstance.gameObject);
             NetworkServer.Spawn(doorLeftInstance.gameObject);
             NetworkServer.Spawn(doorRightInstance.gameObject);
             NetworkServer.Spawn(doorUpperMiddleInstance.gameObject);
-            NetworkServer.Spawn(doorUpperLeftInstance.gameObject);
-            NetworkServer.Spawn(doorUpperRightInstance.gameObject);
-            NetworkServer.Spawn(doorLowerMiddleInstance.gameObject);
-            NetworkServer.Spawn(doorLowerLeftInstance.gameObject);
-            NetworkServer.Spawn(doorLowerRightInstance.gameObject);
-
+            */
             foreach (RTSPlayer player in Players)
             {
                 SetupUnitFactory(new Vector3(0, 0, 0), player);
@@ -174,6 +173,7 @@ public class RTSNetworkManager : NetworkManager
     private void SetupUnitDict()
     {
         unitDict.Clear();
+        /*
         unitDict.Add(UnitMeta.UnitKey.UNDEADARCHER, undeadArcherPrefab);
         unitDict.Add(UnitMeta.UnitKey.HERO, heroPrefab);
         unitDict.Add(UnitMeta.UnitKey.KNIGHT, knightPrefab);
@@ -194,7 +194,7 @@ public class RTSNetworkManager : NetworkManager
         unitDict.Add(UnitMeta.UnitKey.ELFQUEEN, elfQueenPrefab);
         unitDict.Add(UnitMeta.UnitKey.ELFDEMONHUNTER, elfDemonHunterPrefab);
         unitDict.Add(UnitMeta.UnitKey.ELFTREEANT, elfTreeantPrefab);
-
+        */
     }
 
     #endregion

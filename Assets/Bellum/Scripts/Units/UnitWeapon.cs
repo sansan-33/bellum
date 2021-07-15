@@ -162,18 +162,18 @@ public class UnitWeapon : NetworkBehaviour, IAttackAgent, IAttack
             KilledEnemy();
             if(enemy.GetComponent<Unit>().unitType == UnitMeta.UnitType.DOOR)
             {
+                GreatWallController wallController = GameObject.FindGameObjectWithTag("GreatWallController").GetComponent<GreatWallController>();
+                wallController.dynamicBlock(true);
                 if (enemy.GetComponent<UnitBody>() != null)
                 {
                     //Debug.Log("Gate Open in unit weapon");
                     enemy.GetComponent<UnitBody>().SetTeamColor(color);
                     //GateOpened?.Invoke( "" + _playerid);
-                    GreatWallController wallController = GameObject.FindGameObjectWithTag("GreatWallController").GetComponent<GreatWallController>();
                     wallController.GateOpen("" + _playerid, enemy.GetComponent<UnitBody>().doorIndex.ToString() );
                 }
             }
         }
     }
-
     private void KilledEnemy()
     {
         if (isServer)

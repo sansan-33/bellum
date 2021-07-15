@@ -204,7 +204,7 @@ public class Ice : MonoBehaviour, ISpecialAttack
         unit.GetComponent<Health>().IsFrezze = false;
       //  Destroy(effect);
         UnitRepeatAttackDelaykeys.TryGetValue(unit, out float repeatAttackDelay);
-        UnitSpeedkeys.TryGetValue(unit, out int speed);
+        UnitSpeedkeys.TryGetValue(unit, out float speed);
         CardStats cardStats = unit.GetComponent<CardStats>();
         Debug.Log(repeatAttackDelay);
         unit.GetComponent<UnitPowerUp>().SpecialEffect(repeatAttackDelay, speed);
@@ -214,16 +214,16 @@ public class Ice : MonoBehaviour, ISpecialAttack
         UnitRepeatAttackDelaykeys.TryGetValue(unit, out float repeatAttackDelay);
         return repeatAttackDelay;
     }
-    public int GetUnitSpeedkeys(GameObject unit)
+    public float GetUnitSpeedkeys(GameObject unit)
     {
-        UnitSpeedkeys.TryGetValue(unit, out int speed);
+        UnitSpeedkeys.TryGetValue(unit, out float speed);
         return speed;
     }
     public static Dictionary<GameObject, float> UnitRepeatAttackDelaykeys = new Dictionary<GameObject, float>()
     {
 
     };
-    public static Dictionary<GameObject, int> UnitSpeedkeys = new Dictionary<GameObject, int>()
+    public static Dictionary<GameObject, float> UnitSpeedkeys = new Dictionary<GameObject, float>()
     {
 
     };
