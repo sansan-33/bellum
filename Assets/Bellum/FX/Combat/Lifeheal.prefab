@@ -248,8 +248,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
-      minScalar: 0.25
+      scalar: 0.5
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -587,7 +587,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 5
     angle: 7.33
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -595,7 +595,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 2, y: 1, z: 2}
+    m_Scale: {x: 2, y: 3, z: 2}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -910,7 +910,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.039325833
+          value: 0.38614285
           inSlope: 1.9366702
           outSlope: 1.9366702
           tangentMode: 0
@@ -918,8 +918,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.48734176
-          value: 1
+          time: 0.6772773
+          value: 0.7572247
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -4707,7 +4707,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ae934b5889e3824da97a3203192349c, type: 2}
+  - {fileID: 2100000, guid: b61c75b4b28545e4b82376431833c2ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4765,7 +4765,7 @@ GameObject:
   - component: {fileID: 19882994}
   - component: {fileID: 19996966}
   m_Layer: 0
-  m_Name: LifeFlame
+  m_Name: Lifeheal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4958,7 +4958,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.13333334}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
