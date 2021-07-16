@@ -319,7 +319,7 @@ public class SpButtonManager : MonoBehaviour
         buttons.Add(button.GetComponent<Button>());
 
         //hard code sp type is ZAP
-        spType = SpecialAttackType.ZAP;
+        //spType = SpecialAttackType.ZAP;
 
         var impectSmash = Instantiate(impectSmashPrefab, button.transform);
         if (spType == SpecialAttackType.FIREARROW)
