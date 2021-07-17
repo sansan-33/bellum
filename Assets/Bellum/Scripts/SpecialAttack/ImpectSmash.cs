@@ -9,9 +9,9 @@ using UnityEngine.InputSystem;
 
 public class ImpectSmash : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    [SerializeField] Material freezeMaterial;
     [SerializeField] int damage = 10;
     [SerializeField] GameObject dragcCirclePrefab;
-    private PlayerGround playerGround;
     private GameObject dragCircle;
     private RTSPlayer RTSplayer;
     private GameObject impectType;
@@ -20,15 +20,7 @@ public class ImpectSmash : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDra
     void Start()
     {
         RTSplayer = NetworkClient.connection.identity.GetComponent<RTSPlayer>(); 
-        GameObject[] grounds = GameObject.FindGameObjectsWithTag("FightGround");
-        foreach (GameObject ground in grounds)
-        {
-            if (ground.TryGetComponent(out PlayerGround pg))
-            {
-                playerGround = pg;
-                break;
-            }
-        }
+
     }
     public void SetImpectType(GameObject prefab)
     {
@@ -70,17 +62,17 @@ public class ImpectSmash : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDra
         //if the floor layer is not floor it will not work!!!
         if (!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity)) { return; }
         GameObject impect = Instantiate(impectType);
-        
+        impect.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
         if (SpecialAttackType == SpecialAttackDict.SpecialAttackType.TORNADO)
         {
-            impect.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
+           
             impect.GetComponent<Tornado>().SetPlayerType(RTSplayer.GetPlayerID());
-            StartCoroutine(DestroyGameObjectAfterSec(impect, 5.5f));
-            
+            impect.GetComponent<Tornado>().OnStartServer();
+            //StartCoroutine(DestroyGameObjectAfterSec(impect, 5.5f));
         }
         else
         {
-            impect.transform.position = new Vector3(hit.point.x, 0 + 20, hit.point.z);
+            //impect.transform.position = new Vector3(hit.point.x, 0 + 20, hit.point.z);
         }
         if (SpecialAttackType == SpecialAttackDict.SpecialAttackType.METEOR)
         {
@@ -125,22 +117,32 @@ public class ImpectSmash : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDra
                 unit.GetComponent<Health>().DealDamage(damage);
                 if (SpecialAttackType == SpecialAttackDict.SpecialAttackType.ZAP)
                 {
-                    unit.GetComponent<AstarAI>().IS_STUNNED = true;
-                    StartCoroutine(awakeUnit(unit.GetComponent<AstarAI>()));
+                    StartCoroutine(awakeUnit(unit, 1, unit.GetComponent<CardStats>().speed, unit.GetComponent<CardStats>().repeatAttackDelay, unit.GetComponentInChildren<SkinnedMeshRenderer>().material));
+                    //unit.GetComponent<AstarAI>().IS_STUNNED = true;
+                    unit.GetComponent<UnitPowerUp>().SpecialEffect(float.MaxValue, unit.GetComponent<CardStats>().repeatAttackDelay);
+                    
+                }
+                if(SpecialAttackType == SpecialAttackDict.SpecialAttackType.Freeze)
+                {
+                    StartCoroutine(awakeUnit(unit, 5, unit.GetComponent<CardStats>().speed, unit.GetComponent<CardStats>().repeatAttackDelay, unit.GetComponentInChildren<SkinnedMeshRenderer>().material));
+                    unit.GetComponent<UnitPowerUp>().SpecialEffect(float.MaxValue, 0);
+                    unit.GetComponentInChildren<SkinnedMeshRenderer>().material = freezeMaterial;
+                    
                 }
             }
         }
     }
-    private IEnumerator DestroyGameObjectAfterSec(GameObject gameObject, float sec)
+    private IEnumerator DestroyGameObjectAfterSec(GameObject unit, float sec)
     {
         yield return new WaitForSeconds(sec);
         Destroy(gameObject);
 
     }
-    private IEnumerator awakeUnit(AstarAI astarAI)
+    private IEnumerator awakeUnit(GameObject unit, float sec,float speed ,float repeatAttackDelay,Material material)
     {
-        yield return new WaitForSeconds(1);
-        astarAI.IS_STUNNED = false;
+        yield return new WaitForSeconds(sec);
+        unit.GetComponent<UnitPowerUp>().SpecialEffect(speed, repeatAttackDelay);
+        unit.GetComponentInChildren<SkinnedMeshRenderer>().material = material;
 
     }
 
