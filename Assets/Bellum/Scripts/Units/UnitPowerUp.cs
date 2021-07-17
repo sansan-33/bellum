@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FoW;
 using Mirror;
 using Pathfinding;
 using Pathfinding.RVO;
@@ -216,7 +217,7 @@ public class UnitPowerUp : NetworkBehaviour
         gameObject.GetComponent<HealthDisplay>().SetHealthBarColor(teamColor);
         GetComponent<RVOController>().layer = tag.Contains("0") ? RVOLayer.Layer3 : RVOLayer.Layer2;
         GetComponent<RVOController>().collidesWith = tag.Contains("0") ? RVOLayer.Layer3 : RVOLayer.Layer2;
-        //GetComponent<RVOController>().collidesWith = tag.Contains("0") ? RVOLayer.Layer2 : RVOLayer.Layer3;
+        GetComponent<FogOfWarUnit>().team = playerID;
         HandleUnitSkill(UnitMeta.UnitSkill.DEFAULT, star, attack, repeatAttackDelay,speed);
         if ( StaticClass.IsFlippedCamera ){
             gameObject.GetComponent<HealthDisplay>().flipHealthBar();
