@@ -323,7 +323,7 @@ public class SpButtonManager : MonoBehaviour
         buttons.Add(button.GetComponent<Button>());
 
         //hard code sp type is Freeze
-        //spType = SpecialAttackType.Freeze;
+        spType = SpecialAttackType.ZAP;
 
         var impectSmash = Instantiate(impectSmashPrefab, button.transform);
         if (spType == SpecialAttackType.FIREARROW)

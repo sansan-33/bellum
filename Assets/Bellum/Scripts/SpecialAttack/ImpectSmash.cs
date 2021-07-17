@@ -69,7 +69,6 @@ public class ImpectSmash : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDra
             impect.GetComponent<Tornado>().SetPlayerType(RTSplayer.GetPlayerID());
             impect.GetComponent<Tornado>().OnStartServer();
             //StartCoroutine(DestroyGameObjectAfterSec(impect, 5.5f));
-
         }
         else
         {
@@ -118,26 +117,32 @@ public class ImpectSmash : MonoBehaviour,ISpecialAttack, IDragHandler, IBeginDra
                 unit.GetComponent<Health>().DealDamage(damage);
                 if (SpecialAttackType == SpecialAttackDict.SpecialAttackType.ZAP)
                 {
-                    unit.GetComponent<AstarAI>().IS_STUNNED = true;
-                    StartCoroutine(awakeUnit(unit.GetComponent<AstarAI>()));
+                    StartCoroutine(awakeUnit(unit, 1, unit.GetComponent<CardStats>().speed, unit.GetComponent<CardStats>().repeatAttackDelay, unit.GetComponentInChildren<SkinnedMeshRenderer>().material));
+                    //unit.GetComponent<AstarAI>().IS_STUNNED = true;
+                    unit.GetComponent<UnitPowerUp>().SpecialEffect(float.MaxValue, unit.GetComponent<CardStats>().repeatAttackDelay);
+                    
                 }
                 if(SpecialAttackType == SpecialAttackDict.SpecialAttackType.Freeze)
                 {
+                    StartCoroutine(awakeUnit(unit, 5, unit.GetComponent<CardStats>().speed, unit.GetComponent<CardStats>().repeatAttackDelay, unit.GetComponentInChildren<SkinnedMeshRenderer>().material));
+                    unit.GetComponent<UnitPowerUp>().SpecialEffect(float.MaxValue, 0);
                     unit.GetComponentInChildren<SkinnedMeshRenderer>().material = freezeMaterial;
+                    
                 }
             }
         }
     }
-    private IEnumerator DestroyGameObjectAfterSec(GameObject gameObject, float sec)
+    private IEnumerator DestroyGameObjectAfterSec(GameObject unit, float sec)
     {
         yield return new WaitForSeconds(sec);
         Destroy(gameObject);
 
     }
-    private IEnumerator awakeUnit(AstarAI astarAI)
+    private IEnumerator awakeUnit(GameObject unit, float sec,float speed ,float repeatAttackDelay,Material material)
     {
-        yield return new WaitForSeconds(1);
-        astarAI.IS_STUNNED = false;
+        yield return new WaitForSeconds(sec);
+        unit.GetComponent<UnitPowerUp>().SpecialEffect(speed, repeatAttackDelay);
+        unit.GetComponentInChildren<SkinnedMeshRenderer>().material = material;
 
     }
 
